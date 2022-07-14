@@ -10,7 +10,7 @@ import Locker from './components/locker'
 import Account from './components/account'
 import Admin from './components/admin'
 import Farms from './components/farms'
-
+import News from './components/news/news';
 import Sidebar from './components/sidebar'
 import Header from './components/header';
 import Footer from './components/footer';
@@ -160,7 +160,8 @@ render() {
             <Sidebar appState={this.state} isConnected={this.state.isConnected} handleConnection={this.handleConnection}  toggleMobileSidebar={this.toggleMobileSidebar} isOpenInMobile={this.state.isOpenInMobile} theme={this.state.theme} toggleTheme={this.toggleTheme} toggleNetwork={this.toggleNetwork} />
             <div className='right-content'>
               
-              <Route exact path='/' render={() => <PoolExplorer theme={this.state.theme} network={this.state.network} />} />
+            <Route exact path='/pool-explorer' render={() => <PoolExplorer theme={this.state.theme} network={this.state.network} />} />
+              <Route exact path='/' render={() => <News theme={this.state.theme}/>} />
               <Route exact path='/big-swap-explorer' render={() => <BigSwapExplorer theme={this.state.theme} network={this.state.network}/>} />
               <Route exact path='/pair-explorer/:pair_id?' render={(props) => <PairExplorer appState={this.state} isPremium={this.state.isPremium} key={props.match.params.pair_id} theme={this.state.theme} {...props} />} />
               <Route exact path='/top-tokens' render={() => <TopTokens theme={this.state.theme} />} />

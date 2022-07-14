@@ -38,7 +38,7 @@ const Sidebar = (props) => (
             </h6>
 
             <ul>
-                <li><NavLink exact to="/"><img src="/assets/img/search.svg" alt="Image" /><span>Pool Explorer</span></NavLink></li>
+            <li><NavLink exact to="/pool-explorer"><img src="/assets/img/search.svg" alt="Image" /><span>Pool Explorer</span></NavLink></li>
                 <li><NavLink to="/pair-explorer"><img src="/assets/img/compass.svg" alt="Image" /><span>Pair Explorer</span></NavLink></li>
                 <li><NavLink to="/big-swap-explorer"><i className="fas fa-exchange-alt" alt="Image" /><span>Big Swap Explorer</span></NavLink></li>
                 <li><NavLink to="/locker"><i className="fas fa-lock" alt="Image" /><span>DYP Locker</span></NavLink></li>
