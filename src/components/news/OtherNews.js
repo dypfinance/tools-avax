@@ -6,18 +6,23 @@ import Dots from "./assets/dots.svg";
 import Clock from "./assets/clock.svg";
 import WhiteDots from "./assets/dots-white.svg";
 
-const OtherNews = ({ image, link, title, date, theme, onOtherNewsClick}) => {
+const OtherNews = ({ image, link, title, date, theme, onOtherNewsClick }) => {
   const [likeIndicator, setLikeIndicator] = useState("none");
 
   return (
     <div className="other-news-singlewrapper">
       <div>
-        <img src={image} alt="" className="other-news-image" onClick={onOtherNewsClick}/>
-        <div style={{padding: 12, gap: 10}} className='d-flex flex-column'>
-        <a href={link} target={"_blank"}>
-          <h4 className="singlenews-title">{title}</h4>
-        </a>
-        <div className="news-bottom-wrapper">
+        <img
+          src={image}
+          alt=""
+          className="other-news-image"
+          onClick={onOtherNewsClick}
+        />
+        <div style={{ padding: 12, gap: 10 }} className="d-flex flex-column">
+          <a href={link} target={"_blank"}>
+            <h4 className="singlenews-title">{title}</h4>
+          </a>
+          <div className="news-bottom-wrapper">
             <div className="like-wrapper">
               <img
                 src={
@@ -51,15 +56,17 @@ const OtherNews = ({ image, link, title, date, theme, onOtherNewsClick}) => {
                 }}
               />
             </div>
-            <img src={ theme === 'theme-dark' ? WhiteDots : Dots} alt="" style={{ width: "auto" }} />
+            <img
+              src={theme === "theme-dark" ? WhiteDots : Dots}
+              alt=""
+              style={{ width: "auto" }}
+            />
             <div className="date-wrapper">
               <img src={Clock} alt="" style={{ width: "auto" }} />
-              <h6 className="date-content">
-              {date}
-              </h6>
+              <h6 className="date-content">{date}</h6>
             </div>
           </div>
-          </div>
+        </div>
       </div>
     </div>
   );

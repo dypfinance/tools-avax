@@ -1393,7 +1393,7 @@ body.theme-dark img.graph-two {
     padding: 10px;
     background: white;
     border-radius: 10px;
-    margin: 0 10px;
+    /* margin: 0 10px; */
   }
   
   .owl-stage-outer {
@@ -1439,6 +1439,7 @@ body.theme-dark img.graph-two {
     display: flex;
     gap: 20px;
     width: 100%;
+    justify-content: space-between;
   }
   
   .news-left-wrapper {
@@ -1491,9 +1492,9 @@ body.theme-dark img.graph-two {
   
   }
   
-  @media (min-width: 576px) {
+  @media (min-width: 360px) {
     .modal-dialog {
-      max-width: 1000px;
+      max-width: 1030px;
       margin: 1.75rem auto;
       height: 900px;
       overflow-y: auto;
@@ -1628,14 +1629,15 @@ body.theme-dark img.graph-two {
     background: #ffffff;
     box-shadow: 12px 16px 44px rgba(0, 0, 0, 0.12);
     border-radius: 8px;
-    width: 330px;
-    height: 286px;
+    width: 300px;
+    height: 300px;
   }
   
   .other-news-image {
     width: 335px;
     height: 190px;
     border-top-left-radius: 8px;
+  cursor: pointer;
     border-top-right-radius: 8px;
   }
   
@@ -1653,6 +1655,71 @@ body.theme-dark img.graph-two {
     margin-top: 20px;
   }
 
+  .related-news-side-title {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+  }
+  
+  .related-subnews-title {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 20px;
+    color: #ed2120 !important;
+  }
+  
+  .related-news-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  
+  }
+  
+  .single-related-news-wrapper {
+    min-height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+  
+  }
+  
+  .right-col {
+    max-width: 340px;
+    border-left: 1px solid #D9D9D9;
+    padding-left: 20px;
+  }
+  
+  
+  @media only screen and (max-width: 860px) {
+    .left-col-title {
+      max-width: 100% !important;
+    }
+  
+    .left-col-image {
+      max-width: 100% !important;
+    }
+  
+    .right-col {
+     display: none;
+    }
+  
+    .details-modal-content {
+      justify-content: center;
+    }
+  
+    .left-col-content {
+      max-width: 100% !important;
+      text-align: justify;
+    }
+  }
+  
+  .modal-bottom-wrapper {
+    padding: 20px;
+  }
+  
+  
+  
 /*---------------------------------
         Content Footer CSS
 --------------------------------*/
