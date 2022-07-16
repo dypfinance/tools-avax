@@ -88,7 +88,7 @@ const NewsModal = ({
           <div className="right-col">
             <h3 className="related-news-side-title">Related news</h3>
             <div className="related-news-wrapper">
-              {latestNewsData.length > 0 && ((height > 500 && height < 600) ?
+              {latestNewsData.length > 0 && ((height > 500 && height < 610) ?
                 getItemsWithoutCurrentItem(newsId, latestNewsData).slice(0, 5).map((item, key) => {
                   return <div key={key}>
                     <RelatedNews

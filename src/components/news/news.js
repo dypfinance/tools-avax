@@ -103,222 +103,764 @@ const News = ({ theme }) => {
   const press_highlight = [
     {
       title: "Yield farming platform announces it’s expanding to Avalanche",
+      id: 34,
       link: "https://cointelegraph.com/news/yield-farming-platform-announces-it-s-expanding-to-avalanche",
       date: "JUL 08, 2021",
       imageSrc:
         "https://images.cointelegraph.com/images/717_aHR0cHM6Ly9zMy5jb2ludGVsZWdyYXBoLmNvbS91cGxvYWRzLzIwMjEtMDcvMDczNDU5ZWMtYjUwYi00MmRjLWJjNWMtZmJkZDc3NDdlZjg0LmpwZWc=.jpg",
+        content: {
+          title: 'Yield farming platform announces it’s expanding to Avalanche',
+          imageSrc: 'https://images.cointelegraph.com/images/717_aHR0cHM6Ly9zMy5jb2ludGVsZWdyYXBoLmNvbS91cGxvYWRzLzIwMjEtMDcvMDczNDU5ZWMtYjUwYi00MmRjLWJjNWMtZmJkZDc3NDdlZjg0LmpwZWc=.jpg',
+          content: `A yield farming platform has announced that it is expanding to Avalanche.<br/><br/>
+          <a href='https://dyp.finance/' target='_blank'><u>DeFi Yield Protocol </u><a> — known as DYP for short — says the move will mean that its advanced trading tools are available to a greater cross-section of users.<br/><br/>
+          Three of its products are initially going to be available: DYP Farming, DYP Tools and DYP NFTs.<br/><br/>
+          Flexible staking terms are offered through DYP — and this means that tokens can be locked up for three days, 30 days, 60 days or 90 days.<br/><br/>
+          Through DYP Tools, advanced features are offered that allows users to track tokens, access yield data and monitor whale transactions.<br/><br/>
+          This service is expected to arrive on Avalanche in the third quarter of 2021 alongside DYP NFTs — allowing artists to mine, trade and showcase their creative works with low fees, near-instant finality and technology that’s eco-friendly.<br/><br/>
+          DYP’s CEO Mihai Nicusor Busica says his project’s ultimate goal is to level the playing field between everyday crypto consumers and whales.<br/><br/>
+          He added: “Security and transparency have been top priorities for our project since the beginning, so it is absolutely critical to build on a fully-decentralized platform in Avalanche.”<br/><br/>
+          <h4><b>Curbing the influence of whales</b></h4><br/><br/>
+          DeFi Yield Protocol offers an anti-manipulation feature that is designed to curb the influence of large whale users, limiting the market impact associated with cryptocurrencies being converted.<br/><br/>
+          The end goal is designed to deliver stability, fair access to liquidity and a secure, simplified DeFi platform that meets the needs of all users — irrespective of their size.<br/><br/>
+          DYP also says that it has compelling reasons for choosing to launch on Avalanche, which paves the way for the deployment of decentralized applications and enterprise blockchains in an interoperable and highly scalable ecosystem. Figures suggest that Avalanche can process more than 4,500 transactions per second, all while instantly confirming transactions. This can help alleviate some of the scalability concerns that have been seen on the Ethereum blockchain, with congestion regularly resulting in sky-high fees.<br/><br/>
+          Crucially, Avalanche ensures that developers who are accustomed to Ethereum can build on its infrastructure quickly. This is because the Solidity programming language works out of the box.<br/><br/>
+          DYP’s arrival on Avalanche complements the fact that its yield farming feature is already available on both Ethereum and Binance Smart Chain.<br/><br/>
+          <h4><b>Quality partnerships</b></h4><br/><br/>
+          A number of key collaborations have been secured by DYP in recent months. Recently, the protocol integrated Chainlink price feeds — delivering high-quality, tamperproof oracles that allow rewards to be calculated with precision.<br/><br/>
+          Chainlink, which already works with a number of other DeFi protocols, sources data from a variety of premium data aggregators — weighting figures by volume and cleaning them of outliers and wash trading.<br/><br/>
+          Looking ahead, DYP plans to work on its app, and roll out its products to a greater number of blockchains. A lending service will launch, and built-in insurance will be offered to all DYP liquidity providers. And, as the DeFi space continues to evolve and grow, the project says it will expand in a number of different areas too.<br/><br/>
+          The first version of DYP’s NFT DApp launched last month. In the run up to going live, the project collaborated with the renowned fashion illustrator and designer Nidia Toska to create the first collection to be listed on the marketplace. In the past, she’s worked with the likes of Kim Kardashian, GQ magazine and Paris Hilton — another NFT aficionado.<br/>`
+        }
     },
     {
       title: "DeFi Yield Protocol (DYP) Continues to Expand Its Ecosystem",
+      id: 35,
       link: "https://news.bitcoin.com/defi-yield-protocol-dyp-continues-to-expand-its-ecosystem/",
       date: "Jun 28, 2021",
       imageSrc:
         "https://static.news.bitcoin.com/wp-content/uploads/2021/06/dyp.jpg",
+        content: {
+          title: 'DeFi Yield Protocol (DYP) Continues to Expand Its Ecosystem',
+          imageSrc: 'https://static.news.bitcoin.com/wp-content/uploads/2021/06/dyp.jpg',
+          content: `DeFi Yield Protocol has emerged as one of the fastest-growing crypto projects with an expanding ecosystem. DYP allows DeFi users to leverage advanced trading tools to earn yield on their assets while taking advantage of the unique DYP Tools decentralized application.<br/><br/>
+          DYP has attracted the attention of many within the crypto space due to its features that include its unique Anti-manipulation system. The anti-manipulation feature ensures the stability of DYP tokens by automatically converting DYP rewards to Ether (ETH) or BNB by 00:00 UTC daily and distributing rewards to liquidity providers.<br/><br/>
+          <h4>Key Developments in DYP Ecosystem</h4><br/><br/>
+          The DYP team continues to develop the ecosystem with major partnerships and integrations into its infrastructure. Some of the high profile developments include:<br/><br/>
+          <b>Chainlink Integration</b><br/><br/>
+          DYP recently revealed that it has integrated Chainlink Price Feeds on its Ethereum and Binance Smart Chain mainnet. The integration will provide DYP with access to high-quality, tamper-proof price feeds needed to provide the exact value in USD for the rewards paid in ETH and BNB to the liquidity providers via farming pools. Chainlink data feeds will also ensure that DYP values are provided in a fully decentralized way that cannot be manipulated.<br/><br/>
+          According to DYP, the choice of Chainlink is due to its seamless solution that has been tried and tested within the DeFi sector. Chainlink is the choice of several leading DeFi protocols and has proven to be valuable in maintaining the stability and security of smart contracts.<br/><br/>
+          DYP will also use Chainlink in the future to provide additional price feeds for all the farming, staking, and vault pools on its platform.<br/><br/>
+          <b>Avalanche integration</b><br/><br/>
+          DYP is also set to expand its ecosystem by building integration with DeFi protocol Avalanche. The expansion will enable users to leverage DYP advanced trading tools on Avalanche. DYP will initially launch three products: DYP Farming, DYP Tools, and DYP NFTs.<br/><br/>
+          As part of the integration, DYP Farming platform will launch a DYP/AVAX pair on Pangolin enabling users to stake their tokens for the different duration (3,30,60,90 days). Rewards are delivered to users in their choice of PNG, AVAX, or wrapped ETH daily.<br/><br/>
+          DYP will also launch its unique NFT marketplace ‘’DYP NFTs’’ on Avalanche. The Marketplace will enable artists and creators to mint, trade, and sell their digital artwork to the Avalanche community at low fees and eco-friendly technology.<br/><br/>
+          <h4>Ethereum and Binance Smart Chain Pools</h4><br/><br/>
+          DYP has achieved several milestones and became the first protocol to offer users yield rewards in ETH or BNB. Since its launch in 2020, DYP has paid out 8,455.24 ETH and 4,622.56 BNB worth over $20 million to liquidity providers.<br/><br/>
+          It is also one of the few yield farming platforms that allows users to stake on both Ethereum and Binance Smart Chain Network. Yield farmers can easily stake DYP tokens on one of the supported staking pools. Each pool has four different staking options with rewards starting 20% APR up to 35% APR, depending on the lock time.<br/><br/>
+          The DYP Earn Vault also provides an alternative means for users to earn impressive yields. The Vault is an automated yield farming contract with Compound Protocol integration and support for ETH, WBTC, USDC, USDT, and DAI markets.<br/><br/>
+          The interest from Compound is entirely distributed to the users. A substantial proportion of the profits (75%) is converted ETH and distributed to the liquidity providers, whereas the remainder (25%) is used to buy back our protocol token and burn it.<br/><br/>
+          <h4>DYP Tools</h4><br/><br/>
+          DYP has developed a unique decentralized tools dashboard called DYP tools that is the first of its kind in the DeFi sector. DYP Tools increase the use cases for DYP Token and the entire DeFi ecosystem. The tool dashboard serves as a liquidity locker for any DeFi project and protects the DeFi community by providing a decentralized trust score for all DeFi.<br/><br/>
+          DYP continues to trail the blaze in the DeFi space, and the launch of the DYP Tools is expected to lead to an adoption of the DYP token and its project within the crypto space.<br/><br/>
+
+          
+          `,
+        }
     },
     {
       title:
         "DYP Staking dApp Launches on BNB Chain, LPs to earn Passive Income in ETH, DYP, or BNB",
+      id: 36,
       link: "https://crypto.news/dyp-protocol-staking-dapp-binance-smart-chain-bsc-lp-passive-income-eth-dyp-bnb/",
       date: "April 7, 2021",
       imageSrc:
         "https://crypto.news/app/uploads/2021/04/DeFi-Yield-Protocol-Community-Update%E2%80%8A%E2%80%94%E2%80%8AStaking-Pools-Tutorial-on-Binance-Smart-Chain.jpg",
+        content: {
+          title: 'DYP Staking dApp Launches on BNB Chain, LPs to earn Passive Income in ETH, DYP, or BNB',
+          imageSrc: 'https://crypto.news/app/uploads/2021/04/DeFi-Yield-Protocol-Community-Update%E2%80%8A%E2%80%94%E2%80%8AStaking-Pools-Tutorial-on-Binance-Smart-Chain.jpg',
+          content: `<h3><b>DYP Staking Service on the Binance Smart Chain (BSC)</b></h3><br/><br/>
+          The DYP staking service launch on the low-fee, high throughput BSC platform is a step in the right direction. It comes after a code audit by Blockchain Consilium. <br/><br/>
+          DYP Staking services were launched in early Q1 2021 and have grown in stature over time, attracting yield farmers who have cumulatively earned over $14.8 million since activation.<br/><br/>
+          There will be four staking options for each pool in the BSC with monthly rewards ranging from 30k to 100k DYP depending on the lock-up period ranging from three days to three months chosen by liquidity providers staking their liquidity tokens. <br/><br/>
+          LPs can stake their liquidity tokens, received from providing liquidity at their selected DYP pool on PancakeSwap, to the DYP/WBNB, DYP/BUSD, and DYP/ETH pools. <br/><br/>
+          The DYP protocol aims to reward liquidity providers with ETH coins and has integrated an anti-manipulation feature to transparently convert rewards into ETH without a noticeable impact on Ethereum prices.<br/><br/>
+          <h3><b>Launch on BSC a Step in the Right Direction</b></h3><br/><br/>
+          Launching on the BSC platform is expected to spark even more activity. Notably, BSC is part of the burgeoning Binance ecosystem comprising the Binance Chain, a DEX, CeFi products, and an exchange offering crypto-to-crypto, crypto-to-fiat, and derivative trading, on top of other exciting services.<br/><br/>
+          Uniquely, through the DYP protocol, liquidity providers can trustlessly earn ETH, BNB, or DYP easily without risks. <br/><br/>
+          Here, all a user has to do is to provide liquidity to any of the supported protocols. After that, the platform will convert those rewards in DYP to ETH/BNB coins before disbursing them to LPs wallets. <br/><br/>
+          For faster onboarding, the DYP protocol has made its interface easy to use. It is simplified, making it easy for both new and experienced yield farmers to participate.<br/><br/>
+          <h3><b>Yield Farming DYP in the BSC</b></h3><br/><br/>
+          As aforementioned, DYP liquidity providers have cumulatively earned over $14.8 million since launch. <br/><br/>
+          Tokens were distributed to LPs in Uniswap, which has grown almost 20X with over $19 million in various DYP pools in Uniswap. <br/><br/>
+          Therefore, the extension to PancakeSwap would help build DYP Protocol’s liquidity besides opening up even more developments in the future. <br/><br/>
+          To jump-start activity and presence in BSC, DYP Protocol has deposited $510k of liquidity to PancakeSwap. <br/><br/>
+          From there, users can choose to provide liquidity to any of the three pools: DYP/BNB, DYP/ETH, and DYP/BUSD, on PancakeSwap and stake their LP tokens with the option of being paid in the DYP Protocol’s token DYP, BNB—the native currency of the Binance Ecosystem, or ETH.<br/><br/>
+          To get started, users can obtain DYP tokens from DYP Protocols on PancakeSwap to supply liquidity and earn LP tokens. However, those with DYP tokens in Ethereum can easily swap them to BEP-20 tokens on the BSC through the recently created bridge. The BSC is compatible with the EVM. Therefore, transactions can be executed straight from MetaMask. <br/><br/>
+          During conversion, the DYP Protocol recommends swappers to save the transaction hash for quick resolution whenever network issues arise. Also, users can swap a maximum of 10k DYP tokens every 24 hours. <br/><br/>
+          <h3><b>Price Stabilization Feature using the more Liquid BNB</b></h3><br/><br/>
+          Apart from the anti-manipulation feature that safeguards the conversion of rewards to ETH, the DYP Protocol has taken steps to cushion against unexpected DYP volatility. <br/><br/>
+          Accordingly, there will be a trigger set at -2.5 percent. If this is exceeded, then the maximum amount of DYP tokens that won’t affect prices will be converted to BNB. <br/><br/>
+          In that regard, all BSC pools’ DYP rewards will be automatically converted to BNB before being distributed to BNB, ETH, or DYP as per the LP’s selected means of receiving rewards. <br/><br/>
+          Also, assuming LPs don’t claim DYP rewards, the protocol’s governance will vote to either distribute these rewards to owners or burn them.<br/><br/>
+          <h3><b>DYP Protocol Features in the Pipeline</b></h3><br/><br/>
+          In April, the DYP Protocol plans to launch DYP Tools. The team is waiting for the completion of GETH Node synchronization. <br/><br/>
+          At the same time, the DYP Earn Vault is ready to launch, just awaiting audit results. <br/><br/>
+          Other products set for release include DYP NFT dApp, which is still in development, and a planned overhaul of DYP Protocol’s user interface.<br/>
+          `
+        }
     },
     {
       title: "DeFi Yield Protocol Takes Yield Farming to the Next Level",
+      id: 37,
       link: "https://www.newsbtc.com/press-releases/defi-yield-protocol-takes-yield-farming-to-the-next-level/",
       date: "July 12, 2020",
       imageSrc:
         "https://www.newsbtc.com/wp-content/uploads/2020/10/dyp-img.png",
+        content: {
+          title: 'DeFi Yield Protocol Takes Yield Farming to the Next Level',
+          imageSrc: 'https://www.newsbtc.com/wp-content/uploads/2020/10/dyp-img.png',
+          content: `DeFi, short for Decentralized Finance is the new fad in cryptocurrency industry, thanks to the development of blockchain technology and its applications. As new DeFi products hit the market, people are finding attractive investment opportunities with significant profit-making potential. Yield farming is one such example where crypto investors can lock their assets over a certain period of time to earn returns, and doing so in the cryptocurrency space theoretically means, the whole mechanism is democratic and everyone has an equal opportunity to reap profits.<br/><br/>
+          The introduction of Bitcoin back in 2008 was hailed as a landmark moment as it signified a shift in the financial power centers, allowing individuals to stay in complete control of their funds without having to rely on banking and financial institutions. However, in reality, the changes envisioned haven’t completely materialized even after a decade. Similarly, most of the existing DeFi applications are skewed, favoring the ones with fortune, proven recently by Sushi dump brought about SushiSwap’s anonymous founder Chef Nomi swapping his SUSHI token for ETH.<br/><br/>
+          However, that is not going to be the case anymore as DeFi Yield Protocol (DYP) helps prevent the whale advantage in DeFi. Further, the anti-manipulation feature implemented by the protocol ensures all pool rewards viz., DYP/ETH, DYP/USDC. DYP/USDT and DYP/WBTC are converted from DYP to ETH and distributed among liquidity providers at 00:00 UTC every day. By doing so, it prevents manipulation of DYP price by whales for their benefit.<br/><br/>
+          The conversion of pool rewards from DYP to ETH is handled by a smart contract. With each pool generating around 69,120 tokens in rewards, the total number of tokens converted to ETH each day stands at around 276,480. However, in the event of DYP price fluctuating beyond 2.5% in value, the smart contract swaps only as many tokens to ETH as possible without affecting the token’s price and distribute them. Any DYP leftover will be distributed as part of the next day’s rewards. The protocol continues the rollover process for a maximum duration of one week, by the end of which, if there are still undistributed DYP left, will either be distributed among token holders or burnt based on the outcome of a governance vote. All smart contracts implemented within DYP protocol are thoroughly audited and secured to deny access to those planning to take advantage of the system.<br/><br/>
+          <h3><b>Combining DeFi Yield Farming with ETH Mining</b></h3><br/><br/>
+          The DeFi Yield Protocol contributes to the crypto ecosystem with more than just yield farming. It does so with the help of its own mining farm, set up with an investment of over $1 million. Those joining the zero-fee ETH mining pool set up by DYP team stand to receive a 10% monthly bonus of the ETH monthly income earned in the form of DYP tokens airdrop. A total of 5 million DYP will be distributed to the miners as the protocol works on boosting their numbers in its mining pool to at least 200,000.<br/><br/>
+          Participants in the DeFi Yield Protocol ETH mining pool also provide liquidity to participating pools, earning more ETH from DYP rewards as well as DYP Earn Vault – an automated yield farming contract that maximizes returns by moving providers’ funds through the most profitable platforms. 75% of profits generated by Earn Vault will be distributed among the liquidity providers, whereas the remaining 25% will be used to buyback DYP tokens with the intention of enhancing liquidity and maintaining token price stability.<br/><br/>
+          <h3><b>DYP Crowdsale</b></h3><br/><br/>
+          Crypto investors and enthusiasts can be part of the revolutionary DeFi protocol by joining the Crowdsale whitelist and acquiring DYP tokens. The minimum and maximum contributions to participate in DYP is set at 0.5 ETH and 100 ETH respectively.<br/><br/>
+          Access the DYP Crowdsale Whitelist Application at – <a href='https://crowdsale.dyp.finance/' target='_blank'><u>https://crowdsale.dyp.finance/</u></a><br/>
+          `,
+        }
     },
     {
       title:
         "DeFi Yield Protocol Could Be a Massive Boost for Yield Farmers and the DeFi Space",
+      id: 38,
       link: "https://www.cryptocompare.com/coins/guides/defi-yield-protocol-could-be-a-massive-boost-for-yield-farmers-and-the-defi-space/",
       date: "13 Nov, 2020",
       imageSrc: "https://www.cryptocompare.com/media/37459245/graph.jpg",
+      content: {
+        title: 'DeFi Yield Protocol Could Be a Massive Boost for Yield Farmers and the DeFi Space',
+        imageSrc: 'https://www.cryptocompare.com/media/37459245/graph.jpg',
+        content: `Since February 2020, we have seen a steady growth of the blockchain space and, most significantly, decentralized finance. While DeFi isn't entirely new, the network's growth has been more aggressive this year than it has ever been. The distribution of COMP governance token and the introduction of yield farming protocols around June this year has made DeFi the most engaging conversation in the blockchain space, no doubt.<br/><br/>
+        Decentralized finance has only grown this much because of the control and ease it offers users. By allowing users to utilize traditional banking and financing services like lending, borrowing, and saving, an overwhelming sense of trust has been birthed over the past few months. Even more captivating is that many users now earn more than 100% of their capital, mostly by offering liquidity through yield farming protocols.<br/><br/>
+        <h3><b>DeFi Yield Protocol (DYP)</b></h3><br/><br/>
+        Over the past couple of months, we have also seen a contrast between different DeFi protocols and what might set a precedent for the DeFi ecosystem's longevity as a whole. The <a href='https://dyp.finance/#/home' target='_blank'><u>DeFi yield protocol (DYP)</u></a> is a unique protocol that allows virtually any user to provide liquidity, earn DYP tokens as yield while maintaining the token price. Unlike some DeFi user interface, the DYP interface is quite simplified, accommodating new and expert yield farmers.<br/><br/>
+        <h3><b>What Makes the DYP Staking Pool Unique?</b></h3><br/><br/>
+        DYP developers, together with a blockchain company, developed the unique DYP staking. The DYP staking allows users to stake dAPP through the Ethereum smart contract that is front-end integrated with Metamask and Trustwallet. By studying some flaws of the DeFi ecosystem, DYP aims to tackle them head on and give users the best experience in open finance.<br/><br/>
+        One of the many arguments against the operability of defi revolves around “whales” controlling the network. One of such examples is the infamous Sushi dump where the anonymous founder dumped all of his Sushi tokens for ethereum. To prevent a whale attack, DYP developed an anti-manipulation feature that automatically converts all pool rewards from DYP to ETH at 00:00 UTC everyday. The system then distributes the rewards to liquidity providers. This manipulation feature ensures that the pool’s liquidity is fair to every participant.<br/><br/>
+        Besides preventing whales through the anti-manipulating feature, the smart contract also maintains the DYP token price. If the DYP price fluctuates beyond 2.5% in value, rather than swapping all 276,480 DYP tokens for ETH at 00:00 UTC, the smart contract only swaps as many DYP tokens to ETH that doesn’t affect the price of the token. The leftover DYP is then distributed in the next day’s rewards. If there are still leftover DYP tokens, the DYP governance votes on whether to distribute them to token holders or burn the tokens from circulation.<br/><br/>
+        The decentralized network is essentially an open space regulated by a smart contract, and the greatest risk in yield farming today is still a smart contract bug. To prevent the risk of a smart contract bug on their network, DYP ensures all their smart contract codes are <a href='https://github.com/dypfinance/contract-security-audit' target='_blank'><u> audited.</u></a><br/><br/>
+        <h3><b>DYP Yield Farming and the Ethereum Mining Network</b></h3><br/><br/>
+        As the Ethereum network continues to increase in size and number, there's a corresponding need for mining on the network. The DYP team has been committed to Ethereum mining for more than three years and have invested more than $1m on their <a href='https://ethermine.org/miners/0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F/dashboard' target='_blank'><u>mining farm</u></a>. Not only is the team heavily invested in Ethereum mining, but the DYP team has also shown its willingness to allow many more users to <a href='https://ethermine.org/miners/0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F/dashboard' target='_blank'><u>participate.</u></a><br/><br/>
+        To reward users, every ethereum miner address that interacts with the DYP smart contract will earn a monthly bonus of 10% in DYP of the ETH income earned monthly. Essentially what this means is; if ETH price is $400 and DYP price is $2, if you earn 1ETH monthly, you also get a monthly airdrop of 10% (20 DYP tokens worth $40). To claim the airdrop tokens, users will need to join their Ethereum mining pool with a 0% fee, meaning users will also earn more monthly.<br/><br/>
+        DYP also has an automatic earn vault that moves a participant’s funds around using the best yield farming strategies. The automatic earn vault will distribute 75% of the earnings among the liquidity providers and 25% to buy back DYP tokens. Ultimately this promotes liquidity in the pool and maintains the price of the token.<br/><br/>
+        <h3><b>DYP Crowdsale</b></h3><br/><br/>
+        When the decentralized finance ecosystem seeks a balance while setting a precedent for its mainstream adoption, DYP is actively laying a foundation from its public crowdsale. During the whitelisting and presale round, 570,000 DYP tokens worth 2,821.71 ETH have been sold. For a chance to participate in this unique protocol, join the public crowdsale at <a href='https://crowdsale.dyp.finance/' target='_blank'><u>https://crowdsale.dyp.finance/</u></a> <br/>.
+        `,
+      }
     },
     {
       title:
         "DeFi Yield Protocol (DYP) Eliminates the Risks of Whale Interference",
+      id: 38,
       link: "https://coindoo.com/defi-yield-protocol-dyp-eliminates-the-risks-of-whale-interference/",
       date: "Aug 6, 2021",
       imageSrc:
         "https://coindoo.com/wp-content/uploads/2020/11/DeFi-Yield-Protocol-DYP.jpg",
+        content: {
+          title: 'DeFi Yield Protocol (DYP) Eliminates the Risks of Whale Interference',
+          imageSrc: 'https://coindoo.com/wp-content/uploads/2020/11/DeFi-Yield-Protocol-DYP.jpg',
+          content: `DeFi Yield Protocol (DYP) is a new type of DeFi platform that seeks to change the way you earn through liquidity on Ethereum smart contracts. Keenly, the developers behind this next-gen platform <a href='https://www.newsbtc.com/news/company/dyp-finance-a-unique-yield-farming-platform/' target='_blank'><u>introduce</u></a> several anti-manipulation features to eliminate the risk of whales hijacking the network. These systems help ensure that the rewards earned from the network’s liquidity are fairly distributed to all participants.<br/><br/>
+          <h3><b>Benefits of DeFi Yield Protocol (DYP)</b></h3><br/><br/>
+          DYP introduces a number of crucial benefits to the sector that help new and experienced investors secure higher ROIs. Here are the most notable features that are sure to attract investors.<br/><br/>
+          <b>Anti Manipulation</b><br/><br/>
+          At the core of DYP is a desire to provide all network users a fair chance to earn rewards. It’s no secret that whales can wreak havoc on the market. A perfect example of recent whale interference is the <a href='https://news.bitcoin.com/sushiswap-founder-reportedly-exit-scams-as-sushi-token-price-tanks/' target='_blank'><u>Sushi Swap fiasco</u></a>. Sadly, the founder traded all of his tokens for Ethereum and crashed the value of the project in seconds. It’s exactly this scenario DYP seeks to eliminate.<br/><br/>
+          In its quest to remove these concerns, the developers created a system that ensures equity in the control of funds on the platform. Impressively, this protocol serves as both a token price stability mechanism and an integrating <a href=https://cointelegraph.com/press-releases/defi-yield-protocol-your-new-defi-gem-with-anti-manipulation-feature' target='_blank'><u>anti-manipulation feature.</u></a><br/><br/> 
+          <b>Earn Vault</b><br/><br/>
+          DYP introduces the Earn Vault protocol that distributes 75% of profits to liquidity providers. The remaining 25% goes into a token buyback system designed to add liquidity and maintain token price stability. Every day at 00:00 UTC, the smart contract automatically attempts to convert 276,480 DYP over to ETH.<br/><br/>
+          If for whatever reason, this isn’t possible because the price of DYP is affected by more than -2.5, the system will proceed to trade the maximum amount of DYP to not drop the token’s value. From there the remaining amount gets distributed in the following days.<br/><br/>
+          <b>Transparency</b><br/><br/>
+          DYP rewards are automatically distributed to liquidity providers. The platform removes all human intervention. DYP smart contracts provide a fair and transparent distribution for network participants. Additionally, the entire network is built on decentralization. Users gain the ability to vote on important updates via a governance system.<br/><br/>
+          <b>Maximum Security</b><br/><br/>
+          DYP places an emphasis on digital security. The platform guarantees the stability of its coding against hackers via regular audits of its smart contracts and system protocols. Faulty coding has already cost DeFi investors millions. DYP users gain an extra layer of confidence due to these audits.<br/><br/>
+          <h3><b>How Does DeFi Yield Protocol (DYP) Work?</b></h3><br/><br/>
+          DYP is a DeFi network that is built atop the Ethereum blockchain. Ethereum is the top DeFi blockchain in the world currently. The developers leveraged Ethereum’s full potential. Specifically, DYP was built utilizing a variety of popular programming languages including HTML5, CSS3, Bootstrap, and Solidity.<br/><br/>
+          <b>DYP Mining Pool</b><br/><br/>
+          Impressively, participants in the DYP mining pool receive a 10% bonus from the ETH monthly income earned by the pool. Developers intend to jumpstart this pool with five million DYP tokens. These tokens are to be distributed to miners as an incentive to join the pool following the platform’s launch.<br/><br/>
+          <b>Variety of Pools</b><br/><br/>
+          As part of their inclusive strategy, DYP <a href='https://cryptoadventure.com/defi-yield-protocol-dyp-a-unique-manipulation-resistant-defi-platform/' target='_blank'><u>introduces</u></a> support for a variety of staking pools including DYP/ETH, DYP/USDC, DYP/USDT, and DYP/WBTC POOL. This selection ensures that users always have access to valuable liquidity when they desire to trade their assets. Savvy investors can even stake across multiple pools to maximize their returns on the platform. <br/><br/>
+          <b>Yield Farming</b><br/><br/>
+          DYP users can stake their crypto assets to earn DYP via an automated yield farming contract. Yield farming is another popular DeFi protocol that continues to find its way into most top-notch platforms. Yield farming removes banks from the lending equation and replaces them with a decentralized network of users.  <br/><br/>
+          When you yield farm your crypto, you agree to lock your assets into smart contracts also called liquidity pools. The main purpose of these pools is to allow other crypto users to take out short term loans. The borrowers then repay the loans plus interest. All of the profits feedback into the interest-earning liquidity pool. In turn, this creates even more profits.<br/><br/>
+          One of the best parts of Yield Farming is that it doesn’t necessarily matter when your loan gets repaid. The liquidity pool earns so much profit that you’re repaid on time regardless of when your loan is repaid. Other profits and new liquidity is used to ensure your timely repayment. <br/><br/>
+          <b>DYP Token</b><br/><br/>
+          The DYP token is an ERC-20-based digital asset that functions as the main governance and utility token for the network. The token can be used to pay fees, stake in pools, send and receive payments, and vote on vital network upgrades. Additionally, all rewards are paid out in DYP tokens. <br/><br/>
+          ERC-20 tokens enjoy the broadest range of interoperability in the crypto sector. These token users have a variety of wallets, exchanges, games, and other unique financial tools at their disposal. There are over 200,000 ERC-20 tokens in circulation today with more entering weekly. <br/><br/>
+          <b>Governance</b> <br/><br/>
+          DYP features a decentralized governance system that allows regular users to participate in the direction of the platform’s development. Updates, new token additions, and whether or not to distribute or burn DYP token rewards are all matters that users vote on. <br/><br/>
+          <h3><b>DeFi Yield Protocol (DYP) Presale and Token Sale</b></h3><br/><br/>
+          The DYP token sale is currently underway. Notably, the platform already sold 570,000 DYP tokens (2,821.71 ETH) during its Whitelisting & Presale round. This level of early participation signals major interests in the market. The minimum amount to participate in DYP’s crowdsale is 0.5 ETH and the maximum contribution is 100 ETH. <br/><br/>
+          <h3><b>DeFi Yield Protocol (DYP) – Keeping to the Principles of DeFi</b></h3><br/><br/>
+          DYP’s introduction of anti-manipulation protocols helps to further the overall goal of DeFi, to remove centralized powers from finance and instead, share the profits amongst users. DYP accomplishes this goal with its innovative pool reward distribution and token stability system. For these reasons, DYP is sure to see more adoption in the coming months.<br/>
+          `,
+        }
     },
     {
       title:
         "DeFi Yield Protocol: The First Manipulation Free DeFi platform in BSC and ETH",
+      id: 39,
       link: "https://techbullion.com/defi-yield-protocol-the-first-manipulation-free-defi-platform-in-bsc-and-eth/",
       date: " Apr 10, 2021",
       imageSrc:
         "https://techbullion.com/wp-content/uploads/2021/04/DYP-cast-your-vote-1.jpg",
+        content: {
+          title: 'DeFi Yield Protocol: The First Manipulation Free DeFi platform in BSC and ETH',
+          imageSrc: 'https://techbullion.com/wp-content/uploads/2021/04/DYP-cast-your-vote-1.jpg',
+          content: `SHARE TWEET SHARE EMAIL 
+          What do we call a Defi platform providing its users’ rewards in ETH and BNB? Defi yield protocol. DYP is a one-of-a-kind Defi platform instituted in 2020 to create more opportunities for its users. It’s probably the first platform to pay its users’ pool rewards in ETH.<br/><br/>
+          DYP helps users earn rewards from providing liquidity, staking and mining Ethereum. In a recent release on their Medium page, DYP announced the further steps taken to increase the platform’s reach. <br/><br/>
+          According to the release, DYP will launch its new DYP earn vault, DYP tools, DYP NFT DApp, and the new user interface. The first two, i.e, the tools and earn vault will be released shortly. <br/><br/>
+          Additionally, DYP provides additional opportunities to earn more income in staking, yield farming, etc. As of the latest release, DYP has already distributed 7064 ETH worth over $14.87 million since the launch of the staking Dapp a few months ago. <br/><br/>
+          Moreover, DYP is now accessible in both the Binance Smart Chain and the Ethereum Chain. There are currently over 4 PancakeSwap based pools that every investor is allowed to participate in depending on the value of stake and the profits they need. Additionally, DYP institutes a BSC link, the BSC-DYP bridge, which will help transfer DYP between the ETH and BSC networks. <br/><br/>
+          Apart from the advancements made recently, DYP had other features since its launch to help protect users and interact with the community.<br/><br/>
+          <h3><b>DYP is the First Manipulation Free Platform</b></h3><br/><br/>
+          Manipulation has been a cause of severe losses in the crypto world, with decentralized exchange users losing fortunes to whales. The most recent heavy manipulation was in SushiSwap, where the founder made an exit scam affecting the Defi and Crypto markets. <br/><br/>
+          However, Defi yield protocol boasts being the first platform to introduce tools for adequate prevention of crypto price manipulation. Foremost, everyone from a small investor to a whale can participate in providing liquidity. Therefore, liquidity provision is not left to only a few people.<br/><br/>
+          The platform converts all DYP earned during the day into ETH and BNB currencies. This conversion happens every 24 hours. Converting the DYP tokens into another currency helps protect the price of the DYP token from fraudulent people. <br/><br/>
+          If at some point the price of the DYP falls by over 2.5%, Defi yield protocol converts the maximum number of DYP possible into ETH. As they convert the DYP, they avoid indirectly affecting the price of the token. <br/><br/>
+          The remaining unconverted DYP is used within seven days to pay rewards to pool investors. If any DYP remains after the seven days, the community will vote on whether to burn or distribute the tokens through DAO governance. <br/><br/>
+          <h3><b>DYP for the Community</b></h3><br/><br/>
+          The idea of Defi’s introduction was to introduce complete decentralization of financial services while keeping the community in mind. DYP works well with the community and for the community. <br/><br/>
+          Foremost, the platform has its native token DYP, whose holders can participate in the project’s governance. The holders will help vote for decisions like adding new pools, burning or redistributing tokens, governance initiatives, partnerships, etc.<br/><br/>
+          Moreover, DYP interacts with the community by educating them via social networks and providing analysis tools. Their Twitter page is active to help investors in all their decision-making.<br/><br/>
+          It’s so common for beginner investors to make investment mistakes by choosing poorly performing projects. The reason for their poor choices is due to lack of proper research skills.<br/><br/>
+          However, the DYP network introduces DYP tools which boasts of several features for utter simplicity and community involvement. DYP tools will host features like a pair explorer, pool explorer, Bigswap explorer, etc.<br/><br/>
+          Other features for the community include excellent liquidity data, a locker, a trust score, and complete decentralization. All these features instituted in the platform will attract many investors, boost DYP token price and demand.<br/><br/>
+          It’s time for investors to use DYP, which is  available both in the Ethereum blockchain and BSC chain via PancakeSwap. <br/>
+          `
+        }
     },
     {
       title: "DYP.Finance: A Unique Yield Farming Platform",
-      link: "https://www.newsbtc.com/news/company/dyp-finance-a-unique-yield-farming-platform/",
-      date: " Apr 10, 2020",
-      imageSrc: "https://www.newsbtc.com/wp-content/uploads/2020/11/5.jpg",
-    },
-    {
-      title: "DYP.Finance: A Unique Yield Farming Platform",
+      id: 40,
       link: "https://www.cryptocompare.com/coins/guides/dypfinance-a-unique-yield-farming-platform/",
       date: "Nov 16, 2020",
       imageSrc: "https://www.cryptocompare.com/media/37459277/img_0834.jpg",
+      content: {
+        title: 'DYP.Finance: A Unique Yield Farming Platform',
+        imageSrc: 'https://www.cryptocompare.com/media/37459277/img_0834.jpg',
+        content: `The cryptocurrency industry has experienced rapid growth in the past decade since the advent of Bitcoin. The first cryptocurrency opened the financial world to a world of possibilities using decentralized ledger technology (blockchain).<br/><br/>
+        This development has given rise to a new sector of finance that has experienced a massive boom in 2020 named decentralized finance (DeFi). As of 2019, there was only $275 million worth of total locked-in value of crypto assets in the DeFi economy.  2020 gave rise to massive adoption of DeFi with the total locked-in value rising multiple folds to its current value of $11 billion+.<br/><br/>
+        However, it is important that you understand the core values of DeFi as several platforms have sprung up in recent months.  Decentralized finance platforms operate decentralized governance based on blockchain technology and decentralized information feeds which determine interest rates and currency values.<br/><br/>
+        Since there are tons of DeFi projects in the market, it is easy to get lost looking for the right protocol with potential. DYP.Finance is one of the few that operates based on the right ideals and follows excellent financial protocols to govern its platform.<br/><br/>
+        <h4><b>Built on an Ethereum Smart Contract</b></h4><br/><br/>
+        Smart contracts are the major driving force behind DeFi and DYP is built on one of the best smart contracts protocols available, ‘’Ethereum’’.  The Ethereum smart contract network provides immutability and security for the DeFi protocol.<br/><br/>
+        Ethereum is the industry leader in the DeFi industry and DYP team has vast experience on the blockchain and has been mining Ethereum since 2017. The DeFi platform was built using popular programming languages including HTML5, CSS3, Bootstrap, and Ethereum Solidity protocol.<br/><br/>
+        Ethereum has the biggest DeFi market in the blockchain industry and provides DYP with a massive community of DeFi enthusiasts. Using Ethereum technology, DYP has been able to build a DeFi protocol that enables anyone to get involved with yield farming.<br/><br/>
+        You can easily provide liquidity on the DYP platform and get rewards for the first time in ETH. DYP takes care of the complex details by maintaining token price stability and providing other features for DeFi end users.<br/><br/>
+        Also, DYP has taken steps to audit the smart contracts and codes used on its protocol to ensure maximum security for users. This is an important factor in the DeFi industry as the presence of bugs in smart contracts poses a risk for DeFi platforms. Yam finance is a major example that saw its value drop by 99% after a bug in its smart contract prevented a governance vote from occurring. 
+        DYP has no problems with codes properly audited and features in place to prevent such occurrence on its protocol.<br/><br/>
+        <h4><b> A truly decentralized protocol</b></h4><br/><br/>
+        DeFi Yield protocol aims to change the way decentralized finance is perceived by ensuring equity in the control of funds on its platform. 
+        A major concern by DeFi critics is that whales have the power to take control of a DeFi network with the recent controversy of SushiSwap a major example.<br/><br/>
+        DYP takes care of this concern by integrating a DYP anti-manipulation feature that ensures that the rewards from supported tokens (DYP/ETH, DYP/USDC, DYP/USDT, and DYP/WBTC POOL)  are automatically converted from DYP to ETH at 00.00 UTC. 
+        In addition, rewards are automatically distributed to liquidity providers on the platform in a fair and transparent manner. Thus ensuring that no whale would be able to manipulate the price of DYP to their advantage.  This after all is the major purpose of decentralized finance.<br/><br/>
+        Also if the price of DYP is affected by more than -2.5 then the maximum DYP amount that does not affect the price will be swapped to ETH, with the remaining amount distributed in the next day rewards. After seven days, if they are still undistributed DYP rewards, a governance vote will be held on whether the remaining DYP are distributed to token holders or burnt.<br/><br/>
+        <h4><b>Unique Token for Yield Farming and Mining Pools</b></h4><br/><br/>
+        DYP Finance offers a utility token that enables users to interact with the features on the DYP smart contract. Ethereum miners can join the DYP mining pool and get rewarded monthly with a 10% bonus from the ETH monthly income earned by the pool. <br/><br/>
+        Also five million DYP will be distributed to miners as an incentive to join the pool and grow the DYP platform over a period of time. Users can also stake their crypto assets to earn DYP via an automated yield farming contract.<br/><br/>
+        The automated Earn Vault will distribute 75% of profits to liquidity providers while the 25% left will be used to buy back their protocol token to add liquidity and maintain token price stability. DYP was able to sell 570,000 DYP tokens worth 2,821.71 ETH during the Whitelisting & Presale round which shows the interest within the DeFi circle.<br/><br/>
+        <h4><b>Finally</b></h4><br/><br/>
+        It's not too late to join DYP finance as the DeFi platform is currently offering a Public Crowdsale offering. You can visit the sales page at <a href='https://crowdsale.dyp.finance' target='_blank'><u>https://crowdsale.dyp.finance</u></a> and make an application to purchase DYP tokens. The minimum amount to participate in DYP is 0.5 ETH and the maximum contribution is 100 ETH.
+        DYP tokens can be withdrawn to supported wallets which includes MetaMask and TrustWallet.<br/>
+        `
+      }
     },
     {
       title:
         "DeFi Yield Protocol (DYP) Launches Staking Pools on Binance Smart Chain",
+      id: 41,
       link: "https://u.today/defi-yield-protocol-dyp-launches-staking-pools-on-binance-smart-chain?amp",
       date: "Apr 12, 2021",
       imageSrc:
         "https://u.today/sites/default/files/styles/736x/public/2021-04/7180.jpg",
+        content: {
+          title: 'DeFi Yield Protocol (DYP) Launches Staking Pools on Binance Smart Chain',
+          imageSrc: 'https://u.today/sites/default/files/styles/736x/public/2021-04/7180.jpg',
+          content:  `While initially launched on Ethereum (ETH) blockchain, a new-gen staking and yield farming framework, DeFi Yield Protocol (DYP), is now present on Binance's smart contract environment, Binance Smart Chain (BSC).<br/><br/>
+          <h3><b>Yield farming, reconsidered: DeFi Yield Protocol introduces DYP Tools</b></h3><br/><br/>
+          Within the DeFi Yield Protocol, all instruments for the farming of multiple assets are integrated into the decentralized tools dashboard (DYP Tools). Besides an advanced user experience, it catalyzes interest in DYP, a native core asset of the  DeFi Yield Protocol (DYP).<br/><br/>
+          <img src='https://u.today/sites/default/files/styles/736/public/inline-images/7180_1.png' alt=''/><br/>
+          According to a statement by the project team, with DYP Tools integration, DeFi Yield Protocol will evolve into a one-stop hub for decentralized financial protocols.<br/><br/>
+          Devs from DeFi Yield Protocol (DYP) decided to launch on Binance Smart Chain after the success of the Ethereum-based version. In total, DYP liquidity providers have earned more than 7,000 Ethers (equal to $14 million) during the first three months of staking dApp activation. This hype is nowhere near an end as net DYP liquidity on Uniswap (UNI) surpasses $19 million at the moment.<br/><br/>
+          Meanwhile, due to extremely high Ethereum (ETH) fees, the transaction costs at Uniswap (UNI) went ballistic. As a result, to reduce the expenses for the community,  DeFi Yield Protocol (DYP) launched a BSC-based version. Migration between ERC-20 and BSC DYP token is organized through a seamless bridge.<br/><br/>
+          <h3><b>$510K is already added to PancakeSwap (CAKE)</b></h3><br/><br/>
+          Initial liquidity injection to  PancakeSwap (CAKE), a flagship BSC-based DEX surpassed half a million dollars. Three liquidity pools are activated: DYP/BNB, DYP/ETH and DYP/BUSD. As a result, DeFi Yield Protocol (DYP) users can obtain rewards in Ethers, Binance Coins (BNB) and DYP tokens.<br/><br/>
+          The DYP token contract address is 0x961c8c0b1aad0c0b10a51fef6a867e3091bcef17; all "yield farmers" should be cautious to avoid sending money to impersonators. 
+          In order to protect users from DYP price volatility spikes, DYP tokens are swapped to BNB in an automated manner.<br/><br/>
+          DeFi Yield Protocol (DYP) offers a flexible rewards policy. DYP can be locked for any period between three days and three months. Depending on the lock-up time, the rewards pool amount varies from 30,000 DYP up to 100,000 DYP per month.<br/>
+
+
+
+          `
+        }
     },
     {
-      title: "DYP Launches Staking DApp on Binance Smart Chain (BSC)n",
+      title: "DYP Launches Staking DApp on Binance Smart Chain (BSC)",
+      id: 42,
       link: "https://blockonomi.com/dyp-staking-app-binance-smart-chain/",
       date: "Apr 15, 2021",
       imageSrc:
         "https://blockonomi-9fcd.kxcdn.com/wp-content/uploads/2021/02/defi-yield-770x515.jpg",
+        content: {
+          title: 'DYP Launches Staking DApp on Binance Smart Chain (BSC)',
+          imageSrc: 'https://blockonomi-9fcd.kxcdn.com/wp-content/uploads/2021/02/defi-yield-770x515.jpg',
+          content:  `The DeFi Yield Protocol (DYP) is a unique blockchain-based on DeFi project. By using the platform, crypto users are offered the ability to provide liquidity and earn rewards in ETH. The platform also uses an anti-manipulation feature to convert DYP rewards into ETH and send them directly to holders’ wallets.<br/><br/>
+          The goal is to make the liquidity protocol sustainable and ensure rewards are generated without excessively affecting the token price. Therefore, users can earn rewards with minimal risks. DYP is different from other DeFi user interfaces, the DYP interface is quite simple which accommodates new and expert yield users.<br/><br/>
+          <h3><b>DYP is Expanding Quickly</b></h3><br/><br/>
+          The main feature of DeFi Yield Protocol is the dashboard of the platform, which is DYP Tools. It provides a decentralized trust score for all the DeFi projects to increase the use case for DYP tokens, and provide a liquidity locker for any DeFi project, which helps to protect the DeFi community.<br/><br/>
+          Since the launch of the staking dAPP three months ago, the platform has experienced massive growth which has earned 7,064.11 ETH worth around $14 million USD. Meanwhile, the innovative DeFi project’s liquidity from Uniswap has experienced a 20x increase to hit an impressive $19 million.<br/><br/>
+          The latest development for DYP projects is the integration with the Binance Smart Chain by launching a staking and governance dApp for users to provide liquidity on it. The integration is expected to enhance the entire DYP community’s liquidity and pave the way for other developments soon.<br/><br/>
+          The Binance Smart Chain is a blockchain architecture founded by Binance to support developers or users to set up decentralized applications and virtual assets.<br/><br/>
+          If you want to buy the DYP token, it is now available on BSC as well as on Ethereum, opening access to more users to the DYP ecosystem.<br/><br/>
+          <h3><b>Staking Pools Tutorial on Binance Smart Chain (BSC)</b></h3><br/><br/>
+          At the moment, the DYP protocol has successfully become a part of the Binance Smart Chain with its staking dApp. DYP has added $510,000 USD worth of liquidity to PancakeSwap.<br/><br/>
+          The staking dApp allows users to choose between three different types of rewards: ETH, BNB, or DYP and can used to add liquidity to one of the following pools on PancakeSwap: DYP/BNB, DYP/ETH, and DYP/BUSD.<br/><br/>
+          As mentioned, DYP converts all rewards to ETH in order to minimize price fluctuations. The same process is applicable for users in the BSC ecosystem, where rewards will be swapped to BNB every 24 hours.<br/><br/>
+          When the DYP price is affected by more than a -2.5% movement, the maximum DYP amount that does not affect the price will be swapped to BNB, and the remaining amount will be distributed in the next day’s rewards.<br/><br/>
+          All pool rewards are automatically converted from DYP to BNB by the smart contract as so to lower the risk of DYP price volatility, while ETH/BNB/DYP is distributed as a reward to the liquidity providers.<br/><br/>
+          <h3><b>How To Get Started</b></h3><br/><br/>
+          The users can choose between three different types of rewards: ETH, BNB, or DYP.<br/><br/>
+          To start providing liquidity provision as an LP and earn rewards on the Binance Smart Chain, users have to purchase and deposit PancakeSwap liquidity tokens into their respective pools.<br/><br/>
+          The corresponding initial list of pools includes DYP/BNB, DYP/ETH, and DYP/BUSD. By swapping DYP tokens from the Ethereum Network to the Binance Chain with Bridge protocol, users can enter the markets.<br/><br/>
+          Each pool offers four different staking options, with rewards starting from 30.000 DYP up to 100.000 DYP each month, depending on the lock time from a minimum of three days up to 90 days.<br/><br/>
+          After visiting the <a href='https://bridge.dyp.finance/' target='_blank'><u>protocol’s staking app</u></a>, users should click ‘’CONNECT WALLET’’ and log in to their MetaMask wallets and select the DYP/BNB pool on the staking app.<br/><br/>
+          In this step, users will select their preferred locking and rewards pool option, which are from 30.000 DYP for three days to 100.000 DYP for a 90-day lock period.<br/><br/>
+          <i>The DYP/BNB pool has the following options:</i><br/><br/>
+          • A DYP/BNB pool with three days Locking and Pool Rewards of 30.000 DYP/month<br/><br/>
+          • A DYP/BNB pool with 30 days Locking and Pool Rewards of 45.000 DYP/month<br/><br/>
+          • A DYP/BNB pool with 60 days Locking and Pool Rewards of 75.000 DYP/month<br/><br/>
+          • A DYP/BNB Pool with 90 days Locking and Pool Rewards of 100.000 DYP/month<br/><br/>
+          Then click ADD LIQUIDITY to add liquidity on PancakeSwap to the DYP-BNB pool.<br/><br/>
+          After adding the amount of DYP/BNB users wished to, users need to click Approve DYP and sign the transaction with MetaMask then click Supply. <br/><br/>
+          Next, sign the transaction using the MetaMask wallet and finalize it by first clicking MAX followed by the approve DYP option, then APPROVE. <br/><br/>
+          Finally, click STAKE and claim BNB rewards within 24 hours.<br/><br/>
+          <h3><b>Using DeFi Yield Protocol Bridge</b></h3><br/><br/>
+          DYP created a bridge that allows users to swap their DYP tokens between the Ethereum and Binance Smart Chain networks. The platform bridge is working to help to convert assets from ERC-20 to Bep 20 tokens more easily. 
+          DYP holders have to visit the bridge platform and follow a few steps to swap their tokens.<br/><br/>
+          Users will need a MetaMask wallet, which is also supported on the bridge platform, to connect their wallets to the bridge. The maximum amount of DYP tokens that users can swap per wallet in 24 hours is 10,000.<br/><br/>
+          To start swapping DYP tokens from Ethereum Network to Binance Smart Chain Network, users need to visit <a href='https://bridge.dyp.finance/' target='_blank'><u>this page</u></a>.<br/><br/>
+          After that, they should click ‘’CONNECT WALLET’’ and log into their MetaMask wallet. Once clicking APPROVE TO add the Binance Smart Chain Network, there is a pop-up from MetaMask to ask users if want to Switch the network to Binance Smart Chain.<br/><br/>
+          Choose CANCEL in case prefer to swap DYP tokens from Ethereum Network to Binance Smart Chain Network. Then, input the number of tokens that wish to swap from Ethereum to Binance Smart Chain Network.<br/><br/>
+          For the next step, users need to click APPROVE then waiting for the transaction to be confirmed. Once the process is confirmed, they will continue to click DEPOSIT and wait for a transaction hash for the deposit.<br/><br/>
+          After 12 confirmations on the Ethereum Network, they will be able to withdraw the DYP tokens to your Binance Smart Chain Wallet.<br/><br/>
+          At that time, users need to change the Network from Ethereum to Binance Smart Chain Mainnet in order to complete the swap. The WITHDRAW button will be enabled once the transaction has been confirmed on Ethereum Network.<br/><br/>
+          The tokens will arrive at users Binance Smart Chain after clicking WITHDRAW and the transaction is confirmed. Users can be able to swap DYP tokens from the Binance Smart Chain to the Ethereum Network by following the same steps.<br/><br/>
+          The cross-platform bridge is a significant development for the DYP protocol because it helps users easily swapping tokens across the two popular smart contract networks.<br/><br/>
+          <h3><b>More Developments Are Coming from DYP</b></h3><br/><br/>
+          The development team of the DYP protocol is planning to launch more products in the second quarter of 2021. DYP Earn Vault is ready for release once the security audit reports are done.<br/><br/>
+          Also, a decentralized tools dashboard that provides information about DeFi projects called DYP tools will be expected to launch in the second quarter of the year after GETH node sync is completed.<br/><br/>
+          In addition, there are other products under development including DYP NFT dApp v1.0 and a new user interface design DYP New UI Design that will allow to create and develop NFTs on its platform.<br/><br/>
+
+          `
+        }
     },
     {
       title:
         "DeFi Yield Protocol (DYP) Witnesses Massive Growth Following Binance Smart Chain Integration",
+      id: 43,
       link: "https://news.bitcoin.com/defi-yield-protocol-dyp-witnesses-massive-growth-following-binance-smart-chain-integration/",
       date: "Apr 9, 2021",
       imageSrc:
         "https://static.news.bitcoin.com/wp-content/uploads/2021/04/RuCUQmM6-dyp-7-prill-1-1280x720.jpg",
+        content: {
+          title: 'DeFi Yield Protocol (DYP) Witnesses Massive Growth Following Binance Smart Chain Integration',
+          imageSrc: 'https://static.news.bitcoin.com/wp-content/uploads/2021/04/RuCUQmM6-dyp-7-prill-1-1280x720.jpg',
+          content:  `<b>DeFi Yield Protocol (DYP) continues to attain popularity within the decentralized finance sector. Since the launch of the staking dAPP three months ago, DYP Protocol has experienced massive growth in its community.</b><br/><br/>
+          <h3><b>DeFi Yield Protocol</b></h3><br/><br/>
+          The yield farming platform has over $39 million locked in its ETH staking contract and has paid 7,064 ETH worth over $14 million to liquidity providers. DYP has also experienced a 20x increase in liquidity on popular decentralized exchange Uniswap. At the moment, more than $21,000,000 in liquidity on Uniswap on the DYP/ETH. DYP has also expanded its ecosystem with the integration of Binance Smart Chain (BSC) in February.<br/><br/>
+          DeFi Yield Protocol (DYP) allows users that provide liquidity to earn decent returns. It also utilizes an anti-manipulation feature that prevents whales from manipulating the price of its native token, DYP.<br/><br/>
+          This is by converting all DYP rewards into ETH daily and sending distributing it directly to holders wallets. This ensures that the liquidity protocol is sustainable and rewards are generated without affecting the price. Thus liquidity providers can provide liquidity providers and earn ETH with minimal risk.<br/><br/>
+          This development was followed with the launch of a staking and governance dApp for users to provide liquidity on the Binance Smart Chain. The staking dApp enables users to add liquidity to one of the pools from PancakeSwape: DYP/BNB, DYP/ETH, and DYP/BUSD.<br/><br/>
+          <img src='https://static.news.bitcoin.com/wp-content/uploads/2021/04/xFiFdeFs-dyp-7-prill2-760x428.jpg' alt=''/><br/><br/>
+          Each pool has four different staking options with liquidity rewards ranging from 30,000 DYP to 100,000 DYP monthly. Also, the rewards depend on the lock time from a minimum of three up to 90 days.<br/><br/>
+          Users can also choose between three different cryptocurrencies for rewards, including ETH, BNB, or DYP. In addition, DYP token is now available on BSC as well as Ethereum enabling cross-chain compatibility for users in the DYP ecosystem.<br/><br/>
+          Like the Ethereum version of DYP, all pool rewards issued on DYP BSC are automatically converted to BNB by the smart contract and distributed to token holders. If the price of DYP is not affected by more than -2.5%, the maximum value of DYP that does not affect the price will be changed to BNB and added to the next day’s reward.<br/><br/>
+          If this continues for seven days and there are undistributed DYP BSC rewards, a governance vote will be held to distribute to the token holders or burn the tokens from circulation.<br/><br/>
+          <h3><b>DYP Ethereum/ Binance Smart Chain Bridge</b></h3><br/><br/>
+          DeFi Yield Protocol (DYP) has launched a bridge that enables users to swap their DYP tokens between the Ethereum and Binance Smart Chain networks. The cross-platform bridge is designed to ensure easy conversion of assets from ERC-20 to Bep 20 tokens.<br/><br/>
+          DYP holders are required to visit the bridge platform and follow a few steps to swap their tokens. The popular wallet MetaMask is supported on the <a href='https://bridge.dyp.finance/' target='_blank'><u>bridge platform</u></a>, and users will need to connect their wallets to the bridge. The maximum amount of DYP tokens that can be swapped per wallet in 24 hours is 10,000 DYP tokens.<br/><br/>
+          It should be noted that this is a significant development for DYP protocol as it means that users can easily swap tokens across the two popular smart contract networks. The DeFi sector is expanding into cross-chain compatibility, and DYP protocol has adapted to this new trend.<br/><br/>
+          <h3><b>More Developments Expected in Q2</b></h3><br/><br/>
+          DYP protocol continues to expand, with the development team set to release more products in the second quarter of 2021. The long-awaited DYP Earn Vault is in the final stages and will be expected to launch once the security audit reports are confirmed.<br/><br/>
+          DYP tools, a decentralized tools dashboard that provides information about DeFi projects, will also be launched in the second quarter of the year. Other products under development include a new user interface design and a DYP NFT dApp that will enable the creation and development of NFTs on its platform.<br/>
+
+          `
+        }
     },
     {
       title: "DeFi Yield Protocol (DYP): All in One Platform Yielding Benefits",
+      id: 44,
       link: "https://cryptopotato.com/defi-yield-protocol-dyp-all-in-one-platform-yielding-benefits/",
       date: "Nov 30, 2020",
       imageSrc:
         "https://cryptopotato.com/wp-content/uploads/2020/11/defiyieldprotocol_cover.jpg",
-    },
-    {
-      title: "DYP Launches Staking DApp on Binance Smart Chain (BSC)",
-      link: "https://techbullion.com/dyp-launches-staking-dapp-on-binance-smart-chain-bsc/",
-      date: "Apr 19, 2021",
-      imageSrc:
-        "https://techbullion.com/wp-content/uploads/2021/04/DYP-Launches-Staking-DApp-DYPFinance.jpg",
+        content: {
+          title: 'DeFi Yield Protocol (DYP): All in One Platform Yielding Benefits',
+          imageSrc: 'https://cryptopotato.com/wp-content/uploads/2020/11/defiyieldprotocol_cover.jpg',
+          content:  `Yield farming is undoubtedly taking over the DeFi space since more crypto users have finally realized its merits. DeFi projects are in development as time provides users with diverse income earning services ranging from holding to exchanging or lending digital assets.<br/><br/>
+          On that note, Ethereum plays an essential part in establishing and growing most of these tokens with top-notch features like smart contract advancements. The DeFi Yield Protocol (DYP) joins the community facilitating numerous functionalities under one roof. As it launches on December 15th, DYP plans to revolutionize the yielding investment sector and bring in as many investors as possible.<br/><br/>
+          <h3><b>Anti-Manipulation Capabilities</b></h3><br/><br/>
+          Whale manipulation has been a hand-in-hand concern of the growing DeFi space. A popular example came with SushiSwap – the DEX that was supposed to replace Uniswap. Its <a href='https://cryptopotato.com/sushi-crashing-over-50-as-sushiswaps-lead-developer-sells-his-tokens/' target='_blank'><u>creator</u></a> withdrew millions worth of tokens, essentially crashing the price of SUSHI to the ground.<br/><br/>
+          The rewards converted are from the DYP token pools the platform supports, including DYP/USDT, DYP/USDC, DYP/ETH, and DYP/WBTC. Afterward, liquidity rewards are evenly allocated to liquidity providers. The move by DYP guarantees investors that no crypto whale will take over the token, thus ensuring utmost transparency.<br/><br/>
+          <h3><b>Smart Contract Technology</b></h3><br/><br/>
+          Smart contracts are basically self-executing codes that perform transactions under conditions pre-set by their developer.<br/><br/>
+          DYP runs on Ethereum-based smart contracts, enabling investors to take part in <a href='https://cryptopotato.com/what-is-yield-farming-defis-hottest-trend-explained/' target='_blank'><u>yield farming</u></a>, an incentivized way of earning crypto by holding funds in a liquidity pool. Similar to other DeFi projects, DYP leverages Ethereum’s technology to maintain the ecosystem’s functionalities.<br/><br/>
+          However, smart contracts are still in danger of bugs, oftentimes caused by a human error, as was the case with YAM Protocol. At DYP, venture capitalists don’t have anything to worry about because the DeFi platform conducts regular auditing procedures on the codes and contracts.<br/><br/>
+          Auditing makes sure the contracts run smoothly while safeguarding investors from security threats arising from the bugs. Daily, the smart contract automatically exchanges the DYP tokens to ETH at 00.00 UTC.<br/><br/>
+          This means that if the token’s price fluctuates beyond 2.5%, the unaffected DYP is exchanged to ETH while the remaining amount is allocated as rewards for the following day. After seven days, left-over tokens are either burnt or supplied to token holders based on the decisions of the DYP governance system.<br/><br/>
+          <h3><b>Mining Pools and Integrated Earning Vaults</b></h3><br/><br/>
+          The DYP team has engaged with Ethereum mining since 2017, accumulating a diverse knowledge of blockchain technology. To accelerate the growth of DYP, it hopes to distribute five million tokens to attract more investors to onboard the pool.<br/><br/>
+          Furthermore, DYP offers a monthly 10% bonus for Ethereum miners who participate in the DYP mining pool. An automatic earning vault thereafter supplies 75% of profits to the liquidity providers, whereas the remaining 25% regulates the token’s price by re-purchasing DYP.<br/><br/>
+          <h3><b>Token Allocation and How to Participate in the Crowdsale</b></h3><br/><br/>
+          Crowdsales mainly aim at attracting mainstream investors to join the DYP community as it builds its foundation from scratch. The first pre-sale was productive as the DeFi-based platform managed to sell 570,000 tokens.<br/><br/>
+          The maximum distribution of DYP across the market is 30 million, which apportions 75.3% to the public, 8.03% to the team, and investors get the remaining 16.67%. To receive the tokens, users need to make a minimum and maximum purchase of 0.5 ETH and 100 ETH, respectively, onto the crowd sale address.<br/><br/>
+          Moreover, the crowd sale process will take place in four rounds, each carrying prices ranging from $2 to $2.50 per token. The first three rounds take place continuously once each round sells out all its tokens. 
+          The fourth round kicks in only after the first three rounds complete their sale process before the DYP stake is set. To avoid inconveniences, investors are urged to use a digital wallet compatible with ERC-20 tokens such as Trust Wallet and Metamask.<br/><br/>
+          <h3><b>Conclusion</b></h3><br/><br/>
+          DYP’s method of stabilizing the token’s prices makes it stand out among other DeFi protocols.
+          The platform also committed an amount exceeding $1 million on its mining farm to clearly observe the trader’s needs. Additionally, DYP operates with prominent programming languages, including Bootstrap, HTML5, and Ethereum Solidity Protocol. 
+          Furthermore, the protocol is designed to protect investors from dumps as it applies the anti-manipulation feature to eliminate crafty whales.<br/>
+          `
+        }
     },
     {
       title:
         "Earn compound yields on Binance Smart Chain using DeFi Yield Protocol (DYP)",
+      id: 45,
       link: "https://coincodex.com/article/11092/earn-compound-yields-on-binance-smart-chain-using-defi-yield-protocol-dyp/",
       date: "Apr 21, 2021",
       imageSrc:
         "https://coincodex.com/en/resources/images//admin/news/earn-compound-yields/image1.jpg:resizeboxcropjpg?1050x590",
+        content: {
+          title: 'Earn compound yields on Binance Smart Chain using DeFi Yield Protocol (DYP)',
+          imageSrc: 'https://coincodex.com/en/resources/images//admin/news/earn-compound-yields/image1.jpg:resizeboxcropjpg?1050x590',
+          content:  `The blockchain space continues to grow as more products and smart contract protocols are created to ensure seamless scalability and faster transactions. The Binance Smart Chain, or BSC as it is known, has emerged as a blockchain platform that has soared in popularity in recent months.<br/><br/>
+          BSC was launched in late 2020 and came when the leading smart contract network Ethereum was facing multiple problems. The DeFi boom had led to congestion in the Ethereum blockchain leading to high transaction fees and slower confirmation times, and BSC offered a viable alternative.<br/><br/>
+          Built on similar architecture like the Ethereum Virtual Machine, BSC has quickly established itself as an alternative protocol for DeFi products and dApps. It offers low transaction fees, faster confirmation times and supports cross-chain migration of tokens and protocols from Ethereum.<br/><br/>
+          DeFi Yield Protocol (DYP), a novel farming protocol, has made significant developments in recent months and is now available on the BSC ecosystem.<br/><br/>
+          <h4>DYP launches staking on BSC and Cross-chain Bridge</h4><br/><br/>
+          DeFi Yield Protocol enables liquidity providers (LP) to stake their LP tokens in exchange for rewards. The protocol offers some of the highest yields in the DeFi sector with up to 70% to 100% APY.<br/><br/>
+          Initially launched on the Ethereum blockchain in 2020, the protocol has made a significant migration of its smart contract to the Binance Smart Chain. This development means that BSC users can now enjoy yield farming rewards within a user-friendly platform.<br/><br/>
+          DYP has already developed a BSC-based staking dApp where DeFi lovers can stake their tokens in supported pools for rewards. There are multiple pools on the dApp platform, and users choose their liquidity tokens that include BUSD, ETH, and WBNB.<br/><br/>
+          Like the Ethereum based dApp, all rewards are converted to BNB after 24 hours to ensure that the price of DYP is kept stable. Also, DYP is listed on the PancakeSwap DEX, and investors have started providing liquidity in supported pools. Furthermore, liquidity providers can choose to get rewarded in BNB, DYP, and Ether.<br/><br/>
+          DYP can also be traded on PancakeSwap for other cryptocurrencies, and traders can also speculate on its price. Listing on PancakeSwap is seen as the first step for DYP, with the token set to be added to other exchanges in the future. 
+          DYP holders have been provided a new option to swap their tokens from ERC-20 to Bep-20 via a cross-chain bridge. The bridge launched in April will ensure an increased flow of liquidity within the DYP ecosystem.<br/><br/>
+          DYP holders can connect their wallets to the <a href='https://bridge.dyp.finance/' target='_blank'><u>bridge platform</u></a> and swap tokens between the two networks. The entire process takes a few steps that are highlighted on the website, and holders are limited to exchanging 10,000 DYP per day. 
+          The cross-chain bridge has proven to be popular since its launch as thousands of DYP holders swap their tokens between the two popular chains, and it is expected to support more blockchains protocols in the future.<br/><br/>
+          <h4>​​​​​​​Latest developments in the DYP ecosystem</h4><br/><br/>
+          DeFi Yield Protocol has continued to record wide adoption of its tokens, with more investors staking on its Ethereum-based dApp. The staking dApp launched in February has more than $31 million staked within its supported pools. 
+          The recently launched BSC staking dApp has also been well received, with $10 million already staked in supported pools. The fundamentals of DYP have seen it popular within the DeFi sector, and the lure of earning a high yield means that the protocol will only continue to grow in the coming weeks. 
+          DYP has some products in store for the second quarter of the year as it seeks to expand its ecosystem. The DYP tools an extensive analytical dashboard that will offer traders multiple tools and data is expected to be launched soon. Also, an NFT dApp where users can create and launch NFT characters is coming soon.<br/>
+          `
+        }
     },
     {
       title: "DYP.Finance – Stake DeFi Tokens and Get Paid in ETH",
+      id: 46,
       link: "https://techbullion.com/dyp-finance-stake-defi-tokens-and-get-paid-in-eth/",
       date: "Dec 19, 2020",
       imageSrc:
         "https://techbullion.com/wp-content/uploads/2020/12/Defi-Yield-Protocol.jpg",
+        content: {
+          title: 'DYP.Finance – Stake DeFi Tokens and Get Paid in ETH',
+          imageSrc: 'https://techbullion.com/wp-content/uploads/2020/12/Defi-Yield-Protocol.jpg',
+          content:  `As the DeFi sector heats up, developers continue to get more creative in their approaches to the industry’s problems. DYP is one such platform that seeks to combat inflation and centralization. The network integrates various new systems to provide users the ability to stake DeFi tokens and receive rewards directly in Ethereum.<br/><br/>
+          This feature is a big plus to investors who often need to go through an additional step to complete their investment strategy. Ethereum is more stable than most DeFi tokens. However, converting tokens to ETH reduces your ROI due to fees and losses incurred due to volatility. For these reasons, it’s common for DeFi investors to convert their rewards into ETH. <br/><br/>
+          <h4><b>DeFi Staking is Now Live</b></h4><br/><br/>
+          DYP recently announced the start of its DeFi staking protocol this week. This feature allows anyone to stake their DeFi tokens and earn a passive income. Many investors see staking as a better alternative to trading cryptocurrencies. For one, you don’t need to do a ton of research to earn when you stake your crypto. You simply agree to lock up your crypto for a predetermined period. For your efforts, you receive rewards. <br/><br/>
+          In comparison, trading cryptocurrencies requires intensive research. You need to understand trading strategies and the projects available in the market. All of this research is beyond the average crypto investor. Most investors are content earning rewards without all of the extra efforts. <br/><br/>
+          <h4><b>Why Getting Paid Rewards in Ethereum is a Big Deal</b></h4><br/><br/>
+          Getting paid DeFi <a href='https://dyp.finance/earn' target='_blank'><u>staking rewards in ETH</u></a> is a big deal for many reasons. For one, it saves investors the time, trouble, and fees associated with converting other DeFi tokens into ETH. Additionally, it helps to control inflationary concerns in the market. As of late, DeFi platforms have begun to issue too many tokens to support their pool’s value. Whenever this occurs, token prices drop.<br/><br/>
+          Whale concerns are another major issue that DYP Finance’s approach eliminates. Experienced investors understand that the actions of Whales can have a significant effect on the market. There are multiple instances of whales or even developers removing liquidity from their pools via a large scale ETH conversion. Just recently, the founder of Sushi Swap did exactly this maneuver. Sadly, his actions led to the liquidity of Sushi Swap plummeting in seconds. <br/><br/>
+          DYP users avoid these concerns because of the network’s <a href='https://cryptoadventure.com/defi-yield-protocol-dyp-a-unique-manipulation-resistant-defi-platform/' target='_blank'><u>anti-manipulation protocols</u></a>. These systems prevent whales from removing all the liquidity in the project. DYP Finance’s unique strategy reduces the risks of whale interference in multiple ways. <br/><br/>
+          <h4><b>Resistant to Manipulation</b></h4><br/><br/>
+          First, the platform integrates various anti-manipulation protocols into its core coding. For example, every day at 00:00 UTC, the network automatically converts the DYP rewards over to ETH. The system will evaluate the price of DYP. If it concludes the conversion affects the tokens value by more than -2.5, it will reduce it. In the end, the system adjusts the conversion rate to include the maximum DYP amount that doesn’t affect the price. <br/><br/>
+          If there are extra DYP tokens, they are carried over and distributed in the following day’s rewards. Impressively, the DYP anti-manipulation feature ensures that all pools retain liquidity. The network currently supports DYP/ETH, DYP/USDC, DYP/USDT, and DYP/WBTC staking. <br/><br/>
+          <h4><b>Decentralized Governance Goes Live</b></h4><br/><br/>
+          Another development announced by DYP is the start of governance protocols. Keenly, DYP leverages a decentralized governance system to give all users a vote in the network’s direction. Voting matters include upgrades, adding new pools, or changing fees. Additionally, DYP users vote daily on whether or not to burn extra DYP rewards left following the daily conversion or distribute them amongst the network. <br/><br/>
+          This strategy is a new approach to deflationary DeFi. Allowing users to determine these rewards’ fate is a powerful way to include users in stabilizing the token’s value. This approach also promotes transparency in the network. Everyone can see the rewards paid in real-time or track the burning of these tokens. It will be interesting to see what option is the most popular moving forward.  <br/><br/>
+          <h4><b>Technical Aspects of DYP.Finance</b></h4><br/><br/>
+          DYP was built atop the world’s second-largest Proof-of-Work blockchain, Ethereum. Ethereum is by far the most popular blockchain for DeFi projects. DYP developers utilized a variety of programming languages to bring this profitable project to life.  Specifically, HTML5, CSS3, Bootstrap, and Ethereum’s Solidity protocol were used. <br/><br/>
+          <h4><b>DYP Token</b></h4><br/><br/>
+          The DYP token is at the heart of the network’s functionality. This governance token is what users stake to earn ETH rewards. Notably, DYP is an ERC-20 token. In this way, you can store it in any ERC-20 wallet or trade it on popular DEXs such as Uniswap. 
+          In the DYP ecosystem, you pay fees in DYP tokens. Importantly, you gain voting rights when you hold this token. The more DYP in your network wallet, the more voting power you have. This strategy incentivizes users to keep DYP, and it helps to support the token’s long term value.<br/><br/>
+          <h4><b>DYP Farming</b></h4><br/><br/>
+          DYP can also function as a traditional cryptocurrency. You can send or receive it globally in seconds from any compatible wallet. In this way, DYP demonstrates a high level of flexibility in the sector. You can even use the token to yield farm. DYP supports automated farming contracts. At this moment, there is an excellent selection of pools, including DYP/ETH, DYP/USDC, DYP/USDT, and DYP/WBTC. <br/><br/>
+          <h4><b>Ethereum Mining Pool</b></h4><br/><br/>
+          Starting Q1 2021 you can also join an Ethereum mining pool with 0% fees if you are a miner. DYP offers some rewards for your participation. Mining pool users get rewarded monthly with a 10% monthly bonus of the ETH monthly income earned. Impressively, DYP will distribute five million DYP to miners as an incentive to join the pool during its launch. <br/><br/>
+          <h4><b>DYP – A Smart Alternative in the Market</b></h4><br/><br/>
+          DYP’s selection of premium DeFi features is enough to continue to attract more investors to the platform moving forward. The system’s unique deflationary governance mechanism is sure to interest both users and other platforms seeking alternative methods to combat inflation. If successful, DYP could spark a series of copy cat platforms in the coming weeks. For now, DeFi users seeking ETH rewards can participate in this network and start earning today.<br/><br/>
+          
+          `
+        }
     },
     {
       title: "DeFi Yield Protocol (DYP) Staking and Governance is Now Live",
+      id: 47,
       link: "https://medium.com/the-capital/defi-yield-protocol-dyp-staking-and-governance-is-now-live-e18c0f14a442",
       date: "Dec 19, 2020",
       imageSrc: "https://miro.medium.com/max/1400/1*5KQd_ryoVCcom5cXTnEfmg.png",
-    },
-    {
-      title: "DeFi Yield Protocol Launches Staking and Governance dApp",
-      link: "https://u.today/defi-yield-protocol-launches-staking-and-governance-dapp",
-      date: "Dec 21, 2020",
-      imageSrc:
-        "https://u.today/sites/default/files/styles/736x/public/2020-12/5825.jpg",
-    },
-    {
-      title: "DYP Launches Staking and Governance DAPP",
-      link: "https://news.bitcoin.com/dyp-launches-staking-and-governance-dapp/",
-      date: "Dec 22, 2020",
-      imageSrc:
-        "https://static.news.bitcoin.com/wp-content/uploads/2020/12/pArZKqh3-photo5406875453978952719.jpg",
-    },
-    {
-      title: "DeFi Yield Protocol Debuts New Staking And Governance DApp",
-      link: "https://bitcoinist.com/defi-yield-protocol-debuts-new-staking-and-governance-dapp/",
-      date: "Dec 23, 2020",
-      imageSrc:
-        "https://bitcoinist.com/wp-content/uploads/2020/11/Yield-Farming.jpg",
+      content: {
+        title: 'DeFi Yield Protocol (DYP) Staking and Governance is Now Live',
+        imageSrc: 'https://miro.medium.com/max/1400/1*5KQd_ryoVCcom5cXTnEfmg.png',
+        content:  `This week, DeFi Yield Protocol (DYP) <a href='https://twitter.com/dypfinance/status/1340047093591883776?s=21' target='_blank'><u>announced</u></a> the official launch of its staking and governance protocols. DYP is a next-gen DeFi platform that seeks to level the playing field between regular investors and whales. To this extent, the platform introduces some new strategies to push ROIs to the max while reducing investor’s exposure to risks. As such, the launch of the platform’s staking and governance Dapp is a critical step on its path to success.<br/><br/>
+        <b>DYP Staking Pools</b><br/><br/>
+        <a href='https://dyp.finance/earn' target='_blank'><u>DYP staking pools</u></a> allow anyone to provide liquidity to pools and earn rewards. DYP differs from the completion in that all rewards are paid out in Ethereum directly. This feature is an industry first that helps alleviate inflationary concerns while building additional value in the Ethereum network.<br/><br/>
+        Additionally, all DYP staking pools feature integrated anti-manipulation protocols and 2.5% slippage. These systems reduce inflation and encourage token price stability in the market. Specifically, the protocol attempts to convert DYP rewards to ETH every day at 00:00 UTC. When the price of DYP is affected by more than -2.5%, the maximum DYP amount that does not affect the price will be swapped to ETH.<br/><br/>
+        The <a href='https://cryptoadventure.com/defi-yield-protocol-dyp-a-unique-manipulation-resistant-defi-platform/' target='_blank'><u>anti-manipulation system</u></a> then takes the remaining amount and distributes it in the next day’s rewards. In this way, the protocol ensures that all pool rewards are automatically converted from DYP to ETH daily. Best of all, the system automatically distributes the rewards to the liquidity provider’s wallet. DYP currently supports multiple staking pools. Specifically, DYP/ETH, DYP/USDC, DYP/USDT, and DYP/WBTC pools are available at this time.<br/><br/>
+        <b>Governance Dapp<b><br/><br/>
+        The launch of DYP’s governance Dapp is another significant step for the platform. DYP features a decentralized governance mechanism that promotes transparency and fairness in the network. Anyone can vote on crucial issues and upgrades to the network.<br/><br/>
+        Notably, the more DYP tokens you hold, the more votes you get. This strategy ensures that those who are financially vested in the network get their opinions heard. It also removes the risk of nefarious actors infiltrating the network.<br/><br/>
+
+        <b>Deflationary Options</b><br/><br/>
+        DYP leverages various deflationary protocols to promote token stability. Notably, these systems work in tandem with the decentralized governance model to provide a unique community-driven approach to the market. For example, DeFi Yield protocol (DYP) users vote on whether undistributed DYP rewards get distributed to the token holders or burned. They also vote on new liquidity pools, fees, and other vital upgrades.<br/>
+        <b>Smart Contracts</b><br/><br/>
+        The entire <a href='https://dyp.finance/' target='_blank' ><u>DYP ecosystem</u></a> features an autonomous design that relies on advanced smart contracts to eliminate the need for any human intervention. Keenly, the governance mechanism ensures that the DYP community writes the rules for the network. Smart contracts execute these rules, such as the payment of rewards to liquidity provides autonomously.<br/><br/>
+        <b>DYP is Just Getting Started</b><br/><br/>
+        DYP has an entire DeFi ecosystem in the works. The platform will support various other functionalities such as mining pools in the coming weeks. Impressively, DYP intends to reward miners monthly with a 10% bonus from the pool’s ETH monthly income.<br/><br/>
+        Yield Farming is another advanced DeFi functionality the DYP users will enjoy. Farmers can stake their crypto assets to earn DYP via automated yield farming pools. The platform supports various farming pools, including DYP/ETH, DYP/USDC, DYP/USDT, and DYP/WBTC.<br/><br/>
+        <b>DYP — Stake DeFi Tokens and Get Paid in Ethereum</b><br/><br/>
+        DYP raises the bar with its new strategy. Paying out DeFi token stakers in Ethereum is sure to spur some interest in the market. Now, anyone can earn some free Ethereum by staking their tokens on DYP.<br/>
+        `
+      }
     },
     {
       title: "DeFi Projects That Offer Top Staking Rewards in 2021",
+      id: 48,
       link: "https://hackernoon.com/defi-projects-that-offer-top-staking-rewards-in-2021-7fs34qs",
       date: "Dec 24, 2020",
       imageSrc:
-        "https://hackernoon.com/_next/image?url=https%3A%2F%2Fcdn.hackernoon.com%2Fimages%2F7LrDe0NwaTW40HBSsVuBSPeo2yd2-1p2p31oo.jpeg&w=3840&q=75",
-    },
-    {
-      title:
-        "DeFi Yield Protocol Launches Staking and Governance Dapp, DYP Holders Earn Ethereum",
-      link: "https://www.newsbtc.com/news/company/defi-yield-protocol-launches-staking-and-governance-dapp-dyp-holders-earn-ethereum/",
-      date: "Dec 24, 2020",
-      imageSrc:
-        "https://www.newsbtc.com/wp-content/uploads/2020/12/Epey0x_XcAUpVUq.jpg",
+        "https://hackernoon.imgix.net/images/7LrDe0NwaTW40HBSsVuBSPeo2yd2-1p2p31oo.jpeg?auto=format&fit=max&w=1200",
+        content: {
+          title: 'DeFi Projects That Offer Top Staking Rewards in 2021',
+          imageSrc: 'https://hackernoon.imgix.net/images/7LrDe0NwaTW40HBSsVuBSPeo2yd2-1p2p31oo.jpeg?auto=format&fit=max&w=1200',
+          content:  `The DeFi sector provides investors with exciting opportunities that were previously not possible. Every week, new products, features, and networks enter the market. Each platform promises better returns and a more comprehensive UX. However, not every DeFi platform pays out high staking rewards.<br/><br/>
+          Rather than spending days combing through every new platform to determine the most profitable ones, professionals recommend you stick to reputable networks with proven results. These platforms have earned their reputations in the market through optimal ROIs and top-notch security. Here are the DeFi projects with top staking rewards in 2021.<br/><br/>
+          <h3><b>MakerDAO</b></h3><br/><br/>
+          <a href='https://makerdao.com/en/' target='_blank'><u>MakerDAO</u></a> made a name for itself by introducing blockchain technologies that allow borrowers to use volatile cryptocurrency as collateral for loans of stablecoins. Since its introduction, the network has grown to become one of the world’s largest Ethereum Dapps.<br/><br/>
+          This decentralized lending protocol entered the market in December 2015 as the brainchild of CEO Rune Christensen. Interestingly, the network leverages a dual token strategy to accomplish its goals. The DAI stablecoin is the primary currency of the network. Users pay fees, collect rewards and lend out this stablecoin. The network provides both lenders and borrowers with DAI as a means of transparent collateral. Best of all, DAI holders earn interest on their savings when they use this network.<br/><br/>
+          The second token in use in the MakerDAO ecosystem is the MKR governance token. MakerDAO is community-governed via a voting system. User’s votes are weighted depending on the amount of MKR tokens they possess. Consequently, everyone gets a say on future developments. Notably, MakerDAO recently made the <a href='https://www.forbes.com/companies/makerdao/?sh=3fa4220d32ee&ref=hackernoon.com' target='_blank'><u>“Forbes 50”</u></a> list for its innovative approach to DeFi.<br/><br/>
+          <h3><b>Compound</b></h3><br/><br/>
+          <a href='https://compound.finance/?ref=hackernoon.com' target='_blank'><u>Compound</u></a> is the network that launched the current yield farming craze. Compound first introduced its decentralized, blockchain-based protocol that allows you to lend and borrow crypto to the market in mid-summer 2020. The network's strategy was to offer users a small share of transaction fees for contributing liquidity to particular pools on Uniswap or Balancer.<br/><br/>
+          Compound supports the borrowing and lending of a selection of cryptocurrencies at this time. Specifically, Dai (DAI), Ether (ETH), USD Coin (USDC), Ox (ZRX), Tether (USDT), Wrapped BTC (WBTC), Basic Attention Token (BAT), Augur (REP), and Sai (SAI) are available. Notably, anyone can borrow from the lending pools with interest and a deposit. <br/><br/>
+          This deposit also works as collateral for your loan. It’s what's used to determine the total amount you can borrow as well. However, if the collateral’s value begins to drop, the protocol will automatically sell this deposit to cover your losses.<br/><br/>
+          <h3><b>DeFi Yield Protocol - DYP.Finance</b></h3><br/><br/>
+          DYP introduces several benefits to the market that make it a top contender in terms of ROIs. The platform includes a variety of notable features such as mining pools and yield farming protocols. Impressively, DYP is the only platform to pay all rewards out in ETH rather than DeFi tokens. This feature is a huge draw for users who often need to convert their rewards into ETH on DEXs such as Uniswap. The removal of this step also removes the fees and delays associated with the process. <br/><br/>
+          DYP is all about stopping market manipulation. The platform's developers created a proprietary anti-manipulation system that automatically converts the DYP rewards into ETH every day at 00:00 UTC. The system monitors the price of DYP tokens to ensure this action doesn't drop the token’s value. If the token’s value shows more than a 2.5% drop, the conversion rate will adjust to prevent further losses.<br/><br/>
+          Recently, DYP launched its decentralized governance system. This feature works in tandem with the network’s anti-manipulation protocol. Specifically, DYP token holders vote on whether to burn or redistribute the extra DYP tokens not converted in the anti-manipulation process. In this way, DYP provides its community with real token value control measures. <br/><br/>
+          <h3><b>Synthetix (SNX)</b></h3><br/><br/>
+          Earlier in July 2020, <a href='https://synthetix.io/?ref=hackernoon.com' target='_blank'><u>Synthetix</u></a> ranked at the seventh position in terms of market capitalization. However, the 2017 conceived protocol is continually growing to one of the best currently in existence. The project provides users with a synthetic asset issuance platform and a decentralized exchange platform. <br/><br/>
+          Synthetic assets are commonly referred to as Synths, which are digital assets representing real assets such as physical goods, fiat currencies, stocks, or even cryptocurrencies. One of its significant features is the incentivized staking mechanism. It allows users to provide liquidity and maintain the platform. <br/><br/>
+          The Synthetix ecosystem runs under the Synthetix Network Token (SNX), available on different exchange platforms. Users can deposit the tokens and use them in staking. In recent months, the SNX token has seen a surge, with its value shooting from $0.79 to $3.32 between June and July 2020. <br/><br/>
+          It is forecasted that 250 million tokens will be minted by 2025. The platform remains protected from price swings through its high collateralization rate.<br/><br/>
+          <h3><b>Yearn Finance</b></h3><br/><br/>
+          <a href='https://yearn.finance/#/portfolio' target='_blank'><u>Yearn Finance</u></a> launched in February 2020 as a liquidity aggregator providing automated yield farming services. Andre Cronje created this open-source DeFi lending protocol to maximize ROIs via interoperability. Specifically, Yearn circulates your locked crypto to get the best interest rates. The network switches these funds between DeFi lending protocols like Compound, Aave, and dYdX.<br/><br/>
+          The platform uses select smart contracts known as Vaults that allow users to utilize any asset as liquidity. This strategy permits investors to use liquidity as collateral and manage collateral safely to avoid a default. The network also enables you to lend and borrow stablecoins with interest. <br/><br/>
+          Lastly, you can yield farm with these stablecoins directly from the platform’s interface. Lenders enjoy competitive rewards and the ability to reinvest their earnings into the other products offered by Yearn. As such, Yearn users get a high level of flexibility in the market. <br/><br/>
+          <h3><b>What DeFi Projects offer the Top Staking Rewards in 2021?</b></h3><br/><br/>
+          When it comes to determining the best staking rewards, a lot comes down to your strategy. DeFi is diverse, and you can earn profits in many different ways nowadays. These platforms excel in their efforts to provide new and exciting ways to increase your staking rewards.<br/>
+
+          `
+        }
     },
     {
       title:
         "The DeFi Yield Protocol (DYP) Looks Poised to take DeFi to Next Level",
+      id: 49,
       link: "https://crypto.news/defi-yield-protocol-dyp/",
       date: "Dec 24, 2020",
       imageSrc: "https://crypto.news/app/uploads/2020/12/DYP-staking.jpg",
+      content: {
+        title: 'The DeFi Yield Protocol (DYP) Looks Poised to take DeFi to Next Level',
+        imageSrc: 'https://crypto.news/app/uploads/2020/12/DYP-staking.jpg',
+        content: `<h3><b>What Is the DeFi Yield Protocol?</b></h3><br/><br/>
+        The DeFi Yield Protocol (DYP) is developing a cutting-edge unique platform that enables anyone to provide liquidity and be rewarded for the first time in Ethereum (ETH). Simultaneously, the platform maintains both token price stability and secure and easy-to-use DeFi for end users by integrating DYP anti-manipulation feature.<br/><br/>
+        DYP is unique in that it brings a solution to the risks associated with Yield Farming. The protocol does this by permanently changing the way an investor earns by providing liquidity on Ethereum smart contract. <br/><br/>
+        There is an argument against DeFi which states that it gives whales the power to control the underlying network. To get an idea, look no further than the recent infamous Sushiswap dump where the anonymous founder, chef Nomi swapped his SUSHI tokens for Ethereum, resulting in a flash crash for the token. DYP fixes this. <br/><br/>
+        The DYP anti-manipulation feature ensures that all pools (DYP/ETH, DYP/USDC, DYP/USDT, and DYP/WBTC POOL) rewards are automatically converted from DYP to ETH at 00:00 UTC, and the system automatically distributes the rewards to the liquidity providers. As you might have figured out by now, this feature ensures that all network participants are at an equal footing. It essentially disables any whale from manipulating the price of DYP for their benefit.<br/><br/>
+        <h3><b>How Does DYP Ensure Fair Network Participation?</b></h3><br/><br/>
+        To substantiate the finer details of the DYP, every day at 00:00 UTC, the smart contract will automatically try to convert the DYP rewards to ETH. Should the DYP price be affected by more than -2.5%, then the maximum DYP price that does not affect the price will be swapped for ETH while the left over amount would be distributed in the next day’s rewards.<br/><br/>
+        Subsequently, if after seven days there are still undistributed DYP rewards, the DeFi Yield Protocol (DYP) governance will vote on whether the remaining DYP will be distributed to the token holders or burned permanently. For the uninitiated, when a token is burned, it is removed from circulation permanently which creates a supply shock and usually leads to price appreciation of the token.<br/><br/>
+        It is worth noting that DYP takes special care risks associated with smart contracts. Undoubtedly, smart contracts are the backbone of any DeFi project and it is of utmost significance that they are aptly taken care of. <br/><br/>
+        To mitigate such risks, DYP has audited all its smart contracts by PeckShield and Blockchain Consilium. DYP understands how haywire things can go with unaudited or poorly designed smart contracts. Take the recent YAM finance disaster for example. The team discovered a bug that prevented a vote from being executed. This made YAM token holders dump the tokens leading to its dramatic price plunge overnight. DYP takes care of this by ensuring all its smart contracts are duly audited and its codes secured from participants who try to take advantage of the protocol.<br/><br/>
+        <h3><b>Other Benefits of Holding DYP Token</b></h3><br/><br/>
+        In addition to the aforementioned unparalleled benefits of holding the DYP token, the holders also get to participate in DYP governance and vote to add additional liquidity mining pools, burn tokens, DYP toward grants, strategic partnerships, governance initiatives, and other similar protocol governance decisions. Remember, all DYP liquidity pools use the anti-manipulation feature with the 2.5% slippage.<br/><br/>
+
+        
+        `,
+      }
     },
     {
       title:
         "DeFi Yield Protocol (DYP) Provides a New Level of Transparency to the Market",
+      id: 50,
       link: "https://www.bitcoininsider.org/article/100387/defi-yield-protocol-dyp-provides-new-level-transparency-market",
       date: "Dec 24, 2020",
       imageSrc:
         "https://www.bitcoininsider.org/sites/default/files/styles/scale_900px/public/field/image/defi_yield_protocol.webp?itok=2ehPm3JM",
-    },
-    {
-      title:
-        "DeFi Yield Protocol Liquidity Providers Earn $25,000 in ETH per Day Staking DYP",
-      link: "https://www.cryptocompare.com/coins/guides/defi-yield-protocol-liquidity-providers-earn-25-000-in-eth-per-day-staking-dyp/",
-      date: "Dec 28, 2020",
-      imageSrc:
-        "https://www.cryptocompare.com/media/37621945/photo_2020-12-23-172208.jpeg",
+        content: {
+          title: 'DeFi Yield Protocol (DYP) Provides a New Level of Transparency to the Market',
+          imageSrc: 'https://www.bitcoininsider.org/sites/default/files/styles/scale_900px/public/field/image/defi_yield_protocol.webp?itok=2ehPm3JM',
+          content: `The DeFi sector continues to provide new opportunities to investors ready to venture into this new market. DeFi (decentralized finance) replaces centralized financial systems with regular users. In this way, it creates a scenario in which your average user can earn interest and rewards for participation in the network.<br/><br/>
+          Lately, the DeFi sector has seen a rapid increase in networks entering the space. These new platforms introduce new protocols to simplify the UX and streamline DeFi activities. While most of these platforms promise healthy ROIs it’s crucial to understand that not every platform is a wise option to pursue.<br/><br/>
+          There are some problems that the DeFi sector desperately needs to correct before it can reach its true potential. One of these problems that poses a significant risk is Whale manipulation. Whales are the majority token holders of a project. Since these investors have the highest level of participation in a project, they have extraordinary sway within the network's future decisions.<br/><br/>
+          <h3><b>Whale Protections</b></h3><br/><br/>
+          Notably, whales can tank entire markets if they liquidate without warning. In the Bitcoin community, these risks are well-understood. As such, there are a bunch of Whale tracking platforms and social media accounts dedicated to this risk. These accounts simply monitor all significant BTC wallet transactions.<br/><br/>
+          This strategy has proven to be valuable to Bitcoin investors, but what about DeFi investors? DeFi platforms are more susceptible to whale interference than Bitcoin for a variety of reasons. These networks are smaller, and in many cases, a single investor can control over 20% of the tokens in circulation.<br/><br/>
+          Sadly, there are no platforms that exist today to monitor DeFi whales as of yet. Critically, it could still be a while before one emerges. Technically speaking, this task is challenging since, unlike Bitcoin, the DeFi sector includes tons of projects with more entering weekly. There's just no way to track these projects because of their diversity and newness accurately.<br/><br/>
+          Additionally, not all DeFi projects utilize the same blockchain. Ethereum is the most popular blockchain in use within the DeFi ecosystem. However, other projects leverage blockchains such as TRON or Stellar to provide their users with unique services.<br/><br/>
+          <h3><b>Developers Under Watch</b></h3><br/><br/>
+          What's even worse is that much of this manipulation was initiated by the project developers themselves. 
+          In most instances, DeFi developers will keep a large percentage of their tokens locked into liquidity pools on Uniswap. Uniswap allows developers and users to stake their crypto in these liquidity pools and earn rewards. The more liquidity in the pool, the more value the pool's token possesses.<br/><br/>
+          <h3><b>Rug Pulls</b></h3><br/><br/>
+          Whenever a project’s development team exits a liquidity pool after draining it, it’s known as a rug pull. Rug pulls are too common in the sector, with many highly publicized incidents occurring recently. For example, the developer behind a Uniswap competitor SushiSwap dipped without warning after cashing in on the project’s liquidity pool. These actions hurt investors who saw the project’s liquidity drop from millions down to around $15,000. <br/><br/>
+          Luckily, other developers stepped in and took over the project. This move helped the token value recover some of its losses but not all. Notably, this scenario isn't the norm. Usually, these projects become abandoned, with investors losing their holdings.<br/><br/>
+          <h3><b>DYP Figures Out How to Reduce Whale Interference Risks</b></h3><br/><br/>
+          Until recently, DeFi investors had no options in regards to protecting their investments from these risks. 
+          Unfortunately, this lack of protection has led to an increase in whale manipulation in the market. 
+          DYP developers seek to reduce this problem by integrating various conversion strategies to ensure no one party can drain the project’s liquidity without warning.<br/><br/>
+          To accomplish this task, DYP's network integrates a couple of key strategies into their daily routine. For one, the network automatically converts DYP over to ETH daily. This strategy brings many benefits along with it. Specifically, whales are less likely to be successful in their attempts since the liquidity pool tokens are now Ethereum. They hold no sway in the project except to bolster its liquidity.<br/><br/>
+          <h3><b>ETH Rewards</b></h3><br/><br/>
+          Another feature that is unique to DYP is its rewards system. DYP is the only platform in the market that allows you to stake DeFi tokens and receive your rewards <a href='https://dyp.finance/earn' target='_blank'><u>directly in ETH</u></a>. This feature is a big plus for users who often lose valuable ROIs when they convert DeFi tokens to ETH via exchanges.<br/><br/>
+          <h3><b>Inflationary Concerns</b></h3><br/><br/>
+          Notably, both of these strategies serve another purpose aside from reducing whale manipulation risks. These protocols also tackle inflationary risks. Inflationary risks are another primary concern that has DeFi developers scrambling for options.<br/><br/>
+          These concerns are validated when you examine how most DeFi pools operate. In a typical scenario, you join the pool and receive liquidity pool tokens for your investment. These tokens issue every time someone adds liquidity to the pool. In a perfect scenario, the added liquidity will bolster the overall value of the LP token. However, this response isn’t always the case.<br/><br/>
+          As of late, these token issuances have begun to outweigh the demand for the token in the market. This problem is exasperated because most DeFi networks also pay out staking rewards in their LP tokens. Together, these issuances create an unsustainable token value.<br/><br/>
+          <h3><b>Deflationary Community Governance</b></h3><br/><br/>
+          DYP reduces all of these issues with its unique deflationary tactics. The network goes a step further and allows its community to participate in the deflationary process. DYP users vote to redistribute unconverted DYP tokens back to its users or burn these tokens every day. In this way, DYP users have a direct say in the network's LP token value.<br/><br/>
+          <h3><b>DYP - Protocol Built to Stand the Test of Time</b></h3><br/><br/>
+          DYP is a step ahead of the competition with its deflationary approach to the DeFi sector. This network offers users higher ROIs and more flexibility in the market. Consequently, DYP continues to spark investor interests in the industry.<br/>
+
+
+ 
+          `,
+        }
     },
     {
       title:
         "Tackling Volatility Issues for Liquidity Providers with DeFi Yield Protocol (DYP)",
+      id: 51,
       link: "https://cryptopotato.com/tackling-volatility-issues-for-liquidity-providers-with-defi-yield-protocol-dyp/",
       date: "Jan 5, 2021",
       imageSrc:
         "https://www.bitcoininsider.org/sites/default/files/styles/scale_900px/public/field/image/defi_yield_protocol.webp?itok=2ehPm3JM",
+        content: {
+          title: 'Tackling Volatility Issues for Liquidity Providers with DeFi Yield Protocol (DYP)',
+          imageSrc: 'https://www.bitcoininsider.org/sites/default/files/styles/scale_900px/public/field/image/defi_yield_protocol.webp?itok=2ehPm3JM',
+          content: `The field of decentralized finance (DeFi) continues to expand, dismissing a lot of speculative notions that last year’s advance was a bubble-like move.<br/><br/>
+          According to <a href='https://www.defipulse.com/' target='_blank'><u>data</u></a> from DeFi Pulse, the total value locked in various DeFi protocols exceeds $17.8 billion – an increase that continues in the new year of 2021. Leading the way are some established authorities in the field, though newcomers are also starting to play an important role.<br/><br/>
+          However, over the past few months, the cryptocurrency market has entered a state of parabolic advance, causing severe volatility across the board. While the changes so far have been mostly positive, this volatility exposes certain risks to liquidity providers (LPs), perhaps the biggest of which is impermanent loss. <br/><br/>
+          That said, DeFi Yield Protocol (DYP) brings forward an interesting concept that tries to tackle the challenges of substantial volatility and lower the risks for LPs as they play an integral role in the future development of the entire field.<br/><br/>
+          <h3><b>What is DYP Protocol?</b></h3><br/><br/>
+          DeFi Yield Protocol, as the name suggests, is a new protocol that attempts to change the way people earn through liquidity on Ethereum. 
+          One of its primary focuses is to defy the argument that DeFi is a space where whales have the power to control the network. In all fairness, this is a strong argument, highlighted by a few events in the recent past.<br/><br/>
+          Back in September, one DeFi protocol that gained tremendous popularity was Sushiswap. It promised to provide a solution for Liquidity Providers better than that of Uniswap, which is so far the established market leader when it comes to decentralized exchanges. However, at one point, the developer <a href='https://cryptopotato.com/sushi-crashing-over-50-as-sushiswaps-lead-developer-sells-his-tokens/' target='_blank'><u>sold all of his tokens</u></a>, causing mayhem across the board and crashing the price of the native token in an instant.<br/><br/>
+          To prevent this, DYP has integrated an anti-manipulation feature that ensures that all of the pool rewards are automatically converted from DYP to ETH at 00:00 UTC. The system would automatically distribute the rewards to all of the LPs. 
+          In essence, this feature is aimed at providing network fairness to all participants as no whale should be able to manipulate the prices of the native DYP token to their advantage.<br/><br/>
+          <h3><b>How Does it Work?</b></h3><br/><br/>
+          In order to maintain the price stability of the DYP token, the smart contract will automatically convert the DYP rewards to ETH at the time stated above. However, if the price of DYP is affected by more than -2.5%, then the maximum DYP amount that doesn’t affect the price will be swapped to ETH.<br/><br/>
+          The remaining amount will remain and will be distributed with the rewards of the following days. In seven days’ time, if there’s still undistributed DYP rewards, the protocol’s governance will vote whether the remaining DYP will be distributed to the token holders (assuming an appropriate slippage tolerance of -2.5%) or it will be burned. Keep in mind that all burned tokens are also removed from circulation.<br/><br/>
+          This is also a solution to reduce the risk of impermanent loss. It’s a grave challenge that riddles the DeFi space because when token prices are severely reduced, this impacts liquidity providers, causing them to incur substantial losses.<br/><br/>
+          <h3><b>Upcoming Developments</b></h3><br/><br/>
+          According to the official website, the DeFi Yield Protocol staking dApp is already live, and it enjoys a TVL of around $46 million at the time of this writing. 
+          One of the scheduled events for the first quarter of 2021 is the launch of the DYP Earn Vault. This is an automated yield farming contract that will allow each user to deposit a particular token, for which the protocol itself will automate yield farming strategies by conveniently move the funds between the most profitable platforms.  
+          From the generated profits, 75% will be converted to ETH and distributed to liquidity providers, while the remaining 25% will be used to buy back the protocol’s governance token and add liquidity.<br/><br/>
+          <h3><b>Closing Words</b></h3><br/><br/>
+          The challenges of whale manipulation and impermanent loss are among the most serious in the nascent DeFi space. 
+          Solutions such as DeFi Yield Protocol are aimed at handling those problems and making the space more accessible to a larger pool of users. At the same time, its solutions are also intended to automate the yield farming process, providing optimal returns for liquidity providers, which are the cornerstone of the industry.<br/><br/>
+
+
+
+
+
+
+          `,
+        }
     },
     {
       title: "5 DeFi Projects You Should Know About in 2021",
       link: "https://hackernoon.com/5-defi-projects-you-should-know-about-in-2021-irq347a",
+      id: 52,
       date: "Jan 16, 2021",
       imageSrc:
-        "https://hackernoon.com/_next/image?url=https%3A%2F%2Fcdn.hackernoon.com%2Fimages%2F7LrDe0NwaTW40HBSsVuBSPeo2yd2-tsg3140.jpeg&w=1200&q=75",
-    },
-    {
-      title:
-        "DeFi Yield Protocol: The First Manipulation Free DeFi platform in BSC and ETH",
-      link: "https://www.bitcoininsider.org/article/110411/defi-yield-protocol-first-manipulation-free-defi-platform-bsc-and-eth",
-      date: "Jan 16, 2021",
-      imageSrc:
-        "https://www.bitcoininsider.org/sites/default/files/styles/scale_900px/public/field/image/defi-yield-protocol.webp?itok=9O5edgCR",
-    },
-    {
-      title: "DYP Maximizing the Benefits of Yield Farming Protocols",
-      link: "https://coindoo.com/dyp-maximizing-the-benefits-of-yield-farming-protocols/",
-      date: "Aug 6, 2021",
-      imageSrc:
-        "https://coindoo.com/wp-content/uploads/2020/12/Stake-and-Learn.jpg",
-    },
-    {
-      title: "PR: How to Use DYP to Earn Big DeFi ROIs",
-      link: "https://coingape.com/how-to-use-dyp-to-earn-big-defi-rois/",
-      date: "Dec 23, 2020",
-      imageSrc:
-        "https://cdn.coingape.com/wp-content/uploads/2020/12/23193423/IMG_4770-min.jpg",
-    },
+        "https://hackernoon.imgix.net/images/7LrDe0NwaTW40HBSsVuBSPeo2yd2-1p2p31oo.jpeg?auto=format&fit=max&w=1200",
+        content: {
+          title: '5 DeFi Projects You Should Know About in 2021',
+          imageSrc: 'https://hackernoon.imgix.net/images/7LrDe0NwaTW40HBSsVuBSPeo2yd2-1p2p31oo.jpeg?auto=format&fit=max&w=1200',
+          content: `The growth of Defi is remarkable, with the industry making great strides in the past few years. It's quite right to conclude that this industry is probably the next big thing in the financial world, primarily owing to the many use cases of the upcoming projects. <br/><br/>
+          Decentralization of finance was the main idea in Defi's creation, and many of the platforms have lived up to that promise. However, with the strong surge in Defi, it's quite challenging for any investor to make conclusions about which project is worth their money. <br/><br/>
+          You probably are that investor and wonder what Defi projects show unique features and maybe a potential to grow? Here are some of the most unique Defi projects you should check out for in 2021. <br/><br/>
+          <h3><b>Kava</b></h3><br/><br/>
+          <a href='https://www.kava.io/?ref=hackernoon.com' target='_blank'><u>Kava</u></a> is a Defi lending platform offering its users USDX stablecoins loans, thus introducing the crypto market's utmost flexibility. Like chainlink, Kava is known for its cross-chain capabilities and its vast array of stablecoin loans. There is a considerable probability that Kava will add bitcoin to its supported coins in the future. <br/><br/>
+          As of the time of writing, coinmarketcap reports that Kava was among the best performing Defi platforms, with a $70 million market cap. 
+          To ensure all the loans are well collateralized, Kava leverages a protocol dubbed 'collateralized debt position'. Among Kava's unique features include: <br/><br/>
+          • Generous support for cross-chain assets.<br/><br/>
+          • Provides a yield earning option where USDX stablecoins are minted and contributed to a Hard protocol.<br/><br/>
+          • Provides Masternodes and staking opportunities and offers excellent rewards for top 100 validators.<br/><br/>
+          • Autonomous system for burning coins to regulate supply thus increase demand and leave the currency deflationary.<br/><br/>
+          <h3><b>Ren Protocol</b></h3><br/><br/>
+          <a href='https://renproject.io/?ref=hackernoon.com' target='_blank'><u>The Ren protocol</u></a> was initiated with the main aim of providing interoperability between blockchains platforms. The protocol has its native token REN which mainly operates as a bond for the persons running power RenVM Darknodes. 
+          It aims to remove the issues of interoperability and cross-blockchain liquidity. According to Coinmarketcap, the REN protocol has a market capitalization of over $300 million.<br/><br/>
+          Among some of REN's best features include: <br/><br/>
+          • Multi collateral lending, where users can utilize their existing non-custodial smart contracts as collateral for cross-chain assets <br/> <br/>
+          • Enables cross-chain OTC trading with the large volume traders not facing high risks of untrustworthy trade counterparties <br/> <br/>
+          • Allows users to take cross-chain assets to their decentralized exchanges <br/> <br/>
+          <h3><b>Defi Yield Protocol(DYP)</b></h3><br/><br/>
+          Defi Yield Protocol is a smart contract-based network designed to decentralize liquidity provision to everyone on the platforms. It merges an Ethereum mining pool and yield farming to ensure maximum profitability. 
+          For instance, in 24 hours, DYP users earned about 47.69 ETH. Moreso, in just the first 18 days live, the platform's liquidity providers made 609.98 ETH, an equivalent of $652 thousand. <br/><br/>
+          Currently, the most outstanding DYP feature is it's resistance to market manipulation. Due to it allowing everyone to provide liquidity, whalers will not have superiority when causing shifts in prices. 
+          Although the platform is already feature-rich, DYP will soon be introducing better systems to ensure better service provision and rewards. Among the features include:<br/><br/>
+          Within the next two weeks, DYP will be launching new staking pools with DYP tokens, leading to a total number of 4 DYP staking pools. 
+          The staking pools' rewards will depend on the lock period, with the lowest reward being 20% and highest being 35% APR, and the lock time ranging between 30 and 120 days. <br/><br/>
+          There will be a RE-INVEST function allowing investors to plow back their rewards without being charged any fee. 
+          DYP referral program will credit 5% of rewards received from referred friends to the referee.<br/><br/>
+          However, with all those features, DYP is still working hard to give even better products like: <br/><br/>
+          • DYP Earn Vault <br/>
+          • ETH mining pool <br/>
+          • Governance upgrade <br/>
+          • DYP tools with 100% decentralization, aiming to bolter DYP use cases <br/>
+
+          <h3><b>Band Protocol</b></h3><br/><br/>
+          Band protocol is a platform that collects real-world data taking it to on-chain applications, and also creating some links for exchanging information between on-chain and off-chain data sources. <br/><br/>
+          Therefore, the Band protocol gives a gateway for users/developers to get any form of real-world data and use it. Band protocol later launched on Cosmos and reached even more expansive grounds including accessing more real-world data like sports results, insurance, weather etc. <br/><br/>
+          Among some of its best features include: <br/><br/>
+          • Speed and efficiency <br/>
+          • Compatibility with many blockchains <br/>
+          • Permissionless oracle creation <br/>
+          • Simple, smart contract integration <br/><br/>
+
+          <h3><b>0x</b></h3><br/><br/>
+          Ox is a Defi protocol designed to eat the process of Swapping ERC20 tokens built on the Ethereum network. The protocol can scale-out things in the Ethereum blockchain, enabling the chain to be more scalable, thus handling more transactions.  <br/><br/>
+          Ox network's good performance is increased speed, security and immutability of the Ethereum blockchain. 
+          In coinmarketcap, Ox is among the top 20 best performing Defi platforms, with an adequate market capitalization. There are currently 1 billion ZRX in circulation.  <br/><br/>
+          Unique features from Ox include: <br/><br/>
+          • It supports both ERC 20 and ERC-723 tokens from the Ethereum network <br/>
+          • Has comprehensive and unique applications including its possibility of being applied in marketplaces <br/>
+          • Permissionless oracle creation <br/>
+          • Shared liquidity <br/>
+          • Trustless exchange <br/>
+
+          <br/>
+          
+          <h3><b>Conclusion</b></h3><br/><br/>
+          The Ren protocol provides powerful tools, in multi collateral lending, and cross-chain trading. The band protocol offers top speed, compatibility and proper smart contract integration. <br/><br/>
+          Ox protocol offers top solutions to the Ethereum blockchain, including scalability. Kava is an excellent USDX stablecoin lending platform, opening a world of opportunities for users. Defi yield protocol, a feature-rich platform that guarantees users top stability with features like resistance to manipulation, and the earn feature to help users maximize income.<br/>
+
+          `,
+        }
+    }
   ];
 
   const owlCarouselOptions = {
@@ -1312,6 +1854,10 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                       title={item.title}
                       link={item.link}
                       date={item.date}
+                      onSinglePressHighlightClick={() => {
+                        setActiveNews(press_highlight[key]);
+                        setShowModal(true);
+                      }}
                     />
                   </div>
                 );
@@ -1365,6 +1911,9 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
           onModalClose={() => {
             setShowModal(false);
             setActiveNews([]);
+          }}
+          onSelectOtherNews={() => {
+            // setActiveNews(newsArray[key]);
           }}
           title={activeNews.content.title}
           image={activeNews.content.imageSrc}

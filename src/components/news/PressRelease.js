@@ -1,9 +1,9 @@
 import React from "react";
 import Clock from "./assets/clock.svg";
 
-const PressRealease = ({ title, image, date, link }) => {
+const PressRealease = ({ title, image, date, link, onSinglePressHighlightClick }) => {
   return (
-    <div className="single-press-wrapper">
+    <div className="single-press-wrapper" onClick={onSinglePressHighlightClick}>
       <div className="row m-0" style={{ gap: 20 }}>
         <img src={image} alt="" className="press-image" />
         <div className="date-wrapper-press">
