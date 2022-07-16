@@ -1691,9 +1691,13 @@ body.theme-dark img.graph-two {
     flex-direction: column;
     justify-content: center;
     gap: 10px;
-  
+    cursor: pointer;
   }
   
+  .cursor-pointer {
+    cursor: pointer;
+  }
+
   .right-col {
     max-width: 340px;
     border-left: 1px solid #D9D9D9;
