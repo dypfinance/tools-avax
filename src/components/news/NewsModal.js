@@ -28,45 +28,13 @@ const NewsModal = ({
   const [height, setHeight] = useState(0);
 
   useEffect(() => {
-    if (elementRef.current?.clientHeight !== 0) {
-      setHeight(elementRef.current?.clientHeight);
+    if (elementRef.current?.clientHeight !== 0 && visible === true) {
+    
+        setHeight(elementRef.current?.clientHeight);
     }
-  }, [newsId, height]);
+  }, [height, newsId]);
 
-  const owlCarouselOptions = {
-    loop: true,
-    margin: 0,
-    center: false,
-    nav: false,
-    dots: true,
-    autoplay: false,
-    rewind: true,
-    autoplayTimeout: 5000,
-    responsiveClass: true,
-    responsiveRefreshRate: true,
-    responsive: {
-      0: {
-        items: 1,
-      },
-      576: {
-        items: 1,
-      },
-      768: {
-        items: 1,
-      },
-      960: {
-        items: 1,
-      },
-      1200: {
-        items: 1,
-      },
-      1920: {
-        items: 3,
-      },
-    },
-  };
 
-  const carousel = useRef();
 
   return (
     <Modal visible={visible} modalId={modalId} onModalClose={onModalClose}>
@@ -77,7 +45,6 @@ const NewsModal = ({
       >
         <div>
           <div className="details-modal-content pb-0">
-            {/* Acitve news */}
             <div className="left-col" ref={elementRef}>
               <h2 style={{ maxWidth: 550 }} className="left-col-title">
                 {title}
@@ -94,7 +61,6 @@ const NewsModal = ({
                 dangerouslySetInnerHTML={{ __html: content }}
               ></p>
             </div>
-            {/* End of Active news */}
             <div className="right-col">
               <h3 className="related-news-side-title">Related news</h3>
               <div className="related-news-wrapper">
@@ -104,7 +70,9 @@ const NewsModal = ({
                       .slice(0, 5)
                       .map((item, key) => {
                         return (
-                          <div key={key}>
+                          <div key={key}  onClick={() => {
+                            elementRef.current?.scrollIntoView({block: 'start'})
+                          }}>
                             <RelatedNews
                               newsId={item.id}
                               theme={theme}
@@ -123,7 +91,9 @@ const NewsModal = ({
                       .slice(0, 6)
                       .map((item, key) => {
                         return (
-                          <div key={key}>
+                          <div key={key}  onClick={() => {
+                            elementRef.current?.scrollIntoView({block: 'start'})
+                          }}>
                             <RelatedNews
                               newsId={item.id}
                               theme={theme}
@@ -142,7 +112,9 @@ const NewsModal = ({
                       .slice(0, 8)
                       .map((item, key) => {
                         return (
-                          <div key={key}>
+                          <div key={key}  onClick={() => {
+                            elementRef.current?.scrollIntoView({block: 'start'})
+                          }}>
                             <RelatedNews
                               newsId={item.id}
                               theme={theme}
@@ -160,7 +132,9 @@ const NewsModal = ({
                       .slice(0, 10)
                       .map((item, key) => {
                         return (
-                          <div key={key}>
+                          <div key={key}  onClick={() => {
+                            elementRef.current?.scrollIntoView({block: 'start'})
+                          }}>
                             <RelatedNews
                               newsId={item.id}
                               theme={theme}
@@ -179,7 +153,9 @@ const NewsModal = ({
                       .slice(0, 20)
                       .map((item, key) => {
                         return (
-                          <div key={key}>
+                          <div key={key}  onClick={() => {
+                            elementRef.current?.scrollIntoView({block: 'start'})
+                          }}>
                             <RelatedNews
                               newsId={item.id}
                               theme={theme}
@@ -198,7 +174,9 @@ const NewsModal = ({
                       .slice(0, 24)
                       .map((item, key) => {
                         return (
-                          <div key={key}>
+                          <div key={key} onClick={() => {
+                            elementRef.current?.scrollIntoView({block: 'start'})
+                          }}>
                             <RelatedNews
                               newsId={item.id}
                               theme={theme}
@@ -217,7 +195,9 @@ const NewsModal = ({
                       .slice(0, 31)
                       .map((item, key) => {
                         return (
-                          <div key={key}>
+                          <div key={key}  onClick={() => {
+                            elementRef.current?.scrollIntoView({block: 'start'})
+                          }}>
                             <RelatedNews
                               newsId={item.id}
                               theme={theme}
@@ -236,7 +216,9 @@ const NewsModal = ({
                       .slice(0, 36)
                       .map((item, key) => {
                         return (
-                          <div key={key}>
+                          <div key={key}  onClick={() => {
+                            elementRef.current?.scrollIntoView({block: 'start'})
+                          }}>
                             <RelatedNews
                               newsId={item.id}
                               theme={theme}
@@ -255,7 +237,9 @@ const NewsModal = ({
                       .slice(0, 57)
                       .map((item, key) => {
                         return (
-                          <div key={key}>
+                          <div key={key}  onClick={() => {
+                            elementRef.current?.scrollIntoView({block: 'start'})
+                          }}>
                             <RelatedNews
                               newsId={item.id}
                               theme={theme}
@@ -293,7 +277,9 @@ const NewsModal = ({
                       .slice(0, 57)
                       .map((item, key) => {
                         return (
-                          <div key={key}>
+                          <div key={key}  onClick={() => {
+                            elementRef.current?.scrollIntoView({block: 'start'})
+                          }}>
                             <RelatedNews
                               newsId={item.id}
                               theme={theme}
@@ -311,7 +297,9 @@ const NewsModal = ({
                     getItemsWithoutCurrentItem(newsId, latestNewsData).map(
                       (item, key) => {
                         return (
-                          <div key={key}>
+                          <div key={key}  onClick={() => {
+                            elementRef.current?.scrollIntoView({block: 'start'})
+                          }}>
                             <RelatedNews
                               newsId={item.id}
                               theme={theme}
@@ -344,6 +332,9 @@ const NewsModal = ({
                         className="banner-item"
                         key={key}
                         style={{ background: "none" }}
+                        onClick={() => {
+                          elementRef.current?.scrollIntoView({block: 'start'})
+                        }}
                       >
                         <OtherNews
                           newsId={item.id}
