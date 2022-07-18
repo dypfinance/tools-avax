@@ -54,7 +54,7 @@ window.config = {
 			tx_no: 2000,
 			lp_holder_no: 250,
 			daily_volume_usd: 10000,
-			liquidity_usd: 1000000
+			liquidity_usd: 50000
 		},
 		weights: { // sum of all weights must be 1, 1 = 100%
 			tx_no: .1,

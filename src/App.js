@@ -92,14 +92,14 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    getSyncStats()
-      .then(syncStatus => {
-        // let m = window.alertify.message(`Syncing ${getFormattedNumber(syncStatus.latestBlock.number)} of ${getFormattedNumber(syncStatus.chainHeadBlock.number)} blocks`)
-        let m = window.alertify.message(`Warning: The data on this site has only synced to Avalanche block ${getFormattedNumber(syncStatus.latestBlock.number)} (out of ${getFormattedNumber(syncStatus.chainHeadBlock.number)}). Please check back soon.`)
-        m.ondismiss = f => false
-        m.element.style.lineHeight = 1.7
-      })
-      .catch(console.error)
+    // getSyncStats()
+    //   .then(syncStatus => {
+    //     // let m = window.alertify.message(`Syncing ${getFormattedNumber(syncStatus.latestBlock.number)} of ${getFormattedNumber(syncStatus.chainHeadBlock.number)} blocks`)
+    //     let m = window.alertify.message(`Warning: The data on this site has only synced to Avalanche block ${getFormattedNumber(syncStatus.latestBlock.number)} (out of ${getFormattedNumber(syncStatus.chainHeadBlock.number)}). Please check back soon.`)
+    //     m.ondismiss = f => false
+    //     m.element.style.lineHeight = 1.7
+    //   })
+    //   .catch(console.error)
     this.refreshHotPairs()
     this.subscriptionInterval = setInterval(this.refreshSubscription, 5e3);
     fetch('https://api.coingecko.com/api/v3/simple/price?ids=avalanche-2&vs_currencies=usd')
