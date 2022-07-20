@@ -736,6 +736,60 @@ a:hover {
   /* transition: 0.3s; */
 }
 
+.toggle-button-wrapper {
+    min-width: 52px;
+    width: 52px;
+    height: 26px;
+    background: #D9D9D9;
+    border-radius: 100px;
+    background-position: right;
+    background-repeat: no-repeat;
+  
+  
+  } 
+  
+  .toggle-button-wrapper .toggle-circle {
+  
+    background-image: url("../img/sunActive.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #f6f6f6;
+  
+  }
+  
+  .toggle-button-wrapper .toggle-circle {
+    position: relative;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: var(--white);
+    left: 4px;
+    top: 1px;
+    transition: 0.3s;
+  }
+  
+  .toggle-button-wrapper .toggle-circle .active-toggle {
+    background-image: url("../img/sunPassive.svg");
+    background-position: left;
+    background-repeat: no-repeat;
+  }
+  
+  .toggle-button-wrapper svg {
+    position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 2;
+  }
+  
+  .active-toggle .toggle-circle{
+    left: 26px;
+        background-image: url("../img/moonactive.svg");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-color: #f6f6f6;
+  }
+
+
 .page_wrapper {
   /* transition: 0.3s; */
   position: relative;
@@ -796,7 +850,7 @@ a:hover {
 .menu-cat-one ul li,
 .menu-cat-two ul li {
   position: relative;
-  padding-left: 25px;
+  /* padding-left: 25px; */
   margin: 42px 0;
 }
 
@@ -832,7 +886,7 @@ a:hover {
 .menu-cat-one ul li a i,
 .menu-cat-two ul li a i {
   /* transform: scale(0.6); */
-  position: absolute;
+  /* position: absolute; */
   top: -8px;
   left: 0;
   /* transition: 0.2s; */
@@ -880,7 +934,7 @@ a:hover {
 .minimize_btn {
   cursor: pointer;
   text-align: center;
-  padding: 0px 5px 0 6px;
+  padding: 0px 15px 0 6px;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
   height: 50px;
@@ -888,6 +942,14 @@ a:hover {
   justify-content: center;
   flex-direction: column;
 }
+
+.activelink {
+    background: #FDF5F6;
+  border-radius: 8px;
+  padding: 5px;
+  display: flex !important;
+  align-items: center;
+  }
 
 .minimize_btn span {
   position: relative;

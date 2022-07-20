@@ -275,7 +275,9 @@ body.theme-white .home-menu a span {
 }
 
 body.theme-white .minimize_btn {
-    background-color: var(--red)
+    background-color: var(--red);
+    border-top-right-radius: 24px;
+    border-bottom-right-radius: 24px;
 }
 
 body.theme-white .home-menu a {

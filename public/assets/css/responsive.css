@@ -17,7 +17,7 @@
     .menu-cat-two ul li a span {
         font-size: 12px;
         position: relative;
-        top: -3px
+        /* top: -3px */
     }
 
 }
