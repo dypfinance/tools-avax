@@ -21,6 +21,9 @@ const NewsModal = ({
   onShowModalPressInfo,
   onSelectOtherNews,
 }) => {
+  const specialItems = [19, 20, 21, 23, 27, 28, 29]
+  
+  
   const getItemsWithoutCurrentItem = (currentItemId, arrayOfItems) => {
     return arrayOfItems.filter((item) => item.id !== currentItemId);
   };
@@ -65,7 +68,29 @@ const NewsModal = ({
               <h3 className="related-news-side-title">Related news</h3>
               <div className="related-news-wrapper">
                 {latestNewsData.length > 0 &&
-                  (height > 500 && height < 610 ? (
+                  (height > 500 && height < 610 && specialItems.includes(newsId) === false ? (
+                    getItemsWithoutCurrentItem(newsId, latestNewsData)
+                      .slice(0, 4)
+                      .map((item, key) => {
+                        return (
+                          <div key={key}  onClick={() => {
+                            elementRef.current?.scrollIntoView({block: 'start'})
+                          }}>
+                            <RelatedNews
+                              newsId={item.id}
+                              theme={theme}
+                              title={item.title}
+                              date={item.date}
+                              month={item.month}
+                              year={item.year}
+                              link={item.link}
+                              image={item.imageSrc}
+                              onSelectOtherNews={onSelectOtherNews}
+                            />
+                          </div>
+                        );
+                      })
+                  ) : height > 620 && height < 700 && specialItems.includes(newsId) === false ? (
                     getItemsWithoutCurrentItem(newsId, latestNewsData)
                       .slice(0, 5)
                       .map((item, key) => {
@@ -81,14 +106,15 @@ const NewsModal = ({
                               month={item.month}
                               year={item.year}
                               link={item.link}
+                              image={item.imageSrc}
                               onSelectOtherNews={onSelectOtherNews}
                             />
                           </div>
                         );
                       })
-                  ) : height > 620 && height < 700 ? (
+                  ) : height > 700 && height < 900 && specialItems.includes(newsId) === false ? (
                     getItemsWithoutCurrentItem(newsId, latestNewsData)
-                      .slice(0, 6)
+                      .slice(0, 5)
                       .map((item, key) => {
                         return (
                           <div key={key}  onClick={() => {
@@ -101,33 +127,13 @@ const NewsModal = ({
                               date={item.date}
                               month={item.month}
                               year={item.year}
-                              link={item.link}
-                              onSelectOtherNews={onSelectOtherNews}
-                            />
-                          </div>
-                        );
-                      })
-                  ) : height > 700 && height < 900 ? (
-                    getItemsWithoutCurrentItem(newsId, latestNewsData)
-                      .slice(0, 8)
-                      .map((item, key) => {
-                        return (
-                          <div key={key}  onClick={() => {
-                            elementRef.current?.scrollIntoView({block: 'start'})
-                          }}>
-                            <RelatedNews
-                              newsId={item.id}
-                              theme={theme}
-                              title={item.title}
-                              date={item.date}
-                              month={item.month}
-                              year={item.year}
+                              image={item.imageSrc}
                               link={item.link}
                             />
                           </div>
                         );
                       })
-                  ) : height > 900 && height < 1000 ? (
+                  ) : height > 900 && height < 1000 && specialItems.includes(newsId) === false ? (
                     getItemsWithoutCurrentItem(newsId, latestNewsData)
                       .slice(0, 10)
                       .map((item, key) => {
@@ -143,14 +149,15 @@ const NewsModal = ({
                               month={item.month}
                               year={item.year}
                               link={item.link}
+                              image={item.imageSrc}
                               onSelectOtherNews={onSelectOtherNews}
                             />
                           </div>
                         );
                       })
-                  ) : height > 1000 && height < 2400 ? (
+                  ) : height > 1000 && height < 2400 && specialItems.includes(newsId) === false ? (
                     getItemsWithoutCurrentItem(newsId, latestNewsData)
-                      .slice(0, 20)
+                      .slice(0, 14)
                       .map((item, key) => {
                         return (
                           <div key={key}  onClick={() => {
@@ -164,14 +171,15 @@ const NewsModal = ({
                               month={item.month}
                               year={item.year}
                               link={item.link}
+                              image={item.imageSrc}
                               onSelectOtherNews={onSelectOtherNews}
                             />
                           </div>
                         );
                       })
-                  ) : height > 2400 && height < 2500 ? (
+                  ) : height > 2400 && height < 2500 && specialItems.includes(newsId) === false ? (
                     getItemsWithoutCurrentItem(newsId, latestNewsData)
-                      .slice(0, 24)
+                      .slice(0, 17)
                       .map((item, key) => {
                         return (
                           <div key={key} onClick={() => {
@@ -185,14 +193,15 @@ const NewsModal = ({
                               month={item.month}
                               year={item.year}
                               link={item.link}
+                              image={item.imageSrc}
                               onSelectOtherNews={onSelectOtherNews}
                             />
                           </div>
                         );
                       })
-                  ) : height > 2400 && height < 3070 ? (
+                  ) : height > 2400 && height < 3070 && specialItems.includes(newsId) === false ? (
                     getItemsWithoutCurrentItem(newsId, latestNewsData)
-                      .slice(0, 31)
+                      .slice(0, 21)
                       .map((item, key) => {
                         return (
                           <div key={key}  onClick={() => {
@@ -206,12 +215,13 @@ const NewsModal = ({
                               month={item.month}
                               year={item.year}
                               link={item.link}
+                              image={item.imageSrc}
                               onSelectOtherNews={onSelectOtherNews}
                             />
                           </div>
                         );
                       })
-                  ) : height > 3070 && height < 3670 ? (
+                  ) : height > 3070 && height < 3670 && specialItems.includes(newsId) === false ? (
                     getItemsWithoutCurrentItem(newsId, latestNewsData)
                       .slice(0, 36)
                       .map((item, key) => {
@@ -227,12 +237,13 @@ const NewsModal = ({
                               month={item.month}
                               year={item.year}
                               link={item.link}
+                              image={item.imageSrc}
                               onSelectOtherNews={onSelectOtherNews}
                             />
                           </div>
                         );
                       })
-                  ) : height > 3670 && height < 3750 ? (
+                  ) : height > 3670 && height < 3750 && specialItems.includes(newsId) === false ? (
                     getItemsWithoutCurrentItem(newsId, latestNewsData)
                       .slice(0, 57)
                       .map((item, key) => {
@@ -248,12 +259,13 @@ const NewsModal = ({
                               month={item.month}
                               year={item.year}
                               link={item.link}
+                              image={item.imageSrc}
                               onSelectOtherNews={onSelectOtherNews}
                             />
                           </div>
                         );
                       })
-                  ) : height > 3750 && height < 5870 ? (
+                  ) : height > 3750 && height < 5870 && specialItems.includes(newsId) === false ? (
                     getItemsWithoutCurrentItem(newsId, latestNewsData)
                       .slice(0, 37)
                       .map((item, key) => {
@@ -267,12 +279,13 @@ const NewsModal = ({
                               month={item.month}
                               year={item.year}
                               link={item.link}
+                              image={item.imageSrc}
                               onSelectOtherNews={onSelectOtherNews}
                             />
                           </div>
                         );
                       })
-                  ) : height > 5870 && height < 6650 ? (
+                  ) : height > 5870 && height < 6650 && specialItems.includes(newsId) === false ? (
                     getItemsWithoutCurrentItem(newsId, latestNewsData)
                       .slice(0, 57)
                       .map((item, key) => {
@@ -288,12 +301,13 @@ const NewsModal = ({
                               month={item.month}
                               year={item.year}
                               link={item.link}
+                              image={item.imageSrc}
                               onSelectOtherNews={onSelectOtherNews}
                             />
                           </div>
                         );
                       })
-                  ) : height > 6650 ? (
+                  ) : height > 6650  && specialItems.includes(newsId) === false? (
                     getItemsWithoutCurrentItem(newsId, latestNewsData).map(
                       (item, key) => {
                         return (
@@ -308,6 +322,139 @@ const NewsModal = ({
                               month={item.month}
                               year={item.year}
                               link={item.link}
+                              image={item.imageSrc}
+                              onSelectOtherNews={onSelectOtherNews}
+                            />
+                          </div>
+                        );
+                      }
+                    )
+                  ) : newsId === 23 || newsId === 27 ? (
+                    getItemsWithoutCurrentItem(newsId, latestNewsData).slice(0,25).map(
+                      (item, key) => {
+                        return (
+                          <div key={key}  onClick={() => {
+                            elementRef.current?.scrollIntoView({block: 'start'})
+                          }}>
+                            <RelatedNews
+                              newsId={item.id}
+                              theme={theme}
+                              title={item.title}
+                              date={item.date}
+                              month={item.month}
+                              year={item.year}
+                              link={item.link}
+                              image={item.imageSrc}
+                              onSelectOtherNews={onSelectOtherNews}
+                            />
+                          </div>
+                        );
+                      }
+                    )
+                  ) : newsId === 19 ? (
+                    getItemsWithoutCurrentItem(newsId, latestNewsData).slice(0,12).map(
+                      (item, key) => {
+                        return (
+                          <div key={key}  onClick={() => {
+                            elementRef.current?.scrollIntoView({block: 'start'})
+                          }}>
+                            <RelatedNews
+                              newsId={item.id}
+                              theme={theme}
+                              title={item.title}
+                              date={item.date}
+                              month={item.month}
+                              year={item.year}
+                              link={item.link}
+                              image={item.imageSrc}
+                              onSelectOtherNews={onSelectOtherNews}
+                            />
+                          </div>
+                        );
+                      }
+                    )
+                  ) : newsId === 21 ? (
+                    getItemsWithoutCurrentItem(newsId, latestNewsData).slice(0,46).map(
+                      (item, key) => {
+                        return (
+                          <div key={key}  onClick={() => {
+                            elementRef.current?.scrollIntoView({block: 'start'})
+                          }}>
+                            <RelatedNews
+                              newsId={item.id}
+                              theme={theme}
+                              title={item.title}
+                              date={item.date}
+                              month={item.month}
+                              year={item.year}
+                              link={item.link}
+                              image={item.imageSrc}
+                              onSelectOtherNews={onSelectOtherNews}
+                            />
+                          </div>
+                        );
+                      }
+                    )
+                  ) : newsId === 28 ? (
+                    getItemsWithoutCurrentItem(newsId, latestNewsData).slice(0,16).map(
+                      (item, key) => {
+                        return (
+                          <div key={key}  onClick={() => {
+                            elementRef.current?.scrollIntoView({block: 'start'})
+                          }}>
+                            <RelatedNews
+                              newsId={item.id}
+                              theme={theme}
+                              title={item.title}
+                              date={item.date}
+                              month={item.month}
+                              year={item.year}
+                              link={item.link}
+                              image={item.imageSrc}
+                              onSelectOtherNews={onSelectOtherNews}
+                            />
+                          </div>
+                        );
+                      }
+                    )
+                  ) : newsId === 29 ? (
+                    getItemsWithoutCurrentItem(newsId, latestNewsData).slice(0,7).map(
+                      (item, key) => {
+                        return (
+                          <div key={key}  onClick={() => {
+                            elementRef.current?.scrollIntoView({block: 'start'})
+                          }}>
+                            <RelatedNews
+                              newsId={item.id}
+                              theme={theme}
+                              title={item.title}
+                              date={item.date}
+                              month={item.month}
+                              year={item.year}
+                              link={item.link}
+                              image={item.imageSrc}
+                              onSelectOtherNews={onSelectOtherNews}
+                            />
+                          </div>
+                        );
+                      }
+                    )
+                  ) : newsId === 20 ? (
+                    getItemsWithoutCurrentItem(newsId, latestNewsData).slice(0,41).map(
+                      (item, key) => {
+                        return (
+                          <div key={key}  onClick={() => {
+                            elementRef.current?.scrollIntoView({block: 'start'})
+                          }}>
+                            <RelatedNews
+                              newsId={item.id}
+                              theme={theme}
+                              title={item.title}
+                              date={item.date}
+                              month={item.month}
+                              year={item.year}
+                              link={item.link}
+                              image={item.imageSrc}
                               onSelectOtherNews={onSelectOtherNews}
                             />
                           </div>

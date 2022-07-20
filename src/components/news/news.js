@@ -3301,7 +3301,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
               {...owlCarouselOptions}
             >
               {newsArray.length > 0 &&
-                newsArray.slice(0, 4).map((item, key) => {
+                newsArray.slice(0, 7).map((item, key) => {
                   return (
                     <div className="" key={key}>
                       <MainNews
@@ -3351,9 +3351,9 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
               </h6>
             </div>
             {newsArray.length > 0 &&
-              newsArray.slice(0, 4).map((item, key) => {
+              newsArray.slice(0, 7).map((item, key) => {
                 return (
-                  <div className="banner-item" key={key}>
+                  <div className="banner-item pl-0" key={key}>
                     <SingleNews
                       image={item.imageSrc}
                       title={item.title}
@@ -3433,9 +3433,10 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                     link={item.link}
                     date={item.date}
                     theme={theme}
+                    newsId={item.id}
                     onOtherNewsClick={() => {
-                      setActiveNews(newsArray[key]);
-                      // setShowModal(true);
+                      setActiveNews(otherNews[key]);
+                      setShowModal(true);
                     }}
                   />
                 </div>

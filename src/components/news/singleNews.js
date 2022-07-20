@@ -13,9 +13,9 @@ const SingleNews = ({ title, image, link, month, day, year, onNewsClick, theme }
     <div className="singlenews-body" onClick={onNewsClick}>
       <div className="row m-0 justify-content-between" style={{ gap: 20 }}>
         <div className="singlenews-wrapper">
-          <a href={link} target={"_blank"}>
+          {/* <a href={link} target={"_blank"}> */}
             <h4 className="singlenews-title">{title}</h4>
-          </a>
+          {/* </a> */}
           <div className="news-bottom-wrapper">
             <div className="like-wrapper">
               <img
@@ -61,7 +61,7 @@ const SingleNews = ({ title, image, link, month, day, year, onNewsClick, theme }
         </div>
         <a href={link} target={"_blank"}>
           <div>
-            <img src={image} alt="" className="singlenews-image" />
+            <img src={image} alt="" className="singlenews-image d-none" />
           </div>
         </a>
       </div>

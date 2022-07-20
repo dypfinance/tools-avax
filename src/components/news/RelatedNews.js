@@ -12,6 +12,7 @@ const RelatedNews = ({
   date,
   year,
   link,
+  image,
   theme,
   onSelectOtherNews,
   newsId,
@@ -21,9 +22,10 @@ const RelatedNews = ({
   return (
     <div onClick={() => onSelectOtherNews(newsId)}>
       <div className="single-related-news-wrapper">
-        {/* <a href={link} > */}
-         <h6 className="related-subnews-title">{title}</h6> 
-        {/* </a> */}
+        <div className="d-flex align-items-center justify-content-between" style={{gap: 5}}>
+        <h6 className="related-subnews-title">{title}</h6>
+        <img src={image} alt="" className="singlenews-image" />
+        </div>
         <div className="news-bottom-wrapper">
           <div className="like-wrapper">
             <img
@@ -31,8 +33,8 @@ const RelatedNews = ({
                 likeIndicator === "none"
                   ? VotePassive
                   : likeIndicator === "like"
-                  ? Upvote
-                  : Downvote
+                    ? Upvote
+                    : Downvote
               }
               alt=""
               className="like-indicator"
@@ -41,14 +43,14 @@ const RelatedNews = ({
                 e.stopPropagation();
               }}
             />
-       <img
+            <img
               src={
                 likeIndicator === "none"
                   ? VotePassive
                   : likeIndicator === "like"
-                  ? Upvote
-                
-                : Downvote
+                    ? Upvote
+
+                    : Downvote
               }
               alt=""
               className="like-indicator"

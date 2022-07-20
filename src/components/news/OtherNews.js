@@ -6,7 +6,7 @@ import Dots from "./assets/dots.svg";
 import Clock from "./assets/clock.svg";
 import WhiteDots from "./assets/dots-white.svg";
 
-  const OtherNews = ({ image, link, title, date, theme, onOtherNewsClick,newsId }) => {
+  const OtherNews = ({ image, link, title, date, theme, onOtherNewsClick, newsId }) => {
   const [likeIndicator, setLikeIndicator] = useState("none");
 
   return (
@@ -18,9 +18,9 @@ import WhiteDots from "./assets/dots-white.svg";
           className="other-news-image"
         />
         <div style={{ padding: 12, gap: 10 }} className="d-flex flex-column">
-          <a href={link} target={"_blank"}>
+          {/* <a href={link} target={"_blank"}> */}
             <h4 className="singlenews-title">{title}</h4>
-          </a>
+          {/* </a> */}
           <div className="news-bottom-wrapper">
             <div className="like-wrapper">
               <img

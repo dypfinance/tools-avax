@@ -12,7 +12,7 @@ const MainNews = ({ link, image, title, month, day, year, theme, onShowModalClic
   return (
     <div className="main-news-image">
       <div className="banner-item">
-        <a target="_blank" href={link}>
+        {/* <a target="_blank" href={link}> */}
           <div className="main-image">
             <img src={image} alt="Image not found" className="news-image" onClick={(e)=>{e.preventDefault();onShowModalClick()}}/>
             <div className="tag-wrapper d-none">
@@ -23,7 +23,7 @@ const MainNews = ({ link, image, title, month, day, year, theme, onShowModalClic
             </div>
           </div>
           <h2 className="main-title-text">{title}</h2>
-        </a>
+        {/* </a> */}
         <div className="news-bottom-wrapper">
           <div className="like-wrapper">
             <img

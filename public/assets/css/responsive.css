@@ -15,7 +15,7 @@
     .home-menu a span,
     .menu-cat-one ul li a span,
     .menu-cat-two ul li a span {
-        font-size: 1.1rem;
+        font-size: 12px;
         position: relative;
         top: -3px
     }
@@ -161,7 +161,7 @@
     }
 
     .logo a img {
-        max-width: 60px;
+        /* max-width: 60px; */
     }
 
     .right-content {
