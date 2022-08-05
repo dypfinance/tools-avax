@@ -2,47 +2,111 @@ import React, { useState } from "react";
 import VotePassive from "./assets/votepassive.svg";
 import Upvote from "./assets/upvote.svg";
 import Downvote from "./assets/downvote.svg";
-import Dots from "./assets/dots.svg";
+import ToolTip from "./ToolTip";
 import Clock from "./assets/clock.svg";
-import WhiteDots from "./assets/dots-white.svg";
+import OutsideClickHandler from "react-outside-click-handler";
 
-  const OtherNews = ({ image, link, title, date, theme, onOtherNewsClick, newsId }) => {
-  const [likeIndicator, setLikeIndicator] = useState("none");
+const OtherNews = ({
+  image,
+  link,
+  title,
+  date,
+  year,
+  month,
+  theme,
+  onOtherNewsClick,
+  newsId,
+  upvotes,
+  downvotes,
+  onUpVoteClick,
+  onDownVoteClick,
+  onHandlePressDownvote,
+  onHandlePressUpvote
+}) => {
+  const [likeIndicator, setLikeIndicator] = useState(false);
+  const [dislikeIndicator, setDislikeIndicator] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
+
+  const bal1 = Number(localStorage.getItem("balance1"));
+  const bal2 = Number(localStorage.getItem("balance2"));
+
+  const handleLikeStates = () => {
+    if (bal1 === 0 && bal2 === 0) {
+      setLikeIndicator(false);
+      setShowTooltip(true);
+    } else {
+      if (likeIndicator === true) {
+        setLikeIndicator(false);
+        onHandlePressDownvote(newsId);
+      } else if (likeIndicator === false) {
+        setLikeIndicator(true);
+        onHandlePressUpvote(newsId);
+      }
+    }
+  };
+
+  const handleDisLikeStates = () => {
+    if (bal1 === 0 && bal2 === 0) {
+      setLikeIndicator(false);
+      onHandlePressDownvote(newsId);
+    } else {
+      if (dislikeIndicator === true) {
+        setDislikeIndicator(false);
+        onHandlePressUpvote(newsId);
+      } else if (dislikeIndicator === false) {
+        onHandlePressDownvote(newsId);
+        setDislikeIndicator(true);
+      }
+    }
+  };
 
   return (
-    <div className="other-news-singlewrapper" onClick={()=>{onOtherNewsClick(newsId)}}>
+    <div
+      className="other-news-singlewrapper"
+      onClick={() => {
+        onOtherNewsClick(newsId);
+      }}
+    >
       <div>
-        <img
-          src={image}
-          alt=""
-          className="other-news-image"
-        />
+        <img src={image} alt="" className="other-news-image" />
         <div style={{ padding: 12, gap: 10 }} className="d-flex flex-column">
           {/* <a href={link} target={"_blank"}> */}
-            <h4 className="singlenews-title">{title}</h4>
+          <h4 className="singlenews-title">{title}</h4>
           {/* </a> */}
           <div className="news-bottom-wrapper">
             <div className="like-wrapper">
               <img
                 src={
-                  likeIndicator === "none"
+                  (likeIndicator === false && dislikeIndicator === false)
                     ? VotePassive
-                    : likeIndicator === "like"
+                    : likeIndicator === true
                     ? Upvote
                     : Downvote
                 }
                 alt=""
                 className="like-indicator"
                 onClick={(e) => {
-                  setLikeIndicator("like");
+                  handleLikeStates();
                   e.stopPropagation();
                 }}
               />
+              {showTooltip === true ? (
+              <OutsideClickHandler
+                onOutsideClick={() => {
+                  setShowTooltip(false);
+                }}
+              >
+                <ToolTip/>
+              </OutsideClickHandler>
+            ) : (
+              <></>
+            )}
+            {Number(upvotes) - Number(downvotes)}
               <img
                 src={
-                  likeIndicator === "none"
+                  (likeIndicator === false && dislikeIndicator === false)
                     ? VotePassive
-                    : likeIndicator === "like"
+                    : likeIndicator === true
                     ? Upvote
                     : Downvote
                 }
@@ -50,23 +114,24 @@ import WhiteDots from "./assets/dots-white.svg";
                 className="like-indicator"
                 id="dislike"
                 onClick={(e) => {
-                  setLikeIndicator("dislike");
+                  handleDisLikeStates();
                   e.stopPropagation();
                 }}
               />
             </div>
-            <img
+            {/* <img
               src={theme === "theme-dark" ? WhiteDots : Dots}
               alt=""
               style={{ width: "auto" }}
-            />
+            /> */}
             <div className="date-wrapper">
               <img src={Clock} alt="" style={{ width: "auto" }} />
-              <h6 className="date-content">{date}</h6>
+              <h6 className="date-content">{date} {month}, {year}</h6>
             </div>
           </div>
         </div>
       </div>
+      
     </div>
   );
 };

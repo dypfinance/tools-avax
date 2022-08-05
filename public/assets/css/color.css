@@ -26,8 +26,18 @@ body.theme-dark .news-title {
     color: var(--white) !important;
 }
 
+body.theme-dark .hoverNetwork,
+body.theme-dark .copylink-wrapper,
+body.theme-dark .info-wrappers, 
+body.theme-dark .pair-locks-wrapper
+{
+    background: rgba(239, 240, 246, 0.3) !important;
+}
+
+
 body.theme-dark,
-body.theme-dark .dropdown.open ul {
+body.theme-dark .dropdown.open ul,
+body.theme-dark .form-control {
     background-color: var(--grey);
 }
 

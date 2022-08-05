@@ -15,7 +15,7 @@
     .home-menu a span,
     .menu-cat-one ul li a span,
     .menu-cat-two ul li a span {
-        font-size: 12px;
+        font-size: 11px;
         position: relative;
         /* top: -3px */
     }
@@ -89,7 +89,7 @@
     }
 
     .header-left {
-        width: 80%;
+        width: 62%;
         margin: 0;
         padding: 0 0 0 15px;
     }

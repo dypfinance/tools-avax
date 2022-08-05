@@ -15,7 +15,9 @@ import Sidebar from "./components/sidebar";
 import Header from "./components/header";
 import Footer from "./components/footer";
 import { Route } from "react-router-dom";
-
+import SubmitInfo from "./components/submit-info/SubmitInfo";
+import { Switch } from "react-router-dom";
+import { RedirectPathToNewsOnly } from "./functions/redirects";
 import getSyncStats from "./functions/get-indexing-status";
 import getFormattedNumber from "./functions/get-formatted-number";
 
@@ -31,9 +33,9 @@ class App extends React.Component {
       isMinimized: false && window.innerWidth >= 992,
       isOpenInMobile: false,
       isConnected: false,
+      chainId: undefined,
       coinbase: null,
       network: "avalanche",
-
       subscribedPlatformTokenAmount: "...",
       isPremium: false,
 
@@ -56,36 +58,54 @@ class App extends React.Component {
     //   }
     // }.bind(this))
 
-    let coinbase = await window.getCoinbase();
-    //console.log({coinbase})
-    let subscribedPlatformTokenAmount =
+    let coinbase = await window.getCoinbase().then((data) => {
+      return data;
+    });
+
+    let subscribedPlatformTokenAmount;
+    if (window.ethereum.chainId === "0x1") {
+      await window.subscriptionPlatformTokenAmountETH(coinbase);
+      let isPremium = Number(subscribedPlatformTokenAmount) > 0;
+      this.setState({ subscribedPlatformTokenAmount, isPremium });
+    }
+
+    if (window.ethereum.chainId === "0xa86a") {
       await window.subscriptionPlatformTokenAmount(coinbase);
-    let isPremium = Number(subscribedPlatformTokenAmount) > 0;
-    this.setState({ subscribedPlatformTokenAmount, isPremium });
+      let isPremium = Number(subscribedPlatformTokenAmount) > 0;
+      this.setState({ subscribedPlatformTokenAmount, isPremium });
+    }
   };
 
   handleConnection = async () => {
+    let coinbase = this.state.coinbase;
+
+    this.setState({
+      coinbase: await window.getCoinbase()?.then((data) => {
+        return data;
+      }),
+      // : undefined,
+    });
+    return coinbase;
+  };
+
+  getAddress = async () => {
     let isConnected = this.state.isConnected;
-    try {
-      isConnected = await window.connectWallet();
-      // const networkId = await window.web3.eth.net.getId();
-      // const chainId = await window.web3.eth.getChainId();
-      // if (chainId == '1') {
-      //   this.setState({isNetwork: 'ethereum'})
-      // }
-      // else{
-      //   this.setState({isNetwork: 'binance'})
-      // }
-    } catch (e) {
-      window.alertify.error(String(e) || "Cannot connect wallet!");
-      return;
-    }
-    this.setState({ isConnected, coinbase: await window.getCoinbase() });
+    this.setState({
+      isConnected:
+        (await window.ethereum.selectedAddress) !== undefined ? true : false,
+    });
     return isConnected;
   };
 
   refreshHotPairs = async () => {
-    window.$.get(`${API_BASEURL}/api/hot-pairs`)
+    window.$.get(
+      `${
+        window.ethereum.chainId === "0x1"
+          ? "https://app-tools.dyp.finance"
+          : "https://app-tools-avax.dyp.finance"
+      }/api/hot-pairs`
+    )
+      // window.$.get(`${API_BASEURL}/api/hot-pairs`)
       .then(({ hotPairs }) => {
         this.setState({ hotPairs });
       })
@@ -93,33 +113,34 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-    getSyncStats()
-      .then((syncStatus) => {
-        // let m = window.alertify.message(`Syncing ${getFormattedNumber(syncStatus.latestBlock.number)} of ${getFormattedNumber(syncStatus.chainHeadBlock.number)} blocks`)
-        let m = window.alertify.message(
-          `Warning: The data on this site has only synced to Avalanche block ${getFormattedNumber(
-            syncStatus.latestBlock.number
-          )} (out of ${getFormattedNumber(
-            syncStatus.chainHeadBlock.number
-          )}). Please check back soon.`
-        );
-        m.ondismiss = (f) => false;
-        m.element.style.lineHeight = 1.7;
-      })
-      .catch(console.error);
-    this.refreshHotPairs();
-    this.subscriptionInterval = setInterval(this.refreshSubscription, 5e3);
-    fetch(
-      "https://api.coingecko.com/api/v3/simple/price?ids=avalanche-2&vs_currencies=usd"
-    )
-      .then((res) => res.json())
-      .then((data) => this.setState({ ethPrice: data["avalanche-2"]["usd"] }))
-      .catch(console.error);
+    this.handleConnection();
+    // console.log(window.ethereum.chainId);
+    // getSyncStats()
+    // .then((syncStatus) => {
+    // let m = window.alertify.message(
+    //   `Syncing ${getFormattedNumber(
+    //     syncStatus.latestBlock.number
+    //   )} of ${getFormattedNumber(syncStatus.chainHeadBlock.number)} blocks`
+    // );
+    //   let m = window.alertify.message(
+    //     `Warning: The data on this site has only synced to Avalanche block ${getFormattedNumber(
+    //       syncStatus.latestBlock.number
+    //     )} (out of ${getFormattedNumber(
+    //       syncStatus.chainHeadBlock.number
+    //     )}). Please check back soon.`
+    //   );
+    //   m.ondismiss = (f) => false;
+    //   m.element.style.lineHeight = 1.7;
+    // })
+    // .catch(console.error);
+    window.connectWallet().then();
+    // if(window.ethereum) {
+    //   console.log(window.getCoinbase().then())
+    // }
+    this.getAddress();
 
-    fetch("https://api.dyp.finance/api/bridged_on_avalanche")
-      .then((res) => res.json())
-      .then((data) => this.setState({ gasPrice: data }))
-      .catch(console.error);
+    // this.refreshHotPairs();
+    this.subscriptionInterval = setInterval(this.refreshSubscription, 5e3);
   }
 
   componentWillUnmount() {
@@ -139,7 +160,7 @@ class App extends React.Component {
 
   toggleNetwork = (network) => {
     console.log("aaa");
-    this.setState({ network: network });
+    // this.setState({ network: network });
   };
 
   toggleMinimizeSidebar = () => {
@@ -168,112 +189,123 @@ class App extends React.Component {
           </div>
         </div>
         <Header
-          appState={this.state}
+          toggleTheme={this.toggleTheme}
+          theme={this.state.theme}
           toggleMobileSidebar={this.toggleMobileSidebar}
-          ethPrice={this.state.ethPrice}
-          gasPrice={this.state.gasPrice}
-           isConnected={this.state.isConnected}
-          handleConnection={this.handleConnection}
           isOpenInMobile={this.state.isOpenInMobile}
-           toggleNetwork={this.toggleNetwork}
-
         />
         <div className="content-wrapper">
           <Sidebar
             appState={this.state}
-            toggleMobileSidebar={this.toggleMobileSidebar}
-           
             theme={this.state.theme}
-            toggleTheme={this.toggleTheme}
+            isConnected={this.state.isConnected}
+            handleConnection={this.handleConnection}
+            toggleMobileSidebar={this.toggleMobileSidebar}
+            isOpenInMobile={this.state.isOpenInMobile}
           />
           <div className="right-content">
-            <Route
-              exact
-              path="/pool-explorer"
-              render={() => (
-                <PoolExplorer
-                  theme={this.state.theme}
-                  network={this.state.network}
-                />
-              )}
-            />
-            <Route
-              exact
-              path="/"
-              render={() => <News theme={this.state.theme} />}
-            />
-            <Route
-              exact
-              path="/big-swap-explorer"
-              render={() => (
-                <BigSwapExplorer
-                  theme={this.state.theme}
-                  network={this.state.network}
-                />
-              )}
-            />
-            <Route
-              exact
-              path="/pair-explorer/:pair_id?"
-              render={(props) => (
-                <PairExplorer
-                  appState={this.state}
-                  isPremium={this.state.isPremium}
-                  key={props.match.params.pair_id}
-                  theme={this.state.theme}
-                  {...props}
-                />
-              )}
-            />
-            <Route
-              exact
-              path="/top-tokens"
-              render={() => <TopTokens theme={this.state.theme} />}
-            />
-            <Route
-              exact
-              path="/account"
-              render={() => (
-                <Account appState={this.state} theme={this.state.theme} />
-              )}
-            />
-            <Route
-              exact
-              path="/locker/:pair_id?"
-              render={(props) => (
-                <Locker
-                  handleConnection={this.handleConnection}
-                  isConnected={this.state.isConnected}
-                  key={props.match.params.pair_id}
-                  theme={this.state.theme}
-                  {...props}
-                />
-              )}
-            />
-            <Route
-              exact
-              path="/admin"
-              render={(props) => (
-                <Admin
-                  handleConnection={this.handleConnection}
-                  isConnected={this.state.isConnected}
-                  appState={this.state}
-                  {...props}
-                />
-              )}
-            />
-            <Route
-              exact
-              path="/farms"
-              render={(props) => (
-                <Farms
-                  handleConnection={this.handleConnection}
-                  isConnected={this.state.isConnected}
-                  appState={this.state}
-                  {...props}
-                />
-              )}
-            />
+            <Switch>
+              <Route
+                exact
+                path="/pool-explorer"
+                render={() => (
+                  <PoolExplorer
+                    theme={this.state.theme}
+                    network={this.state.network}
+                    handleConnection={this.getAddress}
+                    isConnected={this.state.isConnected}
+                    appState={this.state}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path="/news"
+                render={() => <News theme={this.state.theme} />}
+              />
+              <Route
+                exact
+                path="/big-swap-explorer"
+                render={() => (
+                  <BigSwapExplorer
+                    theme={this.state.theme}
+                    network={this.state.network}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path="/pair-explorer/:pair_id?"
+                render={(props) => (
+                  // to do
+                  <PairExplorer
+                    appState={this.state}
+                    isPremium={this.state.isPremium}
+                    key={props.match.params.pair_id}
+                    theme={this.state.theme}
+                    {...props}
+                  />
+                )}
+              />
+
+              <Route
+                exact
+                path="/submit-info"
+                render={() => <SubmitInfo theme={this.state.theme} />}
+              />
+
+              <Route
+                exact
+                path="/top-tokens"
+                render={() => <TopTokens theme={this.state.theme} />}
+              />
+              <Route
+                exact
+                path="/account"
+                render={() => (
+                  <Account appState={this.state} theme={this.state.theme} />
+                )}
+              />
+              <Route
+                exact
+                path="/locker/:pair_id?"
+                render={(props) => (
+                  <Locker
+                    handleConnection={this.getAddress}
+                    isConnected={this.state.isConnected}
+                    key={props.match.params.pair_id}
+                    theme={this.state.theme}
+                    {...props}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path="/admin"
+                render={(props) => (
+                  <Admin
+                    handleConnection={this.handleConnection}
+                    isConnected={this.state.isConnected}
+                    appState={this.state}
+                    {...props}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path="/farms"
+                render={(props) => (
+                  <Farms
+                    handleConnection={this.handleConnection}
+                    isConnected={this.state.isConnected}
+                    appState={this.state}
+                    {...props}
+                  />
+                )}
+              />
+              <Route component={RedirectPathToNewsOnly} />
+
+            </Switch>
 
             <Footer />
           </div>

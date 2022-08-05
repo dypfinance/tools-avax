@@ -18,8 +18,11 @@ const NewsModal = ({
   latestNewsData,
   pressData,
   theme,
-  onShowModalPressInfo,
+  onHandleUpvote,
+  onHandleDownvote,
   onSelectOtherNews,
+  onHandlePressDownvote,
+  onHandlePressUpvote
 }) => {
   const specialItems = [19, 20, 21, 23, 27, 28, 29]
   
@@ -84,8 +87,12 @@ const NewsModal = ({
                               month={item.month}
                               year={item.year}
                               link={item.link}
+                              upvotes={item.upvote}
+                              downvotes={item.downvote}
                               image={item.imageSrc}
                               onSelectOtherNews={onSelectOtherNews}
+                              onHandleDownvote={onHandleDownvote}
+                              onHandleUpvote={onHandleUpvote}
                             />
                           </div>
                         );
@@ -106,8 +113,12 @@ const NewsModal = ({
                               month={item.month}
                               year={item.year}
                               link={item.link}
+                              upvotes={item.upvote}
+                              downvotes={item.downvote}
                               image={item.imageSrc}
                               onSelectOtherNews={onSelectOtherNews}
+                              onHandleUpvote={onHandleUpvote}
+                              onHandleDownvote={onHandleDownvote}
                             />
                           </div>
                         );
@@ -129,6 +140,10 @@ const NewsModal = ({
                               year={item.year}
                               image={item.imageSrc}
                               link={item.link}
+                              upvotes={item.upvote}
+                              downvotes={item.downvote}
+                              onHandleUpvote={onHandleUpvote}
+                              onHandleDownvote={onHandleDownvote}
                             />
                           </div>
                         );
@@ -149,8 +164,12 @@ const NewsModal = ({
                               month={item.month}
                               year={item.year}
                               link={item.link}
+                              upvotes={item.upvote}
+                              downvotes={item.downvote}
                               image={item.imageSrc}
                               onSelectOtherNews={onSelectOtherNews}
+                              onHandleUpvote={onHandleUpvote}
+                              onHandleDownvote={onHandleDownvote}
                             />
                           </div>
                         );
@@ -171,8 +190,12 @@ const NewsModal = ({
                               month={item.month}
                               year={item.year}
                               link={item.link}
+                              upvotes={item.upvote}
+                              downvotes={item.downvote}
                               image={item.imageSrc}
                               onSelectOtherNews={onSelectOtherNews}
+                              onHandleUpvote={onHandleUpvote}
+                              onHandleDownvote={onHandleDownvote}
                             />
                           </div>
                         );
@@ -193,8 +216,12 @@ const NewsModal = ({
                               month={item.month}
                               year={item.year}
                               link={item.link}
+                              upvotes={item.upvote}
+                              downvotes={item.downvote}
                               image={item.imageSrc}
                               onSelectOtherNews={onSelectOtherNews}
+                              onHandleUpvote={onHandleUpvote}
+                              onHandleDownvote={onHandleDownvote}
                             />
                           </div>
                         );
@@ -215,8 +242,12 @@ const NewsModal = ({
                               month={item.month}
                               year={item.year}
                               link={item.link}
+                              upvotes={item.upvote}
+                              downvotes={item.downvote}
                               image={item.imageSrc}
                               onSelectOtherNews={onSelectOtherNews}
+                              onHandleUpvote={onHandleUpvote}
+                              onHandleDownvote={onHandleDownvote}
                             />
                           </div>
                         );
@@ -237,8 +268,12 @@ const NewsModal = ({
                               month={item.month}
                               year={item.year}
                               link={item.link}
+                              upvotes={item.upvote}
+                              downvotes={item.downvote}
                               image={item.imageSrc}
                               onSelectOtherNews={onSelectOtherNews}
+                              onHandleUpvote={onHandleUpvote}
+                              onHandleDownvote={onHandleDownvote}
                             />
                           </div>
                         );
@@ -259,8 +294,12 @@ const NewsModal = ({
                               month={item.month}
                               year={item.year}
                               link={item.link}
+                              upvotes={item.upvote}
+                              downvotes={item.downvote}
                               image={item.imageSrc}
                               onSelectOtherNews={onSelectOtherNews}
+                              onHandleUpvote={onHandleUpvote}
+                              onHandleDownvote={onHandleDownvote}
                             />
                           </div>
                         );
@@ -279,8 +318,12 @@ const NewsModal = ({
                               month={item.month}
                               year={item.year}
                               link={item.link}
+                              upvotes={item.upvote}
+                              downvotes={item.downvote}
                               image={item.imageSrc}
                               onSelectOtherNews={onSelectOtherNews}
+                              onHandleUpvote={onHandleUpvote}
+                              onHandleDownvote={onHandleDownvote}
                             />
                           </div>
                         );
@@ -301,8 +344,12 @@ const NewsModal = ({
                               month={item.month}
                               year={item.year}
                               link={item.link}
+                              upvotes={item.upvote}
+                              downvotes={item.downvote}
                               image={item.imageSrc}
                               onSelectOtherNews={onSelectOtherNews}
+                              onHandleUpvote={onHandleUpvote}
+                              onHandleDownvote={onHandleDownvote}
                             />
                           </div>
                         );
@@ -322,8 +369,12 @@ const NewsModal = ({
                               month={item.month}
                               year={item.year}
                               link={item.link}
+                              upvotes={item.upvote}
+                              downvotes={item.downvote}
                               image={item.imageSrc}
                               onSelectOtherNews={onSelectOtherNews}
+                              onHandleUpvote={onHandleUpvote}
+                              onHandleDownvote={onHandleDownvote}
                             />
                           </div>
                         );
@@ -344,8 +395,12 @@ const NewsModal = ({
                               month={item.month}
                               year={item.year}
                               link={item.link}
+                              upvotes={item.upvote}
+                              downvotes={item.downvote}
                               image={item.imageSrc}
                               onSelectOtherNews={onSelectOtherNews}
+                              onHandleUpvote={onHandleUpvote}
+                              onHandleDownvote={onHandleDownvote}
                             />
                           </div>
                         );
@@ -366,8 +421,12 @@ const NewsModal = ({
                               month={item.month}
                               year={item.year}
                               link={item.link}
+                              upvotes={item.upvote}
+                              downvotes={item.downvote}
                               image={item.imageSrc}
                               onSelectOtherNews={onSelectOtherNews}
+                              onHandleUpvote={onHandleUpvote}
+                              onHandleDownvote={onHandleDownvote}
                             />
                           </div>
                         );
@@ -388,8 +447,12 @@ const NewsModal = ({
                               month={item.month}
                               year={item.year}
                               link={item.link}
+                              upvotes={item.upvote}
+                              downvotes={item.downvote}
                               image={item.imageSrc}
                               onSelectOtherNews={onSelectOtherNews}
+                              onHandleUpvote={onHandleUpvote}
+                              onHandleDownvote={onHandleDownvote}
                             />
                           </div>
                         );
@@ -410,8 +473,12 @@ const NewsModal = ({
                               month={item.month}
                               year={item.year}
                               link={item.link}
+                              upvotes={item.upvote}
+                              downvotes={item.downvote}
                               image={item.imageSrc}
                               onSelectOtherNews={onSelectOtherNews}
+                              onHandleUpvote={onHandleUpvote}
+                              onHandleDownvote={onHandleDownvote}
                             />
                           </div>
                         );
@@ -432,8 +499,12 @@ const NewsModal = ({
                               month={item.month}
                               year={item.year}
                               link={item.link}
+                              upvotes={item.upvote}
+                              downvotes={item.downvote}
                               image={item.imageSrc}
                               onSelectOtherNews={onSelectOtherNews}
+                              onHandleUpvote={onHandleUpvote}
+                              onHandleDownvote={onHandleDownvote}
                             />
                           </div>
                         );
@@ -454,8 +525,12 @@ const NewsModal = ({
                               month={item.month}
                               year={item.year}
                               link={item.link}
+                              upvotes={item.upvote}
+                              downvotes={item.downvote}
                               image={item.imageSrc}
                               onSelectOtherNews={onSelectOtherNews}
+                              onHandleUpvote={onHandleUpvote}
+                              onHandleDownvote={onHandleDownvote}
                             />
                           </div>
                         );
@@ -490,7 +565,11 @@ const NewsModal = ({
                           link={item.link}
                           date={item.date}
                           theme={theme}
+                          upvotes={item.upvote}
+                          downvotes={item.downvote}
                           onOtherNewsClick={onSelectOtherNews}
+                          onHandlePressUpvote={onHandlePressUpvote}
+                          onHandlePressDownvote={onHandlePressDownvote}
                         />
                       </div>
                     );
