@@ -2074,7 +2074,7 @@ color: #FFFFFF !important;
 }
 
 .account-right-wrapper {
-  /* background: linear-gradient(88.05deg, #E306A5 7.88%, #F83131 92.92%); */
+position: relative;
 border-radius: 12px;
 padding: 20px;
 background-image: url(../img/account-right-hero.svg);
@@ -2108,8 +2108,40 @@ flex-direction: column;
 justify-content: center;
 align-items: center;
 margin: auto;
+cursor: pointer;
 }
 
+input[type="radio"]:checked {
+  accent-color: #E30613;
+}
+
+input[type="radio"] {
+  cursor: pointer;
+}
+
+.subscription-subtitle {
+font-weight: 400;
+font-size: 14px;
+line-height: 17px;
+color: rgba(0, 0, 0, 0.4) !important;
+}
+
+.radio-wrapper{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin: 0 10px;
+  width: fit-content;
+}
+
+.fire {
+  position: absolute;
+width: 100px;
+height: 100px;
+top: -2rem;
+right: 0%;
+
+}
 
 /*---------------------------------
         Content Footer CSS

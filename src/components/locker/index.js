@@ -912,7 +912,17 @@ export default class Locker extends React.Component {
                           this.state.lockActive === false ? "none" : "auto",
                       }}
                     >
-                      LOCK
+                      {this.state.loadspinnerLock === true ? (
+                        <>
+                          <div
+                            className="spinner-border "
+                            role="status"
+                            style={{ height: "1.5rem", width: "1.5rem" }}
+                          ></div>
+                        </>
+                      ) : (
+                        "LOCK"
+                      )}
                     </button>
                   </div>
                   {this.state.status !== "" && (
@@ -1347,7 +1357,7 @@ export default class Locker extends React.Component {
       }).format(timestamp * 1000);
       return result;
     };
-    
+
     return (
       <div>
         <strong style={{ fontSize: "1.2rem" }} className="d-block mb-3">

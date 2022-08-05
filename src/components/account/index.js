@@ -1,7 +1,8 @@
 import React from "react";
 import getFormattedNumber from "../../functions/get-formatted-number";
 import { NavLink } from "react-router-dom";
-
+import Error from "../../assets/error.svg";
+import Fire from './fire.png'
 
 const { BigNumber } = window;
 
@@ -11,7 +12,9 @@ export default class Subscription extends React.Component {
     this.state = {
       coinbase: "",
       selectedSubscriptionToken: Object.keys(
-        window.config.subscription_tokens
+        window.ethereum.chainId === "0x1"
+          ? window.config.subscriptioneth_tokens
+          : window.config.subscription_tokens
       )[0],
       tokenBalance: "",
       price: "",
@@ -19,6 +22,11 @@ export default class Subscription extends React.Component {
       favorites: [],
       selectedFile: null,
       image: "",
+      lockActive: false,
+      status: "",
+      loadspinner: false,
+      loadspinnerSub: false,
+
     };
   }
 
@@ -33,6 +41,14 @@ export default class Subscription extends React.Component {
     } else {
       window.addOneTimeWalletConnectionListener(this.onComponentMount);
     }
+    console.log(this.state.selectedSubscriptionToken);
+    this.setState({
+      selectedSubscriptionToken: Object.keys(
+        window.ethereum.chainId === "0x1"
+          ? window.config.subscriptioneth_tokens
+          : window.config.subscription_tokens
+      )[0],
+    });
   }
   componentWillUnmount() {
     window.removeOneTimeWalletConnectionListener(this.onComponentMount);
@@ -45,15 +61,21 @@ export default class Subscription extends React.Component {
 
   handleSubscriptionTokenChange = async (tokenAddress) => {
     let tokenDecimals =
-      window.config.subscription_tokens[tokenAddress].decimals;
+      window.ethereum.chainId === "0x1"
+        ? window.config.subscriptioneth_tokens[tokenAddress]?.decimals
+        : window.config.subscription_tokens[tokenAddress]?.decimals;
     this.setState({
       selectedSubscriptionToken: tokenAddress,
       tokenBalance: "",
       formattedPrice: "",
       price: "",
     });
-    let price = await window.getEstimatedTokenSubscriptionAmount(tokenAddress);
+    let price =
+      window.ethereum.chainId === "0x1"
+        ? await window.getEstimatedTokenSubscriptionAmountETH(tokenAddress)
+        : await window.getEstimatedTokenSubscriptionAmount(tokenAddress);
     price = new BigNumber(price).times(1.1).toFixed(0);
+
     let formattedPrice = getFormattedNumber(
       price / 10 ** tokenDecimals,
       tokenDecimals
@@ -67,21 +89,71 @@ export default class Subscription extends React.Component {
 
   handleApprove = async (e) => {
     e.preventDefault();
-    window.approveToken(
-      this.state.selectedSubscriptionToken,
-      window.config.subscription_address,
-      this.state.price
-    );
-  };
-  handleSubscribe = (e) => {
-    e.preventDefault();
-    console.log("handleSubscribe()");
-    window.subscribe(this.state.selectedSubscriptionToken, this.state.price);
+
+    let tokenContract = await window.getContract({
+      address: this.state.selectedSubscriptionToken,
+      ABI: window.ERC20_ABI,
+    });
+    this.setState({ loadspinner: true });
+
+
+    await tokenContract.methods
+      .approve(
+        window.ethereum.chainId === "0x1"
+          ? window.config.subscriptioneth_address
+          : window.config.subscriptioneth_address,
+        this.state.price
+      )
+      .send()
+      .then(() => {
+        this.setState({ lockActive: true });
+        this.setState({ loadspinner: false });
+      })
+      .catch((e) => {
+        this.setState({ status: "An error occurred. Please try again" });
+        this.setState({ loadspinner: false });
+      });
   };
 
-  handleUnsubscribe = (e) => {
+  handleSubscribe = async (e) => {
     e.preventDefault();
-    window.unsubscribe();
+    console.log("handleSubscribe()");
+    let subscriptionContract = await window.getContract({
+      key:
+        window.ethereum.chainId === "0x1" ? "SUBSCRIPTIONETH" : "SUBSCRIPTION",
+    });
+  
+        this.setState({ loadspinnerSub: true });
+   
+
+    await subscriptionContract.methods
+      .subscribe(this.state.selectedSubscriptionToken, this.state.price)
+      .send({ from: await window.getCoinbase() })
+      .then(() => {
+        this.setState({ loadspinnerSub: false });
+      })
+      .catch((e) => {
+        this.setState({ status: "An error occurred. Please try again" });
+        this.setState({ loadspinnerSub: false });
+      });
+  };
+
+  handleUnsubscribe = async (e) => {
+    e.preventDefault();
+    let subscriptionContract = await window.getContract({
+      key:
+        window.ethereum.chainId === "0x1" ? "SUBSCRIPTIONETH" : "SUBSCRIPTION",
+    });
+    await subscriptionContract.methods
+      .unsubscribe()
+      .send({ from: await window.getCoinbase() })
+      .then(() => {
+        // this.setState({ loadspinner: false });
+      })
+      .catch((e) => {
+        this.setState({ status: "An error occurred. Please try again" });
+        // this.setState({ loadspinner: false });
+      });
   };
 
   onImageChange = (event) => {
@@ -96,8 +168,13 @@ export default class Subscription extends React.Component {
 
   GetSubscriptionForm = () => {
     let tokenDecimals =
-      window.config.subscription_tokens[this.state.selectedSubscriptionToken]
-        .decimals;
+      window.ethereum.chainId === "0x1"
+        ? window.config.subscriptioneth_tokens[
+            this.state.selectedSubscriptionToken
+          ]?.decimals
+        : window.config.subscription_tokens[
+            this.state.selectedSubscriptionToken
+          ]?.decimals;
 
     return (
       <div>
@@ -121,6 +198,7 @@ export default class Subscription extends React.Component {
               </p>
             </div>
             <div className="account-right-wrapper">
+                <img src={Fire} alt=''  className="fire"/>
               <span className="account-left-title">
                 DYP TOOLS Premium benefits
               </span>
@@ -148,7 +226,12 @@ export default class Subscription extends React.Component {
             </div>
           </div>
           <div className="mt-3 mb-3">
-            <p>Avatar profile</p>
+            <strong
+              style={{ fontSize: "1.2rem" }}
+              className="d-block mb-3 mt-5"
+            >
+              Avatar profile
+            </strong>
             <div className="inputfile-wrapper">
               <img src={this.state.image} alt="your image" />
               <input
@@ -168,64 +251,133 @@ export default class Subscription extends React.Component {
           </div>
           {!this.props.appState.isPremium ? (
             <div>
-              <div className="form-group">
-                <p>Select Subscription Token</p>
-                <select
-                  disabled={!this.props.appState.isConnected}
-                  value={this.state.selectedSubscriptionToken}
-                  onChange={(e) =>
-                    this.handleSubscriptionTokenChange(e.target.value)
-                  }
-                  className="form-control"
+              <div className="row m-0" style={{ gap: 100 }}>
+                <div
+                  className="form-group"
+                  style={{ maxWidth: 490, width: "100%" }}
                 >
-                  {Object.keys(window.config.subscription_tokens).map((t) => (
-                    <option key={t} value={t}>
-                      {" "}
-                      {window.config.subscription_tokens[t].symbol}{" "}
-                    </option>
-                  ))}
-                </select>
-              </div>
+                  <p>Select Subscription Token</p>
+                  <div className="row m-0">
+                    {Object.keys(
+                      window.ethereum.chainId === "0x1"
+                        ? window.config.subscriptioneth_tokens
+                        : window.config.subscription_tokens
+                    ).map((t, i) => (
+                      <span className="radio-wrapper">
+                        <input
+                          type="radio"
+                          key={t}
+                          value={t}
+                          name={"tokensymbol"}
+                          checked={t == this.state.selectedSubscriptionToken}
+                          disabled={!this.props.appState.isConnected}
+                          onChange={
+                            (e) =>
+                              this.handleSubscriptionTokenChange(e.target.value)
+                            // console.log(e.target)
+                          }
+                        />
+                        {window.ethereum.chainId === "0x1"
+                          ? window.config.subscriptioneth_tokens[t]?.symbol
+                          : window.config.subscription_tokens[t]?.symbol}
+                      </span>
+                    ))}
+                  </div>
+                </div>
 
-              <div className="form-group">
-                <p>
-                  Token Amount (Balance:{" "}
-                  {getFormattedNumber(
-                    this.state.tokenBalance / 10 ** tokenDecimals,
-                    6
-                  )}
-                  ){" "}
-                </p>
-                <input
-                  disabled
-                  onChange={(e) => {
-                    let amount = new window.BigNumber(e.target.value);
-                    amount = amount.times(1e18).toFixed(0);
-                    this.setState({ amount });
-                  }}
-                  value={this.state.formattedPrice}
-                  type="number"
-                  placeholder="Subscription Token Amount"
-                  className="form-control"
-                />
-                <br />
+                <div className="form-group">
+                  <div>
+                    <p>Token Amount</p>
+                    <span className="subscription-subtitle">
+                      Subcription token amount
+                    </span>
+                    <div
+                      className="align-items-center row m-0"
+                      style={{ gap: 40 }}
+                    >
+                      <input
+                        style={{ width: "266px", height: 42 }}
+                        disabled
+                        onChange={(e) => {
+                          let amount = new window.BigNumber(e.target.value);
+                          amount = amount.times(1e18).toFixed(0);
+                          this.setState({ amount });
+                        }}
+                        value={this.state.formattedPrice}
+                        type="number"
+                        placeholder="Subscription Token Amount"
+                        className="form-control"
+                      />
+                      <div className="d-flex flex-column">
+                        <span className="balance-placeholder">Balance:</span>
+                        <span className="balance-text">
+                          {getFormattedNumber(
+                            this.state.tokenBalance / 10 ** tokenDecimals,
+                            6
+                          )}
+                        </span>
+                      </div>
+                    </div>
+                    <br />
+                  </div>
+                </div>
               </div>
-
               <button
                 disabled={!this.props.appState.isConnected}
                 onClick={this.handleApprove}
                 className="btn v1"
+                style={{
+                  background:
+                    "linear-gradient(51.32deg, #E30613 -12.3%, #FA4A33 50.14%)",
+                  width: 230,
+                }}
                 type="button"
               >
-                APPROVE
+               {this.state.loadspinner === true ? (
+                        <>
+                          <div
+                            className="spinner-border "
+                            role="status"
+                            style={{ height: "1.5rem", width: "1.5rem" }}
+                          ></div>
+                        </>
+                      ) : (
+                        "APPROVE"
+                      )}
               </button>
               <button
                 disabled={!this.props.appState.isConnected}
                 className="btn v1 ml-2"
                 type="submit"
+                style={{
+                  background:
+                    this.state.lockActive === false
+                      ? "#C4C4C4"
+                      : "linear-gradient(51.32deg, #E30613 -12.3%, #FA4A33 50.14%)",
+                  width: 230,
+                  pointerEvents:
+                    this.state.lockActive === false ? "none" : "auto",
+                }}
               >
-                SUBSCRIBE
+                {this.state.loadspinnerSub === true ? (
+                        <>
+                          <div
+                            className="spinner-border "
+                            role="status"
+                            style={{ height: "1.5rem", width: "1.5rem" }}
+                          ></div>
+                        </>
+                      ) : (
+                        "SUBSCRIBE"
+                      )}
               </button>
+              {this.state.status !== "" && (
+                <div className="status-wrapper">
+                  <p style={{ color: "#E30613" }}>
+                    <img src={Error} alt="" /> {this.state.status}
+                  </p>
+                </div>
+              )}
             </div>
           ) : (
             <div>
