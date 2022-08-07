@@ -477,13 +477,23 @@ export default class PairExplorer extends React.Component {
   };
 
   toggleFavorite = async () => {
-    console.log(this.state.pair)
+    
     if (!this.state.pair) return;
-    await window.toggleFavorite(this.state.pair);
+    if(window.ethereum.chainId === '0x1') {
+      await window.toggleFavoriteETH(this.state.pair);
+    window
+      .isFavoriteETH(this.state.pair.id.toLowerCase())
+      .then((isFavorite) => this.setState({ isFavorite }))
+      .catch(console.error);
+    }
+    if(window.ethereum.chainId === '0xa86a') {
+ await window.toggleFavorite(this.state.pair);
     window
       .isFavorite(this.state.pair.id.toLowerCase())
       .then((isFavorite) => this.setState({ isFavorite }))
       .catch(console.error);
+    }
+   
   };
 
   GetDataTable = () => {

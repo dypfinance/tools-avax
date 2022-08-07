@@ -3003,6 +3003,38 @@ async function toggleFavorite(pair) {
   localStorage.setItem("favorites", JSON.stringify(favorites, null, 4));
 }
 
+
+async function getFavoritesETH() {
+  return JSON.parse(localStorage.getItem("favoritesETH") || `[]`);
+}
+async function isFavoriteETH(pairId) {
+  let favorites = await getFavoritesETH();
+  return favorites.some((f) => {
+    if (f.id == pairId) {
+      return true;
+    }
+    return false;
+  });
+}
+async function toggleFavoriteETH(pair) {
+  if (!pair) return false;
+  let favorites = await getFavoritesETH();
+  let foundIndex;
+  if (
+    favorites.some((f, i) => {
+      if (f.id == pair.id) {
+        foundIndex = i;
+        return true;
+      }
+      return false;
+    })
+  ) {
+    favorites.splice(foundIndex, 1);
+  } else {
+    favorites.push(pair);
+  }
+  localStorage.setItem("favoritesETH", JSON.stringify(favorites, null, 4));
+}
 // ======= end favorites functions ========
 
 // -----------------
@@ -3031,7 +3063,6 @@ async function getMainToken(pair) {
 
   if(window.ethereum.chainId === '0xa86a') {
 
-console.log('avalanche')
   for (let token of window.config.base_tokens) {
     if (mainToken.id == token) {
       mainToken = pair.token1;

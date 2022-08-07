@@ -15,7 +15,6 @@ import InActive from "../../assets/inactive.svg";
 import BadgeYellow from "../../assets/badge-yellow.svg";
 import BadgeGray from "../../assets/badge-gray.svg";
 import BadgeGrayLight from "../../assets/badge-gray-light.svg";
-
 import CountDownTimer from "./Countdown";
 import Skeleton from "@mui/material/Skeleton";
 import Error from "../../assets/error.svg";
@@ -310,6 +309,16 @@ export default class Locker extends React.Component {
       });
       return;
     }
+
+    if (
+      this.state.amount == 0
+    ) {
+      this.setState({
+        status: "Not enough liquidity of base token!",
+      });
+      return;
+    }
+
 
     if (
       baseTokens.includes(selectedBaseTokenAddress) &&
@@ -900,7 +909,7 @@ export default class Locker extends React.Component {
                       )}
                     </button>
                     <button
-                      className="btn v1 ml-2"
+                      className="btn v1 ml-0"
                       type="submit"
                       style={{
                         background:
@@ -994,6 +1003,9 @@ export default class Locker extends React.Component {
                         </div>
                       </div>
                     </div>
+                    <iframe srcDoc={`<div><img src=${Badge} alt=""/><span className="counter-text">${!this.state.lpBalance
+                                ? 25
+                                : getPercentageLocked()} % Locked</span</div>`}></iframe>
                     <div className="copylink-wrapper">
                       <div>
                         <span className="link-text">

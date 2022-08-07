@@ -2,7 +2,7 @@ import React from "react";
 import getFormattedNumber from "../../functions/get-formatted-number";
 import { NavLink } from "react-router-dom";
 import Error from "../../assets/error.svg";
-import Fire from './fire.png'
+import Fire from "./fire.png";
 
 const { BigNumber } = window;
 
@@ -26,15 +26,24 @@ export default class Subscription extends React.Component {
       status: "",
       loadspinner: false,
       loadspinnerSub: false,
-
     };
   }
 
   componentDidMount() {
-    window
-      .getFavorites()
+
+    if(window.ethereum.chainId === '0x1') {
+          window
+      .getFavoritesETH()
       .then((favorites) => this.setState({ favorites }))
       .catch(console.error);
+    }
+
+    if(window.ethereum.chainId === '0xa86a') {
+      window
+  .getFavorites()
+  .then((favorites) => this.setState({ favorites }))
+  .catch(console.error);
+}
 
     if (window.isConnectedOneTime) {
       this.onComponentMount();
@@ -96,7 +105,6 @@ export default class Subscription extends React.Component {
     });
     this.setState({ loadspinner: true });
 
-
     await tokenContract.methods
       .approve(
         window.ethereum.chainId === "0x1"
@@ -122,9 +130,8 @@ export default class Subscription extends React.Component {
       key:
         window.ethereum.chainId === "0x1" ? "SUBSCRIPTIONETH" : "SUBSCRIPTION",
     });
-  
-        this.setState({ loadspinnerSub: true });
-   
+
+    this.setState({ loadspinnerSub: true });
 
     await subscriptionContract.methods
       .subscribe(this.state.selectedSubscriptionToken, this.state.price)
@@ -198,7 +205,7 @@ export default class Subscription extends React.Component {
               </p>
             </div>
             <div className="account-right-wrapper">
-                <img src={Fire} alt=''  className="fire"/>
+              <img src={Fire} alt="" className="fire" />
               <span className="account-left-title">
                 DYP TOOLS Premium benefits
               </span>
@@ -257,7 +264,7 @@ export default class Subscription extends React.Component {
                   style={{ maxWidth: 490, width: "100%" }}
                 >
                   <p>Select Subscription Token</p>
-                  <div className="row m-0">
+                  <div className="row m-0" style={{gap: 10}}>
                     {Object.keys(
                       window.ethereum.chainId === "0x1"
                         ? window.config.subscriptioneth_tokens
@@ -322,6 +329,7 @@ export default class Subscription extends React.Component {
                   </div>
                 </div>
               </div>
+              <div className="row m-0" style={{gap: 30}}>
               <button
                 disabled={!this.props.appState.isConnected}
                 onClick={this.handleApprove}
@@ -333,21 +341,21 @@ export default class Subscription extends React.Component {
                 }}
                 type="button"
               >
-               {this.state.loadspinner === true ? (
-                        <>
-                          <div
-                            className="spinner-border "
-                            role="status"
-                            style={{ height: "1.5rem", width: "1.5rem" }}
-                          ></div>
-                        </>
-                      ) : (
-                        "APPROVE"
-                      )}
+                {this.state.loadspinner === true ? (
+                  <>
+                    <div
+                      className="spinner-border "
+                      role="status"
+                      style={{ height: "1.5rem", width: "1.5rem" }}
+                    ></div>
+                  </>
+                ) : (
+                  "APPROVE"
+                )}
               </button>
               <button
                 disabled={!this.props.appState.isConnected}
-                className="btn v1 ml-2"
+                className="btn v1 ml-0"
                 type="submit"
                 style={{
                   background:
@@ -360,17 +368,17 @@ export default class Subscription extends React.Component {
                 }}
               >
                 {this.state.loadspinnerSub === true ? (
-                        <>
-                          <div
-                            className="spinner-border "
-                            role="status"
-                            style={{ height: "1.5rem", width: "1.5rem" }}
-                          ></div>
-                        </>
-                      ) : (
-                        "SUBSCRIBE"
-                      )}
-              </button>
+                  <>
+                    <div
+                      className="spinner-border "
+                      role="status"
+                      style={{ height: "1.5rem", width: "1.5rem" }}
+                    ></div>
+                  </>
+                ) : (
+                  "SUBSCRIBE"
+                )}
+              </button></div>
               {this.state.status !== "" && (
                 <div className="status-wrapper">
                   <p style={{ color: "#E30613" }}>

@@ -37,10 +37,10 @@ const OtherNews = ({
     } else {
       if (likeIndicator === true) {
         setLikeIndicator(false);
-        onHandlePressDownvote(newsId);
+        onDownVoteClick(newsId);
       } else if (likeIndicator === false) {
         setLikeIndicator(true);
-        onHandlePressUpvote(newsId);
+        onUpVoteClick(newsId);
       }
     }
   };
@@ -48,27 +48,26 @@ const OtherNews = ({
   const handleDisLikeStates = () => {
     if (bal1 === 0 && bal2 === 0) {
       setLikeIndicator(false);
-      onHandlePressDownvote(newsId);
+      onDownVoteClick(newsId);
     } else {
       if (dislikeIndicator === true) {
         setDislikeIndicator(false);
-        onHandlePressUpvote(newsId);
+        onUpVoteClick(newsId);
       } else if (dislikeIndicator === false) {
-        onHandlePressDownvote(newsId);
+        onDownVoteClick(newsId);
         setDislikeIndicator(true);
       }
     }
   };
-
   return (
     <div
       className="other-news-singlewrapper"
-      onClick={() => {
-        onOtherNewsClick(newsId);
-      }}
+     
     >
       <div>
-        <img src={image} alt="" className="other-news-image" />
+        <img src={image} alt="" className="other-news-image"  onClick={() => {
+        onOtherNewsClick(newsId);
+      }}/>
         <div style={{ padding: 12, gap: 10 }} className="d-flex flex-column">
           {/* <a href={link} target={"_blank"}> */}
           <h4 className="singlenews-title">{title}</h4>

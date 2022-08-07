@@ -44,7 +44,7 @@ const Sidebar = (props) => {
             : "linear-gradient(87.56deg, rgba(252, 79, 54, 0.1) 9.37%, rgba(227, 6, 19, 0.1) 93.57%)",
         }}
       >
-        <div className="home-menu">
+        <div className="home-menu row m-0">
           <NavLink to="/account" style={{ paddingLeft: 0, paddingRight: 0 }}>
             <img src="/assets/img/person.svg" alt="Image" />
             <h6 className="sidebar-link2" style={{color: account ? 'white' : '#4D4D4D'}}>Account</h6>
@@ -74,7 +74,7 @@ const Sidebar = (props) => {
         </div>
       </div>
       <div className="menu-cat-one" style={{marginTop: '2rem'}}>
-        <h6 className="networks">
+        <h6 className="networks row m-0">
           <a
             href="javascript:void(0)"
             className="hoverNetwork"

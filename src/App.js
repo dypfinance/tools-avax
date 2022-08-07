@@ -183,11 +183,7 @@ class App extends React.Component {
         <Route component={GoogleAnalyticsReporter} />
 
         <div className="body_overlay"></div>
-        <div className="minimize-wrap">
-          <div onClick={this.toggleMinimizeSidebar} className="minimize_btn">
-            <span className=""></span>
-          </div>
-        </div>
+        
         <Header
           toggleTheme={this.toggleTheme}
           theme={this.state.theme}
@@ -304,7 +300,6 @@ class App extends React.Component {
                 )}
               />
               <Route component={RedirectPathToNewsOnly} />
-
             </Switch>
 
             <Footer />

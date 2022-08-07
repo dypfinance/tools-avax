@@ -438,10 +438,11 @@ a:hover {
   display: flex;
   gap: 10px;
   align-items: center;
-  width: 275px;
+  max-width: 275px;
   margin: auto;
   border-radius: 8px;
-  height: 72px;
+  min-height: 72px;
+  justify-content: center;
 }
 
 .bridged {
@@ -705,7 +706,7 @@ a:hover {
 }
 
 .networks {
-  display: flex;
+  /* display: flex; */
   justify-content: center;
   padding-bottom: 10px;
   gap: 20px;
@@ -852,7 +853,7 @@ a:hover {
 .home-menu {
   width: fit-content;
   margin: auto;
-  display: flex;
+  justify-content: center;
   gap: 15px;
 }
 
@@ -888,6 +889,10 @@ a:hover {
 .menu-cat-one ul li a,
 .menu-cat-two ul li a {
   display: block;
+}
+
+.carousel .slider-wrapper {
+  width: 90% !important;
 }
 
 .menu-cat-one ul li a img,
@@ -1621,6 +1626,7 @@ color: #DB2728 !important;
   font-size: 24px;
   line-height: 29px;
   letter-spacing: 0.05em;
+  text-align: left;
 }
 
 .main-title-text:hover {

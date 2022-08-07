@@ -99,6 +99,7 @@ const News = ({ theme }) => {
 
   const handleNewsClick = (id) => {
     carousel.current.to(id, 500);
+    updateCarouselPosition(  id);
   };
 
   const handleSingleNewsUpdate = (id) => {
@@ -3792,10 +3793,15 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
     return descarray;
   };
 
-  const updateCarouselPosition = (object) => {
-    if (object.item.index != startPosition) {
+  const updateCarouselPosition = (object, objIndex) => {
+  
+    if (object.item.index != startPosition && objIndex === undefined) {
       setStartPosition(object.item.index -2)
       console.log(object)
+    }
+
+    if(objIndex) {
+      console.log('index', objIndex)
     }
   };
 
@@ -3813,6 +3819,9 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
               onDragged={(obj) => {
                 updateCarouselPosition(obj);
               }}
+              // onChange={(obj) => {
+              //   updateCarouselPosition(obj);
+              // }}
               
 
             >
@@ -3938,7 +3947,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                           handleNewsClick(key);
                           e.stopPropagation();
                         }}
-                        onUpVoteClick={() => {
+                        onSingleUpVoteClick={() => {
                           handleSingleUpVoting(item.id);
                         }}
                         onDownVoteClick={() => {
@@ -3967,6 +3976,12 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
             ref={carousel2}
             className="owl-carousel owl-theme brand-slider"
             {...owlCarouselOptionsPress}
+            onDragged={(obj1) => {
+              updateCarouselPosition(obj1);
+            }}
+            // onChange={(obj) => {
+            //   updateCarouselPosition(obj);
+            // }}
           >
             {press_highlight.length > 0 &&
               press_highlight.map((item, key) => {
