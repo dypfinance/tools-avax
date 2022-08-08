@@ -21,7 +21,6 @@ const RelatedNews = ({
   onHandleUpvote,
   onHandleDownvote,
   onDownVoteClick,
-
 }) => {
   const [likeIndicator, setLikeIndicator] = useState(false);
   const [dislikeIndicator, setDislikeIndicator] = useState(false);
@@ -59,7 +58,6 @@ const RelatedNews = ({
     }
   };
 
-
   return (
     <div onClick={() => onSelectOtherNews(newsId)}>
       <div className="single-related-news-wrapper">
@@ -67,55 +65,60 @@ const RelatedNews = ({
           className="d-flex align-items-center justify-content-between"
           style={{ gap: 5 }}
         >
-          <h6 className="related-subnews-title">{title}</h6>
-          <img src={image} alt="" className="singlenews-image" />
-        </div>
-        <div className="news-bottom-wrapper">
-          <div className="like-wrapper">
-            <img
-              src={
-                (likeIndicator === false && dislikeIndicator === false)
-                ? VotePassive
-                : likeIndicator === true
-                ? Upvote
-                : Downvote
-              }
-              alt=""
-              className="like-indicator"
-              onClick={(e) => {
-                handleLikeStates();
-                e.stopPropagation();
-              }}
-            />
-            {Number(upvotes) - Number(downvotes)}
-            <img
-              src={
-                (likeIndicator === false && dislikeIndicator === false)
-                    ? VotePassive
-                    : likeIndicator === true
-                    ? Upvote
-                    : Downvote
-              }
-              alt=""
-              className="like-indicator"
-              id="dislike"
-              onClick={(e) => {
-                handleDisLikeStates();
-                e.stopPropagation();
-              }}
-            />
-          </div>
-          {/* <img
+          <div
+            className="d-flex flex-column"
+            style={{ gap: 15 }}
+          >
+            <h6 className="related-subnews-title">{title}</h6>
+            <div className="news-bottom-wrapper">
+              <div className="like-wrapper">
+                <img
+                  src={
+                    likeIndicator === false && dislikeIndicator === false
+                      ? VotePassive
+                      : likeIndicator === true
+                      ? Upvote
+                      : Downvote
+                  }
+                  alt=""
+                  className="like-indicator"
+                  onClick={(e) => {
+                    handleLikeStates();
+                    e.stopPropagation();
+                  }}
+                />
+                {Number(upvotes) - Number(downvotes)}
+                <img
+                  src={
+                    likeIndicator === false && dislikeIndicator === false
+                      ? VotePassive
+                      : likeIndicator === true
+                      ? Upvote
+                      : Downvote
+                  }
+                  alt=""
+                  className="like-indicator"
+                  id="dislike"
+                  onClick={(e) => {
+                    handleDisLikeStates();
+                    e.stopPropagation();
+                  }}
+                />
+              </div>
+              {/* <img
             src={theme === "theme-dark" ? WhiteDots : Dots}
             alt=""
             style={{ width: "auto" }}
           /> */}
-          <div className="date-wrapper">
-            <img src={Clock} alt="" style={{ width: "auto" }} />
-            <h6 className="date-content">
-              {month} {date}, {year}
-            </h6>
+              <div className="date-wrapper">
+                <img src={Clock} alt="" style={{ width: "auto" }} />
+                <h6 className="date-content">
+                  {month} {date}, {year}
+                </h6>
+              </div>
+            </div>
           </div>
+          <img src={image} alt="" className="singlenews-image" />
         </div>
       </div>
     </div>

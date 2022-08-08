@@ -9,6 +9,7 @@ import axios from "axios";
 import ToolTip from "./ToolTip";
 import OutsideClickHandler from "react-outside-click-handler";
 import * as _ from "lodash";
+import Carousel from 'react-bootstrap/Carousel';
 
 const News = ({ theme }) => {
   const owlCarouselOptions = {
@@ -90,6 +91,8 @@ const News = ({ theme }) => {
   const [activeNews, setActiveNews] = useState([]);
   const [showTooltip, setShowTooltip] = useState(false);
   const [startPosition, setStartPosition] = useState(0);
+  const [startPosition2, setStartPosition2] = useState(0);
+
 
   const [next, setNext] = useState(newsPerRow);
 
@@ -3793,15 +3796,19 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
     return descarray;
   };
 
-  const updateCarouselPosition = (object, objIndex) => {
+  const updateCarouselPosition = (object) => {
   
-    if (object.item.index != startPosition && objIndex === undefined) {
+    if (object.item.index != startPosition) {
       setStartPosition(object.item.index -2)
       console.log(object)
     }
+  };
 
-    if(objIndex) {
-      console.log('index', objIndex)
+  const updateCarouselPosition2 = (object) => {
+  
+    if (object.item.index != startPosition2) {
+      setStartPosition2(object.item.index -2)
+      console.log(object)
     }
   };
 
@@ -3975,13 +3982,14 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
           <OwlCarousel
             ref={carousel2}
             className="owl-carousel owl-theme brand-slider"
+            startPosition={startPosition2}
             {...owlCarouselOptionsPress}
-            onDragged={(obj1) => {
-              updateCarouselPosition(obj1);
+            onDragged={(obj) => {
+              updateCarouselPosition2(obj);
             }}
-            // onChange={(obj) => {
-            //   updateCarouselPosition(obj);
-            // }}
+            onChange={(obj) => {
+              updateCarouselPosition2(obj);
+            }}
           >
             {press_highlight.length > 0 &&
               press_highlight.map((item, key) => {

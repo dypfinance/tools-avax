@@ -173,15 +173,15 @@ export default class Locker extends React.Component {
       tokenLocksLength = Number(tokenLocksLength);
       let step = window.config.MAX_LOCKS_TO_LOAD_PER_CALL;
       if (tokenLocksLength !== 0) {
-      let startIndex = this.state.tokenLocks.length;
-      let endIndex = Math.min(tokenLocksLength, startIndex + step);
-      let tokenLocks =
-        window.ethereum.chainId === "0x1"
-          ? await window.getActiveLocksByTokenETH(token, startIndex, endIndex)
-          : await window.getActiveLocksByToken(token, startIndex, endIndex);
-      tokenLocks = this.state.tokenLocks.concat(tokenLocks);
-      this.setState({ tokenLocksLength, tokenLocks });
-    }
+        let startIndex = this.state.tokenLocks.length;
+        let endIndex = Math.min(tokenLocksLength, startIndex + step);
+        let tokenLocks =
+          window.ethereum.chainId === "0x1"
+            ? await window.getActiveLocksByTokenETH(token, startIndex, endIndex)
+            : await window.getActiveLocksByToken(token, startIndex, endIndex);
+        tokenLocks = this.state.tokenLocks.concat(tokenLocks);
+        this.setState({ tokenLocksLength, tokenLocks });
+      }
     } finally {
       this.setState({ isLoadingMoreTokenLocks: false });
       const maxAmount = Math.max.apply(
@@ -231,33 +231,32 @@ export default class Locker extends React.Component {
     let isAddress;
 
     // if (this.state.pair_address) {
-      isAddress = window.web3.utils.isAddress(this.state.pair_address);
-      if (!isAddress) {
-        this.setState({
-          status: "Pair address not valid. Please enter a valid address!",
-        });
-        return;
-      }
+    isAddress = window.web3.utils.isAddress(this.state.pair_address);
+    if (!isAddress) {
+      this.setState({
+        status: "Pair address not valid. Please enter a valid address!",
+      });
+      return;
+    }
 
-      if (this.state.placeholderState === true && isAddress && isConnected) {
-        this.setState({ placeholderState: false });
-        this.selectBaseToken();
-        this.handlePairChange(this.state.pair_address);
-      }
+    if (this.state.placeholderState === true && isAddress && isConnected) {
+      this.setState({ placeholderState: false });
+      this.selectBaseToken();
+      this.handlePairChange(this.state.pair_address);
+    }
 
-      if (this.state.placeholderState === false && isAddress && isConnected) {
-        this.selectBaseToken();
-        this.handlePairChange(this.state.pair_address);
-      }
+    if (this.state.placeholderState === false && isAddress && isConnected) {
+      this.selectBaseToken();
+      this.handlePairChange(this.state.pair_address);
+    }
     // }
   };
 
-
   selectBaseToken = async (e) => {
     let pair = await window.getPairTokensInfo(this.state.pair_address);
-    
+
     this.setState({ pair });
-    this.setState({ status: '' });
+    this.setState({ status: "" });
 
     if (pair) {
       let balance = await window.getTokenHolderBalance(
@@ -280,16 +279,16 @@ export default class Locker extends React.Component {
       } else if (baseTokens.includes(token1)) {
         this.setState({ selectedBaseToken: "1" });
         this.setState({ selectedBaseTokenTicker: pair["token1"].symbol });
+      } else if (
+        pair["token0"].symbol === "USDT" ||
+        pair["token1"].symbol === "USDT"
+      ) {
+        this.setState({ selectedBaseTokenTicker: "WETH" });
       }
-        else if(pair["token0"].symbol === 'USDT' || pair["token1"].symbol === 'USDT')
-        {
-          this.setState({ selectedBaseTokenTicker: 'WETH' });
-        }
     }
   };
 
   handleApprove = async (e) => {
-    
     let selectedBaseTokenAddress = this.state.pair
       ? this.state.pair[
           this.state.selectedBaseToken == "0" ? "token0" : "token1"
@@ -310,15 +309,12 @@ export default class Locker extends React.Component {
       return;
     }
 
-    if (
-      this.state.amount == 0
-    ) {
+    if (this.state.amount == 0) {
       this.setState({
         status: "Not enough liquidity of base token!",
       });
       return;
     }
-
 
     if (
       baseTokens.includes(selectedBaseTokenAddress) &&
@@ -1003,9 +999,13 @@ export default class Locker extends React.Component {
                         </div>
                       </div>
                     </div>
-                    <iframe srcDoc={`<div><img src=${Badge} alt=""/><span className="counter-text">${!this.state.lpBalance
-                                ? 25
-                                : getPercentageLocked()} % Locked</span</div>`}></iframe>
+                    <iframe
+                    style={{border: 'none'}}
+                      srcDoc={`<div style="display: flex; flex-direction: column; align-items: center; gap: 5px"><img src=${BadgeSmall} alt="" style="width: 100px; height: 100px;"/>
+                      <span style="background: rgb(236, 33, 32); color: #fff; padding: 5px 10px; border-radius: 4px; font-weight: 500; ">${
+                        !this.state.lpBalance ? 25 : getPercentageLocked()
+                      } % Locked</span</div>`}
+                    ></iframe>
                     <div className="copylink-wrapper">
                       <div>
                         <span className="link-text">
