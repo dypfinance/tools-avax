@@ -9,7 +9,8 @@ import axios from "axios";
 import ToolTip from "./ToolTip";
 import OutsideClickHandler from "react-outside-click-handler";
 import * as _ from "lodash";
-import Carousel from 'react-bootstrap/Carousel';
+import Carousel from "react-bootstrap/Carousel";
+import { useWeb3React } from "@web3-react/core";
 
 const News = ({ theme }) => {
   const owlCarouselOptions = {
@@ -51,11 +52,12 @@ const News = ({ theme }) => {
     center: false,
     nav: false,
     dots: true,
-    autoplay: false,
+    autoplay: true,
     rewind: true,
     autoplayTimeout: 5000,
     responsiveClass: true,
     responsiveRefreshRate: true,
+
     responsive: {
       0: {
         items: 1,
@@ -82,7 +84,7 @@ const News = ({ theme }) => {
   };
   const carousel = useRef();
   const carousel2 = React.createRef();
-  const newsPerRow = 4;
+  const newsPerRow = 8;
   const [activeClass, setActiveClass] = useState("latestnews");
   const [showModal, setShowModal] = useState(false);
   const [newsItemId, setnewsItemId] = useState(-1);
@@ -92,7 +94,8 @@ const News = ({ theme }) => {
   const [showTooltip, setShowTooltip] = useState(false);
   const [startPosition, setStartPosition] = useState(0);
   const [startPosition2, setStartPosition2] = useState(0);
-
+  const [isConnected, setIsConnected] = useState();
+  const { account, chainId, active } = useWeb3React();
 
   const [next, setNext] = useState(newsPerRow);
 
@@ -102,11 +105,12 @@ const News = ({ theme }) => {
 
   const handleNewsClick = (id) => {
     carousel.current.to(id, 500);
-    updateCarouselPosition(  id);
+    updateCarouselPosition(id);
   };
 
   const handleSingleNewsUpdate = (id) => {
     setActiveNews(newsArray[id]);
+    setShowModal(true);
   };
 
   const fetchVotingdata = async () => {
@@ -131,6 +135,12 @@ const News = ({ theme }) => {
       .catch(console.error);
     return result;
   };
+
+  useEffect(() => {
+    if (account !== undefined) {
+      setIsConnected(true);
+    } else setIsConnected(false);
+  });
 
   useEffect(() => {
     fetchVotingdata().then();
@@ -1711,7 +1721,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       <a href='https://dyp.finance/earn' target='_blank'><u>DYP staking pools</u></a> allow anyone to provide liquidity to pools and earn rewards. DYP differs from the completion in that all rewards are paid out in Ethereum directly. This feature is an industry first that helps alleviate inflationary concerns while building additional value in the Ethereum network.<br/><br/>
       Additionally, all DYP staking pools feature integrated anti-manipulation protocols and 2.5% slippage. These systems reduce inflation and encourage token price stability in the market. Specifically, the protocol attempts to convert DYP rewards to ETH every day at 00:00 UTC. When the price of DYP is affected by more than -2.5%, the maximum DYP amount that does not affect the price will be swapped to ETH.<br/><br/>
       The <a href='https://cryptoadventure.com/defi-yield-protocol-dyp-a-unique-manipulation-resistant-defi-platform/' target='_blank'><u>anti-manipulation system</u></a> then takes the remaining amount and distributes it in the next day’s rewards. In this way, the protocol ensures that all pool rewards are automatically converted from DYP to ETH daily. Best of all, the system automatically distributes the rewards to the liquidity provider’s wallet. DYP currently supports multiple staking pools. Specifically, DYP/ETH, DYP/USDC, DYP/USDT, and DYP/WBTC pools are available at this time.<br/><br/>
-      <b>Governance Dapp<b><br/><br/>
+      <b>Governance Dapp</b><br/><br/>
       The launch of DYP’s governance Dapp is another significant step for the platform. DYP features a decentralized governance mechanism that promotes transparency and fairness in the network. Anyone can vote on crucial issues and upgrades to the network.<br/><br/>
       Notably, the more DYP tokens you hold, the more votes you get. This strategy ensures that those who are financially vested in the network get their opinions heard. It also removes the risk of nefarious actors infiltrating the network.<br/><br/>
 
@@ -3452,7 +3462,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       <a href='https://dyp.finance/earn' target='_blank'><u>DYP staking pools</u></a> allow anyone to provide liquidity to pools and earn rewards. DYP differs from the completion in that all rewards are paid out in Ethereum directly. This feature is an industry first that helps alleviate inflationary concerns while building additional value in the Ethereum network.<br/><br/>
       Additionally, all DYP staking pools feature integrated anti-manipulation protocols and 2.5% slippage. These systems reduce inflation and encourage token price stability in the market. Specifically, the protocol attempts to convert DYP rewards to ETH every day at 00:00 UTC. When the price of DYP is affected by more than -2.5%, the maximum DYP amount that does not affect the price will be swapped to ETH.<br/><br/>
       The <a href='https://cryptoadventure.com/defi-yield-protocol-dyp-a-unique-manipulation-resistant-defi-platform/' target='_blank'><u>anti-manipulation system</u></a> then takes the remaining amount and distributes it in the next day’s rewards. In this way, the protocol ensures that all pool rewards are automatically converted from DYP to ETH daily. Best of all, the system automatically distributes the rewards to the liquidity provider’s wallet. DYP currently supports multiple staking pools. Specifically, DYP/ETH, DYP/USDC, DYP/USDT, and DYP/WBTC pools are available at this time.<br/><br/>
-      <b>Governance Dapp<b><br/><br/>
+      <b>Governance Dapp</b><br/><br/>
       The launch of DYP’s governance Dapp is another significant step for the platform. DYP features a decentralized governance mechanism that promotes transparency and fairness in the network. Anyone can vote on crucial issues and upgrades to the network.<br/><br/>
       Notably, the more DYP tokens you hold, the more votes you get. This strategy ensures that those who are financially vested in the network get their opinions heard. It also removes the risk of nefarious actors infiltrating the network.<br/><br/>
 
@@ -3721,7 +3731,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
   const bal2 = Number(localStorage.getItem("balance2"));
 
   const handleUpVoting = async (itemId) => {
-    if (bal1 === 0 && bal2 === 0) {
+    if ((bal1 === 0 && bal2 === 0) || isConnected === false) {
       setShowTooltip(true);
     } else {
       let response = null;
@@ -3772,7 +3782,8 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
   };
 
   const handleDownVoting = async (itemId) => {
-    if (bal1 === 0 && bal2 === 0) {
+    console.log(isConnected);
+    if ((bal1 === 0 && bal2 === 0) || isConnected === false) {
       setShowTooltip(true);
     } else {
       return await axios
@@ -3797,18 +3808,18 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
   };
 
   const updateCarouselPosition = (object) => {
-  
-    if (object.item.index != startPosition) {
-      setStartPosition(object.item.index -2)
-      console.log(object)
+    if (typeof object === "number") {
+      setStartPosition(object);
+    } else if (object.item.index != startPosition) {
+      setStartPosition(object.item.index - 2);
     }
   };
 
   const updateCarouselPosition2 = (object) => {
-  
-    if (object.item.index != startPosition2) {
-      setStartPosition2(object.item.index -2)
-      console.log(object)
+    if (typeof object === "number") {
+      setStartPosition2(object);
+    } else if (object.item.index != startPosition) {
+      setStartPosition2(object.item.index - 2);
     }
   };
 
@@ -3826,11 +3837,9 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
               onDragged={(obj) => {
                 updateCarouselPosition(obj);
               }}
-              // onChange={(obj) => {
-              //   updateCarouselPosition(obj);
-              // }}
-              
-
+              onChange={(obj) => {
+                updateCarouselPosition(obj);
+              }}
             >
               {newsArray.length > 0 &&
                 newsArray.slice(0, 7).map((item, key) => {
@@ -3857,6 +3866,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                         onDownVoteClick={() => {
                           handleDownVoting(item.id);
                         }}
+                        isConnected={isConnected}
                       />
                     </div>
                   );
@@ -3868,7 +3878,15 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                   setShowTooltip(false);
                 }}
               >
-                <ToolTip bottom={0} left={0} />
+                <ToolTip
+                  bottom={0}
+                  left={0}
+                  status={
+                    isConnected
+                      ? "You need to be holding DYP to vote"
+                      : "Please connect your wallet"
+                  }
+                />
               </OutsideClickHandler>
             ) : (
               <></>
@@ -3917,7 +3935,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                       theme={theme}
                       upvotes={item.upvote}
                       downvotes={item.downvote}
-                      onNewsClick={(e) => {
+                      onNewsHover={(e) => {
                         handleNewsClick(key);
                         e.stopPropagation();
                       }}
@@ -3927,7 +3945,8 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                       onDownVoteClick={() => {
                         handleSingleDownVoting(item.id);
                       }}
-                      onClick={() => handleSingleNewsUpdate(key)}
+                      onNewsClick={() => handleSingleNewsUpdate(key)}
+                      isConnected={isConnected}
                     />
                   </div>
                 );
@@ -3950,7 +3969,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                         theme={theme}
                         upvotes={item.upvote}
                         downvotes={item.downvote}
-                        onNewsClick={(e) => {
+                        onNewsHover={(e) => {
                           handleNewsClick(key);
                           e.stopPropagation();
                         }}
@@ -3960,7 +3979,8 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                         onDownVoteClick={() => {
                           handleSingleDownVoting(item.id);
                         }}
-                        onClick={() => handleSingleNewsUpdate(key)}
+                        onNewsClick={() => handleSingleNewsUpdate(key)}
+                        isConnected={isConnected}
                       />
                     </div>
                   );
@@ -3984,9 +4004,9 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
             className="owl-carousel owl-theme brand-slider"
             startPosition={startPosition2}
             {...owlCarouselOptionsPress}
-            onDragged={(obj) => {
-              updateCarouselPosition2(obj);
-            }}
+            // onDragged={(obj) => {
+            //   updateCarouselPosition2(obj);
+            // }}
             onChange={(obj) => {
               updateCarouselPosition2(obj);
             }}
@@ -4052,6 +4072,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                     onDownVoteClick={() => {
                       handleDownVoting(item.id);
                     }}
+                    isConnected={isConnected}
                   />
                 </div>
               );
@@ -4096,6 +4117,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
           onHandlePressDownvote={(id) => {
             handleDownVoting(id);
           }}
+          isConnected={isConnected}
         />
       )}
     </>

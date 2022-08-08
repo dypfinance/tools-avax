@@ -20,6 +20,7 @@ const OtherNews = ({
   downvotes,
   onUpVoteClick,
   onDownVoteClick,
+  isConnected,
   onHandlePressDownvote,
   onHandlePressUpvote
 }) => {
@@ -31,7 +32,7 @@ const OtherNews = ({
   const bal2 = Number(localStorage.getItem("balance2"));
 
   const handleLikeStates = () => {
-    if (bal1 === 0 && bal2 === 0) {
+    if (bal1 === 0 && bal2 === 0 || isConnected === false) {
       setLikeIndicator(false);
       setShowTooltip(true);
     } else {
@@ -46,9 +47,9 @@ const OtherNews = ({
   };
 
   const handleDisLikeStates = () => {
-    if (bal1 === 0 && bal2 === 0) {
+    if (bal1 === 0 && bal2 === 0 || isConnected === false) {
       setLikeIndicator(false);
-      onDownVoteClick(newsId);
+      setShowTooltip(true)
     } else {
       if (dislikeIndicator === true) {
         setDislikeIndicator(false);
@@ -72,7 +73,7 @@ const OtherNews = ({
           {/* <a href={link} target={"_blank"}> */}
           <h4 className="singlenews-title">{title}</h4>
           {/* </a> */}
-          <div className="news-bottom-wrapper">
+          <div className="news-bottom-wrapper" style={{justifyContent: 'space-between'}}>
             <div className="like-wrapper">
               <img
                 src={
@@ -95,12 +96,16 @@ const OtherNews = ({
                   setShowTooltip(false);
                 }}
               >
-                <ToolTip/>
+                <ToolTip status={
+                    isConnected
+                      ? "You need to be holding DYP to vote"
+                      : "Please connect your wallet"
+                  }/>
               </OutsideClickHandler>
             ) : (
               <></>
             )}
-            {Number(upvotes) - Number(downvotes)}
+          <span> {Number(upvotes) - Number(downvotes)}</span>
               <img
                 src={
                   (likeIndicator === false && dislikeIndicator === false)

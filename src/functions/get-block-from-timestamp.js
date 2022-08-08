@@ -68,7 +68,7 @@ async function getBlockFromTimestamp(timestamp) {
   let response = await fetchGql(
     BLOCK_QUERY,
     variables,
-    window.ethereum.chainId === "0x1"
+    window.ethereum?.chainId === "0x1"
       ? ETHEREUM_BLOCKS_SUBGRAPH_ETH
       : ETHEREUM_BLOCKS_SUBGRAPH
   );
@@ -83,7 +83,7 @@ async function getTimestampFromBlock(number) {
     response = await fetchGql(
       TIMESTAMP_QUERY,
       variables,
-      window.ethereum.chainId === "0x1"
+      window.ethereum?.chainId === "0x1"
         ? ETHEREUM_BLOCKS_SUBGRAPH_ETH
         : ETHEREUM_BLOCKS_SUBGRAPH
     );
@@ -100,7 +100,7 @@ async function getTimestampFromBlock(number) {
 }
 
 async function getLatestBlock() {
-  if(window.ethereum.chainId === '0x1')
+  if(window.ethereum?.chainId === '0x1')
   {  
     
     let response = await fetchGql(
@@ -113,7 +113,7 @@ async function getLatestBlock() {
     .number;
   }
 
-  if(window.ethereum.chainId === '0xa86a') {
+  if(window.ethereum?.chainId === '0xa86a') {
   
   let response = await fetchGql(
    INDEXING_STATUS_QUERY,

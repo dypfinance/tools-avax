@@ -47,7 +47,7 @@ const TOKEN_HISTORY_QUERY = `query ($token: ID!, $block: Int!) {
 }`;
 
 async function getOldTokenResponse(tokenIdList, _24hEarlierBlock) {
-  if(window.ethereum.chainId === '0xa86a') {
+  if(window.ethereum?.chainId === '0xa86a') {
   
   let bundleResponse = await fetchGql(ETH_PRICE_HISTORY_QUERY, {
     block: _24hEarlierBlock,
@@ -63,7 +63,7 @@ async function getOldTokenResponse(tokenIdList, _24hEarlierBlock) {
 
   return { data: { bundle, tokens: oldTokenResponses } };
   }
-  if(window.ethereum.chainId === '0x1') {
+  if(window.ethereum?.chainId === '0x1') {
 
     let bundleResponse = await fetchGql(ETH_PRICE_HISTORY_QUERY, {
       block: _24hEarlierBlock,
@@ -90,7 +90,7 @@ async function getOldTokenResponse(tokenIdList, _24hEarlierBlock) {
 
 export default async function getTopTokens() {
 
-  if(window.ethereum.chainId === '0xa86a') {
+  if(window.ethereum?.chainId === '0xa86a') {
   
   let _24hEarlierBlock = await get24hEarlierBlock();
   // alert(_24hEarlierBlock)
@@ -150,7 +150,7 @@ export default async function getTopTokens() {
   return { tokens, ethPrice };
     }
 
-  if(window.ethereum.chainId === '0x1') {
+  if(window.ethereum?.chainId === '0x1') {
 
     let _24hEarlierBlock = await get24hEarlierBlock();
     // alert(_24hEarlierBlock)

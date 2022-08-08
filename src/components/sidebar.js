@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import Ethereum from "../assets/ethereum.svg";
 import Avax from "../assets/avalanche.svg";
-import Logo from "../assets/logo.svg";
+import Logo from "../assets/logo.png";
 import LogoWhite from "../assets/logo-white.svg";
 import React, { useState } from "react";
 import { useWeb3React } from "@web3-react/core";
@@ -38,17 +38,14 @@ const Sidebar = (props) => {
         className="top-right-header"
         style={{
           background: account
-            ? window.ethereum.chainId === "0x1"
+            ? window.ethereum?.chainId === "0x1"
               ? "linear-gradient(87.56deg, #1D91D0 9.37%, #32B1F7 93.57%)"
               : "linear-gradient(87.56deg, #FC4F36 9.37%, #E30613 93.57%)"
             : "linear-gradient(87.56deg, rgba(252, 79, 54, 0.1) 9.37%, rgba(227, 6, 19, 0.1) 93.57%)",
         }}
       >
         <div className="home-menu row m-0">
-          <NavLink to="/account" style={{ paddingLeft: 0, paddingRight: 0 }}>
-            <img src="/assets/img/person.svg" alt="Image" />
-            <h6 className="sidebar-link2" style={{color: account ? 'white' : '#4D4D4D'}}>Account</h6>
-          </NavLink>
+
           <a
             onClick={(e) => {
               e.preventDefault();
@@ -74,6 +71,11 @@ const Sidebar = (props) => {
         </div>
       </div>
       <div className="menu-cat-one" style={{marginTop: '2rem'}}>
+      <NavLink to="/account" style={{ paddingLeft: 0, paddingRight: 0 }}>
+        <div className="d-flex align-items-center mb-3 justify-content-center account-wrapper" style={{gap: 5}}>
+            <img src="/assets/img/person.svg" alt="Image" />
+            <h6 className="sidebar-link2 mb-0 ml-0" style={{color: account ? '#fff' : '#4D4D4D'}}>Account</h6></div>
+          </NavLink>
         <h6 className="networks row m-0">
           <a
             href="javascript:void(0)"
@@ -278,8 +280,8 @@ const Sidebar = (props) => {
               <img
                 src={
                   activeLink === "buydyp"
-                    ? "/assets/img/buydyp-active.svg"
-                    : "/assets/img/buydyp-passive.svg"
+                    ? "/assets/img/cart.svg"
+                    : "/assets/img/cart-passive.svg"
                 }
                 alt="Image"
               />

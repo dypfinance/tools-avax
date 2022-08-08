@@ -13,10 +13,12 @@ const SingleNews = ({
   month,
   day,
   year,
+  onNewsHover,
   onNewsClick,
   theme,
   upvotes,
   downvotes,
+  isConnected,
   onSingleUpVoteClick,
   onSingleDownVoteClick,
 }) => {
@@ -28,7 +30,7 @@ const SingleNews = ({
   const bal2 = Number(localStorage.getItem("balance2"));
 
   const handleLikeStates = () => {
-    if (bal1 === 0 && bal2 === 0) {
+    if (bal1 === 0 && bal2 === 0 || isConnected === false) {
       setLikeIndicator(false);
       setShowTooltip(true);
     } else {
@@ -43,9 +45,9 @@ const SingleNews = ({
   };
 
   const handleDisLikeStates = () => {
-    if (bal1 === 0 && bal2 === 0) {
+    if (bal1 === 0 && bal2 === 0 || isConnected === false) {
       setLikeIndicator(false);
-      onSingleDownVoteClick();
+      setShowTooltip(true);
     } else {
       if (dislikeIndicator === true) {
         setDislikeIndicator(false);
@@ -88,12 +90,16 @@ const SingleNews = ({
                     setShowTooltip(false);
                   }}
                 >
-                  <ToolTip />
+                  <ToolTip status={
+                    isConnected
+                      ? "You need to be holding DYP to vote"
+                      : "Please connect your wallet"
+                  }/>
                 </OutsideClickHandler>
               ) : (
                 <></>
               )}
-              {Number(upvotes) - Number(downvotes)}
+            <span> {Number(upvotes) - Number(downvotes)}</span>
 
               <img
                 src={

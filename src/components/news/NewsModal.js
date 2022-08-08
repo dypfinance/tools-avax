@@ -22,7 +22,9 @@ const NewsModal = ({
   onHandleDownvote,
   onSelectOtherNews,
   onHandlePressDownvote,
-  onHandlePressUpvote
+  onHandlePressUpvote,
+  isConnected,
+
 }) => {
   const specialItems = [19, 20, 21, 23, 27, 28, 29]
   
@@ -93,6 +95,8 @@ const NewsModal = ({
                               onSelectOtherNews={onSelectOtherNews}
                               onHandleDownvote={onHandleDownvote}
                               onHandleUpvote={onHandleUpvote}
+          isConnected={isConnected}
+
                             />
                           </div>
                         );
@@ -119,6 +123,8 @@ const NewsModal = ({
                               onSelectOtherNews={onSelectOtherNews}
                               onHandleUpvote={onHandleUpvote}
                               onHandleDownvote={onHandleDownvote}
+          isConnected={isConnected}
+
                             />
                           </div>
                         );
@@ -144,6 +150,8 @@ const NewsModal = ({
                               downvotes={item.downvote}
                               onHandleUpvote={onHandleUpvote}
                               onHandleDownvote={onHandleDownvote}
+          isConnected={isConnected}
+
                             />
                           </div>
                         );
@@ -170,6 +178,8 @@ const NewsModal = ({
                               onSelectOtherNews={onSelectOtherNews}
                               onHandleUpvote={onHandleUpvote}
                               onHandleDownvote={onHandleDownvote}
+          isConnected={isConnected}
+
                             />
                           </div>
                         );
@@ -196,6 +206,8 @@ const NewsModal = ({
                               onSelectOtherNews={onSelectOtherNews}
                               onHandleUpvote={onHandleUpvote}
                               onHandleDownvote={onHandleDownvote}
+          isConnected={isConnected}
+
                             />
                           </div>
                         );
@@ -222,6 +234,8 @@ const NewsModal = ({
                               onSelectOtherNews={onSelectOtherNews}
                               onHandleUpvote={onHandleUpvote}
                               onHandleDownvote={onHandleDownvote}
+          isConnected={isConnected}
+
                             />
                           </div>
                         );
@@ -248,6 +262,8 @@ const NewsModal = ({
                               onSelectOtherNews={onSelectOtherNews}
                               onHandleUpvote={onHandleUpvote}
                               onHandleDownvote={onHandleDownvote}
+          isConnected={isConnected}
+
                             />
                           </div>
                         );
@@ -274,6 +290,8 @@ const NewsModal = ({
                               onSelectOtherNews={onSelectOtherNews}
                               onHandleUpvote={onHandleUpvote}
                               onHandleDownvote={onHandleDownvote}
+          isConnected={isConnected}
+
                             />
                           </div>
                         );
@@ -300,6 +318,8 @@ const NewsModal = ({
                               onSelectOtherNews={onSelectOtherNews}
                               onHandleUpvote={onHandleUpvote}
                               onHandleDownvote={onHandleDownvote}
+          isConnected={isConnected}
+
                             />
                           </div>
                         );
@@ -324,6 +344,8 @@ const NewsModal = ({
                               onSelectOtherNews={onSelectOtherNews}
                               onHandleUpvote={onHandleUpvote}
                               onHandleDownvote={onHandleDownvote}
+          isConnected={isConnected}
+
                             />
                           </div>
                         );
@@ -350,6 +372,8 @@ const NewsModal = ({
                               onSelectOtherNews={onSelectOtherNews}
                               onHandleUpvote={onHandleUpvote}
                               onHandleDownvote={onHandleDownvote}
+          isConnected={isConnected}
+
                             />
                           </div>
                         );
@@ -375,6 +399,8 @@ const NewsModal = ({
                               onSelectOtherNews={onSelectOtherNews}
                               onHandleUpvote={onHandleUpvote}
                               onHandleDownvote={onHandleDownvote}
+          isConnected={isConnected}
+
                             />
                           </div>
                         );
@@ -401,6 +427,8 @@ const NewsModal = ({
                               onSelectOtherNews={onSelectOtherNews}
                               onHandleUpvote={onHandleUpvote}
                               onHandleDownvote={onHandleDownvote}
+          isConnected={isConnected}
+
                             />
                           </div>
                         );
@@ -427,6 +455,8 @@ const NewsModal = ({
                               onSelectOtherNews={onSelectOtherNews}
                               onHandleUpvote={onHandleUpvote}
                               onHandleDownvote={onHandleDownvote}
+          isConnected={isConnected}
+
                             />
                           </div>
                         );
@@ -453,6 +483,8 @@ const NewsModal = ({
                               onSelectOtherNews={onSelectOtherNews}
                               onHandleUpvote={onHandleUpvote}
                               onHandleDownvote={onHandleDownvote}
+          isConnected={isConnected}
+
                             />
                           </div>
                         );
@@ -479,6 +511,8 @@ const NewsModal = ({
                               onSelectOtherNews={onSelectOtherNews}
                               onHandleUpvote={onHandleUpvote}
                               onHandleDownvote={onHandleDownvote}
+          isConnected={isConnected}
+
                             />
                           </div>
                         );
@@ -505,6 +539,8 @@ const NewsModal = ({
                               onSelectOtherNews={onSelectOtherNews}
                               onHandleUpvote={onHandleUpvote}
                               onHandleDownvote={onHandleDownvote}
+          isConnected={isConnected}
+
                             />
                           </div>
                         );
@@ -531,6 +567,8 @@ const NewsModal = ({
                               onSelectOtherNews={onSelectOtherNews}
                               onHandleUpvote={onHandleUpvote}
                               onHandleDownvote={onHandleDownvote}
+          isConnected={isConnected}
+
                             />
                           </div>
                         );

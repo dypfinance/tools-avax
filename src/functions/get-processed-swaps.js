@@ -83,7 +83,7 @@ const BIG_SWAP_QUERY = `query {
 }`
 
 export default function getProcessedSwaps(pair, bigSwaps = false, network) {
-  if(window.ethereum.chainId === '0xa86a') {
+  if(window.ethereum?.chainId === '0xa86a') {
     let config = ''
     if (network == 'ethereum') {
         config = 'window.config_eth'
@@ -113,7 +113,7 @@ export default function getProcessedSwaps(pair, bigSwaps = false, network) {
     })
   }
 
-  if(window.ethereum.chainId === '0x1') {
+  if(window.ethereum?.chainId === '0x1') {
     let body = JSON.stringify({
       query: bigSwaps ? BIG_SWAP_QUERY : SWAP_QUERY,
       variables: bigSwaps ? null : {pair}
@@ -137,7 +137,7 @@ export default function getProcessedSwaps(pair, bigSwaps = false, network) {
 
 // for now, base is token1, and token0 is the token to consider
 function handleTheGraphData({data}, bigSwaps) {
-  if(window.ethereum.chainId === '0xa86a') {
+  if(window.ethereum?.chainId === '0xa86a') {
     let swaps = data.swaps.map(swap => {
         let type
         let amount0, amount1
@@ -186,7 +186,7 @@ function handleTheGraphData({data}, bigSwaps) {
     }
   }
 
-  if(window.ethereum.chainId === '0x1') {
+  if(window.ethereum?.chainId === '0x1') {
     let swaps = data.swaps.map(swap => {
       let type
       let amount0, amount1

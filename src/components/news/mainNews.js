@@ -2,10 +2,7 @@ import React, { useState, useEffect } from "react";
 import VotePassive from "./assets/votepassive.svg";
 import Upvote from "./assets/upvote.svg";
 import Downvote from "./assets/downvote.svg";
-import Dots from "./assets/dots.svg";
 import Clock from "./assets/clock.svg";
-import WhiteDots from "./assets/dots-white.svg";
-import { useWeb3React } from "@web3-react/core";
 
 const MainNews = ({
   link,
@@ -20,6 +17,7 @@ const MainNews = ({
   upvotes,
   downvotes,
   onUpVoteClick,
+  isConnected,
   onDownVoteClick,
 }) => {
   const [likeIndicator, setLikeIndicator] = useState(false);
@@ -29,7 +27,7 @@ const MainNews = ({
   const bal2 = Number(localStorage.getItem("balance2"));
 
   const handleLikeStates = () => {
-    if (bal1 === 0 && bal2 === 0) {
+    if (bal1 === 0 && bal2 === 0 || isConnected === false) {
       setLikeIndicator(false);
       onUpVoteClick();
     } else {
@@ -45,7 +43,7 @@ const MainNews = ({
   };
 
   const handleDisLikeStates = () => {
-    if (bal1 === 0 && bal2 === 0) {
+    if (bal1 === 0 && bal2 === 0 || isConnected === false) {
       setLikeIndicator(false);
       onDownVoteClick();
     } else {
@@ -83,7 +81,10 @@ const MainNews = ({
             </div>
           </div>
         </div>
-        <h2 className="main-title-text">{title}</h2>
+        <h2 className="main-title-text"  onClick={(e) => {
+              e.preventDefault();
+              onShowModalClick();
+            }}>{title}</h2>
         {/* </a> */}
 
         <div className="news-bottom-wrapper">
@@ -101,7 +102,7 @@ const MainNews = ({
               className="like-indicator"
               onClick={() => {handleLikeStates()}}
             />
-           {Number(upvotes) - Number(downvotes)}
+          <span> {Number(upvotes) - Number(downvotes)}</span>
 
             <img
               src={

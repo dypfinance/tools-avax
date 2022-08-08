@@ -12,7 +12,7 @@ export default class Subscription extends React.Component {
     this.state = {
       coinbase: "",
       selectedSubscriptionToken: Object.keys(
-        window.ethereum.chainId === "0x1"
+        window.ethereum?.chainId === "0x1"
           ? window.config.subscriptioneth_tokens
           : window.config.subscription_tokens
       )[0],
@@ -31,14 +31,14 @@ export default class Subscription extends React.Component {
 
   componentDidMount() {
 
-    if(window.ethereum.chainId === '0x1') {
+    if(window.ethereum?.chainId === '0x1') {
           window
       .getFavoritesETH()
       .then((favorites) => this.setState({ favorites }))
       .catch(console.error);
     }
 
-    if(window.ethereum.chainId === '0xa86a') {
+    if(window.ethereum?.chainId === '0xa86a') {
       window
   .getFavorites()
   .then((favorites) => this.setState({ favorites }))
@@ -53,7 +53,7 @@ export default class Subscription extends React.Component {
     console.log(this.state.selectedSubscriptionToken);
     this.setState({
       selectedSubscriptionToken: Object.keys(
-        window.ethereum.chainId === "0x1"
+        window.ethereum?.chainId === "0x1"
           ? window.config.subscriptioneth_tokens
           : window.config.subscription_tokens
       )[0],
@@ -70,7 +70,7 @@ export default class Subscription extends React.Component {
 
   handleSubscriptionTokenChange = async (tokenAddress) => {
     let tokenDecimals =
-      window.ethereum.chainId === "0x1"
+      window.ethereum?.chainId === "0x1"
         ? window.config.subscriptioneth_tokens[tokenAddress]?.decimals
         : window.config.subscription_tokens[tokenAddress]?.decimals;
     this.setState({
@@ -80,7 +80,7 @@ export default class Subscription extends React.Component {
       price: "",
     });
     let price =
-      window.ethereum.chainId === "0x1"
+      window.ethereum?.chainId === "0x1"
         ? await window.getEstimatedTokenSubscriptionAmountETH(tokenAddress)
         : await window.getEstimatedTokenSubscriptionAmount(tokenAddress);
     price = new BigNumber(price).times(1.1).toFixed(0);
@@ -107,7 +107,7 @@ export default class Subscription extends React.Component {
 
     await tokenContract.methods
       .approve(
-        window.ethereum.chainId === "0x1"
+        window.ethereum?.chainId === "0x1"
           ? window.config.subscriptioneth_address
           : window.config.subscriptioneth_address,
         this.state.price
@@ -128,7 +128,7 @@ export default class Subscription extends React.Component {
     console.log("handleSubscribe()");
     let subscriptionContract = await window.getContract({
       key:
-        window.ethereum.chainId === "0x1" ? "SUBSCRIPTIONETH" : "SUBSCRIPTION",
+        window.ethereum?.chainId === "0x1" ? "SUBSCRIPTIONETH" : "SUBSCRIPTION",
     });
 
     this.setState({ loadspinnerSub: true });
@@ -149,7 +149,7 @@ export default class Subscription extends React.Component {
     e.preventDefault();
     let subscriptionContract = await window.getContract({
       key:
-        window.ethereum.chainId === "0x1" ? "SUBSCRIPTIONETH" : "SUBSCRIPTION",
+        window.ethereum?.chainId === "0x1" ? "SUBSCRIPTIONETH" : "SUBSCRIPTION",
     });
     await subscriptionContract.methods
       .unsubscribe()
@@ -175,7 +175,7 @@ export default class Subscription extends React.Component {
 
   GetSubscriptionForm = () => {
     let tokenDecimals =
-      window.ethereum.chainId === "0x1"
+      window.ethereum?.chainId === "0x1"
         ? window.config.subscriptioneth_tokens[
             this.state.selectedSubscriptionToken
           ]?.decimals
@@ -266,7 +266,7 @@ export default class Subscription extends React.Component {
                   <p>Select Subscription Token</p>
                   <div className="row m-0" style={{gap: 10}}>
                     {Object.keys(
-                      window.ethereum.chainId === "0x1"
+                      window.ethereum?.chainId === "0x1"
                         ? window.config.subscriptioneth_tokens
                         : window.config.subscription_tokens
                     ).map((t, i) => (
@@ -284,7 +284,7 @@ export default class Subscription extends React.Component {
                             // console.log(e.target)
                           }
                         />
-                        {window.ethereum.chainId === "0x1"
+                        {window.ethereum?.chainId === "0x1"
                           ? window.config.subscriptioneth_tokens[t]?.symbol
                           : window.config.subscription_tokens[t]?.symbol}
                       </span>

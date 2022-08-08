@@ -21,7 +21,7 @@ import axios from "axios";
 
 async function getTokenInformation(address) {
   let res = await axios.get(
-    window.ethereum.chainId === "0x1"
+    window.ethereum?.chainId === "0x1"
       ? `https://api.coingecko.com/api/v3/coins/ethereum/contract/${address}`
       : `https://api.coingecko.com/api/v3/coins/avalanche/contract/${address}`
   );
@@ -211,7 +211,7 @@ export default class PairExplorer extends React.Component {
 
   refreshPairInfo = async () => {
     let { pairInfo } = await window.$.get(
-      window.ethereum.chainId === "0x1"
+      window.ethereum?.chainId === "0x1"
         ? `${window.config.apieth_baseurl}/api/pair-info?pairId=${String(
             this.props.match.params.pair_id
           )
@@ -252,7 +252,7 @@ export default class PairExplorer extends React.Component {
     }
     let { voteCount, upvoteCount, coinbaseVote } = await window.$.get(
       `${
-        window.ethereum.chainId === "0x1"
+        window.ethereum?.chainId === "0x1"
           ? window.config.apieth_baseurl
           : window.config.api_baseurl
       }/api/community-votes?coinbase=${coinbase}&pairId=${
@@ -276,7 +276,7 @@ export default class PairExplorer extends React.Component {
       let pair_name = `${token0Symbol}-${token1Symbol}`;
       window.$.post(
         `${
-          window.ethereum.chainId === "0x1"
+          window.ethereum?.chainId === "0x1"
             ? window.config.apieth_baseurl
             : window.config.api_baseurl
         }/api/register-view?pair_address=${pair_address}&pair_name=${pair_name}`
@@ -325,7 +325,7 @@ export default class PairExplorer extends React.Component {
       let pairId = this.props.match.params.pair_id;
       await window.$.post(
         `${
-          window.ethereum.chainId === "0x1"
+          window.ethereum?.chainId === "0x1"
             ? window.config.apieth_baseurl
             : window.config.api_baseurl
         }/api/community-votes?coinbase=${coinbase}&pairId=${pairId}&action=${action}`
@@ -479,14 +479,14 @@ export default class PairExplorer extends React.Component {
   toggleFavorite = async () => {
     
     if (!this.state.pair) return;
-    if(window.ethereum.chainId === '0x1') {
+    if(window.ethereum?.chainId === '0x1') {
       await window.toggleFavoriteETH(this.state.pair);
     window
       .isFavoriteETH(this.state.pair.id.toLowerCase())
       .then((isFavorite) => this.setState({ isFavorite }))
       .catch(console.error);
     }
-    if(window.ethereum.chainId === '0xa86a') {
+    if(window.ethereum?.chainId === '0xa86a') {
  await window.toggleFavorite(this.state.pair);
     window
       .isFavorite(this.state.pair.id.toLowerCase())
@@ -574,7 +574,7 @@ export default class PairExplorer extends React.Component {
             target="_blank"
             rel="noopener noreferrer"
             href={
-              window.ethereum.chainId === "0x1"
+              window.ethereum?.chainId === "0x1"
                 ? `https://etherscan.io/address/${txn.maker}`
                 : `https://cchain.explorer.avax.network/address/${txn.maker}`
             }
@@ -598,7 +598,7 @@ export default class PairExplorer extends React.Component {
               target="_blank"
               title={txn.id.split("-")[0]}
               href={
-                window.ethereum.chainId === "0x1"
+                window.ethereum?.chainId === "0x1"
                   ? `https://etherscan.io/tx/${txn.id.split("-")[0]}`
                   : `https://cchain.explorer.avax.network/tx/${
                       txn.id.split("-")[0]
@@ -608,7 +608,7 @@ export default class PairExplorer extends React.Component {
               <img
                 className="icon-bg-white-rounded"
                 src={
-                  window.ethereum.chainId === "0x1"
+                  window.ethereum?.chainId === "0x1"
                     ? "/images/etherscan.png"
                     : "/images/cchain.png"
                 }
@@ -720,7 +720,7 @@ export default class PairExplorer extends React.Component {
   refreshLockerData = async () => {
     let pair_id = this.props.match.params.pair_id;
     let baseTokens =
-      window.ethereum.chainId === "0x1"
+      window.ethereum?.chainId === "0x1"
         ? await window.getBaseTokensETH()
         : await window.getBaseTokens();
     this.setState({ baseTokens });
@@ -728,7 +728,7 @@ export default class PairExplorer extends React.Component {
       // this.refreshTokenLocks(pair_id)
       // this.handlePairChange(null, pair_id)
       let totalLpLocked =
-        window.ethereum.chainId === "0x1"
+        window.ethereum?.chainId === "0x1"
           ? await window.getLockedAmountETH(pair_id)
           : await window.getLockedAmount(pair_id);
       this.refreshUsdValueOfLP(pair_id, totalLpLocked, baseTokens);
@@ -805,7 +805,7 @@ export default class PairExplorer extends React.Component {
       return (
         <Redirect
           to={
-            window.ethereum.chainId === "0x1"
+            window.ethereum?.chainId === "0x1"
               ? "/pair-explorer/0x76911e11fddb742d75b83c9e1f611f48f19234e4"
               : "/pair-explorer/0x497070e8b6c55fd283d8b259a6971261e2021c01"
           }
@@ -871,19 +871,19 @@ export default class PairExplorer extends React.Component {
                       rel="noopener noreferrer"
                       target="_blank"
                       title={
-                        window.ethereum.chainId === "0x1"
+                        window.ethereum?.chainId === "0x1"
                           ? "Buy at Uniswap"
                           : "Buy at Pangolin"
                       }
                       href={
-                        window.ethereum.chainId === "0x1"
+                        window.ethereum?.chainId === "0x1"
                           ? `https://v2.info.uniswap.org/pair/${this.props.match.params.pair_id}`
                           : `https://v2.info.uniswap.org/pair/${this.props.match.params.pair_id}`
                       }
                     >
                       <img
                         src={
-                          window.ethereum.chainId === "0x1"
+                          window.ethereum?.chainId === "0x1"
                             ? "/images/uniswap-logo-home.png"
                             : "/images/pangolin.png"
                         }
@@ -990,7 +990,7 @@ export default class PairExplorer extends React.Component {
                       target="_blank"
                       title={this.state.pair?.id}
                       href={
-                        window.ethereum.chainId === "0x1"
+                        window.ethereum?.chainId === "0x1"
                           ? `https://etherscan.io/address/${this.props.match.params.pair_id}`
                           : `https://cchain.explorer.avax.network/address/${this.props.match.params.pair_id}`
                       }
@@ -998,7 +998,7 @@ export default class PairExplorer extends React.Component {
                       <img
                         className="icon-bg-white-rounded"
                         src={
-                          window.ethereum.chainId === "0x1"
+                          window.ethereum?.chainId === "0x1"
                             ? "/images/etherscan.png"
                             : "/images/cchain.png"
                         }
@@ -1053,7 +1053,7 @@ export default class PairExplorer extends React.Component {
                   rel="noopener noreferrer"
                   target="_blank"
                   href={
-                    window.ethereum.chainId === "0x1"
+                    window.ethereum?.chainId === "0x1"
                       ? `https://etherscan.io/token/${this.state.mainToken?.id}`
                       : `https://cchain.explorer.avax.network/tokens/${this.state.mainToken?.id}`
                   }
@@ -1096,7 +1096,7 @@ export default class PairExplorer extends React.Component {
                   )}{" "}
                   {(this.state.mainToken?.derivedETH * 1).toFixed(6) * 1 ||
                     "..."}{" "}
-                  {window.ethereum.chainId === "0x1" ? "ETH" : "AVAX"}
+                  {window.ethereum?.chainId === "0x1" ? "ETH" : "AVAX"}
                 </p>
               </div>
               <div className="graph-header-right">
@@ -1104,7 +1104,7 @@ export default class PairExplorer extends React.Component {
                   target="_blank"
                   rel="noopener noreferrer"
                   href={
-                    window.ethereum.chainId === "0x1"
+                    window.ethereum?.chainId === "0x1"
                       ? `https://app.uniswap.org/#/swap?outputCurrency=${this.state.mainToken?.id}`
                       : `https://app.pangolin.exchange/#/swap?outputCurrency=${this.state.mainToken?.id}`
                   }

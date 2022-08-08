@@ -6,7 +6,7 @@ async function getPairCandles(pair, from, to, n = 0) {
     query = `?from=${from}&to=${to}`;
   }
   let candles = await axios.get(
-    window.ethereum.chainId === "0x1"
+    window.ethereum?.chainId === "0x1"
       ? `${window.config.apieth_baseurl}/api/candles/minutes/${pair}${query}`
       : `${window.config.api_baseurl}/api/candles/minutes/${pair}${query}`
   );

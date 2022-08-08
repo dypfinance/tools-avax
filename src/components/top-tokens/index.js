@@ -116,7 +116,7 @@ export default class TopTokens extends React.Component {
           <a
             target="_blank"
             className="l-clr-purple"
-            href={ window.ethereum.chainId === '0x1' ? `https://v2.info.uniswap.org/token/${txn.id}` : `https://cchain.explorer.avax.network/address/${txn.id}`}
+            href={ window.ethereum?.chainId === '0x1' ? `https://v2.info.uniswap.org/token/${txn.id}` : `https://cchain.explorer.avax.network/address/${txn.id}`}
             style={{
               whiteSpace: "nowrap",
               overflow: "hidden",

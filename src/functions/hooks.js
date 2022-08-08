@@ -16,7 +16,7 @@ const onSignIn = async ({ account, chainId }) => {
   if (!account || !chainId) return;
   if (window.ethereum) {
     try {
-      accounts = await window.ethereum.request({
+      accounts = await window.ethereum?.request({
         method: "eth_requestAccounts",
       });
     } catch (err) {
@@ -128,8 +128,8 @@ export const handleSwitchNetwork = async (chainID) => {
       symbol: "ETH", // 2-6 characters long
       decimals: 18,
     },
-    rpcUrls: "https://mainnet.infura.io/v3/",
-    blockExplorerUrls: "https://etherscan.io",
+    rpcUrls: ["https://mainnet.infura.io/v3/"],
+    blockExplorerUrls: ["https://etherscan.io"],
   };
 
   const AVAXPARAMS = {
@@ -140,8 +140,8 @@ export const handleSwitchNetwork = async (chainID) => {
       symbol: "AVAX", // 2-6 characters long
       decimals: 18,
     },
-    rpcUrls: "https://api.avax.network/ext/bc/C/rpc",
-    blockExplorerUrls: "https://snowtrace.io/",
+    rpcUrls: ["https://api.avax.network/ext/bc/C/rpc"],
+    blockExplorerUrls: ["https://snowtrace.io/"],
   };
 
   try {
@@ -151,15 +151,17 @@ export const handleSwitchNetwork = async (chainID) => {
     });
   } catch (switchError) {
     // This error code indicates that the chain has not been added to MetaMask.
-    if (error.code === 4902) {
+    console.log(switchError, 'switch')
+    if (switchError.code === 4902) {
+      console.log('yes')
       try {
         await ethereum.request({
           method: "wallet_addEthereumChain",
           params:
             chainID === "0x1"
-              ? ETHPARAMS
+              ? [ETHPARAMS]
               : chainID === "0xa86a"
-              ? AVAXPARAMS
+              ? [AVAXPARAMS]
               : "",
         });
       } catch (addError) {

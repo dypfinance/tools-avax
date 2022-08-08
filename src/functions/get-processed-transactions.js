@@ -164,7 +164,7 @@ burns(first: 250, orderBy: timestamp, orderDirection: desc) {
 }
 
 function handleTheGraphData({ data }) {
-  if (window.ethereum.chainId === "0xa86a") {
+  if (window.ethereum?.chainId === "0xa86a") {
     let burns = data.burns
       .filter((mintOrBurn) => {
         return [mintOrBurn.pair.token0.id, mintOrBurn.pair.token1.id].includes(
@@ -190,7 +190,7 @@ function handleTheGraphData({ data }) {
       ethPrice: data.bundle.ethPrice,
     };
   }
-  if (window.ethereum.chainId === "0x1") {
+  if (window.ethereum?.chainId === "0x1") {
     let burns = data.burns
       .filter((mintOrBurn) => {
         return [mintOrBurn.pair.token0.id, mintOrBurn.pair.token1.id].includes(
@@ -220,7 +220,7 @@ function handleTheGraphData({ data }) {
 }
 
 function getFormattedMintOrBurn(mintOrBurn, type) {
-  if (window.ethereum.chainId === "0xa86a") {
+  if (window.ethereum?.chainId === "0xa86a") {
     let tokenAmount,
       ethAmount,
       tokenDecimals = 18,
@@ -264,7 +264,7 @@ function getFormattedMintOrBurn(mintOrBurn, type) {
     };
   }
 
-  if (window.ethereum.chainId === "0x1") {
+  if (window.ethereum?.chainId === "0x1") {
     let tokenAmount,
       ethAmount,
       tokenDecimals = 18,

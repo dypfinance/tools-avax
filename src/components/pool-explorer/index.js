@@ -83,7 +83,7 @@ export default class PoolExplorer extends React.Component {
   fetchTransactions = async () => {
     try {
       let network = this.props.network;
-      if(window.ethereum.chainId === '0x1') {
+      if(window.ethereum?.chainId === '0x1') {
         let { transactions, ethPrice } = await getProcessedTransactionsETH();
 
         // TODO: Filter this to last 4 hour transactions once synced
@@ -95,7 +95,7 @@ export default class PoolExplorer extends React.Component {
           ethPrice,
         });
       }
-      if(window.ethereum.chainId === '0xa86a') {
+      if(window.ethereum?.chainId === '0xa86a') {
          let { transactions, ethPrice } = await getProcessedTransactions(network);
 
       // TODO: Filter this to last 4 hour transactions once synced
@@ -185,7 +185,7 @@ export default class PoolExplorer extends React.Component {
             rel="noopener noreferrer"
             target="_blank"
             href={
-              window.ethereum.chainId === "0x1"
+              window.ethereum?.chainId === "0x1"
                 ? `https://etherscan.io/address/${txn.tokenId}`
                 : `https://cchain.explorer.avax.network/address/${txn.tokenId}`
             }
@@ -240,19 +240,19 @@ export default class PoolExplorer extends React.Component {
               rel="noopener noreferrer"
               target="_blank"
               title={
-                window.ethereum.chainId === "0x1"
+                window.ethereum?.chainId === "0x1"
                   ? "Buy at Uniswap"
                   : "Buy at Pangolin"
               }
               href={
-                window.ethereum.chainId === "0x1"
+                window.ethereum?.chainId === "0x1"
                   ? `https://app.uniswap.org/#/swap?outputCurrency=${txn.tokenId}`
                   : `https://app.pangolin.exchange/#/swap?outputCurrency=${txn.tokenId}`
               }
             >
               <img
                 src={
-                  window.ethereum.chainId === "0x1"
+                  window.ethereum?.chainId === "0x1"
                     ? "/images/uniswap-logo-home.png"
                     : "/images/pangolin.png"
                 }
@@ -265,7 +265,7 @@ export default class PoolExplorer extends React.Component {
               target="_blank"
               title={txn.id.split("-")[0]}
               href={
-                window.ethereum.chainId === "0x1"
+                window.ethereum?.chainId === "0x1"
                   ? `https://etherscan.io/tx/${txn.id.split("-")[0]}`
                   : `https://cchain.explorer.avax.network/tx/${
                       txn.id.split("-")[0]
@@ -275,7 +275,7 @@ export default class PoolExplorer extends React.Component {
               <img
                 className="icon-bg-white-rounded"
                 src={
-                  window.ethereum.chainId === "0x1"
+                  window.ethereum?.chainId === "0x1"
                     ? "/images/etherscan.png"
                     : "/images/cchain.png"
                 }
@@ -317,7 +317,7 @@ export default class PoolExplorer extends React.Component {
             target="_blank"
             rel="noopener noreferrer"
             href={
-              window.ethereum.chainId === "0x1"
+              window.ethereum?.chainId === "0x1"
                 ? `https://v2.info.uniswap.org/pair/${txn.pairId}`
                 : `https://cchain.explorer.avax.network/address/${txn.pairId}`
             }
@@ -353,10 +353,10 @@ export default class PoolExplorer extends React.Component {
           `${getFormattedNumber(txn.tokenAmount, 8)} ${txn.tokenSymbol}`,
       },
       {
-        name: window.ethereum.chainId === '0x1' ? 'ETH Amount' : "AVAX Amount",
+        name: window.ethereum?.chainId === '0x1' ? 'ETH Amount' : "AVAX Amount",
         selector: "ethAmount",
         sortable: true,
-        format: (txn) => window.ethereum.chainId === '0x1' ?  `${getFormattedNumber(txn.ethAmount, 8)} ETH` : `${getFormattedNumber(txn.ethAmount, 8)} AVAX`,
+        format: (txn) => window.ethereum?.chainId === '0x1' ?  `${getFormattedNumber(txn.ethAmount, 8)} ETH` : `${getFormattedNumber(txn.ethAmount, 8)} AVAX`,
       },
       {
         name: "Pair Created",
@@ -410,7 +410,7 @@ export default class PoolExplorer extends React.Component {
                   Big Swap Explorer
                 </h2>
                 <p className="d-block">
-                  {window.ethereum.chainId === '0x1' ? ' Search for Big Swaps on Uniswap with useful information.' : ' Search for Big Swaps on Pangolin with useful information.'}
+                  {window.ethereum?.chainId === '0x1' ? ' Search for Big Swaps on Uniswap with useful information.' : ' Search for Big Swaps on Pangolin with useful information.'}
                  
                 </p>
               </>
@@ -420,7 +420,7 @@ export default class PoolExplorer extends React.Component {
                   Top Tokens
                 </h2>
                 <p className="d-block">
-                  {window.ethereum.chainId === '0x1' ? 'Showing Uniswap Top Tokens' : 'Showing Pangolin Top Tokens'}
+                  {window.ethereum?.chainId === '0x1' ? 'Showing Uniswap Top Tokens' : 'Showing Pangolin Top Tokens'}
                   </p>
               </>
             ) : (
@@ -526,14 +526,14 @@ export default class PoolExplorer extends React.Component {
           <div className="table-title">
             {this.state.screen === "pool" ? (
               <h4>
-                {window.ethereum.chainId === "0x1"
+                {window.ethereum?.chainId === "0x1"
                   ? "Uniswap Pools Activity"
                   : "Pangolin Pools Activity"}
               </h4>
             ) : this.state.screen === "swap" ? (
               <h4>Latest Big Swaps</h4>
             ) : this.state.screen === "tokens" ? (
-              <h4>{window.ethereum.chainId === '0x1' ? 'Uniswap Top Tokens' : 'Pangolin Top Tokens'}</h4>
+              <h4>{window.ethereum?.chainId === '0x1' ? 'Uniswap Top Tokens' : 'Pangolin Top Tokens'}</h4>
             ) : (
               <h4>Yields Rankings</h4>
             )}

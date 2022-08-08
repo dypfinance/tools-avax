@@ -47,7 +47,7 @@ class App extends React.Component {
     if (!this.state.isConnected) return;
 
     // // detect Network account change
-    // window.ethereum.on('chainChanged', function(networkId){
+    // window.ethereum?.on('chainChanged', function(networkId){
     //   console.log('networkChanged',networkId);
     //   const chainId = async() => await window.web3.eth.getChainId();
     //   if (chainId == '1') {
@@ -63,13 +63,13 @@ class App extends React.Component {
     });
 
     let subscribedPlatformTokenAmount;
-    if (window.ethereum.chainId === "0x1") {
+    if (window.ethereum?.chainId === "0x1") {
       await window.subscriptionPlatformTokenAmountETH(coinbase);
       let isPremium = Number(subscribedPlatformTokenAmount) > 0;
       this.setState({ subscribedPlatformTokenAmount, isPremium });
     }
 
-    if (window.ethereum.chainId === "0xa86a") {
+    if (window.ethereum?.chainId === "0xa86a") {
       await window.subscriptionPlatformTokenAmount(coinbase);
       let isPremium = Number(subscribedPlatformTokenAmount) > 0;
       this.setState({ subscribedPlatformTokenAmount, isPremium });
@@ -92,7 +92,7 @@ class App extends React.Component {
     let isConnected = this.state.isConnected;
     this.setState({
       isConnected:
-        (await window.ethereum.selectedAddress) !== undefined ? true : false,
+        (await window.ethereum?.selectedAddress) !== undefined ? true : false,
     });
     return isConnected;
   };
@@ -100,7 +100,7 @@ class App extends React.Component {
   refreshHotPairs = async () => {
     window.$.get(
       `${
-        window.ethereum.chainId === "0x1"
+        window.ethereum?.chainId === "0x1"
           ? "https://app-tools.dyp.finance"
           : "https://app-tools-avax.dyp.finance"
       }/api/hot-pairs`
@@ -114,7 +114,7 @@ class App extends React.Component {
 
   componentDidMount() {
     this.handleConnection();
-    // console.log(window.ethereum.chainId);
+    // console.log(window.ethereum?.chainId);
     // getSyncStats()
     // .then((syncStatus) => {
     // let m = window.alertify.message(
@@ -183,7 +183,11 @@ class App extends React.Component {
         <Route component={GoogleAnalyticsReporter} />
 
         <div className="body_overlay"></div>
-        
+        <div className="minimize-wrap">
+          <div onClick={this.toggleMinimizeSidebar} className="minimize_btn">
+            <span className=""></span>
+          </div>
+        </div>
         <Header
           toggleTheme={this.toggleTheme}
           theme={this.state.theme}
@@ -217,7 +221,8 @@ class App extends React.Component {
               <Route
                 exact
                 path="/news"
-                render={() => <News theme={this.state.theme} />}
+           
+            render={() => <News theme={this.state.theme}/>}
               />
               <Route
                 exact

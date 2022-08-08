@@ -80,7 +80,7 @@ export default class Locker extends React.Component {
     try {
       let recipient = await window.getCoinbase();
       let recipientLocksLength =
-        window.ethereum.chainId === "0x1"
+        window.ethereum?.chainId === "0x1"
           ? await window.getActiveLockIdsLengthByRecipientETH(recipient)
           : await window.getActiveLockIdsLengthByRecipient(recipient);
       recipientLocksLength = Number(recipientLocksLength);
@@ -91,7 +91,7 @@ export default class Locker extends React.Component {
         let startIndex = this.state.recipientLocks.length;
         let endIndex = Math.min(recipientLocksLength, startIndex + step);
         let recipientLocks =
-          window.ethereum.chainId === "0x1"
+          window.ethereum?.chainId === "0x1"
             ? await window.getActiveLocksByRecipientETH(
                 recipient,
                 startIndex,
@@ -117,7 +117,7 @@ export default class Locker extends React.Component {
     let pair_id = this.props.match.params.pair_id;
 
     let baseTokens =
-      window.ethereum.chainId === "0x1"
+      window.ethereum?.chainId === "0x1"
         ? await window.getBaseTokensETH()
         : await window.getBaseTokens();
     this.setState({ baseTokens });
@@ -125,7 +125,7 @@ export default class Locker extends React.Component {
       this.refreshTokenLocks(pair_id);
       this.handlePairChange(null, pair_id);
       let totalLpLocked =
-        // window.ethereum.chainId === "0x1"
+        // window.ethereum?.chainId === "0x1"
         //   ? await window.getLockedAmountETH(pair_id)
         //   : await window.getLockedAmount(pair_id);
         this.refreshUsdValueOfLP(pair_id, totalLpLocked, baseTokens);
@@ -167,7 +167,7 @@ export default class Locker extends React.Component {
     this.setState({ isLoadingMoreTokenLocks: true });
     try {
       let tokenLocksLength =
-        window.ethereum.chainId === "0x1"
+        window.ethereum?.chainId === "0x1"
           ? await window.getActiveLockIdsLengthByTokenETH(token)
           : await window.getActiveLockIdsLengthByToken(token);
       tokenLocksLength = Number(tokenLocksLength);
@@ -176,7 +176,7 @@ export default class Locker extends React.Component {
         let startIndex = this.state.tokenLocks.length;
         let endIndex = Math.min(tokenLocksLength, startIndex + step);
         let tokenLocks =
-          window.ethereum.chainId === "0x1"
+          window.ethereum?.chainId === "0x1"
             ? await window.getActiveLocksByTokenETH(token, startIndex, endIndex)
             : await window.getActiveLocksByToken(token, startIndex, endIndex);
         tokenLocks = this.state.tokenLocks.concat(tokenLocks);
@@ -205,7 +205,7 @@ export default class Locker extends React.Component {
     });
 
     let totalLpLocked =
-      window.ethereum.chainId === "0x1"
+      window.ethereum?.chainId === "0x1"
         ? await window.getLockedAmountETH(newPairAddress)
         : await window.getLockedAmount(newPairAddress);
     this.setState({ totalLpLocked });
@@ -218,7 +218,7 @@ export default class Locker extends React.Component {
   };
 
   loadPairInfo = async () => {
-    let isConnected = window.ethereum.selectedAddress;
+    let isConnected = window.ethereum?.selectedAddress;
 
     if (!isConnected) {
       this.setState({
@@ -270,7 +270,7 @@ export default class Locker extends React.Component {
       let token1 = pair["token1"]?.address;
 
       let baseTokens =
-        window.ethereum.chainId === "0x1"
+        window.ethereum?.chainId === "0x1"
           ? await window.getBaseTokensETH()
           : await window.getBaseTokens();
       if (baseTokens.includes(token0)) {
@@ -295,7 +295,7 @@ export default class Locker extends React.Component {
         ].address
       : "";
     let baseTokens =
-      window.ethereum.chainId === "0x1"
+      window.ethereum?.chainId === "0x1"
         ? await window.getBaseTokensETH()
         : await window.getBaseTokens();
     if (
@@ -335,7 +335,7 @@ export default class Locker extends React.Component {
     });
     await tokenContract.methods
       .approve(
-        window.ethereum.chainId === "0x1"
+        window.ethereum?.chainId === "0x1"
           ? window.config.lockereth_address
           : window.config.locker_address,
         amountWei.times(1e18).toFixed(0).toString()
@@ -359,7 +359,7 @@ export default class Locker extends React.Component {
           this.state.selectedBaseToken == "0" ? "token0" : "token1"
         ].address
       : "";
-    if (window.ethereum.chainId === "0x1") {
+    if (window.ethereum?.chainId === "0x1") {
       let lockerContract = await window.getContract({ key: "LOCKERETH" });
 
       let estimatedValue = await window.getMinLockCreationFeeInWei(
@@ -391,7 +391,7 @@ export default class Locker extends React.Component {
         });
     }
 
-    if (window.ethereum.chainId === "0xa86a") {
+    if (window.ethereum?.chainId === "0xa86a") {
       let lockerContract = await window.getContract({ key: "LOCKER" });
 
       let estimatedValue = await window.getMinLockCreationFeeInWei(
@@ -432,10 +432,10 @@ export default class Locker extends React.Component {
 
   handleClaim = (id) => (e) => {
     e.preventDefault();
-    if (window.ethereum.chainId === "0x1") {
+    if (window.ethereum?.chainId === "0x1") {
       window.claimUnlockedETH(id);
     }
-    if (window.ethereum.chainId === "0xa86a") {
+    if (window.ethereum?.chainId === "0xa86a") {
       window.claimUnlocked(id);
     }
   };
@@ -524,7 +524,7 @@ export default class Locker extends React.Component {
               >
                 <i className="fas fa-info-circle"></i> Approx. 1% of the LP
                 value will be sent as{" "}
-                {window.ethereum.chainId === "0x1" ? "ETH" : "AVAX"} , which
+                {window.ethereum?.chainId === "0x1" ? "ETH" : "AVAX"} , which
                 will be used to buy and lock DYP with the liquidity, DYP will be
                 released to recipient wallet along with liquidity once unlocked.
               </p>
@@ -586,7 +586,7 @@ export default class Locker extends React.Component {
               >
                 <i className="fas fa-info-circle"></i> Approx. 1% of the LP
                 value will be sent as{" "}
-                {window.ethereum.chainId === "0x1" ? "ETH" : "AVAX"} , which
+                {window.ethereum?.chainId === "0x1" ? "ETH" : "AVAX"} , which
                 will be used to buy and lock DYP with the liquidity, DYP will be
                 released to recipient wallet along with liquidity once unlocked.
               </p>
@@ -999,13 +999,13 @@ export default class Locker extends React.Component {
                         </div>
                       </div>
                     </div>
-                    <iframe
+                    {/* <iframe
                     style={{border: 'none'}}
                       srcDoc={`<div style="display: flex; flex-direction: column; align-items: center; gap: 5px"><img src=${BadgeSmall} alt="" style="width: 100px; height: 100px;"/>
                       <span style="background: rgb(236, 33, 32); color: #fff; padding: 5px 10px; border-radius: 4px; font-weight: 500; ">${
                         !this.state.lpBalance ? 25 : getPercentageLocked()
                       } % Locked</span</div>`}
-                    ></iframe>
+                    ></iframe> */}
                     <div className="copylink-wrapper">
                       <div>
                         <span className="link-text">
@@ -1734,14 +1734,16 @@ export default class Locker extends React.Component {
           </h2>
 
           <p>
-            Lock {window.ethereum.chainId === "0x1" ? "Uniswap" : "Pangolin"}{" "}
+            Lock {window.ethereum?.chainId === "0x1" ? "Uniswap" : "Pangolin"}{" "}
             Liquidity and Check Status of Liquidity Locks.
           </p>
         </div>
         <div className="l-table-wrapper-div p-4">
           <div className="mb-4">{this.GetCreateLockForm()}</div>
           <div className="mb-4">{this.GetTokenLocks()}</div>
-          <div className="mb-5">{this.GetMyLocks()}</div>
+          {this.state.recipientLocks.length > 0 && (
+            <div className="mb-5">{this.GetMyLocks()}</div>
+          )}
         </div>
       </div>
     );

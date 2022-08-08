@@ -2,14 +2,14 @@ import { NavLink } from "react-router-dom";
 
 import getFormattedNumber from "../functions/get-formatted-number";
 import React, { useEffect, useState } from "react";
-import { useWeb3React } from "@web3-react/core";
+
 import {
   useEagerConnect,
   useInactiveListener
 } from "../functions/hooks";
 
 const Header = ({toggleMobileSidebar, toggleTheme, theme}) => {
-  const { account, chainId, active } = useWeb3React();
+ 
   const [gasPrice, setGasprice] = useState()
   const [ethPrice, setEthprice] = useState()
   const [hotpairs, setHotpairs] = useState([])
@@ -23,7 +23,7 @@ const Header = ({toggleMobileSidebar, toggleTheme, theme}) => {
 
 
    const fetchData= async()=> {
-    if (window.ethereum.chainId === "0x1") {
+    if (window.ethereum?.chainId === "0x1") {
       await fetch(
         "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd"
       )
@@ -39,7 +39,7 @@ const Header = ({toggleMobileSidebar, toggleTheme, theme}) => {
         .catch(console.error);
     }
 
-    if (window.ethereum.chainId === "0xa86a") {
+    if (window.ethereum?.chainId === "0xa86a") {
       await fetch(
         "https://api.coingecko.com/api/v3/simple/price?ids=avalanche-2&vs_currencies=usd"
       )
@@ -57,7 +57,7 @@ const Header = ({toggleMobileSidebar, toggleTheme, theme}) => {
   const refreshHotPairs = async () => {
     window.$.get(
       `${
-        window.ethereum.chainId === "0x1"
+        window.ethereum?.chainId === "0x1"
           ? "https://app-tools.dyp.finance"
           : "https://app-tools-avax.dyp.finance"
       }/api/hot-pairs`
@@ -86,7 +86,7 @@ const Header = ({toggleMobileSidebar, toggleTheme, theme}) => {
   ethereum?.on('chainChanged', handleChainChanged)
   ethereum?.on('accountChanged', handleChainChanged)
   
-  }, [window.ethereum.chainId])
+  }, [window.ethereum?.chainId])
 
   return (
     <header className="header-wrap" style={{ paddingLeft: "2rem" }}>
@@ -94,9 +94,9 @@ const Header = ({toggleMobileSidebar, toggleTheme, theme}) => {
         <div>
           <img
             src={
-              window.ethereum.chainId === "0x1"
+              window.ethereum?.chainId === "0x1"
                 ? "https://dyp.finance/img/eth.svg"
-                : window.ethereum.chainId === "0xa86a"
+                : window.ethereum?.chainId === "0xa86a"
                 ? "https://dyp.finance/img/farms/avax-yield.png"
                 : ""
             }
@@ -104,15 +104,15 @@ const Header = ({toggleMobileSidebar, toggleTheme, theme}) => {
             style={{ width: "20px", marginRight: "5px" }}
           />
           <a href="#">
-            {window.ethereum.chainId === "0x1"
+            {window.ethereum?.chainId === "0x1"
               ? "ETH:"
-              : window.ethereum.chainId === "0xa86a"
+              : window.ethereum?.chainId === "0xa86a"
               ? "AVAX"
               : ""}
             <span>${getFormattedNumber(ethPrice, 2)}</span>
           </a>
         </div>
-        {window.ethereum.chainId === "0x1" ? (
+        {window.ethereum?.chainId === "0x1" ? (
           <div className="dropdown">
             <img src="/assets/img/icon-1.svg" alt="Image" />
             <span>{getFormattedNumber(gasPrice, 0)} GWEI</span>

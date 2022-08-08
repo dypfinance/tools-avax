@@ -702,9 +702,16 @@ a:hover {
   font-weight: 500 !important;
   font-size: 12px;
   line-height: 15px !important;
-  margin-left: 10px;
+  margin-left: 5px;
 }
 
+.account-wrapper {
+  background: linear-gradient(100.22deg, #06E386 -14.12%, #5E9AF3 107.46%);
+    max-width: 275px;
+    margin: auto;
+    padding: 10px;
+    border-radius: 8px;
+}
 .networks {
   /* display: flex; */
   justify-content: center;
@@ -1005,6 +1012,18 @@ a:hover {
   width: auto;
   margin-left: 10px;
   margin-right: 10px;
+}
+
+.page_wrapper.minimize .account-wrapper {
+  width: auto;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+::placeholder {
+  color: rgba(0, 0, 0, 0.3);
+  
+  opacity: 1;
 }
 
 .page_wrapper.minimize .home-menu a {
@@ -1896,7 +1915,7 @@ color: #DB2728 !important;
   font-weight: 700;
   font-size: 16px;
   line-height: 20px;
-  color: #ed2120 !important;
+  /* color: #ed2120 !important; */
   width: 230px;
 }
 
@@ -1962,7 +1981,7 @@ color: #DB2728 !important;
 font-size: 14px;
 line-height: 17px;
 color: #000000;
-opacity: 0.4;
+/* opacity: 0.4; */
 }
 
 .input-wrapper {

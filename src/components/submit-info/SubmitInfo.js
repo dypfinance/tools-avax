@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import validateInfo from "./validateinfo";
+import axios from "axios";
 
 const SubmitInfo = () => {
   const initialState = {
@@ -30,11 +31,53 @@ const SubmitInfo = () => {
 
   const handleSubmit = async (e) =>
   {
-      e.preventDefault();
+    e.preventDefault();
 
-      setErrors(validateInfo(values));
+    setErrors(validateInfo(values));
 
+    if(Object.keys(errors).length === 0)
+    {
+      const data = {
+        project_name: values.project_name,
+        nft_number: values.nft_number,
+        ticker: values.ticker,
+        contract_address: values.contract_address,
+        about: values.about,
+        audit_info: values.audit_info,
+        audit_link: values.audit_link,
+        website_link: values.website_link,
+        twitter: values.twitter,
+        coinmarket: values.coinmarket,
+        telegram: values.telegram,
+        coingecko: values.coingecko,
+      }
+
+      if(values.project_name !== "" && values.nft_number !== "" && values.ticker !== "")
+      {
+        const send = await axios.post("https://api-mail.dyp.finance/api/submit_form", data).then(function (result)
+        {
+          return result.data
+
+        }).catch(function (error)
+        {
+          console.error(error)
+        })
+
+        if(send.status === 1)
+        {
+          alert("Your information has been submitted.");
+        }
+        else
+        {
+
+          alert("Something goes to wrong.");
+        }
+      }
+
+      setValues({ ...initialState });
+    }
   };
+
 
   return (
     <div>
@@ -47,7 +90,7 @@ const SubmitInfo = () => {
         </div>
       </div>
       <div className="px-3 table-title" style={{ paddingBottom: "6rem" }}>
-        <form>
+        <form style={{display: 'flex', flexDirection: 'column', gap: 20}}>
           <div>
             <h5>Your details</h5>
             <div className="row mt-3 mb-4">
@@ -267,7 +310,7 @@ const SubmitInfo = () => {
               </div>
             </div>
           </div>
-          <div className="row mt-5 buttons-wrapper">
+          <div className="row mt-3 buttons-wrapper">
             <div className="col-lg-4 single-cell">
               <div className="submitbtn" onClick={handleSubmit}>
                 <span className="submit-text">Submit</span>

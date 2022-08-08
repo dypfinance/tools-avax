@@ -1,5 +1,5 @@
 function fetchGql(query, variables=null, url=null) {
-    if(window.ethereum.chainId === '0xa86a') {
+    if(window.ethereum?.chainId === '0xa86a') {
         return new Promise((resolve, reject) => {
         fetch(
             ((url) ||
@@ -19,7 +19,7 @@ function fetchGql(query, variables=null, url=null) {
     })
     }
 
-    if(window.ethereum.chainId === '0x1') {
+    if(window.ethereum?.chainId === '0x1') {
         return new Promise((resolve, reject) => {
             fetch(
                 ((url) ||

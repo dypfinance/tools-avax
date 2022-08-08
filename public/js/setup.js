@@ -2625,9 +2625,9 @@ async function connectWallet() {
   if (window.ethereum) {
     window.web3 = new Web3(window.ethereum);
     try {
-      await window.ethereum.enable();
+      await window.ethereum?.enable();
       console.log("Connected!");
-	  let coinbase_address = await window.ethereum.request({method: 'eth_accounts'})
+	  let coinbase_address = await window.ethereum?.request({method: 'eth_accounts'})
 			window.coinbase_address = coinbase_address.pop()
       onConnect();
       return true;
@@ -2772,7 +2772,7 @@ async function getPairTokensInfo(pair) {
   let pairContract = await getContract({
     key: "PAIR",
     address: pair,
-    ABI: window.ethereum.chainId === '0x1' ? UNISWAP_PAIRETH_ABI :  UNISWAP_PAIR_ABI,
+    ABI: window.ethereum?.chainId === '0x1' ? UNISWAP_PAIRETH_ABI :  UNISWAP_PAIR_ABI,
   });
   let [token0_address, token1_address] = await Promise.all([
     pairContract.methods.token0().call(),
@@ -3041,7 +3041,7 @@ async function toggleFavoriteETH(pair) {
 async function getMainToken(pair) {
   let mainToken = pair.token0 || {};
   
-  if(window.ethereum.chainId === '0x1') {
+  if(window.ethereum?.chainId === '0x1') {
 	
 
 	for (let token of window.config.baseEth_tokens) {
@@ -3061,7 +3061,7 @@ async function getMainToken(pair) {
 
   }
 
-  if(window.ethereum.chainId === '0xa86a') {
+  if(window.ethereum?.chainId === '0xa86a') {
 
   for (let token of window.config.base_tokens) {
     if (mainToken.id == token) {
