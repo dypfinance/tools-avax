@@ -22,7 +22,6 @@ const SubmitInfo = () => {
 
   const handleChange = async (e) => {
     const { name, value } = e.target;
-
     setValues({
       ...values,
       [name]: value,
@@ -126,7 +125,7 @@ const SubmitInfo = () => {
                   <textarea
                     className="form-control"
                     id="inputAddress"
-                    name="message"
+                    name="about"
                     rows="5"
                     cols="2"
                     onChange={handleChange}
