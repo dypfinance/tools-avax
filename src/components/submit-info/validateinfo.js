@@ -1,8 +1,16 @@
 export default function validateInfo(values) {
   let errors = {};
-
+  if(!values.email){
+    errors.email = "Email Required"
+}else if(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)){
+    errors.email = "Email Address is Invalid"
+}
   if (!values.project_name.trim()) {
     errors.project_name = "Project name is Required";
+  }
+
+  if (!values.logoimg.trim()) {
+    errors.logoimg = "Link to download 512x512 png logo image is Required";
   }
 
   if (!values.nft_number.trim()) {

@@ -52,19 +52,19 @@ const NewsModal = ({
         }}
       >
         <div>
-          <div className="details-modal-content pb-0">
+          <div className="details-modal-content">
             <div className="left-col" ref={elementRef}>
-              <h2 style={{ maxWidth: 550 }} className="left-col-title">
+              <h2 style={{ maxWidth: 710 }} className="left-col-title">
                 {title}
               </h2>
               <img
                 src={image}
                 alt=""
                 className="left-col-image"
-                style={{ maxWidth: 550, padding: "20px 0" }}
+                style={{ maxWidth: 710, padding: "20px 0" }}
               />
               <p
-                style={{ maxWidth: 550 }}
+                style={{ maxWidth: 710 }}
                 className="left-col-content"
                 dangerouslySetInnerHTML={{ __html: content }}
               ></p>
@@ -582,7 +582,7 @@ const NewsModal = ({
           </div>
           <div className="modal-bottom-wrapper">
             <h3>Press Realese</h3>
-            <div className="row justify-content-center" style={{ gap: 15 }}>
+            <div className="row justify-content-center mt-4" style={{ gap: 15 }}>
               {pressData.length > 0 &&
                 getItemsWithoutCurrentItem(newsId, pressData)
                   .slice(0, 6)

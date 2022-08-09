@@ -6,6 +6,7 @@ const SubmitInfo = () => {
   const initialState = {
     project_name: "",
     nft_number: "",
+    email: "",
     ticker: "",
     contract_address: "",
     about: "",
@@ -13,6 +14,7 @@ const SubmitInfo = () => {
     audit_link: "",
     website_link: "",
     twitter: "",
+    logoimg: "",
     coinmarket: "",
     telegram: "",
     coingecko: "",
@@ -29,14 +31,12 @@ const SubmitInfo = () => {
     });
   };
 
-  const handleSubmit = async (e) =>
-  {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     setErrors(validateInfo(values));
 
-    if(Object.keys(errors).length === 0)
-    {
+    if (Object.keys(errors).length === 0) {
       const data = {
         project_name: values.project_name,
         nft_number: values.nft_number,
@@ -50,26 +50,25 @@ const SubmitInfo = () => {
         coinmarket: values.coinmarket,
         telegram: values.telegram,
         coingecko: values.coingecko,
-      }
+      };
 
-      if(values.project_name !== "" && values.nft_number !== "" && values.ticker !== "")
-      {
-        const send = await axios.post("https://api-mail.dyp.finance/api/submit_form", data).then(function (result)
-        {
-          return result.data
+      if (
+        values.project_name !== "" &&
+        values.nft_number !== "" &&
+        values.ticker !== ""
+      ) {
+        const send = await axios
+          .post("https://api-mail.dyp.finance/api/submit_form", data)
+          .then(function (result) {
+            return result.data;
+          })
+          .catch(function (error) {
+            console.error(error);
+          });
 
-        }).catch(function (error)
-        {
-          console.error(error)
-        })
-
-        if(send.status === 1)
-        {
+        if (send.status === 1) {
           alert("Your information has been submitted.");
-        }
-        else
-        {
-
+        } else {
           alert("Something goes to wrong.");
         }
       }
@@ -78,19 +77,20 @@ const SubmitInfo = () => {
     }
   };
 
-
   return (
     <div>
       <div className="row px-3 table-title">
         <div>
-          <h2 style={{ display: "block",  color: 'var(--preloader-clr)' }}>Submit form</h2>
+          <h2 style={{ display: "block", color: "var(--preloader-clr)" }}>
+            Submit form
+          </h2>
           <p className="d-block">
             Search for new pools, add or remove liquidity in a pair
           </p>
         </div>
       </div>
       <div className="px-3 table-title" style={{ paddingBottom: "6rem" }}>
-        <form style={{display: 'flex', flexDirection: 'column', gap: 20}}>
+        <form style={{ display: "flex", flexDirection: "column", gap: 20 }}>
           <div>
             <h5>Your details</h5>
             <div className="row mt-3 mb-4">
@@ -110,7 +110,7 @@ const SubmitInfo = () => {
                     <span className="errormessage">{errors.project_name}</span>
                   )}
                 </div>
-                <div className="input-wrapper">
+                {/* <div className="input-wrapper">
                   <span className="required-text">Nr. of NFT to created</span>
                   <input
                     type="text"
@@ -123,6 +123,21 @@ const SubmitInfo = () => {
                   />
                   {errors.nft_number && (
                     <span className="errormessage">{errors.nft_number}</span>
+                  )}
+                </div> */}
+                 <div className="input-wrapper">
+                  <span className="required-text">Email</span>
+                  <input
+                    type="email"
+                    className="inputfield"
+                    name="email"
+                    id="email"
+                    value={values.email}
+                    onChange={handleChange}
+                    placeholder="Email"
+                  />
+                  {errors.nft_number && (
+                    <span className="errormessage">{errors.email}</span>
                   )}
                 </div>
               </div>
@@ -244,18 +259,18 @@ const SubmitInfo = () => {
                   )}
                 </div>
                 <div className="input-wrapper">
-                  <span className="required-text">Twitter link</span>
+                  <span className="required-text">Link to download 512x512 png logo image.</span>
                   <input
                     type="text"
                     className="inputfield"
-                    name="twitter"
-                    id="twitter"
-                    value={values.twitter}
+                    name="logoimg"
+                    id="logoimg"
+                    value={values.logoimg}
                     onChange={handleChange}
-                    placeholder="Twitter link"
+                    placeholder="Link to download 512x512 png logo image."
                   />
-                  {errors.twitter && (
-                    <span className="errormessage">{errors.twitter}</span>
+                  {errors.logoimg && (
+                    <span className="errormessage">{errors.logoimg}</span>
                   )}
                 </div>
               </div>
@@ -307,6 +322,21 @@ const SubmitInfo = () => {
                     <span className="errormessage">{errors.coingecko}</span>
                   )}
                 </div>
+                <div className="input-wrapper">
+                  <span className="required-text">Twitter link</span>
+                  <input
+                    type="text"
+                    className="inputfield"
+                    name="twitter"
+                    id="twitter"
+                    value={values.twitter}
+                    onChange={handleChange}
+                    placeholder="Twitter link"
+                  />
+                  {errors.twitter && (
+                    <span className="errormessage">{errors.twitter}</span>
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -317,7 +347,12 @@ const SubmitInfo = () => {
               </div>
             </div>
             <div className="col-lg-4 single-cell">
-              <div className="clearbtn" onClick={()=>{setValues({ ...initialState });}}>
+              <div
+                className="clearbtn"
+                onClick={() => {
+                  setValues({ ...initialState });
+                }}
+              >
                 <span className="clear-text">Clear form</span>
               </div>
             </div>

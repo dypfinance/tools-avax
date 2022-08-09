@@ -9,8 +9,11 @@ import axios from "axios";
 import ToolTip from "./ToolTip";
 import OutsideClickHandler from "react-outside-click-handler";
 import * as _ from "lodash";
-import Carousel from "react-bootstrap/Carousel";
+import { Carousel } from "@trendyol-js/react-carousel";
 import { useWeb3React } from "@web3-react/core";
+import ReactCSSTransitionGroup from 'react-transition-group';
+import SvgArrow from "./SvgArrow";
+import LeftArrow from "./LeftArrow";
 
 const News = ({ theme }) => {
   const owlCarouselOptions = {
@@ -3816,15 +3819,36 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
   };
 
   const updateCarouselPosition2 = (object) => {
-    if (typeof object === "number") {
-      setStartPosition2(object);
-    } else if (object.item.index != startPosition) {
-      setStartPosition2(object.item.index - 2);
-    }
+    // if (typeof object === "number") {
+    //   setStartPosition2(object);
+    // } else if (object.item.index != startPosition) {
+    //   setStartPosition2(object.item.index - 2);
+    // }
+
+    console.log(object)
+  };
+
+  const listInnerRef = useRef();
+
+  useEffect(()=>{
+    document.addEventListener('scroll', onScroll);
+  })
+
+  const isBottom=(el)=> {
+    return el.getBoundingClientRect().bottom <= window.innerHeight;
+  }
+
+  const onScroll = () => {
+  const wrappedElement = document.getElementById('header');
+  if (isBottom(wrappedElement)) {
+    console.log('header bottom reached');
+    loadMore()
+    document.removeEventListener('scroll', onScroll);
+  }
   };
 
   return (
-    <>
+    <div onScroll={onScroll} ref={listInnerRef} id='header'>
       <div className="news-wrapper">
         <h1 className="news-title">Popular News</h1>
         <div className="row m-0 main-news-content-wrapper">
@@ -3999,17 +4023,35 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
           className="brand-wrapper banner-wrapper"
           style={{ display: "flex" }}
         >
-          <OwlCarousel
+          {/* <OwlCarousel
             ref={carousel2}
             className="owl-carousel owl-theme brand-slider"
             startPosition={startPosition2}
             {...owlCarouselOptionsPress}
-            // onDragged={(obj) => {
-            //   updateCarouselPosition2(obj);
-            // }}
+            onDragged={(obj) => {
+              updateCarouselPosition2(obj);
+            }}
             onChange={(obj) => {
               updateCarouselPosition2(obj);
             }}
+          > */}
+
+    
+          <Carousel
+            show={ window.innerWidth < 916 ? 1 : 2}
+            slide={1}
+            infinite={true}
+            swiping={true}
+            swipeOn={0.2}
+            responsive={true}
+            transition={0.5}
+            useArrowKeys={true}
+            rightArrow={<SvgArrow/>}
+            leftArrow={<LeftArrow/>}
+            dynamic={true}
+            className="owl-carousel owl-theme brand-slider"
+            onDragged={()=>{console.log('ddd')}}
+         
           >
             {press_highlight.length > 0 &&
               press_highlight.map((item, key) => {
@@ -4018,6 +4060,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                     className="banner-item"
                     key={key}
                     style={{ background: "none" }}
+                   
                   >
                     <PressRealease
                       image={item.imageSrc}
@@ -4032,7 +4075,8 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                   </div>
                 );
               })}
-          </OwlCarousel>
+          </Carousel>
+          {/* </OwlCarousel> */}
         </div>
       </div>
       <div className="press-release-wrapper" style={{ paddingTop: 0 }}>
@@ -4042,7 +4086,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         >
           Other News
         </h1>
-        <div className="row m-0 othernews-row-wrapper" style={{ rowGap: 10 }}>
+        <div className="row m-0 othernews-row-wrapper" style={{ gap: 10 }}>
           {otherNews.length > 0 &&
             otherNews?.slice(0, next)?.map((item, key) => {
               return (
@@ -4120,7 +4164,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
           isConnected={isConnected}
         />
       )}
-    </>
+    </div>
   );
 };
 
