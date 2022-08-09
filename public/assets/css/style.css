@@ -1013,8 +1013,8 @@ a:hover {
 
 .page_wrapper.minimize .top-right-header {
   width: auto;
-  margin-left: 10px;
-  margin-right: 10px;
+  /* margin-left: 10px;
+  margin-right: 10px; */
 }
 
 .page_wrapper.minimize .account-wrapper {
@@ -1646,6 +1646,9 @@ color: #DB2728 !important;
   line-height: 29px;
   letter-spacing: 0.05em;
   text-align: left;
+  color: #fff !important;
+  /* position: absolute; */
+  /* top: -2rem; */
 }
 
 .main-title-text:hover {
@@ -1698,6 +1701,7 @@ color: #DB2728 !important;
   .singlenews-side {
     width: 100% !important;
     border-left: none !important;
+    overflow: inherit !important;
   }
 
   .main-news-content-wrapper {
@@ -1766,6 +1770,7 @@ color: #DB2728 !important;
   display: flex;
   flex-direction: column;
   height: fit-content;
+  width: 100%;
 }
 
 .tag-wrapper {
@@ -1776,16 +1781,20 @@ color: #DB2728 !important;
     #000000 100%
   );
   opacity: 0.8;
+  width: 100%;
   border-radius: 0px 0px 8px 8px;
-  height: 118px;
-  position: relative;
-  bottom: 115px;
+  height: 130px;
+  position: absolute;
+  bottom: 0px;
   display: flex;
   justify-content: end;
   flex-direction: column;
   padding: 20px;
 }
 
+.main-image {
+  position: relative;
+}
 .singlenews-wrapper {
   display: flex;
   flex-direction: column;
@@ -1814,11 +1823,17 @@ color: #DB2728 !important;
 }
 
 .singlenews-side {
-  width: 38%;
-  height: 520px;
+  
+  /* height: 520px; */
   /* overflow: auto; */
   border-left: 1px solid #d9d9d9;
   padding-left: 20px;
+}
+
+.newmodal {
+  width: 100%;
+    justify-content: start;
+    display: flex;
 }
 
 .button-wrapper {
@@ -1917,7 +1932,7 @@ color: #DB2728 !important;
   font-size: 16px;
   line-height: 20px;
   /* color: #ed2120 !important; */
-  width: 230px;
+  /* width: 230px; */
 }
 
 
@@ -1942,14 +1957,20 @@ color: #DB2728 !important;
 }
 
 .right-col {
-  max-width: 380px;
+  /* max-width: 380px; */
   border-left: 1px solid #d9d9d9;
   padding-left: 20px;
+  width: 70%;
 }
 
 @media only screen and (max-width: 860px) {
   .left-col-title {
     max-width: 100% !important;
+    font-size: 1.2rem !important;
+  }
+  
+  .newmodal {
+    width: 100% !important;
   }
 
   .left-col-image {

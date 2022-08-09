@@ -9,11 +9,7 @@ import axios from "axios";
 import ToolTip from "./ToolTip";
 import OutsideClickHandler from "react-outside-click-handler";
 import * as _ from "lodash";
-import { Carousel } from 'react-responsive-carousel';
 import { useWeb3React } from "@web3-react/core";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
-import SvgArrow from "./SvgArrow";
-import LeftArrow from "./LeftArrow";
 
 const News = ({ theme }) => {
   const owlCarouselOptions = {
@@ -146,7 +142,7 @@ const News = ({ theme }) => {
 
   useEffect(() => {
     fetchVotingdata().then();
-  }, [votes.length, newsItemId]);
+  }, [votes.length, newsItemId, activeNews]);
 
   const newsArray = [
     {
@@ -3784,7 +3780,6 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
   };
 
   const handleDownVoting = async (itemId) => {
-
     if ((bal1 === 0 && bal2 === 0) || isConnected === false) {
       setShowTooltip(true);
     } else {
@@ -3806,7 +3801,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
     });
 
     const descarray = [...sortedArrayOfNews].sort((a, b) => b.diff - a.diff);
-    
+
     return descarray;
   };
 
@@ -3824,98 +3819,144 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
     } else if (object.item.index != startPosition) {
       setStartPosition2(object.item.index - 2);
     }
-
   };
 
   const listInnerRef = useRef();
 
-  useEffect(()=>{
-    document.addEventListener('scroll', onScroll);
-  })
+  useEffect(() => {
+    document.addEventListener("scroll", onScroll);
+  });
 
-  const isBottom=(el)=> {
+  const isBottom = (el) => {
     return el.getBoundingClientRect().bottom <= window.innerHeight;
-  }
+  };
 
   const onScroll = () => {
-  const wrappedElement = document.getElementById('header');
-  if (isBottom(wrappedElement)) {
-    loadMore()
-    document.removeEventListener('scroll', onScroll);
-  }
+    const wrappedElement = document.getElementById("header");
+    if (isBottom(wrappedElement)) {
+      loadMore();
+      document.removeEventListener("scroll", onScroll);
+    }
   };
 
   return (
-    <div onScroll={onScroll} ref={listInnerRef} id='header'>
+    <div onScroll={onScroll} ref={listInnerRef} id="header">
       <div className="news-wrapper">
-        <h1 className="news-title">Popular News</h1>
+        {!showModal ? <h1 className="news-title">Popular News</h1> : ""}
         <div className="row m-0 main-news-content-wrapper">
-          <div className="brand-wrapper banner-wrapper news-left-wrapper">
-            <OwlCarousel
-              ref={carousel}
-              className="owl-carousel owl-theme brand-slider"
-              {...owlCarouselOptions}
-              startPosition={startPosition}
-              onDragged={(obj) => {
-                updateCarouselPosition(obj);
+          {showModal === true ? (
+            <NewsModal
+              style={{ width: "fit-content" }}
+              visible={showModal}
+              modalId="#newsmodal"
+              onModalClose={() => {
+                setShowModal(false);
+                setActiveNews([]);
               }}
-              onChange={(obj) => {
-                updateCarouselPosition(obj);
+              onSelectOtherNews={(key) => {
+                setActiveNews(newsArray[key]);
+                window.scrollTo(0, 0);
               }}
-            >
-              {newsArray.length > 0 &&
-                newsArray.slice(0, 7).map((item, key) => {
-                  return (
-                    <div className="" key={key}>
-                      <MainNews
-                        image={item.imageSrc}
-                        title={item.title}
-                        link={item.link}
-                        year={item.year}
-                        month={item.month}
-                        day={item.date}
-                        theme={theme}
-                        upvotes={item.upvote}
-                        downvotes={item.downvote}
-                        newsId={item.id}
-                        onShowModalClick={() => {
-                          setShowModal(true);
-                          setActiveNews(newsArray[key]);
-                        }}
-                        onUpVoteClick={() => {
-                          handleUpVoting(item.id);
-                        }}
-                        onDownVoteClick={() => {
-                          handleDownVoting(item.id);
-                        }}
-                        isConnected={isConnected}
-                      />
-                    </div>
-                  );
-                })}
-            </OwlCarousel>
-            {showTooltip === true ? (
-              <OutsideClickHandler
-                onOutsideClick={() => {
-                  setShowTooltip(false);
+              title={activeNews.content.title}
+              image={activeNews.content.imageSrc}
+              content={activeNews.content.content}
+              theme={theme}
+              upvotes={activeNews.upvote}
+              downvotes={activeNews.downvote}
+              day={activeNews.date}
+              month={activeNews.month}
+              year={activeNews.year}
+              latestNewsData={[...newsArray]}
+              newsId={activeNews.id}
+              pressData={press_highlight}
+              onHandleUpvote={(id) => {
+                handleUpVoting(id);
+              }}
+              onHandleDownvote={(id) => {
+                handleDownVoting(id);
+              }}
+              onHandlePressUpvote={(id) => {
+                handleUpVoting(id);
+              }}
+              onHandlePressDownvote={(id) => {
+                handleDownVoting(id);
+              }}
+              isConnected={isConnected}
+            />
+          ) : (
+            <div className="brand-wrapper banner-wrapper news-left-wrapper">
+              <OwlCarousel
+                ref={carousel}
+                className="owl-carousel owl-theme brand-slider"
+                {...owlCarouselOptions}
+                startPosition={startPosition}
+                onDragged={(obj) => {
+                  updateCarouselPosition(obj);
+                }}
+                onChange={(obj) => {
+                  updateCarouselPosition(obj);
                 }}
               >
-                <ToolTip
-                  bottom={0}
-                  left={0}
-                  status={
-                    isConnected
-                      ? "You need to be holding DYP to vote"
-                      : "Please connect your wallet"
-                  }
-                />
-              </OutsideClickHandler>
-            ) : (
-              <></>
-            )}
-          </div>
+                {newsArray.length > 0 &&
+                  newsArray.slice(0, 7).map((item, key) => {
+                    return (
+                      <div className="" key={key}>
+                        <MainNews
+                          image={item.imageSrc}
+                          title={item.title}
+                          link={item.link}
+                          year={item.year}
+                          month={item.month}
+                          day={item.date}
+                          theme={theme}
+                          upvotes={item.upvote}
+                          downvotes={item.downvote}
+                          newsId={item.id}
+                          onShowModalClick={() => {
+                            setShowModal(true);
+                            setActiveNews(newsArray[key]);
+                          }}
+                          onUpVoteClick={() => {
+                            handleUpVoting(item.id);
+                          }}
+                          onDownVoteClick={() => {
+                            handleDownVoting(item.id);
+                          }}
+                          isConnected={isConnected}
+                        />
+                      </div>
+                    );
+                  })}
+              </OwlCarousel>
+              {showTooltip === true ? (
+                <OutsideClickHandler
+                  onOutsideClick={() => {
+                    setShowTooltip(false);
+                  }}
+                >
+                  <ToolTip
+                    bottom={0}
+                    left={0}
+                    status={
+                      isConnected
+                        ? "You need to be holding DYP to vote"
+                        : "Please connect your wallet"
+                    }
+                  />
+                </OutsideClickHandler>
+              ) : (
+                <></>
+              )}
+            </div>
+          )}
 
-          <div className="singlenews-side">
+          <div
+            className="singlenews-side"
+            style={{
+              width: showModal ? "20%" : "33%",
+              display: !showModal ? "block" : "none",
+            }}
+          >
             <div className="button-wrapper">
               <h6
                 className={
@@ -3967,7 +4008,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                       onDownVoteClick={() => {
                         handleSingleDownVoting(item.id);
                       }}
-                      onNewsClick={() => handleSingleNewsUpdate(key)}
+                      onNewsClick={() => handleSingleNewsUpdate(item.id)}
                       isConnected={isConnected}
                     />
                   </div>
@@ -3992,7 +4033,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                         upvotes={item.upvote}
                         downvotes={item.downvote}
                         onNewsHover={(e) => {
-                          handleNewsClick(key);
+                          handleNewsClick(item.id);
                           e.stopPropagation();
                         }}
                         onSingleUpVoteClick={() => {
@@ -4001,7 +4042,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                         onDownVoteClick={() => {
                           handleSingleDownVoting(item.id);
                         }}
-                        onNewsClick={() => handleSingleNewsUpdate(key)}
+                        onNewsClick={() => handleSingleNewsUpdate(item.id)}
                         isConnected={isConnected}
                       />
                     </div>
@@ -4030,10 +4071,8 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
             onDragged={(obj) => {
               updateCarouselPosition2(obj);
             }}
-            onChanged={(obj) => {
-            }}
+            onChanged={(obj) => {}}
           >
-
             {press_highlight.length > 0 &&
               press_highlight.map((item, key) => {
                 return (
@@ -4041,7 +4080,6 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                     className="banner-item"
                     key={key}
                     style={{ background: "none" }}
-                   
                   >
                     <PressRealease
                       image={item.imageSrc}
@@ -4051,6 +4089,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                       onSinglePressHighlightClick={() => {
                         setActiveNews(press_highlight[key]);
                         setShowModal(true);
+                        window.scrollTo(0,0)
                       }}
                     />
                   </div>
@@ -4087,8 +4126,9 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                     upvotes={item.upvote}
                     downvotes={item.downvote}
                     onOtherNewsClick={() => {
-                      setActiveNews(otherNews[key]);
+                      setActiveNews(otherNews[item.id]);
                       setShowModal(true);
+                      window.scrollTo(0, 0);
                     }}
                     onUpVoteClick={() => {
                       handleSingleUpVoting(item.id);
@@ -4110,40 +4150,6 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
           )}
         </div>
       </div>
-      {showModal === true && (
-        <NewsModal
-          visible={showModal}
-          modalId="#newsmodal"
-          onModalClose={() => {
-            setShowModal(false);
-            setActiveNews([]);
-          }}
-          onSelectOtherNews={(key) => {
-            setActiveNews(newsArray[key]);
-            window.scrollTo(0, 0);
-          }}
-          title={activeNews.content.title}
-          image={activeNews.content.imageSrc}
-          content={activeNews.content.content}
-          theme={theme}
-          latestNewsData={[...newsArray]}
-          newsId={activeNews.id}
-          pressData={press_highlight}
-          onHandleUpvote={(id) => {
-            handleUpVoting(id);
-          }}
-          onHandleDownvote={(id) => {
-            handleDownVoting(id);
-          }}
-          onHandlePressUpvote={(id) => {
-            handleUpVoting(id);
-          }}
-          onHandlePressDownvote={(id) => {
-            handleDownVoting(id);
-          }}
-          isConnected={isConnected}
-        />
-      )}
     </div>
   );
 };

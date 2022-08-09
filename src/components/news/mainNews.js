@@ -27,36 +27,32 @@ const MainNews = ({
   const bal2 = Number(localStorage.getItem("balance2"));
 
   const handleLikeStates = () => {
-    if (bal1 === 0 && bal2 === 0 || isConnected === false) {
+    if ((bal1 === 0 && bal2 === 0) || isConnected === false) {
       setLikeIndicator(false);
       onUpVoteClick();
     } else {
-      if(likeIndicator === true) {
-        setLikeIndicator(false)
-        onDownVoteClick()
-      }
-      else if(likeIndicator === false) {
+      if (likeIndicator === true) {
+        setLikeIndicator(false);
+        onDownVoteClick();
+      } else if (likeIndicator === false) {
         setLikeIndicator(true);
-        onUpVoteClick()
+        onUpVoteClick();
       }
     }
   };
 
   const handleDisLikeStates = () => {
-    if (bal1 === 0 && bal2 === 0 || isConnected === false) {
+    if ((bal1 === 0 && bal2 === 0) || isConnected === false) {
       setLikeIndicator(false);
       onDownVoteClick();
     } else {
-      if(dislikeIndicator === true) {
+      if (dislikeIndicator === true) {
         setDislikeIndicator(false);
-        onUpVoteClick()
-      }
-      else if(dislikeIndicator === false)
-      {
+        onUpVoteClick();
+      } else if (dislikeIndicator === false) {
         onDownVoteClick();
         setDislikeIndicator(true);
       }
-      
     }
   };
 
@@ -74,55 +70,58 @@ const MainNews = ({
               onShowModalClick();
             }}
           />
-          <div className="tag-wrapper d-none">
+          <div className="tag-wrapper">
             <div className="d-flex" style={{ gap: 10 }}>
-              <h5 className="tags">NFT's</h5>
-              <h5 className="tags">CAWS</h5>
+              <h2
+                className="main-title-text"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onShowModalClick();
+                }}
+              >
+                {title}
+              </h2>
             </div>
           </div>
         </div>
-        <h2 className="main-title-text"  onClick={(e) => {
-              e.preventDefault();
-              onShowModalClick();
-            }}>{title}</h2>
+
         {/* </a> */}
 
-        <div className="news-bottom-wrapper">
+        <div className="news-bottom-wrapper mt-3">
           <div className="like-wrapper">
-          
             <img
               src={
-                (likeIndicator === false && dislikeIndicator === false)
-                    ? VotePassive
-                    : likeIndicator === true
-                    ? Upvote
-                    : Downvote
+                likeIndicator === false && dislikeIndicator === false
+                  ? VotePassive
+                  : likeIndicator === true
+                  ? Upvote
+                  : Downvote
               }
               alt=""
               className="like-indicator"
-              onClick={() => {handleLikeStates()}}
+              onClick={() => {
+                handleLikeStates();
+              }}
             />
-          <span> {Number(upvotes) - Number(downvotes)}</span>
+            <span> {Number(upvotes) - Number(downvotes)}</span>
 
             <img
               src={
-                (likeIndicator === false && dislikeIndicator === false)
-                    ? VotePassive
-                    : likeIndicator === true
-                    ? Upvote
-                    : Downvote
+                likeIndicator === false && dislikeIndicator === false
+                  ? VotePassive
+                  : likeIndicator === true
+                  ? Upvote
+                  : Downvote
               }
               alt=""
               className="like-indicator"
               id="dislike"
-              onClick={() => {handleDisLikeStates()}}
+              onClick={() => {
+                handleDisLikeStates();
+              }}
             />
           </div>
-          {/* <img
-            src={theme !== "theme-dark" ? WhiteDots : Dots}
-            alt=""
-            style={{ width: "auto" }}
-          /> */}
+
           <div className="date-wrapper">
             <img src={Clock} alt="" style={{ width: "auto" }} />
             <h6 className="date-content">
