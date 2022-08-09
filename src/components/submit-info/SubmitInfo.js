@@ -90,8 +90,8 @@ const SubmitInfo = () => {
         </div>
       </div>
       <div className="px-3 table-title" style={{ paddingBottom: "6rem" }}>
-        <form style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-          <div>
+        <form style={{ display: "flex", flexDirection: "column", gap: 20, margin: '2rem' }}>
+          <div style={{borderBottom: '1px solid #D5D7E6'}}>
             <h5>Your details</h5>
             <div className="row mt-3 mb-4">
               <div className="col-lg-4 single-cell">
@@ -168,7 +168,7 @@ const SubmitInfo = () => {
                     id="contract_address"
                     value={values.contract_address}
                     onChange={handleChange}
-                    placeholder="Contract address"
+                    placeholder="For multiple addresses, separate them by comma ','"
                   />
                   {errors.contract_address && (
                     <span className="errormessage">
@@ -180,11 +180,14 @@ const SubmitInfo = () => {
               <div className="col-lg-4">
                 <div className="input-wrapper">
                   <span className="required-text">About the project</span>
+                  
                   <textarea
-                    className="form-control"
+                    className="inputfield"
+                    style={{height: 'auto', paddingTop:10, paddingBottom:10}}
                     id="inputAddress"
+                    placeholder="Enter project description, also include information about the project's liquidity, team profiles, smart contract security efforts, project mission etc."
                     name="about"
-                    rows="5"
+                    rows="8"
                     cols="2"
                     onChange={handleChange}
                     value={values.about}
@@ -196,13 +199,13 @@ const SubmitInfo = () => {
               </div>
             </div>
           </div>
-          <div>
+          <div  style={{borderBottom: '1px solid #D5D7E6'}}>
             <h5>Smart contract details</h5>
             <div className="row mt-3 mb-4">
               <div className="col-lg-4 single-cell">
                 <div className="input-wrapper">
                   <span className="required-text">
-                    Smart contract audit info
+                    Smart contract audit information
                   </span>
                   <input
                     type="text"
@@ -211,7 +214,7 @@ const SubmitInfo = () => {
                     id="audit_info"
                     value={values.audit_info}
                     onChange={handleChange}
-                    placeholder="Audit info"
+                    placeholder="Smart contract audit info"
                   />
                   {errors.audit_info && (
                     <span className="errormessage">{errors.audit_info}</span>
@@ -221,7 +224,7 @@ const SubmitInfo = () => {
               <div className="col-lg-4 single-cell">
                 <div className="input-wrapper">
                   <span className="required-text">
-                    Smart contract audit link
+                    Smart contract audit
                   </span>
                   <input
                     type="text"
@@ -230,7 +233,7 @@ const SubmitInfo = () => {
                     id="audit_link"
                     value={values.audit_link}
                     onChange={handleChange}
-                    placeholder="Audit link"
+                    placeholder="URL"
                   />
                   {errors.audit_link && (
                     <span className="errormessage">{errors.audit_link}</span>
@@ -244,7 +247,7 @@ const SubmitInfo = () => {
             <div className="row mt-3 mb-4">
               <div className="col-lg-4 single-cell">
                 <div className="input-wrapper">
-                  <span className="required-text">Website link</span>
+                  <span className="required-text">Website</span>
                   <input
                     type="text"
                     className="inputfield"
@@ -252,14 +255,14 @@ const SubmitInfo = () => {
                     id="website_link"
                     value={values.website_link}
                     onChange={handleChange}
-                    placeholder="Website link"
+                    placeholder="URL"
                   />
                   {errors.website_link && (
                     <span className="errormessage">{errors.website_link}</span>
                   )}
                 </div>
                 <div className="input-wrapper">
-                  <span className="required-text">Link to download 512x512 png logo image.</span>
+                  <span className="required-text">512x512 png logo image</span>
                   <input
                     type="text"
                     className="inputfield"
@@ -267,7 +270,7 @@ const SubmitInfo = () => {
                     id="logoimg"
                     value={values.logoimg}
                     onChange={handleChange}
-                    placeholder="Link to download 512x512 png logo image."
+                    placeholder="URL"
                   />
                   {errors.logoimg && (
                     <span className="errormessage">{errors.logoimg}</span>
@@ -276,7 +279,7 @@ const SubmitInfo = () => {
               </div>
               <div className="col-lg-4 single-cell">
                 <div className="input-wrapper">
-                  <span className="required-text">Coinmarket link</span>
+                  <span className="required-text">CoinMarketCap</span>
                   <input
                     type="text"
                     className="inputfield"
@@ -284,14 +287,14 @@ const SubmitInfo = () => {
                     id="coinmarket"
                     value={values.coinmarket}
                     onChange={handleChange}
-                    placeholder="Coinmarket link"
+                    placeholder="URL"
                   />
                   {errors.coinmarket && (
                     <span className="errormessage">{errors.coinmarket}</span>
                   )}
                 </div>
                 <div className="input-wrapper">
-                  <span className="required-text">Telegram link</span>
+                  <span className="required-text">Telegram</span>
                   <input
                     type="text"
                     className="inputfield"
@@ -299,7 +302,7 @@ const SubmitInfo = () => {
                     id="telegram"
                     value={values.telegram}
                     onChange={handleChange}
-                    placeholder="Telegram link"
+                    placeholder="URL"
                   />
                   {errors.telegram && (
                     <span className="errormessage">{errors.telegram}</span>
@@ -308,7 +311,7 @@ const SubmitInfo = () => {
               </div>
               <div className="col-lg-4 single-cell">
                 <div className="input-wrapper">
-                  <span className="required-text">Coingecko link</span>
+                  <span className="required-text">Coingecko</span>
                   <input
                     type="text"
                     className="inputfield"
@@ -316,14 +319,14 @@ const SubmitInfo = () => {
                     id="coingecko"
                     value={values.coingecko}
                     onChange={handleChange}
-                    placeholder="Coingecko link"
+                    placeholder="URL"
                   />
                   {errors.coingecko && (
                     <span className="errormessage">{errors.coingecko}</span>
                   )}
                 </div>
                 <div className="input-wrapper">
-                  <span className="required-text">Twitter link</span>
+                  <span className="required-text">Twitter </span>
                   <input
                     type="text"
                     className="inputfield"
@@ -331,7 +334,7 @@ const SubmitInfo = () => {
                     id="twitter"
                     value={values.twitter}
                     onChange={handleChange}
-                    placeholder="Twitter link"
+                    placeholder="URL"
                   />
                   {errors.twitter && (
                     <span className="errormessage">{errors.twitter}</span>

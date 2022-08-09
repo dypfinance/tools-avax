@@ -9,9 +9,9 @@ import axios from "axios";
 import ToolTip from "./ToolTip";
 import OutsideClickHandler from "react-outside-click-handler";
 import * as _ from "lodash";
-import { Carousel } from "@trendyol-js/react-carousel";
+import { Carousel } from 'react-responsive-carousel';
 import { useWeb3React } from "@web3-react/core";
-import ReactCSSTransitionGroup from 'react-transition-group';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 import SvgArrow from "./SvgArrow";
 import LeftArrow from "./LeftArrow";
 
@@ -55,9 +55,8 @@ const News = ({ theme }) => {
     center: false,
     nav: false,
     dots: true,
-    autoplay: true,
     rewind: true,
-    autoplayTimeout: 5000,
+    autoplayTimeout: 2000,
     responsiveClass: true,
     responsiveRefreshRate: true,
 
@@ -1315,7 +1314,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       To reward users, every ethereum miner address that interacts with the DYP smart contract will earn a monthly bonus of 10% in DYP of the ETH income earned monthly. Essentially what this means is; if ETH price is $400 and DYP price is $2, if you earn 1ETH monthly, you also get a monthly airdrop of 10% (20 DYP tokens worth $40). To claim the airdrop tokens, users will need to join their Ethereum mining pool with a 0% fee, meaning users will also earn more monthly.<br/><br/>
       DYP also has an automatic earn vault that moves a participant’s funds around using the best yield farming strategies. The automatic earn vault will distribute 75% of the earnings among the liquidity providers and 25% to buy back DYP tokens. Ultimately this promotes liquidity in the pool and maintains the price of the token.<br/><br/>
       <h3><b>DYP Crowdsale</b></h3><br/><br/>
-      When the decentralized finance ecosystem seeks a balance while setting a precedent for its mainstream adoption, DYP is actively laying a foundation from its public crowdsale. During the whitelisting and presale round, 570,000 DYP tokens worth 2,821.71 ETH have been sold. For a chance to participate in this unique protocol, join the public crowdsale at <a href='https://crowdsale.dyp.finance/' target='_blank'><u>https://crowdsale.dyp.finance/</u></a> <br/>.
+      When the decentralized finance ecosystem seeks a balance while setting a precedent for its mainstream adoption, DYP is actively laying a foundation from its public crowdsale. During the whitelisting and presale round, 570,000 DYP tokens worth 2,821.71 ETH have been sold. For a chance to participate in this unique protocol, join the public crowdsale at <a href='https://crowdsale.dyp.finance/' target='_blank'><u>https://crowdsale.dyp.finance/</u></a> <br/>
       `,
       },
     },
@@ -3056,7 +3055,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       To reward users, every ethereum miner address that interacts with the DYP smart contract will earn a monthly bonus of 10% in DYP of the ETH income earned monthly. Essentially what this means is; if ETH price is $400 and DYP price is $2, if you earn 1ETH monthly, you also get a monthly airdrop of 10% (20 DYP tokens worth $40). To claim the airdrop tokens, users will need to join their Ethereum mining pool with a 0% fee, meaning users will also earn more monthly.<br/><br/>
       DYP also has an automatic earn vault that moves a participant’s funds around using the best yield farming strategies. The automatic earn vault will distribute 75% of the earnings among the liquidity providers and 25% to buy back DYP tokens. Ultimately this promotes liquidity in the pool and maintains the price of the token.<br/><br/>
       <h3><b>DYP Crowdsale</b></h3><br/><br/>
-      When the decentralized finance ecosystem seeks a balance while setting a precedent for its mainstream adoption, DYP is actively laying a foundation from its public crowdsale. During the whitelisting and presale round, 570,000 DYP tokens worth 2,821.71 ETH have been sold. For a chance to participate in this unique protocol, join the public crowdsale at <a href='https://crowdsale.dyp.finance/' target='_blank'><u>https://crowdsale.dyp.finance/</u></a> <br/>.
+      When the decentralized finance ecosystem seeks a balance while setting a precedent for its mainstream adoption, DYP is actively laying a foundation from its public crowdsale. During the whitelisting and presale round, 570,000 DYP tokens worth 2,821.71 ETH have been sold. For a chance to participate in this unique protocol, join the public crowdsale at <a href='https://crowdsale.dyp.finance/' target='_blank'><u>https://crowdsale.dyp.finance/</u></a> <br/>
       `,
       },
     },
@@ -3785,7 +3784,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
   };
 
   const handleDownVoting = async (itemId) => {
-    console.log(isConnected);
+
     if ((bal1 === 0 && bal2 === 0) || isConnected === false) {
       setShowTooltip(true);
     } else {
@@ -3807,6 +3806,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
     });
 
     const descarray = [...sortedArrayOfNews].sort((a, b) => b.diff - a.diff);
+    
     return descarray;
   };
 
@@ -3819,13 +3819,12 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
   };
 
   const updateCarouselPosition2 = (object) => {
-    // if (typeof object === "number") {
-    //   setStartPosition2(object);
-    // } else if (object.item.index != startPosition) {
-    //   setStartPosition2(object.item.index - 2);
-    // }
+    if (typeof object === "number") {
+      setStartPosition2(object);
+    } else if (object.item.index != startPosition) {
+      setStartPosition2(object.item.index - 2);
+    }
 
-    console.log(object)
   };
 
   const listInnerRef = useRef();
@@ -3841,7 +3840,6 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
   const onScroll = () => {
   const wrappedElement = document.getElementById('header');
   if (isBottom(wrappedElement)) {
-    console.log('header bottom reached');
     loadMore()
     document.removeEventListener('scroll', onScroll);
   }
@@ -4023,36 +4021,19 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
           className="brand-wrapper banner-wrapper"
           style={{ display: "flex" }}
         >
-          {/* <OwlCarousel
+          <OwlCarousel
             ref={carousel2}
+            autoPlay={true}
             className="owl-carousel owl-theme brand-slider"
             startPosition={startPosition2}
             {...owlCarouselOptionsPress}
             onDragged={(obj) => {
               updateCarouselPosition2(obj);
             }}
-            onChange={(obj) => {
-              updateCarouselPosition2(obj);
+            onChanged={(obj) => {
             }}
-          > */}
-
-    
-          <Carousel
-            show={ window.innerWidth < 916 ? 1 : 2}
-            slide={1}
-            infinite={true}
-            swiping={true}
-            swipeOn={0.2}
-            responsive={true}
-            transition={0.5}
-            useArrowKeys={true}
-            rightArrow={<SvgArrow/>}
-            leftArrow={<LeftArrow/>}
-            dynamic={true}
-            className="owl-carousel owl-theme brand-slider"
-            onDragged={()=>{console.log('ddd')}}
-         
           >
+
             {press_highlight.length > 0 &&
               press_highlight.map((item, key) => {
                 return (
@@ -4075,8 +4056,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                   </div>
                 );
               })}
-          </Carousel>
-          {/* </OwlCarousel> */}
+          </OwlCarousel>
         </div>
       </div>
       <div className="press-release-wrapper" style={{ paddingTop: 0 }}>

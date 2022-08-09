@@ -90,10 +90,13 @@ class App extends React.Component {
 
   getAddress = async () => {
     let isConnected = this.state.isConnected;
-    this.setState({
-      isConnected:
-        (await window.ethereum?.selectedAddress) !== undefined ? true : false,
-    });
+    try {
+      isConnected = await window.connectWallet();
+    } catch (e) {
+      window.alertify.error(String(e) || "Cannot connect wallet!");
+      return;
+    }
+    this.setState({ isConnected, coinbase: await window.getCoinbase() });
     return isConnected;
   };
 

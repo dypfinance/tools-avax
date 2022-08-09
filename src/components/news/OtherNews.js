@@ -63,12 +63,12 @@ const OtherNews = ({
   return (
     <div
       className="other-news-singlewrapper"
-     
+       onClick={() => {
+        onOtherNewsClick(newsId);
+      }}
     >
       <div>
-        <img src={image} alt="" className="other-news-image"  onClick={() => {
-        onOtherNewsClick(newsId);
-      }}/>
+        <img src={image} alt="" className="other-news-image"/>
         <div style={{ padding: 12, gap: 10 }} className="d-flex flex-column">
           {/* <a href={link} target={"_blank"}> */}
           <h4 className="singlenews-title">{title}</h4>

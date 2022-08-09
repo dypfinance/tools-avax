@@ -71,11 +71,11 @@ const Sidebar = (props) => {
         </div>
       </div>
       <div className="menu-cat-one" style={{marginTop: '2rem'}}>
-      <NavLink to="/account" style={{ paddingLeft: 0, paddingRight: 0 }}>
+      {/* <NavLink to="/account" style={{ paddingLeft: 0, paddingRight: 0 }}>
         <div className="d-flex align-items-center mb-3 justify-content-center account-wrapper" style={{gap: 5}}>
             <img src="/assets/img/person.svg" alt="Image" />
             <h6 className="sidebar-link2 mb-0 ml-0" style={{color: account ? '#fff' : '#4D4D4D'}}>Account</h6></div>
-          </NavLink>
+          </NavLink> */}
         <h6 className="networks row m-0">
           <a
             href="javascript:void(0)"
@@ -109,6 +109,26 @@ const Sidebar = (props) => {
         </h6>
 
         <ul>
+        <li>
+            <NavLink
+              exact
+              to="/account"
+              onClick={() => {
+                setActiveLink("account");
+              }}
+              className={ window.location.href.includes('account') ? "activelink" : ""}
+            >
+              <img
+                src={
+                   window.location.href.includes('account')
+                    ? "/assets/img/person-active.svg"
+                    : "/assets/img/person.svg"
+                }
+                alt="Image"
+              />
+              <span className="sidebar-link">Account</span>
+            </NavLink>
+          </li>
           <li>
             <NavLink
               exact

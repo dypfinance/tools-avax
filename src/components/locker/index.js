@@ -218,7 +218,8 @@ export default class Locker extends React.Component {
   };
 
   loadPairInfo = async () => {
-    let isConnected = window.ethereum?.selectedAddress;
+    let isConnected = this.props.isConnected;
+console.log(isConnected)
 
     if (!isConnected) {
       this.setState({

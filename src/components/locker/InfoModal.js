@@ -50,7 +50,7 @@ const InfoModal = ({ modalId, visible, onModalClose }) => {
                   <h6 className="info-title">Inactive – Liquidity Unlocked</h6>
                   <br />
                   <p className="info-text">
-                  This badge means that lockin time ended and liquidity pool has been withdrawn. Note that unlocked liquidity means that you cannot sell the coin or token and will experience Impermanent Loss (IL).
+                  This badge means that locking time ended and liquidity pool has been withdrawn. Note that unlocked liquidity means that you cannot sell the coin or token and will experience Impermanent Loss (IL).
                   </p>
                 </div>
               </div>
