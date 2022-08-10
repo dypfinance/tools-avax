@@ -65,6 +65,8 @@ const OtherNews = ({
       className="other-news-singlewrapper"
        onClick={() => {
         onOtherNewsClick(newsId);
+      setLikeIndicator(false);
+      setDislikeIndicator(true);
       }}
     >
       <div>

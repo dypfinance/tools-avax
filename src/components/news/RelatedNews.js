@@ -61,7 +61,8 @@ const RelatedNews = ({
   };
 
   return (
-    <div onClick={() => onSelectOtherNews(newsId)}>
+      
+      <div onClick={() => {onSelectOtherNews(newsId);setLikeIndicator(false); setDislikeIndicator(false);}}>
       <div className="single-related-news-wrapper">
         <div
           className="d-flex align-items-center justify-content-between"

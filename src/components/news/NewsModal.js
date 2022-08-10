@@ -14,11 +14,9 @@ import { useState } from "react";
 
 const NewsModal = ({
   modalId,
-  visible,
   title,
   image,
   content,
-  onModalClose,
   newsId,
   latestNewsData,
   pressData,
@@ -44,12 +42,13 @@ const NewsModal = ({
   const [likeIndicator, setLikeIndicator] = useState(false);
   const [dislikeIndicator, setDislikeIndicator] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
-
   useEffect(() => {
-    if (elementRef.current?.clientHeight !== 0 && visible === true) {
+    if (elementRef.current?.clientHeight !== 0 ) {
       setHeight(elementRef.current?.clientHeight);
+      setDislikeIndicator(false)
+      setLikeIndicator(false)
     }
-  }, [newsId, title, likeIndicator]);
+  }, [newsId, title]);
 
   const bal1 = Number(localStorage.getItem("balance1"));
   const bal2 = Number(localStorage.getItem("balance2"));
@@ -86,9 +85,7 @@ const NewsModal = ({
 
   return (
     <div
-      visible={visible}
       modalId={modalId}
-      onModalClose={onModalClose}
       className="newmodal"
     >
       <div>
@@ -216,7 +213,7 @@ const NewsModal = ({
                 ) : (
                   <></>
                 )}
-                <span> {Number(upvotes) - Number(downvotes)}</span>
+                <span>{Number(upvotes) - Number(downvotes)}</span>
 
                 <img
                   src={
