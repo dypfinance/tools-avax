@@ -10,6 +10,8 @@ import ToolTip from "./ToolTip";
 import OutsideClickHandler from "react-outside-click-handler";
 import * as _ from "lodash";
 import { useWeb3React } from "@web3-react/core";
+import SvgArrow from "./SvgArrow";
+import LeftArrow from "./LeftArrow";
 
 const News = ({ theme }) => {
   const owlCarouselOptions = {
@@ -3806,6 +3808,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
   };
 
   const updateCarouselPosition = (object) => {
+    
     if (typeof object === "number") {
       setStartPosition(object);
     } else if (object.item.index != startPosition) {
@@ -3839,6 +3842,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
     }
   };
 
+  // console.log(startPosition)
   return (
     <div onScroll={onScroll} ref={listInnerRef} id="header">
       <div className="news-wrapper">
@@ -3858,6 +3862,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                 window.scrollTo(0, 0);
               }}
               title={activeNews.content.title}
+              link={activeNews.link}
               image={activeNews.content.imageSrc}
               content={activeNews.content.content}
               theme={theme}
@@ -3890,12 +3895,12 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                 className="owl-carousel owl-theme brand-slider"
                 {...owlCarouselOptions}
                 startPosition={startPosition}
-                onDragged={(obj) => {
+                onTranslated={(obj) => {
                   updateCarouselPosition(obj);
                 }}
-                onChange={(obj) => {
-                  updateCarouselPosition(obj);
-                }}
+                // onChange={(obj) => {
+                //   updateCarouselPosition(obj);
+                // }}
               >
                 {newsArray.length > 0 &&
                   newsArray.slice(0, 7).map((item, key) => {
@@ -3928,6 +3933,20 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                     );
                   })}
               </OwlCarousel>
+              {showModal === false && (
+                  <div className="banner-slider-arrow">
+                <div onClick={(obj) => {carousel?.current?.prev(); setStartPosition(startPosition-1)}} className="left">
+                  <LeftArrow size="35" className="left" />
+                </div>
+
+                <div
+                  onClick={() => {carousel?.current?.next(); setStartPosition(startPosition+1)}}
+                  className="right"
+                >
+                  <SvgArrow size="35" className="right" />
+                </div>
+              </div>
+        )}
               {showTooltip === true ? (
                 <OutsideClickHandler
                   onOutsideClick={() => {
@@ -4052,7 +4071,10 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
               <></>
             )}
           </div>
+          
         </div>
+
+
       </div>
       <div className="press-release-wrapper">
         <h1 className="news-title" style={{ paddingLeft: 20 }}>
@@ -4068,10 +4090,10 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
             className="owl-carousel owl-theme brand-slider"
             startPosition={startPosition2}
             {...owlCarouselOptionsPress}
-            onDragged={(obj) => {
+            onTranslated={(obj) => {
               updateCarouselPosition2(obj);
             }}
-            onChanged={(obj) => {}}
+            
           >
             {press_highlight.length > 0 &&
               press_highlight.map((item, key) => {
@@ -4089,7 +4111,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                       onSinglePressHighlightClick={() => {
                         setActiveNews(press_highlight[key]);
                         setShowModal(true);
-                        window.scrollTo(0,0)
+                        window.scrollTo(0, 0);
                       }}
                     />
                   </div>
