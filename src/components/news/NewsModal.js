@@ -13,7 +13,6 @@ import ToolTip from "./ToolTip";
 import { useState } from "react";
 
 const NewsModal = ({
-  modalId,
   title,
   image,
   content,
@@ -33,6 +32,7 @@ const NewsModal = ({
   day,
   year,
   link,
+  onModalClose
 }) => {
   const getItemsWithoutCurrentItem = (currentItemId, arrayOfItems) => {
     return arrayOfItems.filter((item) => item.id !== currentItemId);
@@ -43,10 +43,10 @@ const NewsModal = ({
   const [dislikeIndicator, setDislikeIndicator] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
   useEffect(() => {
-    if (elementRef.current?.clientHeight !== 0 ) {
+    if (elementRef.current?.clientHeight !== 0) {
       setHeight(elementRef.current?.clientHeight);
-      setDislikeIndicator(false)
-      setLikeIndicator(false)
+      setDislikeIndicator(false);
+      setLikeIndicator(false);
     }
   }, [newsId, title]);
 
@@ -82,28 +82,34 @@ const NewsModal = ({
       }
     }
   };
-
+console.log(upvotes, newsId)
   return (
-    <div
-      modalId={modalId}
-      className="newmodal"
-    >
+    <div  className="newmodal">
       <div>
         <div className="details-modal-content">
           <div className="left-col" ref={elementRef}>
             <div className="d-flex justify-content-between">
+              <div className="backbtn" onClick={onModalClose}>
+                <i className="fas fa-arrow-left" style={{color: 'white'}}></i>
+              </div>
               <h2 className="left-col-title">{title}</h2>
               <div
                 className="social-share-parent"
                 style={{
                   display: "inline-block",
                   position: "relative",
-                  
                 }}
               >
-                <button className="btn v3" style={{background: "linear-gradient(to right, #ee0979, #ff6a00)",}}>
+                
+                <button
+                  className="btn v3"
+                  style={{
+                    background: "linear-gradient(to right, #ee0979, #ff6a00)",
+                  }}
+                >
                   <i className="fas fa-share-alt"></i>
                 </button>
+                
 
                 <div className="social-share-wrapper-div">
                   <a
@@ -245,6 +251,12 @@ const NewsModal = ({
               className="left-col-content"
               dangerouslySetInnerHTML={{ __html: content }}
             ></p>
+            <p>
+              Source:{" "}
+              <a href={link} target="_blank">
+                <u>click here</u>
+              </a>
+            </p>
           </div>
 
           <div className="right-col">
@@ -258,7 +270,7 @@ const NewsModal = ({
                       <div
                         key={key}
                         onClick={() => {
-                          window.scrollTo(0, 0)
+                          window.scrollTo(0, 0);
                         }}
                       >
                         <RelatedNews
@@ -299,7 +311,7 @@ const NewsModal = ({
                       key={key}
                       style={{ background: "none" }}
                       onClick={() => {
-                       window.scrollTo(0,0)
+                        window.scrollTo(0, 0);
                       }}
                     >
                       <OtherNews

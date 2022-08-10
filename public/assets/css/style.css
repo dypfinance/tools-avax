@@ -439,10 +439,55 @@ a:hover {
   gap: 10px;
   align-items: center;
   max-width: fit-content;
-  margin: auto;
+  /* margin: auto; */
   border-radius: 8px;
   min-height: fit-content;
   justify-content: center;
+}
+
+.walletwrapper {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  margin: auto;
+  gap: 20px;
+
+}
+
+.dZkckO::before {
+    border-top: 2px solid #fff !important;
+    border-right: 2px solid #fff !important;
+}
+
+.dZkckO {
+  background: #FA4833 !important;
+  box-shadow: 0 0 5px 0 #FA4833 !important;
+  opacity: 1 !important;
+}
+
+.bBfHpH {
+  background: #FA4833 !important;
+  box-shadow: 0 0 5px 0 #FA4833 !important;
+  opacity: 1 !important;
+}
+
+.bBfHpH::before {
+  border-top: 2px solid #fff !important;
+  border-right: 2px solid #fff !important;
+}
+
+.backbtn {
+  justify-content: center;
+    align-items: center;
+    display: flex;
+    background: linear-gradient(to right, #ed213a, #93291e);
+    position: absolute;
+    left: 1rem;
+    width: 30px; 
+   height: 30px;
+   border-radius: 6px;
+   cursor: pointer;
+    /* top: 2rem; */
 }
 
 .bridged {
@@ -483,7 +528,7 @@ a:hover {
   justify-content: flex-start;
   align-items: center;
   flex-wrap: wrap;
-  margin-left: 8%;
+  margin-left: 10%;
   /* transition: 0.3s; */
 }
 
@@ -1560,6 +1605,7 @@ body.theme-dark img.graph-two {
   height: 500px;
   border-radius: 8px;
   cursor: pointer;
+  width: -webkit-fill-available;
 }
 
 .tooltip-wrapper {
@@ -1696,12 +1742,11 @@ color: #DB2728 !important;
 }
 
 .news-left-wrapper {
-  max-width: 60%;
-  display: flex;
+  width: 60%;
 }
 
 .main-news-content-wrapper {
-  justify-content: space-between;
+  /* justify-content: space-between; */
 }
 
 .othernews-row-wrapper {
@@ -1711,6 +1756,7 @@ color: #DB2728 !important;
 @media only screen and (max-width: 770px) {
   .news-left-wrapper {
     max-width: 100%;
+    width: 100%;
   }
 
   .singlenews-side {
@@ -1788,14 +1834,22 @@ color: #DB2728 !important;
   width: 100%;
 }
 
+/* .fPimMH {
+  width: 90% !important;
+}
+
+.dluTbn {
+  width: 90% !important;
+} */
+
 .tag-wrapper {
   /* background:linear-gradient(to right, #000000, #434343);
    */
   /* background: linear-gradient(to left, #d66d75, #e29587); */
    
    
-  background: linear-gradient(to right, #ef3b36, #ffffff);
-  opacity: 0.8;
+  background: linear-gradient(to right, rgba(239, 59, 54, 0.8), rgba(255,255,255, 0.8));
+  /* opacity: 0.8; */
   width: 100%;
   border-radius: 0px 0px 8px 8px;
   height: fit-content;
@@ -2159,6 +2213,7 @@ padding: 20px;
 max-width: 520px;
 width: 100%;
 display: flex;
+align-items: center;
 }
 
 .removebtn {

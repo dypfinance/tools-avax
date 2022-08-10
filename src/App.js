@@ -178,7 +178,9 @@ class App extends React.Component {
     this.setState({ isOpenInMobile: !this.state.isOpenInMobile });
   };
 
+
   render() {
+    document.addEventListener('touchstart', {passive: true});
     return (
       <div
         className={`page_wrapper ${this.state.isMinimized ? "minimize" : ""}`}

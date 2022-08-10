@@ -229,13 +229,10 @@
     }
 }
 
+
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
 
-    .header-left a,
-    .header-left span {
-        font-size: 14px;
-        line-height: 20px;
-    }
+
 
     .header-right ul li {
         margin-left: 10px;

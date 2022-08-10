@@ -89,7 +89,7 @@ const Header = ({toggleMobileSidebar, toggleTheme, theme}) => {
   }, [window.ethereum?.chainId])
 
   return (
-    <header className="header-wrap" style={{ paddingLeft: "2rem" }}>
+    <header className="header-wrap" style={{ paddingLeft: "2rem", zIndex: 777 }}>
       <div className="header-left">
         <div>
           <img

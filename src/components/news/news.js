@@ -12,84 +12,32 @@ import * as _ from "lodash";
 import { useWeb3React } from "@web3-react/core";
 import SvgArrow from "./SvgArrow";
 import LeftArrow from "./LeftArrow";
+import Carousel from 'better-react-carousel'
 
 const News = ({ theme }) => {
-  const owlCarouselOptions = {
-    loop: true,
-    margin: 0,
-    center: false,
-    nav: false,
-    dots: true,
-    autoplay: false,
-    rewind: true,
-    autoplayTimeout: 5000,
-    responsiveClass: true,
-    responsiveRefreshRate: true,
-    responsive: {
-      0: {
-        items: 1,
-      },
-      576: {
-        items: 1,
-      },
-      768: {
-        items: 1,
-      },
-      960: {
-        items: 1,
-      },
-      1200: {
-        items: 1,
-      },
-      1920: {
-        items: 1,
-      },
-    },
-  };
 
-  const owlCarouselOptionsPress = {
-    loop: true,
-    margin: 0,
-    center: false,
-    nav: false,
-    dots: true,
-    rewind: true,
-    autoplayTimeout: 2000,
-    responsiveClass: true,
-    responsiveRefreshRate: true,
+ const responsive1 = [
+    {
+      breakpoint: 985,
+      cols: 1,
+      rows: 1,
+      gap: 10,
+      loop: true,
+      autoplay: 4000
+    }
+  ]
+  
 
-    responsive: {
-      0: {
-        items: 1,
-      },
-      576: {
-        items: 1,
-      },
-      768: {
-        items: 1,
-      },
-      960: {
-        items: 1,
-        slideBy: 1,
-      },
-      1200: {
-        items: 2,
-        slideBy: 2,
-      },
-      1920: {
-        items: 2,
-        slideBy: 2,
-      },
-    },
-  };
+
   const carousel = useRef();
-  const carousel2 = React.createRef();
+  
   const newsPerRow = 8;
   const [activeClass, setActiveClass] = useState("latestnews");
   const [showModal, setShowModal] = useState(false);
   const [newsItemId, setnewsItemId] = useState(-1);
   const [downvotes, setDownvotes] = useState(0);
   const [votes, setVotes] = useState([]);
+  const [newsData, setNewsData] = useState([]);
   const [activeNews, setActiveNews] = useState([]);
   const [showTooltip, setShowTooltip] = useState(false);
   const [startPosition, setStartPosition] = useState(0);
@@ -126,6 +74,20 @@ const News = ({ theme }) => {
     return test;
   };
 
+  const fetchNewsdata = async () => {
+    const result = await fetch(`https://news-manage.dyp.finance/api/news`)
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        setNewsData(data);
+      })
+      .catch(console.error);
+
+    return result;
+  };
+
+
   const handlefetchSingleVotingData = async (itemId) => {
     const result = await axios
       .get(`https://testd.dyp.finance/v1/votes/${itemId}`)
@@ -144,9 +106,2299 @@ const News = ({ theme }) => {
 
   useEffect(() => {
     fetchVotingdata().then();
-  }, [activeNews, votes, newsItemId]);
+  },[showModal, activeNews]);
+
+  useEffect(()=>{
+    fetchNewsdata().then()
+  }, [])
 
   const newsArray = [
+    {
+      date: newsData[0]?.date.slice(0,10),
+      id: 58,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 58).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 58)?.down : 0,
+      title: newsData[0]?.title,
+      link: newsData[0]?.link,
+      imageSrc:
+        newsData[0]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[0]?.image,
+        title: newsData[0]?.title,
+        content: newsData[0]?.content,
+      },
+    },
+    {
+      date: newsData[1]?.date.slice(0,10),
+      id: 59,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 59).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 59)?.down : 0,
+      title: newsData[1]?.title,
+      link: newsData[1]?.link,
+      imageSrc:
+        newsData[0]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[1]?.image,
+        title: newsData[1]?.title,
+        content: newsData[1]?.content,
+      },
+    },
+    {
+      date: newsData[2]?.date.slice(0,10),
+      id: 60,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 60).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 60)?.down : 0,
+      title: newsData[2]?.title,
+      link: newsData[2]?.link,
+      imageSrc:
+        newsData[2]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[2]?.image,
+        title: newsData[2]?.title,
+        content: newsData[2]?.content,
+      },
+    },
+    {
+      date: newsData[3]?.date.slice(0,10),
+      id: 61,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 61).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 61)?.down : 0,
+      title: newsData[3]?.title,
+      link: newsData[3]?.link,
+      imageSrc:
+        newsData[3]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[3]?.image,
+        title: newsData[3]?.title,
+        content: newsData[3]?.content,
+      },
+    },
+    {
+      date: newsData[4]?.date.slice(0,10),
+      id: 62,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 62).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 62)?.down : 0,
+      title: newsData[4]?.title,
+      link: newsData[4]?.link,
+      imageSrc:
+        newsData[4]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[4]?.image,
+        title: newsData[4]?.title,
+        content: newsData[4]?.content,
+      },
+    },
+    {
+      date: newsData[5]?.date.slice(0,10),
+      id: 63,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 63).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 63)?.down : 0,
+      title: newsData[5]?.title,
+      link: newsData[5]?.link,
+      imageSrc:
+        newsData[5]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[5]?.image,
+        title: newsData[5]?.title,
+        content: newsData[5]?.content,
+      },
+    },
+    {
+      date: newsData[6]?.date.slice(0,10),
+      id: 64,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 64).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 64)?.down : 0,
+      title: newsData[6]?.title,
+      link: newsData[6]?.link,
+      imageSrc:
+        newsData[6]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[6]?.image,
+        title: newsData[6]?.title,
+        content: newsData[6]?.content,
+      },
+    },
+    {
+      date:newsData[7]?.date.slice(0,10),
+      id: 65,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 65).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 65)?.down : 0,
+      title: newsData[7]?.title,
+      link: newsData[7]?.link,
+      imageSrc:
+        newsData[7]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[7]?.image,
+        title: newsData[7]?.title,
+        content: newsData[7]?.content,
+      },
+    },
+    {
+      date: newsData[8]?.date.slice(0,10),
+      id: 66,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 66).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 66)?.down : 0,
+      title: newsData[8]?.title,
+      link: newsData[8]?.link,
+      imageSrc:
+        newsData[8]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[8]?.image,
+        title: newsData[8]?.title,
+        content: newsData[8]?.content,
+      },
+    },
+    {
+      date: newsData[9]?.date.slice(0,10),
+      id: 67,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 67).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 67)?.down : 0,
+      title: newsData[9]?.title,
+      link: newsData[9]?.link,
+      imageSrc:
+        newsData[9]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[9]?.image,
+        title: newsData[9]?.title,
+        content: newsData[9]?.content,
+      },
+    },
+    {
+      date: newsData[10]?.date.slice(0,10),
+      id: 68,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 68).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 68)?.down : 0,
+      title: newsData[10]?.title,
+      link: newsData[10]?.link,
+      imageSrc:
+        newsData[10]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[10]?.image,
+        title: newsData[10]?.title,
+        content: newsData[10]?.content,
+      },
+    },
+    {
+      date: newsData[11]?.date.slice(0,10),
+      id: 56,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 56).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 56)?.down : 0,
+      title: newsData[11]?.title,
+      link: newsData[11]?.link,
+      imageSrc:newsData[11]?.image,
+      year: "",
+      content: {
+        imageSrc: newsData[11]?.image,
+        title: newsData[11]?.title,
+        content: newsData[11]?.content,
+      },
+    },
+    {
+      date: newsData[12]?.date.slice(0,10),
+      id: 54,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 54).up : 0,
+      downvote:
+        votes.length !== 0 ? votes.find((obj) => obj.id === 54)?.down : 0,
+      title: newsData[12]?.title,
+      link: newsData[12]?.link,
+      imageSrc:
+        newsData[12]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[12]?.image,
+        title: newsData[12]?.title,
+        content: newsData[12]?.content,
+      },
+    },
+    {
+      date: newsData[13]?.date.slice(0,10),
+      id: 55,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 55).up : 0,
+      downvote:
+        votes.length !== 0 ? votes.find((obj) => obj.id === 55)?.down : 0,
+      title: newsData[13]?.title,
+      link: newsData[13]?.link,
+      imageSrc:
+        newsData[13]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[13]?.image,
+        title: newsData[13]?.title,
+        content: newsData[13]?.content,
+      },
+    },
+    {
+      date: newsData[13]?.date.slice(0,10),
+      id: 57,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 57).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 57)?.down : 0,
+      title: newsData[13]?.title,
+      link: newsData[13]?.link,
+      imageSrc:
+        newsData[13]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[13]?.image,
+        title: newsData[13]?.title,
+        content: newsData[13]?.content,
+      },
+    },
+    {
+      date: newsData[14]?.date.slice(0,10),
+      id: 69,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 69).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 69)?.down : 0,
+      title: newsData[14]?.title,
+      link: newsData[14]?.link,
+      imageSrc:
+        newsData[14]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[14]?.image,
+        title: newsData[14]?.title,
+        content: newsData[14]?.content,
+      },
+    },
+    {
+      date: newsData[15]?.date.slice(0,10),
+      id: 70,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 70).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 70)?.down : 0,
+      title: newsData[15]?.title,
+      link: newsData[15]?.link,
+      imageSrc:
+        newsData[15]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[15]?.image,
+        title: newsData[15]?.title,
+        content: newsData[15]?.content,
+      },
+    },
+    {
+      date: newsData[16]?.date.slice(0,10),
+      id: 71,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 71).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 71)?.down : 0,
+      title: newsData[16]?.title,
+      link: newsData[16]?.link,
+      imageSrc:
+        newsData[16]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[16]?.image,
+        title: newsData[16]?.title,
+        content: newsData[16]?.content,
+      },
+    },
+    {
+      date: newsData[17]?.date.slice(0,10),
+      id: 72,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 72).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 72)?.down : 0,
+      title: newsData[17]?.title,
+      link: newsData[17]?.link,
+      imageSrc:
+        newsData[17]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[17]?.image,
+        title: newsData[17]?.title,
+        content: newsData[17]?.content,
+      },
+    },
+    {
+      date: newsData[18]?.date.slice(0,10),
+      id: 73,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 73).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 73)?.down : 0,
+      title: newsData[18]?.title,
+      link: newsData[18]?.link,
+      imageSrc:
+        newsData[18]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[18]?.image,
+        title: newsData[18]?.title,
+        content: newsData[18]?.content,
+      },
+    },
+    {
+      date: newsData[19]?.date.slice(0,10),
+      id: 74,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 74).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 74)?.down : 0,
+      title: newsData[19]?.title,
+      link: newsData[19]?.link,
+      imageSrc:
+        newsData[19]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[19]?.image,
+        title: newsData[19]?.title,
+        content: newsData[19]?.content,
+      },
+    },
+    {
+      date: newsData[20]?.date.slice(0,10),
+      id: 75,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 75).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 75)?.down : 0,
+      title: newsData[20]?.title,
+      link: newsData[20]?.link,
+      imageSrc:
+        newsData[20]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[20]?.image,
+        title: newsData[20]?.title,
+        content: newsData[20]?.content,
+      },
+    },
+    {
+      date: newsData[20]?.date.slice(0,10),
+      id: 75,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 75).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 75)?.down : 0,
+      title: newsData[20]?.title,
+      link: newsData[20]?.link,
+      imageSrc:
+        newsData[20]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[20]?.image,
+        title: newsData[20]?.title,
+        content: newsData[20]?.content,
+      },
+    },
+    {
+      date: newsData[21]?.date.slice(0,10),
+      id: 76,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 76).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 76)?.down : 0,
+      title: newsData[21]?.title,
+      link: newsData[21]?.link,
+      imageSrc:
+        newsData[21]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[21]?.image,
+        title: newsData[21]?.title,
+        content: newsData[21]?.content,
+      },
+    },
+    {
+      date: newsData[22]?.date.slice(0,10),
+      id: 77,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 77).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 77)?.down : 0,
+      title: newsData[22]?.title,
+      link: newsData[22]?.link,
+      imageSrc:
+        newsData[22]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[22]?.image,
+        title: newsData[22]?.title,
+        content: newsData[22]?.content,
+      },
+    },
+    {
+      date: newsData[23]?.date.slice(0,10),
+      id: 78,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 78).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 78)?.down : 0,
+      title: newsData[23]?.title,
+      link: newsData[23]?.link,
+      imageSrc:
+        newsData[23]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[23]?.image,
+        title: newsData[23]?.title,
+        content: newsData[23]?.content,
+      },
+    },
+    {
+      date: newsData[24]?.date.slice(0,10),
+      id: 79,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 79).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 79)?.down : 0,
+      title: newsData[24]?.title,
+      link: newsData[24]?.link,
+      imageSrc:
+        newsData[24]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[24]?.image,
+        title: newsData[24]?.title,
+        content: newsData[24]?.content,
+      },
+    },
+    {
+      date: newsData[25]?.date.slice(0,10),
+      id: 80,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 80).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 80)?.down : 0,
+      title: newsData[25]?.title,
+      link: newsData[25]?.link,
+      imageSrc:
+        newsData[25]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[25]?.image,
+        title: newsData[25]?.title,
+        content: newsData[25]?.content,
+      },
+    },
+    {
+      date: newsData[26]?.date.slice(0,10),
+      id: 81,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 81).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 81)?.down : 0,
+      title: newsData[26]?.title,
+      link: newsData[26]?.link,
+      imageSrc:
+        newsData[26]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[26]?.image,
+        title: newsData[26]?.title,
+        content: newsData[26]?.content,
+      },
+    },
+    {
+      date: newsData[27]?.date.slice(0,10),
+      id: 82,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 82).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 82)?.down : 0,
+      title: newsData[27]?.title,
+      link: newsData[27]?.link,
+      imageSrc:
+        newsData[27]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[27]?.image,
+        title: newsData[27]?.title,
+        content: newsData[27]?.content,
+      },
+    },
+    {
+      date: newsData[28]?.date.slice(0,10),
+      id: 83,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 83).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 83)?.down : 0,
+      title: newsData[28]?.title,
+      link: newsData[28]?.link,
+      imageSrc:
+        newsData[28]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[28]?.image,
+        title: newsData[28]?.title,
+        content: newsData[28]?.content,
+      },
+    },
+    {
+      date: newsData[29]?.date.slice(0,10),
+      id: 84,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 84).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 84)?.down : 0,
+      title: newsData[29]?.title,
+      link: newsData[29]?.link,
+      imageSrc:
+        newsData[29]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[29]?.image,
+        title: newsData[29]?.title,
+        content: newsData[29]?.content,
+      },
+    },
+    {
+      date: newsData[30]?.date.slice(0,10),
+      id: 85,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 85).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 85)?.down : 0,
+      title: newsData[30]?.title,
+      link: newsData[30]?.link,
+      imageSrc:
+        newsData[30]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[30]?.image,
+        title: newsData[30]?.title,
+        content: newsData[30]?.content,
+      },
+    },
+    {
+      date: newsData[31]?.date.slice(0,10),
+      id: 86,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 86).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 86)?.down : 0,
+      title: newsData[31]?.title,
+      link: newsData[31]?.link,
+      imageSrc:
+        newsData[31]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[31]?.image,
+        title: newsData[31]?.title,
+        content: newsData[31]?.content,
+      },
+    },
+    {
+      date: newsData[32]?.date.slice(0,10),
+      id: 87,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 87).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 87)?.down : 0,
+      title: newsData[32]?.title,
+      link: newsData[32]?.link,
+      imageSrc:
+        newsData[32]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[32]?.image,
+        title: newsData[32]?.title,
+        content: newsData[32]?.content,
+      },
+    },
+    {
+      date: newsData[33]?.date.slice(0,10),
+      id: 88,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 88).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 88)?.down : 0,
+      title: newsData[33]?.title,
+      link: newsData[33]?.link,
+      imageSrc:
+        newsData[33]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[33]?.image,
+        title: newsData[33]?.title,
+        content: newsData[33]?.content,
+      },
+    },
+    {
+      date: newsData[34]?.date.slice(0,10),
+      id: 89,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 89).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 89)?.down : 0,
+      title: newsData[34]?.title,
+      link: newsData[34]?.link,
+      imageSrc:
+        newsData[34]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[34]?.image,
+        title: newsData[34]?.title,
+        content: newsData[34]?.content,
+      },
+    },
+    {
+      date: newsData[35]?.date.slice(0,10),
+      id: 90,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 90).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 90)?.down : 0,
+      title: newsData[35]?.title,
+      link: newsData[35]?.link,
+      imageSrc:
+        newsData[35]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[35]?.image,
+        title: newsData[35]?.title,
+        content: newsData[35]?.content,
+      },
+    },
+    {
+      date: newsData[36]?.date.slice(0,10),
+      id: 91,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 91).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 91)?.down : 0,
+      title: newsData[36]?.title,
+      link: newsData[36]?.link,
+      imageSrc:
+        newsData[36]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[36]?.image,
+        title: newsData[36]?.title,
+        content: newsData[36]?.content,
+      },
+    },
+    {
+      date: newsData[37]?.date.slice(0,10),
+      id: 92,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 92).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 92)?.down : 0,
+      title: newsData[37]?.title,
+      link: newsData[37]?.link,
+      imageSrc:
+        newsData[37]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[37]?.image,
+        title: newsData[37]?.title,
+        content: newsData[37]?.content,
+      },
+    },
+    {
+      date: newsData[38]?.date.slice(0,10),
+      id: 93,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 93).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 93)?.down : 0,
+      title: newsData[38]?.title,
+      link: newsData[38]?.link,
+      imageSrc:
+        newsData[38]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[38]?.image,
+        title: newsData[38]?.title,
+        content: newsData[38]?.content,
+      },
+    },
+    {
+      date: newsData[39]?.date.slice(0,10),
+      id: 94,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 94).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 94)?.down : 0,
+      title: newsData[39]?.title,
+      link: newsData[39]?.link,
+      imageSrc:
+        newsData[39]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[39]?.image,
+        title: newsData[39]?.title,
+        content: newsData[39]?.content,
+      },
+    },
+    {
+      date: newsData[40]?.date.slice(0,10),
+      id: 95,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 95).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 95)?.down : 0,
+      title: newsData[40]?.title,
+      link: newsData[40]?.link,
+      imageSrc:
+        newsData[40]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[40]?.image,
+        title: newsData[40]?.title,
+        content: newsData[40]?.content,
+      },
+    },
+    {
+      date: newsData[41]?.date.slice(0,10),
+      id: 96,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 96).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 96)?.down : 0,
+      title: newsData[41]?.title,
+      link: newsData[41]?.link,
+      imageSrc:
+        newsData[41]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[41]?.image,
+        title: newsData[41]?.title,
+        content: newsData[41]?.content,
+      },
+    },
+    {
+      date: newsData[42]?.date.slice(0,10),
+      id: 97,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 97).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 97)?.down : 0,
+      title: newsData[42]?.title,
+      link: newsData[42]?.link,
+      imageSrc:
+        newsData[42]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[42]?.image,
+        title: newsData[42]?.title,
+        content: newsData[42]?.content,
+      },
+    },
+    {
+      date: newsData[43]?.date.slice(0,10),
+      id: 98,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 98).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 98)?.down : 0,
+      title: newsData[43]?.title,
+      link: newsData[43]?.link,
+      imageSrc:
+        newsData[43]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[43]?.image,
+        title: newsData[43]?.title,
+        content: newsData[43]?.content,
+      },
+    },
+    {
+      date: newsData[44]?.date.slice(0,10),
+      id: 99,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 99).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 99)?.down : 0,
+      title: newsData[44]?.title,
+      link: newsData[44]?.link,
+      imageSrc:
+        newsData[44]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[44]?.image,
+        title: newsData[44]?.title,
+        content: newsData[44]?.content,
+      },
+    },
+    {
+      date: newsData[45]?.date.slice(0,10),
+      id: 100,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 100).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 100)?.down : 0,
+      title: newsData[45]?.title,
+      link: newsData[45]?.link,
+      imageSrc:
+        newsData[45]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[45]?.image,
+        title: newsData[45]?.title,
+        content: newsData[45]?.content,
+      },
+    },
+    {
+      date: newsData[46]?.date.slice(0,10),
+      id: 101,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 101).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 101)?.down : 0,
+      title: newsData[46]?.title,
+      link: newsData[46]?.link,
+      imageSrc:
+        newsData[46]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[46]?.image,
+        title: newsData[46]?.title,
+        content: newsData[46]?.content,
+      },
+    },
+    {
+      date: newsData[47]?.date.slice(0,10),
+      id: 102,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 102).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 102)?.down : 0,
+      title: newsData[47]?.title,
+      link: newsData[47]?.link,
+      imageSrc:
+        newsData[47]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[47]?.image,
+        title: newsData[47]?.title,
+        content: newsData[47]?.content,
+      },
+    },
+    {
+      date: newsData[48]?.date.slice(0,10),
+      id: 103,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 103).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 103)?.down : 0,
+      title: newsData[48]?.title,
+      link: newsData[48]?.link,
+      imageSrc:
+        newsData[48]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[48]?.image,
+        title: newsData[48]?.title,
+        content: newsData[48]?.content,
+      },
+    },
+    {
+      date: newsData[49]?.date.slice(0,10),
+      id: 104,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 104).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 104)?.down : 0,
+      title: newsData[49]?.title,
+      link: newsData[49]?.link,
+      imageSrc:
+        newsData[49]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[49]?.image,
+        title: newsData[49]?.title,
+        content: newsData[49]?.content,
+      },
+    },
+    {
+      date: newsData[50]?.date.slice(0,10),
+      id: 105,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 105).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 105)?.down : 0,
+      title: newsData[50]?.title,
+      link: newsData[50]?.link,
+      imageSrc:
+        newsData[50]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[50]?.image,
+        title: newsData[50]?.title,
+        content: newsData[50]?.content,
+      },
+    },
+    {
+      date: newsData[51]?.date.slice(0,10),
+      id: 106,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 106).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 106)?.down : 0,
+      title: newsData[51]?.title,
+      link: newsData[51]?.link,
+      imageSrc:
+        newsData[51]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[51]?.image,
+        title: newsData[51]?.title,
+        content: newsData[51]?.content,
+      },
+    },
+    {
+      date: newsData[52]?.date.slice(0,10),
+      id: 107,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 107).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 107)?.down : 0,
+      title: newsData[52]?.title,
+      link: newsData[52]?.link,
+      imageSrc:
+        newsData[52]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[52]?.image,
+        title: newsData[52]?.title,
+        content: newsData[52]?.content,
+      },
+    },
+     {
+      date: newsData[53]?.date.slice(0,10),
+      id: 108,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 108).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 108)?.down : 0,
+      title: newsData[53]?.title,
+      link: newsData[53]?.link,
+      imageSrc:
+        newsData[53]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[53]?.image,
+        title: newsData[53]?.title,
+        content: newsData[53]?.content,
+      },
+    },
+    {
+      date: newsData[54]?.date.slice(0,10),
+      id: 109,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 109).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 109)?.down : 0,
+      title: newsData[54]?.title,
+      link: newsData[54]?.link,
+      imageSrc:
+        newsData[54]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[54]?.image,
+        title: newsData[54]?.title,
+        content: newsData[54]?.content,
+      },
+    },
+    {
+      date: newsData[55]?.date.slice(0,10),
+      id: 110,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 110).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 110)?.down : 0,
+      title: newsData[55]?.title,
+      link: newsData[55]?.link,
+      imageSrc:
+        newsData[55]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[55]?.image,
+        title: newsData[55]?.title,
+        content: newsData[55]?.content,
+      },
+    },
+    {
+      date: newsData[56]?.date.slice(0,10),
+      id: 111,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 111).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 111)?.down : 0,
+      title: newsData[56]?.title,
+      link: newsData[56]?.link,
+      imageSrc:
+        newsData[56]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[56]?.image,
+        title: newsData[56]?.title,
+        content: newsData[56]?.content,
+      },
+    },
+    {
+      date: newsData[57]?.date.slice(0,10),
+      id: 112,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 112).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 112)?.down : 0,
+      title: newsData[57]?.title,
+      link: newsData[57]?.link,
+      imageSrc:
+        newsData[57]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[57]?.image,
+        title: newsData[57]?.title,
+        content: newsData[57]?.content,
+      },
+    },
+    {
+      date: newsData[58]?.date.slice(0,10),
+      id: 113,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 113).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 113)?.down : 0,
+      title: newsData[58]?.title,
+      link: newsData[58]?.link,
+      imageSrc:
+        newsData[58]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[58]?.image,
+        title: newsData[58]?.title,
+        content: newsData[58]?.content,
+      },
+    },
+    {
+      date: newsData[59]?.date.slice(0,10),
+      id: 114,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 114).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 114)?.down : 0,
+      title: newsData[59]?.title,
+      link: newsData[59]?.link,
+      imageSrc:
+        newsData[59]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[59]?.image,
+        title: newsData[59]?.title,
+        content: newsData[59]?.content,
+      },
+    },
+    {
+      date: newsData[60]?.date.slice(0,10),
+      id: 115,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 115).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 115)?.down : 0,
+      title: newsData[60]?.title,
+      link: newsData[60]?.link,
+      imageSrc:
+        newsData[60]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[60]?.image,
+        title: newsData[60]?.title,
+        content: newsData[60]?.content,
+      },
+    },
+    {
+      date: newsData[61]?.date.slice(0,10),
+      id: 116,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 116).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 116)?.down : 0,
+      title: newsData[61]?.title,
+      link: newsData[61]?.link,
+      imageSrc:
+        newsData[61]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[61]?.image,
+        title: newsData[61]?.title,
+        content: newsData[61]?.content,
+      },
+    },
+    {
+      date: newsData[62]?.date.slice(0,10),
+      id: 117,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 117).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 117)?.down : 0,
+      title: newsData[62]?.title,
+      link: newsData[62]?.link,
+      imageSrc:
+        newsData[62]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[62]?.image,
+        title: newsData[62]?.title,
+        content: newsData[62]?.content,
+      },
+    },
+    {
+      date: newsData[63]?.date.slice(0,10),
+      id: 118,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 118).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 118)?.down : 0,
+      title: newsData[63]?.title,
+      link: newsData[63]?.link,
+      imageSrc:
+        newsData[63]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[63]?.image,
+        title: newsData[63]?.title,
+        content: newsData[63]?.content,
+      },
+    },
+    {
+      date: newsData[64]?.date.slice(0,10),
+      id: 119,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 119).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 119)?.down : 0,
+      title: newsData[64]?.title,
+      link: newsData[64]?.link,
+      imageSrc:
+        newsData[64]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[64]?.image,
+        title: newsData[64]?.title,
+        content: newsData[64]?.content,
+      },
+    },
+    {
+      date: newsData[65]?.date.slice(0,10),
+      id: 120,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 120).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 120)?.down : 0,
+      title: newsData[65]?.title,
+      link: newsData[65]?.link,
+      imageSrc:
+        newsData[65]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[65]?.image,
+        title: newsData[65]?.title,
+        content: newsData[65]?.content,
+      },
+    },
+    {
+      date: newsData[66]?.date.slice(0,10),
+      id: 121,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 121).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 121)?.down : 0,
+      title: newsData[66]?.title,
+      link: newsData[66]?.link,
+      imageSrc:
+        newsData[66]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[66]?.image,
+        title: newsData[66]?.title,
+        content: newsData[66]?.content,
+      },
+    },
+    {
+      date: newsData[67]?.date.slice(0,10),
+      id: 122,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 122).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 122)?.down : 0,
+      title: newsData[67]?.title,
+      link: newsData[67]?.link,
+      imageSrc:
+        newsData[67]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[67]?.image,
+        title: newsData[67]?.title,
+        content: newsData[67]?.content,
+      },
+    },
+    {
+      date: newsData[68]?.date.slice(0,10),
+      id: 123,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 123).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 123)?.down : 0,
+      title: newsData[68]?.title,
+      link: newsData[68]?.link,
+      imageSrc:
+        newsData[68]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[68]?.image,
+        title: newsData[68]?.title,
+        content: newsData[68]?.content,
+      },
+    },
+    {
+      date: newsData[69]?.date.slice(0,10),
+      id: 124,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 124).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 124)?.down : 0,
+      title: newsData[69]?.title,
+      link: newsData[69]?.link,
+      imageSrc:
+        newsData[69]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[69]?.image,
+        title: newsData[69]?.title,
+        content: newsData[69]?.content,
+      },
+    },
+    {
+      date: newsData[70]?.date.slice(0,10),
+      id: 125,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 125).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 125)?.down : 0,
+      title: newsData[70]?.title,
+      link: newsData[70]?.link,
+      imageSrc:
+        newsData[70]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[70]?.image,
+        title: newsData[70]?.title,
+        content: newsData[70]?.content,
+      },
+    },
+    {
+      date: newsData[71]?.date.slice(0,10),
+      id: 126,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 126).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 126)?.down : 0,
+      title: newsData[71]?.title,
+      link: newsData[71]?.link,
+      imageSrc:
+        newsData[71]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[71]?.image,
+        title: newsData[71]?.title,
+        content: newsData[71]?.content,
+      },
+    },
+    {
+      date: newsData[72]?.date.slice(0,10),
+      id: 127,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 127).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 127)?.down : 0,
+      title: newsData[72]?.title,
+      link: newsData[72]?.link,
+      imageSrc:
+        newsData[72]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[72]?.image,
+        title: newsData[72]?.title,
+        content: newsData[72]?.content,
+      },
+    },
+    {
+      date: newsData[73]?.date.slice(0,10),
+      id: 128,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 128).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 128)?.down : 0,
+      title: newsData[73]?.title,
+      link: newsData[73]?.link,
+      imageSrc:
+        newsData[73]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[73]?.image,
+        title: newsData[73]?.title,
+        content: newsData[73]?.content,
+      },
+    },
+    {
+      date: newsData[74]?.date.slice(0,10),
+      id: 129,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 129).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 129)?.down : 0,
+      title: newsData[74]?.title,
+      link: newsData[74]?.link,
+      imageSrc:
+        newsData[74]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[74]?.image,
+        title: newsData[74]?.title,
+        content: newsData[74]?.content,
+      },
+    },
+    {
+      date: newsData[75]?.date.slice(0,10),
+      id: 130,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 130).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 130)?.down : 0,
+      title: newsData[75]?.title,
+      link: newsData[75]?.link,
+      imageSrc:
+        newsData[75]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[75]?.image,
+        title: newsData[75]?.title,
+        content: newsData[75]?.content,
+      },
+    },
+    {
+      date: newsData[76]?.date.slice(0,10),
+      id: 131,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 131).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 131)?.down : 0,
+      title: newsData[76]?.title,
+      link: newsData[76]?.link,
+      imageSrc:
+        newsData[76]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[76]?.image,
+        title: newsData[76]?.title,
+        content: newsData[76]?.content,
+      },
+    },
+    {
+      date: newsData[77]?.date.slice(0,10),
+      id: 132,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 132).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 132)?.down : 0,
+      title: newsData[77]?.title,
+      link: newsData[77]?.link,
+      imageSrc:
+        newsData[77]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[77]?.image,
+        title: newsData[77]?.title,
+        content: newsData[77]?.content,
+      },
+    },
+    {
+      date: newsData[78]?.date.slice(0,10),
+      id: 133,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 133).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 133)?.down : 0,
+      title: newsData[78]?.title,
+      link: newsData[78]?.link,
+      imageSrc:
+        newsData[78]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[78]?.image,
+        title: newsData[78]?.title,
+        content: newsData[78]?.content,
+      },
+    },
+    {
+      date: newsData[79]?.date.slice(0,10),
+      id: 134,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 134).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 134)?.down : 0,
+      title: newsData[79]?.title,
+      link: newsData[79]?.link,
+      imageSrc:
+        newsData[79]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[79]?.image,
+        title: newsData[79]?.title,
+        content: newsData[79]?.content,
+      },
+    },
+    {
+      date: newsData[80]?.date.slice(0,10),
+      id: 135,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 135).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 135)?.down : 0,
+      title: newsData[80]?.title,
+      link: newsData[80]?.link,
+      imageSrc:
+        newsData[80]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[80]?.image,
+        title: newsData[80]?.title,
+        content: newsData[80]?.content,
+      },
+    },
+    {
+      date: newsData[81]?.date.slice(0,10),
+      id: 136,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 136).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 136)?.down : 0,
+      title: newsData[81]?.title,
+      link: newsData[81]?.link,
+      imageSrc:
+        newsData[81]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[81]?.image,
+        title: newsData[81]?.title,
+        content: newsData[81]?.content,
+      },
+    },
+    {
+      date: newsData[82]?.date.slice(0,10),
+      id: 137,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 137).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 137)?.down : 0,
+      title: newsData[82]?.title,
+      link: newsData[82]?.link,
+      imageSrc:
+        newsData[82]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[82]?.image,
+        title: newsData[82]?.title,
+        content: newsData[82]?.content,
+      },
+    },
+    {
+      date: newsData[83]?.date.slice(0,10),
+      id: 138,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 138).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 138)?.down : 0,
+      title: newsData[83]?.title,
+      link: newsData[83]?.link,
+      imageSrc:
+        newsData[83]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[83]?.image,
+        title: newsData[83]?.title,
+        content: newsData[83]?.content,
+      },
+    },
+    {
+      date: newsData[84]?.date.slice(0,10),
+      id: 139,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 139).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 139)?.down : 0,
+      title: newsData[84]?.title,
+      link: newsData[84]?.link,
+      imageSrc:
+        newsData[84]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[84]?.image,
+        title: newsData[84]?.title,
+        content: newsData[84]?.content,
+      },
+    },
+    {
+      date: newsData[85]?.date.slice(0,10),
+      id: 140,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 140).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 140)?.down : 0,
+      title: newsData[85]?.title,
+      link: newsData[85]?.link,
+      imageSrc:
+        newsData[85]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[85]?.image,
+        title: newsData[85]?.title,
+        content: newsData[85]?.content,
+      },
+    },
+    {
+      date: newsData[86]?.date.slice(0,10),
+      id: 141,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 141).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 141)?.down : 0,
+      title: newsData[86]?.title,
+      link: newsData[86]?.link,
+      imageSrc:
+        newsData[86]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[86]?.image,
+        title: newsData[86]?.title,
+        content: newsData[86]?.content,
+      },
+    },
+    {
+      date: newsData[87]?.date.slice(0,10),
+      id: 142,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 142).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 142)?.down : 0,
+      title: newsData[87]?.title,
+      link: newsData[87]?.link,
+      imageSrc:
+        newsData[87]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[87]?.image,
+        title: newsData[87]?.title,
+        content: newsData[87]?.content,
+      },
+    },
+    {
+      date: newsData[88]?.date.slice(0,10),
+      id: 143,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 143).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 143)?.down : 0,
+      title: newsData[88]?.title,
+      link: newsData[88]?.link,
+      imageSrc:
+        newsData[88]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[88]?.image,
+        title: newsData[88]?.title,
+        content: newsData[88]?.content,
+      },
+    },
+    {
+      date: newsData[89]?.date.slice(0,10),
+      id: 144,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 144).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 144)?.down : 0,
+      title: newsData[89]?.title,
+      link: newsData[89]?.link,
+      imageSrc:
+        newsData[89]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[89]?.image,
+        title: newsData[89]?.title,
+        content: newsData[89]?.content,
+      },
+    },
+    {
+      date: newsData[90]?.date.slice(0,10),
+      id: 145,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 145).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 145)?.down : 0,
+      title: newsData[90]?.title,
+      link: newsData[90]?.link,
+      imageSrc:
+        newsData[90]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[90]?.image,
+        title: newsData[90]?.title,
+        content: newsData[90]?.content,
+      },
+    },
+    {
+      date: newsData[91]?.date.slice(0,10),
+      id: 146,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 146).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 146)?.down : 0,
+      title: newsData[91]?.title,
+      link: newsData[91]?.link,
+      imageSrc:
+        newsData[91]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[91]?.image,
+        title: newsData[91]?.title,
+        content: newsData[91]?.content,
+      },
+    },
+    {
+      date: newsData[92]?.date.slice(0,10),
+      id: 147,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 147).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 147)?.down : 0,
+      title: newsData[92]?.title,
+      link: newsData[92]?.link,
+      imageSrc:
+        newsData[92]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[92]?.image,
+        title: newsData[92]?.title,
+        content: newsData[92]?.content,
+      },
+    },
+    {
+      date: newsData[93]?.date.slice(0,10),
+      id: 148,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 148).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 148)?.down : 0,
+      title: newsData[93]?.title,
+      link: newsData[93]?.link,
+      imageSrc:
+        newsData[93]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[93]?.image,
+        title: newsData[93]?.title,
+        content: newsData[93]?.content,
+      },
+    },
+    {
+      date: newsData[94]?.date.slice(0,10),
+      id: 149,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 149).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 149)?.down : 0,
+      title: newsData[94]?.title,
+      link: newsData[94]?.link,
+      imageSrc:
+        newsData[94]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[94]?.image,
+        title: newsData[94]?.title,
+        content: newsData[94]?.content,
+      },
+    },
+    {
+      date: newsData[95]?.date.slice(0,10),
+      id: 150,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 150).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 150)?.down : 0,
+      title: newsData[95]?.title,
+      link: newsData[95]?.link,
+      imageSrc:
+        newsData[95]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[95]?.image,
+        title: newsData[95]?.title,
+        content: newsData[95]?.content,
+      },
+    },
+    {
+      date: newsData[96]?.date.slice(0,10),
+      id: 151,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 151).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 151)?.down : 0,
+      title: newsData[96]?.title,
+      link: newsData[96]?.link,
+      imageSrc:
+        newsData[96]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[96]?.image,
+        title: newsData[96]?.title,
+        content: newsData[96]?.content,
+      },
+    },
+    {
+      date: newsData[97]?.date.slice(0,10),
+      id: 152,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 152).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 152)?.down : 0,
+      title: newsData[97]?.title,
+      link: newsData[97]?.link,
+      imageSrc:
+        newsData[97]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[97]?.image,
+        title: newsData[97]?.title,
+        content: newsData[97]?.content,
+      },
+    },
+    {
+      date: newsData[98]?.date.slice(0,10),
+      id: 153,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 153).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 153)?.down : 0,
+      title: newsData[98]?.title,
+      link: newsData[98]?.link,
+      imageSrc:
+        newsData[98]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[98]?.image,
+        title: newsData[98]?.title,
+        content: newsData[98]?.content,
+      },
+    },
+    {
+      date: newsData[99]?.date.slice(0,10),
+      id: 154,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 154).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 154)?.down : 0,
+      title: newsData[99]?.title,
+      link: newsData[99]?.link,
+      imageSrc:
+        newsData[99]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[99]?.image,
+        title: newsData[99]?.title,
+        content: newsData[99]?.content,
+      },
+    },
+    {
+      date: newsData[100]?.date.slice(0,10),
+      id: 155,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 155).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 155)?.down : 0,
+      title: newsData[100]?.title,
+      link: newsData[100]?.link,
+      imageSrc:
+        newsData[100]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[100]?.image,
+        title: newsData[100]?.title,
+        content: newsData[100]?.content,
+      },
+    },
+    {
+      date: newsData[101]?.date.slice(0,10),
+      id: 156,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 156).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 156)?.down : 0,
+      title: newsData[101]?.title,
+      link: newsData[101]?.link,
+      imageSrc:
+        newsData[101]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[101]?.image,
+        title: newsData[101]?.title,
+        content: newsData[101]?.content,
+      },
+    },
+    {
+      date: newsData[102]?.date.slice(0,10),
+      id: 157,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 157).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 157)?.down : 0,
+      title: newsData[102]?.title,
+      link: newsData[102]?.link,
+      imageSrc:
+        newsData[102]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[102]?.image,
+        title: newsData[102]?.title,
+        content: newsData[102]?.content,
+      },
+    },
+    {
+      date: newsData[103]?.date.slice(0,10),
+      id: 158,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 158).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 158)?.down : 0,
+      title: newsData[103]?.title,
+      link: newsData[103]?.link,
+      imageSrc:
+        newsData[103]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[103]?.image,
+        title: newsData[103]?.title,
+        content: newsData[103]?.content,
+      },
+    },
+    {
+      date: newsData[104]?.date.slice(0,10),
+      id: 159,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 159).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 159)?.down : 0,
+      title: newsData[104]?.title,
+      link: newsData[104]?.link,
+      imageSrc:
+        newsData[104]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[104]?.image,
+        title: newsData[104]?.title,
+        content: newsData[104]?.content,
+      },
+    },
+    {
+      date: newsData[105]?.date.slice(0,10),
+      id: 160,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 160).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 160)?.down : 0,
+      title: newsData[105]?.title,
+      link: newsData[105]?.link,
+      imageSrc:
+        newsData[105]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[105]?.image,
+        title: newsData[105]?.title,
+        content: newsData[105]?.content,
+      },
+    },
+    {
+      date: newsData[106]?.date.slice(0,10),
+      id: 161,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 161).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 161)?.down : 0,
+      title: newsData[106]?.title,
+      link: newsData[106]?.link,
+      imageSrc:
+        newsData[106]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[106]?.image,
+        title: newsData[106]?.title,
+        content: newsData[106]?.content,
+      },
+    },
+    {
+      date: newsData[107]?.date.slice(0,10),
+      id: 162,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 162).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 162)?.down : 0,
+      title: newsData[107]?.title,
+      link: newsData[107]?.link,
+      imageSrc:
+        newsData[107]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[107]?.image,
+        title: newsData[107]?.title,
+        content: newsData[107]?.content,
+      },
+    },
+    {
+      date: newsData[108]?.date.slice(0,10),
+      id: 163,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 163).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 163)?.down : 0,
+      title: newsData[108]?.title,
+      link: newsData[108]?.link,
+      imageSrc:
+        newsData[108]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[108]?.image,
+        title: newsData[108]?.title,
+        content: newsData[108]?.content,
+      },
+    },
+    {
+      date: newsData[109]?.date.slice(0,10),
+      id: 164,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 164).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 164)?.down : 0,
+      title: newsData[109]?.title,
+      link: newsData[109]?.link,
+      imageSrc:
+        newsData[109]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[109]?.image,
+        title: newsData[109]?.title,
+        content: newsData[109]?.content,
+      },
+    },
+    {
+      date: newsData[110]?.date.slice(0,10),
+      id: 165,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 165).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 165)?.down : 0,
+      title: newsData[110]?.title,
+      link: newsData[110]?.link,
+      imageSrc:
+        newsData[110]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[110]?.image,
+        title: newsData[110]?.title,
+        content: newsData[110]?.content,
+      },
+    },
+    {
+      date: newsData[111]?.date.slice(0,10),
+      id: 166,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 166).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 166)?.down : 0,
+      title: newsData[111]?.title,
+      link: newsData[111]?.link,
+      imageSrc:
+        newsData[111]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[111]?.image,
+        title: newsData[111]?.title,
+        content: newsData[111]?.content,
+      },
+    },
+    {
+      date: newsData[112]?.date.slice(0,10),
+      id: 167,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 167).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 167)?.down : 0,
+      title: newsData[112]?.title,
+      link: newsData[112]?.link,
+      imageSrc:
+        newsData[112]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[112]?.image,
+        title: newsData[112]?.title,
+        content: newsData[112]?.content,
+      },
+    },
+    {
+      date: newsData[113]?.date.slice(0,10),
+      id: 168,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 168).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 168)?.down : 0,
+      title: newsData[113]?.title,
+      link: newsData[113]?.link,
+      imageSrc:
+        newsData[113]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[113]?.image,
+        title: newsData[113]?.title,
+        content: newsData[113]?.content,
+      },
+    },
+    {
+      date: newsData[114]?.date.slice(0,10),
+      id: 169,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 169).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 169)?.down : 0,
+      title: newsData[114]?.title,
+      link: newsData[114]?.link,
+      imageSrc:
+        newsData[114]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[114]?.image,
+        title: newsData[114]?.title,
+        content: newsData[114]?.content,
+      },
+    },
+    {
+      date: newsData[115]?.date.slice(0,10),
+      id: 170,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 170).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 170)?.down : 0,
+      title: newsData[115]?.title,
+      link: newsData[115]?.link,
+      imageSrc:
+        newsData[115]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[115]?.image,
+        title: newsData[115]?.title,
+        content: newsData[115]?.content,
+      },
+    },
+    {
+      date: newsData[116]?.date.slice(0,10),
+      id: 171,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 171).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 171)?.down : 0,
+      title: newsData[116]?.title,
+      link: newsData[116]?.link,
+      imageSrc:
+        newsData[116]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[116]?.image,
+        title: newsData[116]?.title,
+        content: newsData[116]?.content,
+      },
+    },
+    {
+      date: newsData[117]?.date.slice(0,10),
+      id: 172,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 172).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 172)?.down : 0,
+      title: newsData[117]?.title,
+      link: newsData[117]?.link,
+      imageSrc:
+        newsData[117]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[117]?.image,
+        title: newsData[117]?.title,
+        content: newsData[117]?.content,
+      },
+    },
+    {
+      date: newsData[118]?.date.slice(0,10),
+      id: 173,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 173).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 173)?.down : 0,
+      title: newsData[118]?.title,
+      link: newsData[118]?.link,
+      imageSrc:
+        newsData[118]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[118]?.image,
+        title: newsData[118]?.title,
+        content: newsData[118]?.content,
+      },
+    },
+    {
+      date: newsData[119]?.date.slice(0,10),
+      id: 174,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 174).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 174)?.down : 0,
+      title: newsData[119]?.title,
+      link: newsData[119]?.link,
+      imageSrc:
+        newsData[119]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[119]?.image,
+        title: newsData[119]?.title,
+        content: newsData[119]?.content,
+      },
+    },
+    {
+      date: newsData[120]?.date.slice(0,10),
+      id: 175,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 175).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 175)?.down : 0,
+      title: newsData[120]?.title,
+      link: newsData[120]?.link,
+      imageSrc:
+        newsData[120]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[120]?.image,
+        title: newsData[120]?.title,
+        content: newsData[120]?.content,
+      },
+    },
+    {
+      date: newsData[121]?.date.slice(0,10),
+      id: 176,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 176).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 176)?.down : 0,
+      title: newsData[121]?.title,
+      link: newsData[121]?.link,
+      imageSrc:
+        newsData[121]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[121]?.image,
+        title: newsData[121]?.title,
+        content: newsData[121]?.content,
+      },
+    },
+    {
+      date: newsData[122]?.date.slice(0,10),
+      id: 177,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 177).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 177)?.down : 0,
+      title: newsData[122]?.title,
+      link: newsData[122]?.link,
+      imageSrc:
+        newsData[122]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[122]?.image,
+        title: newsData[122]?.title,
+        content: newsData[122]?.content,
+      },
+    },
+    {
+      date: newsData[123]?.date.slice(0,10),
+      id: 178,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 178).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 178)?.down : 0,
+      title: newsData[123]?.title,
+      link: newsData[123]?.link,
+      imageSrc:
+        newsData[123]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[123]?.image,
+        title: newsData[123]?.title,
+        content: newsData[123]?.content,
+      },
+    },
+    {
+      date: newsData[124]?.date.slice(0,10),
+      id: 179,
+      month: "",
+      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 179).up : 0,
+      downvote:  votes.length !== 0 ? votes.find((obj) => obj.id === 179)?.down : 0,
+      title: newsData[124]?.title,
+      link: newsData[124]?.link,
+      imageSrc:
+        newsData[124]?.image,
+      year: "",
+      content: {
+        imageSrc:
+          newsData[124]?.image,
+        title: newsData[124]?.title,
+        content: newsData[124]?.content,
+      },
+    },
     {
       date: "22",
       id: 0,
@@ -3739,8 +5991,11 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         response = await axios.get(
           `https://testd.dyp.finance/v1/vote/${itemId}/up`
         );
-        setnewsItemId(newsItemId)
-        await fetchVotingdata();
+        
+        // await fetchVotingdata();
+         fetchVotingdata().then();
+         console.log('itemid', newsItemId)
+
         // find which news was updated in the 3 array of news
         // if (newsArray.some(item => item.id === getUpdatedUpvoted.id)) {
         //   // news is in newsArray
@@ -3842,7 +6097,6 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
           {showModal === true ? (
             <NewsModal
               style={{ width: "fit-content" }}
-              modalId="#newsmodal"
               onSelectOtherNews={(key) => {
                 setActiveNews(newsArray[key]);
                 window.scrollTo(0, 0);
@@ -3861,10 +6115,10 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
               newsId={activeNews.id}
               pressData={press_highlight}
               onHandleUpvote={(id) => {
-                handleUpVoting(id)
+                handleSingleUpVoting(activeNews.id)
               }}
               onHandleDownvote={(id) => {
-                handleDownVoting(id);
+                handleDownVoting(activeNews.id);
               }}
               onHandlePressUpvote={(id) => {
                 handleUpVoting(id);
@@ -3873,25 +6127,17 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                 handleDownVoting(id);
               }}
               isConnected={isConnected}
+              onModalClose={()=>{setShowModal(false)}}
             />
           ) : (
             <div className="brand-wrapper banner-wrapper news-left-wrapper">
-              <OwlCarousel
-                ref={carousel}
-                className="owl-carousel owl-theme brand-slider"
-                {...owlCarouselOptions}
-                startPosition={startPosition}
-                onTranslated={(obj) => {
-                  updateCarouselPosition(obj);
-                }}
-                // onChange={(obj) => {
-                //   updateCarouselPosition(obj);
-                // }}
-              >
+
+              <Carousel cols={1} rows={1} gap={10} loop showDots={true} autoplay={4000}>
                 {newsArray.length > 0 &&
-                  newsArray.slice(0, 7).map((item, key) => {
+                  newsArray.slice(0, 5).map((item, key) => {
                     return (
-                      <div className="" key={key}>
+                      <Carousel.Item key={key}>
+                      <div className="">
                         <MainNews
                           image={item.imageSrc}
                           title={item.title}
@@ -3915,24 +6161,11 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                           }}
                           isConnected={isConnected}
                         />
-                      </div>
+                      </div></Carousel.Item>
                     );
-                  })}
-              </OwlCarousel>
-              {showModal === false && (
-                  <div className="banner-slider-arrow">
-                <div onClick={(obj) => {carousel?.current?.prev(); setStartPosition(startPosition-1)}} className="left">
-                  <LeftArrow size="35" className="left" />
-                </div>
+                  })}</Carousel>
+                  
 
-                <div
-                  onClick={() => {carousel?.current?.next(); setStartPosition(startPosition+1)}}
-                  className="right"
-                >
-                  <SvgArrow size="35" className="right" />
-                </div>
-              </div>
-        )}
               {showTooltip === true ? (
                 <OutsideClickHandler
                   onOutsideClick={() => {
@@ -3990,7 +6223,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
             </div>
             {newsArray.length > 0 &&
               activeClass === "latestnews" &&
-              newsArray.slice(0, 7).map((item, key) => {
+              newsArray.slice(0, 5).map((item, key) => {
                 return (
                   <div className="banner-item pl-0" key={key}>
                     <SingleNews
@@ -4022,7 +6255,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
 
             {handleShowTopvoted().length > 0 && activeClass === "toprated" ? (
               handleShowTopvoted()
-                .slice(0, 7)
+                .slice(0,7)
                 .map((item, key) => {
                   //to do sorting
                   return (
@@ -4068,21 +6301,12 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         </h1>
         <div
           className="brand-wrapper banner-wrapper"
-          style={{ display: "flex" }}
         >
-          <OwlCarousel
-            ref={carousel2}
-            className="owl-carousel owl-theme brand-slider"
-            startPosition={startPosition2}
-            {...owlCarouselOptionsPress}
-            onTranslated={(obj) => {
-              updateCarouselPosition2(obj);
-            }}
-            
-          >
+ <Carousel cols={2} rows={1} gap={1} showDots={true} loop autoplay={4000} responsiveLayout={responsive1}>
             {press_highlight.length > 0 &&
               press_highlight.map((item, key) => {
                 return (
+                  <Carousel.Item>
                   <div
                     className="banner-item"
                     key={key}
@@ -4100,9 +6324,10 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                       }}
                     />
                   </div>
+                  </Carousel.Item>
                 );
               })}
-          </OwlCarousel>
+              </Carousel>
         </div>
       </div>
       <div className="press-release-wrapper" style={{ paddingTop: 0 }}>

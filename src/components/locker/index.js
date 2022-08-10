@@ -219,7 +219,7 @@ export default class Locker extends React.Component {
 
   loadPairInfo = async () => {
     let isConnected = this.props.isConnected;
-console.log(isConnected)
+    console.log(isConnected);
 
     if (!isConnected) {
       this.setState({
@@ -939,7 +939,7 @@ console.log(isConnected)
                     </div>
                   )}
                 </div>
-                {this.state.recipientLocks.length > 0 && (
+                {this.state.recipientLocks.length > 0 ? (
                   <div style={{ maxWidth: "400px", width: "100%" }}>
                     <div className="row m-0">
                       <div className="badge-wraper">
@@ -1061,6 +1061,18 @@ console.log(isConnected)
                           </NavLink>{" "}
                         </span>
                       </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="badge-wraper">
+                    <img src={BadgeGrayLight} alt="" />
+                    <div
+                      className="counter-wrapper"
+                      style={{
+                        background: "#C4C4C4",
+                      }}
+                    >
+                      <span className="counter-text">Liquidity not locked</span>
                     </div>
                   </div>
                 )}

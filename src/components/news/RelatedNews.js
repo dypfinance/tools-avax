@@ -62,7 +62,7 @@ const RelatedNews = ({
 
   return (
       
-      <div onClick={() => {onSelectOtherNews(newsId);setLikeIndicator(false); setDislikeIndicator(false);}}>
+      <div  style={{display: title?.includes('http') ? 'none' : 'block'}}>
       <div className="single-related-news-wrapper">
         <div
           className="d-flex align-items-center justify-content-between"
@@ -72,7 +72,7 @@ const RelatedNews = ({
             className="d-flex flex-column"
             style={{ gap: 15 }}
           >
-            <h6 className="related-subnews-title">{title}</h6>
+            <h6 className="related-subnews-title" onClick={() => {onSelectOtherNews(newsId);setLikeIndicator(false); setDislikeIndicator(false);}}>{title}</h6>
             <div className="news-bottom-wrapper">
               <div className="like-wrapper">
                 <img

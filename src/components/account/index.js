@@ -3,6 +3,7 @@ import getFormattedNumber from "../../functions/get-formatted-number";
 import { NavLink } from "react-router-dom";
 import Error from "../../assets/error.svg";
 import Fire from "./fire.png";
+import Placeholder from '../../assets/person.svg'
 
 const { BigNumber } = window;
 
@@ -21,7 +22,7 @@ export default class Subscription extends React.Component {
       formattedPrice: "",
       favorites: [],
       selectedFile: null,
-      image: "",
+      image: Placeholder,
       lockActive: false,
       status: "",
       loadspinner: false,
@@ -240,7 +241,7 @@ export default class Subscription extends React.Component {
               Avatar profile
             </strong>
             <div className="inputfile-wrapper">
-              <img src={this.state.image} alt="your image" />
+              <img src={this.state.image} alt="your image" style={{marginRight: 5, height: 70}}/>
               <input
                 type="file"
                 id="group_image"
