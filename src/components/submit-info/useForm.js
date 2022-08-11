@@ -4,7 +4,8 @@ const useForm = (validate) => {
     const [values, setValues] = useState({
        
         project_name: "",
-        nft_number: "",
+        email: "",
+        logo_link: "",
         ticker: "",
         contract_address: "",
         about: "",

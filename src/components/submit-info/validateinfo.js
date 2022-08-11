@@ -5,9 +5,14 @@ export default function validateInfo(values) {
     errors.project_name = "Project name is Required";
   }
 
-  if (!values.nft_number.trim()) {
-    errors.nft_number = "Nft number is Required";
+  if (!values.email.trim()) {
+    errors.email = "E-mail is Required";
   }
+
+  if (!values.logo_link.trim()) {
+    errors.logo_link = "Logo Link is Required";
+  }
+
   if (!values.ticker.trim()) {
     errors.ticker = "Ticker is Required";
   }
