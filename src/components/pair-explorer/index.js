@@ -24,6 +24,14 @@ async function getTokenInformation(address) {
     return res.data
 }
 
+
+async function getSearchResultsLocalAPI(query)
+{
+    let res = await axios.get(`https://api-explorer.dyp.finance/v1/avax/search/pairs/${query}`)
+
+    return res.data
+}
+
 const Circular = () => (
     // we need to add some padding to circular progress to keep it from activating our scrollbar
     <div style={{ padding: '60px' }}>
@@ -353,7 +361,7 @@ export default class PairExplorer extends React.Component {
             return;
         }
         this.setState({isSearching: true})
-        getSearchResults(this.state.query)
+        getSearchResultsLocalAPI(this.state.query)
             .then(searchResults => {
                 if (!this.state.query) searchResults = []
                 this.setState({searchResults})
@@ -830,19 +838,30 @@ export default class PairExplorer extends React.Component {
                         <div className="search-box">
                             <form id="searchform">
                                 <input value={this.state.query} onChange={e => this.handleQuery(e.target.value)} type="text" id="search-bar" autoComplete="off" placeholder="Search Pairs" />
-                                <ul className="output" style={{display: this.state.searchResults.length == 0 ? 'none' : 'block', zIndex: 9, maxHeight: '300px', overflowY: 'auto'}}>
+                                <ul className="output" style={{
+                                    display: this.state.searchResults.length == 0 ? 'none' : 'block',
+                                    zIndex: 9,
+                                    maxHeight: '300px',
+                                    overflowY: 'auto'
+                                }}>
                                     {
-                                        this.state.searchResults.map((p) => <NavLink to={`/pair-explorer/${p.id}`}><li key={p.id} class="prediction-item">
-                                        <div class="suggest-item">
-                                            <h2 style={{fontSize: '1.2rem', fontWeight: 500}}>
-                                                <span class="wh_txt">{p.token1.symbol}</span>/{p.token0.symbol} <span class="bar">-</span> ({p.token0.name})
-                                            </h2>            
-                                            <p style={{fontSize: '.85rem', fontWeight: 400}}>Token: ...{p.token0.id.slice(34)} - Pair: ...{p.id.slice(34)}</p>             
-                                            <p style={{fontSize: '.85rem', fontWeight: 400}}>Total Liquidity: ${getFormattedNumber(p.reserveUSD, 2)}</p>   
-                                        </div>
-                                    </li>
-                                    </NavLink>
-                                    )
+                                        this.state.searchResults.map((p) => <NavLink
+                                                to={`/pair-explorer/${p.pair.address.toLowerCase()}`}>
+                                                <li key={p.id} className="prediction-item">
+                                                    <div className="suggest-item">
+                                                        <h2 style={{fontSize: '1.2rem', fontWeight: 500}}>
+                                                            <span
+                                                                className="wh_txt">{p.pair.token_1.symbol}</span>/{p.pair.token_0.symbol}
+                                                            <span className="bar">-</span> ({p.pair.token_0.name})
+                                                        </h2>
+                                                        <p style={{fontSize: '.85rem', fontWeight: 400}}>Token:
+                                                            ...{p.pair.token_0.address.toLowerCase().slice(34)} - Pair:
+                                                            ...{p.pair.address.toLowerCase().slice(34)}</p>
+                                                        {/*<p style={{fontSize: '.85rem', fontWeight: 400}}>Total Liquidity: ${getFormattedNumber(p.pair.reserve, 2)}</p>*/}
+                                                    </div>
+                                                </li>
+                                            </NavLink>
+                                        )
                                     }
                                 </ul>
                                 <button type="submit" id="submit">
