@@ -19,9 +19,11 @@ import { Modal, Button } from 'react-bootstrap'
 
 import axios from 'axios'
 
-async function getTokenInformation(address) {
+async function getTokenInformation(address)
+{
     let res = await axios.get(`https://api.coingecko.com/api/v3/coins/avalanche/contract/${address}`)
-    return res.data
+
+    return res.data.sort((a, b) => parseFloat(b.pair.reserve) - parseFloat(a.pair.reserve))
 }
 
 
@@ -857,7 +859,7 @@ export default class PairExplorer extends React.Component {
                                                         <p style={{fontSize: '.85rem', fontWeight: 400}}>Token:
                                                             ...{p.pair.token_0.address.toLowerCase().slice(34)} - Pair:
                                                             ...{p.pair.address.toLowerCase().slice(34)}</p>
-                                                        {/*<p style={{fontSize: '.85rem', fontWeight: 400}}>Total Liquidity: ${getFormattedNumber(p.pair.reserve, 2)}</p>*/}
+                                                        <p style={{fontSize: '.85rem', fontWeight: 400}}>Total Liquidity: ${getFormattedNumber(p.pair.reserve, 2)}</p>
                                                     </div>
                                                 </li>
                                             </NavLink>
