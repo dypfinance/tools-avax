@@ -140,7 +140,7 @@ const News = ({ theme }) => {
       title: newsData[1]?.title,
       link: newsData[1]?.link,
       imageSrc:
-        newsData[0]?.image,
+        newsData[1]?.image,
       year: "",
       content: {
         imageSrc:

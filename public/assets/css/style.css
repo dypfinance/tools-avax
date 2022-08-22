@@ -763,8 +763,10 @@ a:hover {
 .networks {
   /* display: flex; */
   justify-content: center;
-  padding-bottom: 10px;
-  gap: 20px;
+  background: #F7F8FA;
+  padding: 3px;
+border-radius: 6px;
+  /* gap: 20px; */
 }
 
 .networks a {
@@ -789,7 +791,9 @@ a:hover {
 }
 
 .sidebar {
-  background: #ddd;
+  background: url(../img/sidebar-hero.png) !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
   position: fixed;
   top: 0;
   left: 0;
@@ -909,7 +913,9 @@ a:hover {
   width: fit-content;
   margin: auto;
   justify-content: center;
-  gap: 15px;
+  gap: 8px;
+  display: flex;
+  align-items: center;
 }
 
 .menu-cat-one ul li,
@@ -961,6 +967,12 @@ a:hover {
   /* transition: 0.2s; */
   font-size: 30px;
   color: var(--red);
+  width: 30px;
+  height: 30px;
+}
+
+.navlinks {
+  width: 110px
 }
 
 .menu-cat-one h6,
@@ -1843,12 +1855,8 @@ color: #DB2728 !important;
 } */
 
 .tag-wrapper {
-  /* background:linear-gradient(to right, #000000, #434343);
-   */
-  /* background: linear-gradient(to left, #d66d75, #e29587); */
-   
-   
-  background: linear-gradient(to right, rgba(239, 59, 54, 0.8), rgba(255,255,255, 0.8));
+
+  background: linear-gradient(to right, #ff512f, #dd2476);
   /* opacity: 0.8; */
   width: 100%;
   border-radius: 0px 0px 8px 8px;
@@ -1859,6 +1867,20 @@ color: #DB2728 !important;
   justify-content: end;
   flex-direction: column;
   padding: 20px;
+}
+
+.connectwalletbtn {
+  background: #E30613;
+border-radius: 6px;
+width: 67px;
+height: 26px;
+font-weight: 400;
+font-size: 12px;
+line-height: 15px;
+margin-right: 10px;
+color: #FFFFFF;
+border: none !important;
+outline: none !important;
 }
 
 .main-image {

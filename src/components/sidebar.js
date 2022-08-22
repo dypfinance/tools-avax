@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import Ethereum from "../assets/ethereum.svg";
 import Avax from "../assets/avalanche.svg";
-import Logo from "../assets/logo.png";
+import Logo from "../assets/logo.svg";
 import LogoWhite from "../assets/logo-white.svg";
 import React, { useState } from "react";
 import { useWeb3React } from "@web3-react/core";
@@ -43,39 +43,45 @@ const Sidebar = (props) => {
                 ? window.ethereum?.chainId === "0x1"
                   ? "linear-gradient(87.56deg, #1D91D0 9.37%, #32B1F7 93.57%)"
                   : "linear-gradient(87.56deg, #FC4F36 9.37%, #E30613 93.57%)"
-                : "linear-gradient(87.56deg, rgba(252, 79, 54, 0.1) 9.37%, rgba(227, 6, 19, 0.1) 93.57%)",
+                : "#fff",
             }}
           >
             <div className="home-menu">
-              <a
-                onClick={(e) => {
-                  e.preventDefault();
-                  injected.activate();
-                  window.connectWallet();
-                }}
-                href="#"
-                style={{
-                  border: !active ? "1px solid #ED636C" : "1px solid #fff",
-                }}
-                id="wallet"
-              >
+              <a href="#" id="wallet">
                 <img src={!active ? NotConnected : Connected} alt="Image" />
                 {/* <i style={{color: '#fff'}} className='fas fa-wallet'></i> */}
                 <span
                   style={{
-                    color: !active ? "#ED636C" : "#fff",
+                    color: !active ? "#6B7A99" : "#fff",
                   }}
                 >
-                  {!active ? "Connect Wallet" : "Wallet Connected!"}
+                  {!active ? "Wallet not connected" : "Connected!"}
                 </span>
               </a>
+              {!active && (
+                <button
+                  className="connectwalletbtn"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    injected.activate();
+                    window.connectWallet();
+                  }}
+                >
+                  Connect
+                </button>
+              )}
             </div>
           </div>
-          <h6 className="networks row m-0">
+          <h6
+            className="networks row m-0"
+            style={{
+              border: chainId === 1 ? "1px solid #1486C3" : "1px solid #E84142",
+            }}
+          >
             <a
               href="javascript:void(0)"
               className="hoverNetwork"
-              style={{ background: chainId === 1 ? "#1D91D0" : "#EFF0F6" }}
+              style={{ background: chainId === 1 ? "#1D91D0" : "transparent" }}
               onClick={() => {
                 setActiveBtn("eth");
                 handleSwitchNetwork("0x1");
@@ -83,7 +89,7 @@ const Sidebar = (props) => {
             >
               <img src={Ethereum} alt="Image not found" />
               <span
-                style={{ color: chainId === 1 ? "#fff" : "" }}
+                style={{ color: chainId === 1 ? "#fff" : "#6B7A99" }}
                 className="network-text"
               >
                 Ethereum
@@ -94,7 +100,7 @@ const Sidebar = (props) => {
               className="hoverNetwork"
               style={{
                 padding: "4px 11px 0",
-                background: chainId === 43114 ? "#E84142" : "#EFF0F6",
+                background: chainId === 43114 ? "#E84142" : "transparent",
               }}
               onClick={() => {
                 setActiveBtn("avax");
@@ -102,142 +108,115 @@ const Sidebar = (props) => {
               }}
             >
               <img src={Avax} alt="Image not found" />
-              <span style={{ color: chainId === 43114 ? "#fff" : "" }}>
+              <span style={{ color: chainId === 43114 ? "#fff" : "#6B7A99" }}>
                 Avalanche
               </span>
             </a>
           </h6>
         </div>
-        <ul>
-          <li>
-            <NavLink
-              exact
-              to="/account"
-              onClick={() => {
-                setActiveLink("account");
-              }}
-              className={
-                window.location.href.includes("account") ? "activelink" : ""
-              }
-            >
-              <img
-                src={
-                  window.location.href.includes("account")
-                    ? "/assets/img/person-active.svg"
-                    : "/assets/img/person.svg"
-                }
-                alt="Image"
-              />
-              <span className="sidebar-link">Account</span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              exact
-              to="/pool-explorer"
-              onClick={() => {
-                setActiveLink("explorer");
-              }}
-              className={
-                window.location.href.includes("pool-explorer")
-                  ? "activelink"
-                  : ""
-              }
-            >
-              <img
-                src={
+        <ul style={{width: 'fit-content', margin: 'auto'}}>
+          <div className="row m-auto align-items-center" style={{width: 'fit-content'}}>
+            <li className="navlinks">
+              <NavLink
+                exact
+                to="/pool-explorer"
+                onClick={() => {
+                  setActiveLink("explorer");
+                }}
+                className={
                   window.location.href.includes("pool-explorer")
-                    ? "/assets/img/search.svg"
-                    : "/assets/img/search-passive.svg"
+                    ? "activelink"
+                    : ""
                 }
-                alt="Image"
-              />
-              <span className="sidebar-link">Explorer</span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/pair-explorer"
-              onClick={() => {
-                setActiveLink("pair");
-              }}
-              className={
-                window.location.href.includes("pair-explorer")
-                  ? "activelink"
-                  : ""
-              }
-            >
-              <img
-                src={
+                 style={{flexDirection: 'column', display: 'flex', alignItems: 'center'}}
+              >
+                <img
+                  src={
+                    window.location.href.includes("pool-explorer")
+                      ? "/assets/img/search.svg"
+                      : "/assets/img/search-passive.svg"
+                  }
+                  alt="Image"
+                />
+                <span className="sidebar-link">Explorer</span>
+              </NavLink>
+            </li>
+            <li className="navlinks">
+              <NavLink
+                to="/pair-explorer"
+                onClick={() => {
+                  setActiveLink("pair");
+                }}
+                className={
                   window.location.href.includes("pair-explorer")
-                    ? "/assets/img/compass.svg"
-                    : "/assets/img/compass-passive.svg"
+                    ? "activelink"
+                    : ""
                 }
-                alt="Image"
-              />
-              <span className="sidebar-link">Pair Explorer</span>
-            </NavLink>
-          </li>
-          {/* <li>
-          <NavLink to="/big-swap-explorer">
-            <i className="fas fa-exchange-alt" alt="Image" />
-            <span className="sidebar-link">Big Swap Explorer</span>
-          </NavLink>
-        </li> */}
-          <li>
-            <NavLink
-              to="/locker"
-              onClick={() => {
-                setActiveLink("lock");
-              }}
-              className={
-                window.location.href.includes("locker") ? "activelink" : ""
-              }
-            >
-              <img
-                src={
-                  window.location.href.includes("locker")
-                    ? "/assets/img/locker-active.svg"
-                    : "/assets/img/locker-passive.svg"
+                style={{flexDirection: 'column', display: 'flex', alignItems: 'center'}}
+              >
+                <img
+                  src={
+                    window.location.href.includes("pair-explorer")
+                      ? "/assets/img/compass.svg"
+                      : "/assets/img/compass-passive.svg"
+                  }
+                  alt="Image"
+                />
+                <span className="sidebar-link">Pair Explorer</span>
+              </NavLink>
+            </li>
+          </div>
+          <div className="row m-auto align-items-center" style={{width: 'fit-content'}}>
+          <li className="navlinks">
+              <NavLink
+                to="/locker"
+                onClick={() => {
+                  setActiveLink("lock");
+                }}
+                className={
+                  window.location.href.includes("locker") ? "activelink" : ""
                 }
-                alt="Image"
-              />
-              <span className="sidebar-link">DYP Locker</span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/news"
-              onClick={() => {
-                setActiveLink("news");
-              }}
-              className={
-                window.location.href.includes("news") ? "activelink" : ""
-              }
-            >
-              <img
-                src={
-                  window.location.href.includes("news")
-                    ? "/assets/img/news-active.svg"
-                    : "/assets/img/news-passive.svg"
+                style={{flexDirection: 'column', display: 'flex', alignItems: 'center'}}
+              >
+                <img
+                  src={
+                    window.location.href.includes("locker")
+                      ? "/assets/img/locker-active.svg"
+                      : "/assets/img/locker-passive.svg"
+                  }
+                  alt="Image"
+                />
+                <span className="sidebar-link">DYP Locker</span>
+              </NavLink>
+            </li>
+            <li className="navlinks">
+              <NavLink
+                to="/news"
+                onClick={() => {
+                  setActiveLink("news");
+                }}
+                className={
+                  window.location.href.includes("news") ? "activelink" : ""
                 }
-                alt="Image"
-              />
-              <span className="sidebar-link">News</span>
-            </NavLink>
-          </li>
-
-          {/* <li>
-          <NavLink to="/top-tokens">
-            <i className="fab fa-ethereum" alt="Image" />
-            <span className="sidebar-link">Top Tokens</span>
-          </NavLink>
-        </li> */}
+                style={{flexDirection: 'column', display: 'flex', alignItems: 'center'}}
+              >
+                <img
+                  src={
+                    window.location.href.includes("news")
+                      ? "/assets/img/news-active.svg"
+                      : "/assets/img/news-passive.svg"
+                  }
+                  alt="Image"
+                />
+                <span className="sidebar-link">News</span>
+              </NavLink>
+            </li>
+          </div>
         </ul>
       </div>
       <div className="menu-cat-two m-0">
         {/* <h6>Others</h6> */}
-        <ul>
+        <ul style={{width: 'fit-content', margin: 'auto'}}>
           {String(props.appState.coinbase).toLowerCase() ==
             window.config.metamask_admin_account.toLowerCase() && (
             <li>
@@ -247,83 +226,105 @@ const Sidebar = (props) => {
               </NavLink>
             </li>
           )}
-          {/* <li>
-          <NavLink to="/farms">
-            <i className="fas fa-seedling" />
-            <span className="sidebar-link">Yields</span>
-          </NavLink>
-        </li> */}
-
-          <li
-            onClick={() => {
-              setActiveLink("info");
-            }}
-          >
-            <NavLink
-              to="/submit-info"
+         <div className="row m-auto align-items-center" style={{width: 'fit-content'}}>
+         <li className="navlinks"
               onClick={() => {
                 setActiveLink("info");
               }}
-              className={
-                window.location.href.includes("info") ? "activelink" : ""
-              }
             >
-              <img
-                src={
-                  window.location.href.includes("info")
-                    ? "/assets/img/info-active.svg"
-                    : "/assets/img/info-passive.svg"
+              <NavLink
+                to="/submit-info"
+                onClick={() => {
+                  setActiveLink("info");
+                }}
+                className={
+                  window.location.href.includes("info") ? "activelink" : ""
                 }
-                alt="Image"
-              />
-              <span className="sidebar-link">Submit Info</span>
-            </NavLink>
-          </li>
-          <li
-            onClick={() => {
-              setActiveLink("rocket");
-            }}
-            className={activeLink === "rocket" ? "activelink" : ""}
-          >
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://dyp.finance/launchpad"
+                style={{flexDirection: 'column', display: 'flex', alignItems: 'center'}}
+              >
+                <img
+                  src={
+                    window.location.href.includes("info")
+                      ? "/assets/img/info-active.svg"
+                      : "/assets/img/info-passive.svg"
+                  }
+                  alt="Image"
+                />
+                <span className="sidebar-link">Submit Info</span>
+              </NavLink>
+            </li>
+            <li
+              onClick={() => {
+                setActiveLink("rocket");
+              }}
+              className={activeLink === "rocket" ? "activelink" : "navlinks"}
             >
-              <img
-                src={
-                  activeLink === "rocket"
-                    ? "/assets/img/rocket-active.svg"
-                    : "/assets/img/rocket-passive.svg"
-                }
-                alt="Image"
-              />
-              <span className="sidebar-link">LaunchPad</span>
-            </a>
-          </li>
-
-          <li
-            onClick={() => {
-              setActiveLink("buydyp");
-            }}
-          >
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://app.uniswap.org/#/swap?outputCurrency=0x961c8c0b1aad0c0b10a51fef6a867e3091bcef17"
-              className={activeLink === "buydyp" ? "activelink" : ""}
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://dyp.finance/launchpad"
+                style={{flexDirection: 'column', display: 'flex', alignItems: 'center'}}
+              >
+                <img
+                  src={
+                    activeLink === "rocket"
+                      ? "/assets/img/rocket-active.svg"
+                      : "/assets/img/rocket-passive.svg"
+                  }
+                  alt="Image"
+                />
+                <span className="sidebar-link">LaunchPad</span>
+              </a>
+            </li>
+          </div>
+          <div className="row m-auto align-items-center" style={{width: 'fit-content'}}>
+          <li className="navlinks"
+              onClick={() => {
+                setActiveLink("buydyp");
+              }}
             >
-              <img
-                src={
-                  activeLink === "buydyp"
-                    ? "/assets/img/cart.svg"
-                    : "/assets/img/cart-passive.svg"
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://app.uniswap.org/#/swap?outputCurrency=0x961c8c0b1aad0c0b10a51fef6a867e3091bcef17"
+                className={activeLink === "buydyp" ? "activelink" : ""}
+                style={{flexDirection: 'column', display: 'flex', alignItems: 'center'}}
+              >
+                <img
+                  src={
+                    activeLink === "buydyp"
+                      ? "/assets/img/cart.svg"
+                      : "/assets/img/cart-passive.svg"
+                  }
+                  alt="Image"
+                />
+                <span className="sidebar-link">Buy DYP</span>
+              </a>
+            </li>
+            <li className="navlinks">
+              <NavLink
+                exact
+                to="/account"
+                onClick={() => {
+                  setActiveLink("account");
+                }}
+                className={
+                  window.location.href.includes("account") ? "activelink" : ""
                 }
-                alt="Image"
-              />
-              <span className="sidebar-link">Buy DYP</span>
-            </a>
-          </li>
+                style={{flexDirection: 'column', display: 'flex', alignItems: 'center'}}
+              >
+                <img
+                  src={
+                    window.location.href.includes("account")
+                      ? "/assets/img/person-active.svg"
+                      : "/assets/img/person.svg"
+                  }
+                  alt="Image"
+                />
+                <span className="sidebar-link">Account</span>
+              </NavLink>
+            </li>
+          </div>
         </ul>
       </div>
     </div>
