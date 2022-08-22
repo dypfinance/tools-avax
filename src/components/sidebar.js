@@ -10,6 +10,9 @@ import { injected } from "../functions/connectors";
 import NotConnected from "../assets/notconnected.svg";
 import Connected from "../assets/connected.svg";
 import SubmitInfo from "./submit-info/SubmitInfo";
+import Crown from '../assets/crown.png'
+import RightArrow from '../assets/rightarrow.svg'
+
 
 const activateLasers = () => {
   window.$.alert("Coming Soon!");
@@ -54,6 +57,7 @@ const Sidebar = (props) => {
                   style={{
                     color: !active ? "#6B7A99" : "#fff",
                   }}
+                  className='connect-text'
                 >
                   {!active ? "Wallet not connected" : "Connected!"}
                 </span>
@@ -115,7 +119,7 @@ const Sidebar = (props) => {
           </h6>
         </div>
         <ul style={{width: 'fit-content', margin: 'auto'}}>
-          <div className="row m-auto align-items-center" style={{width: 'fit-content'}}>
+          <div className="row m-auto align-items-center twolinks-wrapper" style={{width: 'fit-content'}}>
             <li className="navlinks">
               <NavLink
                 exact
@@ -128,7 +132,7 @@ const Sidebar = (props) => {
                     ? "activelink"
                     : ""
                 }
-                 style={{flexDirection: 'column', display: 'flex', alignItems: 'center'}}
+                 style={{flexDirection: 'column', display: 'flex', alignItems: 'center', gap: 20}}
               >
                 <img
                   src={
@@ -152,7 +156,7 @@ const Sidebar = (props) => {
                     ? "activelink"
                     : ""
                 }
-                style={{flexDirection: 'column', display: 'flex', alignItems: 'center'}}
+                style={{flexDirection: 'column', display: 'flex', alignItems: 'center', gap: 20}}
               >
                 <img
                   src={
@@ -166,7 +170,7 @@ const Sidebar = (props) => {
               </NavLink>
             </li>
           </div>
-          <div className="row m-auto align-items-center" style={{width: 'fit-content'}}>
+          <div className="row m-auto align-items-center twolinks-wrapper" style={{width: 'fit-content', borderRadius: 0, borderTop: 'none', borderBottom: 'none'}}>
           <li className="navlinks">
               <NavLink
                 to="/locker"
@@ -176,7 +180,7 @@ const Sidebar = (props) => {
                 className={
                   window.location.href.includes("locker") ? "activelink" : ""
                 }
-                style={{flexDirection: 'column', display: 'flex', alignItems: 'center'}}
+                style={{flexDirection: 'column', display: 'flex', alignItems: 'center', gap: 20}}
               >
                 <img
                   src={
@@ -198,7 +202,7 @@ const Sidebar = (props) => {
                 className={
                   window.location.href.includes("news") ? "activelink" : ""
                 }
-                style={{flexDirection: 'column', display: 'flex', alignItems: 'center'}}
+                style={{flexDirection: 'column', display: 'flex', alignItems: 'center', gap: 20}}
               >
                 <img
                   src={
@@ -226,7 +230,7 @@ const Sidebar = (props) => {
               </NavLink>
             </li>
           )}
-         <div className="row m-auto align-items-center" style={{width: 'fit-content'}}>
+         <div className="row m-auto align-items-center twolinks-wrapper" style={{width: 'fit-content', borderRadius: 0, borderBottom: 'none'}}>
          <li className="navlinks"
               onClick={() => {
                 setActiveLink("info");
@@ -240,7 +244,7 @@ const Sidebar = (props) => {
                 className={
                   window.location.href.includes("info") ? "activelink" : ""
                 }
-                style={{flexDirection: 'column', display: 'flex', alignItems: 'center'}}
+                style={{flexDirection: 'column', display: 'flex', alignItems: 'center', gap: 20}}
               >
                 <img
                   src={
@@ -263,7 +267,7 @@ const Sidebar = (props) => {
                 target="_blank"
                 rel="noopener noreferrer"
                 href="https://dyp.finance/launchpad"
-                style={{flexDirection: 'column', display: 'flex', alignItems: 'center'}}
+                style={{flexDirection: 'column', display: 'flex', alignItems: 'center', gap: 20}}
               >
                 <img
                   src={
@@ -277,7 +281,7 @@ const Sidebar = (props) => {
               </a>
             </li>
           </div>
-          <div className="row m-auto align-items-center" style={{width: 'fit-content'}}>
+          <div className="row m-auto align-items-center twolinks-wrapper" style={{width: 'fit-content', borderRadius: '0px 0px 8px 8px'}}>
           <li className="navlinks"
               onClick={() => {
                 setActiveLink("buydyp");
@@ -288,7 +292,7 @@ const Sidebar = (props) => {
                 rel="noopener noreferrer"
                 href="https://app.uniswap.org/#/swap?outputCurrency=0x961c8c0b1aad0c0b10a51fef6a867e3091bcef17"
                 className={activeLink === "buydyp" ? "activelink" : ""}
-                style={{flexDirection: 'column', display: 'flex', alignItems: 'center'}}
+                style={{flexDirection: 'column', display: 'flex', alignItems: 'center', gap: 20}}
               >
                 <img
                   src={
@@ -311,7 +315,7 @@ const Sidebar = (props) => {
                 className={
                   window.location.href.includes("account") ? "activelink" : ""
                 }
-                style={{flexDirection: 'column', display: 'flex', alignItems: 'center'}}
+                style={{flexDirection: 'column', display: 'flex', alignItems: 'center', gap: 20}}
               >
                 <img
                   src={
@@ -326,6 +330,20 @@ const Sidebar = (props) => {
             </li>
           </div>
         </ul>
+      </div>
+      <div className="premium-wrapper">
+        <div style={{padding: 15}}>
+        <div className="row m-0 pb-2 upper-wrapper">
+          <div style={{maxWidth: 110}}>
+            <h3 className="premium-title">Upgrade to Premium</h3>
+            <span className="premium-subtitle">Get additional benefits & features</span>
+          </div>
+          <div>
+            <img src={Crown} alt='' className="crown"/>
+          </div>
+        </div>
+        <NavLink className="upgrade-text" to='/account'>Upgrade today <img src={RightArrow} alt=''/></NavLink>
+      </div>
       </div>
     </div>
   );
