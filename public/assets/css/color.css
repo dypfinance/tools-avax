@@ -102,7 +102,8 @@ body.theme-dark .premium-wrapper {
     background: rgba(255, 255, 255, 0.1) !important;
 }
 
-body.theme-dark .activenavlink, .navlinks:hover {
+body.theme-dark .activenavlink, 
+body.theme-dark .navlinks:hover {
     background: linear-gradient(44.88deg, #191919 0.82%, #3F2050 97.31%) !important;
     
 }
@@ -298,6 +299,10 @@ body.theme-white .table-title {
     background-color: var(--white);
 }
 
+body.theme-white .activenavlink, .navlinks:hover {
+    background: white !important;
+    
+}
 
 body.theme-white .dropdown.open ul li a,
 body.theme-white .header-left ul li a span {

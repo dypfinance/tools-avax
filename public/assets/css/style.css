@@ -987,7 +987,7 @@ a:hover {
 
 .navlinks:hover {
   transform: scale(1.2);
-  background: #ffffff;
+  background: #ffffff !important;
   box-shadow: 0px 8px 22px rgba(0, 0, 0, 0.12);
   border-radius: 8px;
   border: 2px solid #edeff2;
