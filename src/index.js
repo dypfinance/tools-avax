@@ -11,7 +11,7 @@ import { BrowserRouter } from "react-router-dom";
 const Web3ProviderNetwork = createWeb3ReactRoot("NETWORK");
 
 if ('ethereum' in window) {
-  ;(window.ethereum).autoRefreshOnNetworkChange = false
+  ;(window.ethereum).autoRefreshOnNetworkChange = true
 }
 
 const GOOGLE_ANALYTICS_ID: string | undefined =

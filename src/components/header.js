@@ -3,24 +3,13 @@ import { NavLink } from "react-router-dom";
 import getFormattedNumber from "../functions/get-formatted-number";
 import React, { useEffect, useState } from "react";
 
-import {
-  useEagerConnect,
-  useInactiveListener
-} from "../functions/hooks";
+
 
 const Header = ({toggleMobileSidebar, toggleTheme, theme}) => {
  
   const [gasPrice, setGasprice] = useState()
   const [ethPrice, setEthprice] = useState()
   const [hotpairs, setHotpairs] = useState([])
-
-
-
-  const triedEager = useEagerConnect();
-
-
-  useInactiveListener(!triedEager);
-
 
    const fetchData= async()=> {
     if (window.ethereum?.chainId === "0x1") {
@@ -74,10 +63,7 @@ const Header = ({toggleMobileSidebar, toggleTheme, theme}) => {
   function handleChainChanged() {
     // We recommend reloading the page, unless you must do otherwise
     window.location.reload()
-    // localStorage.setItem("favorites",  `[]`)
   }
-
-
 
   useEffect(()=>{
     fetchData().then()

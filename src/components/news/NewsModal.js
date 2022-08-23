@@ -82,7 +82,6 @@ const NewsModal = ({
       }
     }
   };
-console.log(upvotes, newsId)
   return (
     <div  className="newmodal">
       <div>

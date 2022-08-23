@@ -72,9 +72,8 @@ export function useInactiveListener(suppress = false) {
 
   useEffect(() => {
     const { ethereum } = window;
-
     
-  // ethereum?.removeAllListeners(['networkChanged'])
+  ethereum?.removeAllListeners(['networkChanged'])
 
 
 

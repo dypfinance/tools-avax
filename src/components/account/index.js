@@ -51,7 +51,7 @@ export default class Subscription extends React.Component {
     } else {
       window.addOneTimeWalletConnectionListener(this.onComponentMount);
     }
-    console.log(this.state.selectedSubscriptionToken);
+   
     this.setState({
       selectedSubscriptionToken: Object.keys(
         window.ethereum?.chainId === "0x1"

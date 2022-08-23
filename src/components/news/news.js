@@ -6089,6 +6089,13 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
   };
 
   
+  const handleSelectOtherNews=(key)=> {
+    const search = obj => obj.id === key;
+    const index = newsArray.findIndex(search)
+    setActiveNews(newsArray[index]);
+  }
+
+  
   return (
     <div onScroll={onScroll} ref={listInnerRef} id="header">
       <div className="news-wrapper">
@@ -6098,8 +6105,8 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
             <NewsModal
               style={{ width: "fit-content" }}
               onSelectOtherNews={(key) => {
-                setActiveNews(newsArray[key]);
                 window.scrollTo(0, 0);
+                handleSelectOtherNews(key)
               }}
               title={activeNews.content.title}
               link={activeNews.link}

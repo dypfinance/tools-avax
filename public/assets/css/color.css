@@ -27,7 +27,7 @@ body.theme-dark .news-title {
     color: var(--white) !important;
 }
 
-body.theme-dark .hoverNetwork,
+/* body.theme-dark .hoverNetwork, */
 body.theme-dark .copylink-wrapper,
 body.theme-dark .info-wrappers, 
 body.theme-dark .pair-locks-wrapper
@@ -96,6 +96,32 @@ body.theme-dark .table-head,
 body.theme-dark .table-data {
     background: var(--black);
 }
+
+body.theme-dark .twolinks-wrapper,
+body.theme-dark .premium-wrapper {
+    background: rgba(255, 255, 255, 0.1) !important;
+}
+
+body.theme-dark .activenavlink, .navlinks:hover {
+    background: linear-gradient(44.88deg, #191919 0.82%, #3F2050 97.31%) !important;
+    
+}
+
+body.theme-dark .navlinks:hover span,
+body.theme-dark .activenavlink span {
+   color: white !important;
+    
+}
+
+body.theme-dark .premium-subtitle {
+    color: #939393 !important;
+}
+
+body.theme-dark .upgrade-text {
+    color: #E30613 !important;
+}
+
+
 
 body.theme-dark .table-data-item a,
 body.theme-white .table-data-item a {
@@ -235,6 +261,16 @@ body.theme-dark .hamburger-menu span {
 
 body.theme-dark .btn.v1{
     background-color: var(--preloader-clr);
+}
+
+body.theme-dark .networks{
+    background: transparent !important;
+}
+
+body.theme-dark .sidebar{
+    background: url(../img/darkmode-sidebar.png), #26202A !important;
+    background-repeat: no-repeat !important;
+  background-size: cover !important;
 }
 /*--------------------------
 	theme white color CSS
