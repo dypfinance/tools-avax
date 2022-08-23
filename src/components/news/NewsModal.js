@@ -32,7 +32,8 @@ const NewsModal = ({
   day,
   year,
   link,
-  onModalClose
+  onModalClose,
+  isPremium
 }) => {
   const getItemsWithoutCurrentItem = (currentItemId, arrayOfItems) => {
     return arrayOfItems.filter((item) => item.id !== currentItemId);
@@ -54,7 +55,7 @@ const NewsModal = ({
   const bal2 = Number(localStorage.getItem("balance2"));
 
   const handleLikeStates = () => {
-    if ((bal1 === 0 && bal2 === 0) || isConnected === false) {
+    if ((bal1 === 0 && bal2 === 0 && isPremium === false) || isConnected === false) {
       setLikeIndicator(false);
       setShowTooltip(true);
     } else {
@@ -69,7 +70,7 @@ const NewsModal = ({
   };
 
   const handleDisLikeStates = () => {
-    if ((bal1 === 0 && bal2 === 0) || isConnected === false) {
+    if ((bal1 === 0 && bal2 === 0 && isPremium === false) || isConnected === false) {
       setLikeIndicator(false);
       setShowTooltip(true);
     } else {

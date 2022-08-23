@@ -3,8 +3,14 @@ import getFormattedNumber from "../../functions/get-formatted-number";
 import { NavLink } from "react-router-dom";
 import Error from "../../assets/error.svg";
 import Fire from "./fire.png";
-import Placeholder from '../../assets/person.svg'
-
+import Placeholder from "../../assets/person.svg";
+import { benefits } from "./benefits";
+import Check from "./check.svg";
+import Cross from "./cross.svg";
+import Free from "./free.svg";
+import Premium from "./premium.svg";
+import FreeWhite from "./free-white.svg";
+import PremiumBanner from "./premium-banner.png";
 const { BigNumber } = window;
 
 export default class Subscription extends React.Component {
@@ -31,27 +37,26 @@ export default class Subscription extends React.Component {
   }
 
   componentDidMount() {
-
-    if(window.ethereum?.chainId === '0x1') {
-          window
-      .getFavoritesETH()
-      .then((favorites) => this.setState({ favorites }))
-      .catch(console.error);
+    if (window.ethereum?.chainId === "0x1") {
+      window
+        .getFavoritesETH()
+        .then((favorites) => this.setState({ favorites }))
+        .catch(console.error);
     }
 
-    if(window.ethereum?.chainId === '0xa86a') {
+    if (window.ethereum?.chainId === "0xa86a") {
       window
-  .getFavorites()
-  .then((favorites) => this.setState({ favorites }))
-  .catch(console.error);
-}
+        .getFavorites()
+        .then((favorites) => this.setState({ favorites }))
+        .catch(console.error);
+    }
 
     if (window.isConnectedOneTime) {
       this.onComponentMount();
     } else {
       window.addOneTimeWalletConnectionListener(this.onComponentMount);
     }
-   
+
     this.setState({
       selectedSubscriptionToken: Object.keys(
         window.ethereum?.chainId === "0x1"
@@ -190,47 +195,65 @@ export default class Subscription extends React.Component {
           SUBSCRIBE TO DYP TOOLS PREMIUM
         </h4>
         <form onSubmit={this.handleSubscribe}>
-          <div className="row m-0" style={{ gap: 40 }}>
-            <div className="accout-left-wrapper">
-              <p
-                className="account-left-text mb-4"
-                style={{ fontSize: ".8rem", maxWidth: "600px" }}
+          <div>
+            <table className="w-100">
+              <tr
+                className="tablerow"
+                style={{ position: "relative", top: "-10px" }}
               >
-                <span className="account-left-title">
-                  <i className="fas fa-info-circle mr-1"></i>DYP TOOLS Premium
-                </span>
-                <br />
-                The subscription tokens will be used to buy and lock DYP worth
-                ~$75, once unsubscribed the DYP will be unlocked and sent to
-                your wallet.
-              </p>
-            </div>
-            <div className="account-right-wrapper">
-              <img src={Fire} alt="" className="fire" />
-              <span className="account-left-title">
-                DYP TOOLS Premium benefits
-              </span>
-              <ul
-                style={{
-                  fontSize: ".8rem",
-                  lineHeight: 1.5,
-                  maxWidth: "430px",
-                }}
-                className="account-left-text mb-4"
-              >
-                <li>
-                  <i className="fas fa-check"></i> Access to manual research
-                  info for projects.
-                </li>
-                <li>
-                  <i className="fas fa-check"></i> Early access to new features
-                  released in the future.
-                </li>
-                <li>
-                  <i className="fas fa-check"></i> Guaranteed allocation to
-                  presales of new projects launched using our LaunchPad.
-                </li>
-              </ul>
+                <th className="tableheader"></th>
+                <th className="tableheader freetext">
+                  <img
+                    src={this.props.theme === "theme-dark" ? FreeWhite : Free}
+                    alt=""
+                  />{" "}
+                  Free
+                </th>
+                <th className="tableheader premiumtext">
+                  <img src={Premium} alt="" /> Premium
+                </th>
+              </tr>
+              {benefits.length > 0 &&
+                benefits.map((item, key) => {
+                  return (
+                    <>
+                      <tr key={key} className="tablerow">
+                        <td className="tabledata">{item.title}</td>
+                        <td className="tabledata">
+                          <img
+                            src={item.free === "yes" ? Check : Cross}
+                            alt=""
+                          />{" "}
+                        </td>
+                        <td className="tabledata">
+                          <img
+                            src={item.premium === "yes" ? Check : Cross}
+                            alt=""
+                          />
+                        </td>
+                      </tr>
+                    </>
+                  );
+                })}
+            </table>
+            <div className="premiumbanner">
+              <div className="row m-0 justify-content-between">
+              <div style={{maxWidth: 335}}>
+                <h3 className="subscr-title">Lifetime subscription</h3>
+                <p className="subscr-subtitle">
+                  The subscription tokens will be used to buy and lock DYP
+                </p>
+                <p className="subscr-note">
+                  *When you unsubscribe the DYP will be unlocked and sent to
+                  your wallet
+                </p>
+              </div>
+              <div>
+                <h3 className="subscr-price">75 USD</h3>
+                <p className="subscr-note">*Exclusive offer</p>
+                {/* <button></button> */}
+              </div>
+              </div>
             </div>
           </div>
           <div className="mt-3 mb-3">
@@ -241,7 +264,11 @@ export default class Subscription extends React.Component {
               Avatar profile
             </strong>
             <div className="inputfile-wrapper">
-              <img src={this.state.image} alt="your image" style={{marginRight: 5, height: 70}}/>
+              <img
+                src={this.state.image}
+                alt="your image"
+                style={{ marginRight: 5, height: 70 }}
+              />
               <input
                 type="file"
                 id="group_image"
@@ -265,7 +292,7 @@ export default class Subscription extends React.Component {
                   style={{ maxWidth: 490, width: "100%" }}
                 >
                   <p>Select Subscription Token</p>
-                  <div className="row m-0" style={{gap: 10}}>
+                  <div className="row m-0" style={{ gap: 10 }}>
                     {Object.keys(
                       window.ethereum?.chainId === "0x1"
                         ? window.config.subscriptioneth_tokens
@@ -330,56 +357,57 @@ export default class Subscription extends React.Component {
                   </div>
                 </div>
               </div>
-              <div className="row m-0" style={{gap: 30}}>
-              <button
-                disabled={!this.props.appState.isConnected}
-                onClick={this.handleApprove}
-                className="btn v1"
-                style={{
-                  background:
-                    "linear-gradient(51.32deg, #E30613 -12.3%, #FA4A33 50.14%)",
-                  width: 230,
-                }}
-                type="button"
-              >
-                {this.state.loadspinner === true ? (
-                  <>
-                    <div
-                      className="spinner-border "
-                      role="status"
-                      style={{ height: "1.5rem", width: "1.5rem" }}
-                    ></div>
-                  </>
-                ) : (
-                  "APPROVE"
-                )}
-              </button>
-              <button
-                disabled={!this.props.appState.isConnected}
-                className="btn v1 ml-0"
-                type="submit"
-                style={{
-                  background:
-                    this.state.lockActive === false
-                      ? "#C4C4C4"
-                      : "linear-gradient(51.32deg, #E30613 -12.3%, #FA4A33 50.14%)",
-                  width: 230,
-                  pointerEvents:
-                    this.state.lockActive === false ? "none" : "auto",
-                }}
-              >
-                {this.state.loadspinnerSub === true ? (
-                  <>
-                    <div
-                      className="spinner-border "
-                      role="status"
-                      style={{ height: "1.5rem", width: "1.5rem" }}
-                    ></div>
-                  </>
-                ) : (
-                  "SUBSCRIBE"
-                )}
-              </button></div>
+              <div className="row m-0" style={{ gap: 30 }}>
+                <button
+                  disabled={!this.props.appState.isConnected}
+                  onClick={this.handleApprove}
+                  className="btn v1"
+                  style={{
+                    background:
+                      "linear-gradient(51.32deg, #E30613 -12.3%, #FA4A33 50.14%)",
+                    width: 230,
+                  }}
+                  type="button"
+                >
+                  {this.state.loadspinner === true ? (
+                    <>
+                      <div
+                        className="spinner-border "
+                        role="status"
+                        style={{ height: "1.5rem", width: "1.5rem" }}
+                      ></div>
+                    </>
+                  ) : (
+                    "APPROVE"
+                  )}
+                </button>
+                <button
+                  disabled={!this.props.appState.isConnected}
+                  className="btn v1 ml-0"
+                  type="submit"
+                  style={{
+                    background:
+                      this.state.lockActive === false
+                        ? "#C4C4C4"
+                        : "linear-gradient(51.32deg, #E30613 -12.3%, #FA4A33 50.14%)",
+                    width: 230,
+                    pointerEvents:
+                      this.state.lockActive === false ? "none" : "auto",
+                  }}
+                >
+                  {this.state.loadspinnerSub === true ? (
+                    <>
+                      <div
+                        className="spinner-border "
+                        role="status"
+                        style={{ height: "1.5rem", width: "1.5rem" }}
+                      ></div>
+                    </>
+                  ) : (
+                    "SUBSCRIBE"
+                  )}
+                </button>
+              </div>
               {this.state.status !== "" && (
                 <div className="status-wrapper">
                   <p style={{ color: "#E30613" }}>

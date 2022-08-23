@@ -22,7 +22,9 @@ const OtherNews = ({
   onDownVoteClick,
   isConnected,
   onHandlePressDownvote,
-  onHandlePressUpvote
+  onHandlePressUpvote,
+  isPremium
+
 }) => {
   const [likeIndicator, setLikeIndicator] = useState(false);
   const [dislikeIndicator, setDislikeIndicator] = useState(false);
@@ -32,7 +34,7 @@ const OtherNews = ({
   const bal2 = Number(localStorage.getItem("balance2"));
 
   const handleLikeStates = () => {
-    if (bal1 === 0 && bal2 === 0 || isConnected === false) {
+    if ((bal1 === 0 && bal2 === 0 && isPremium === false) || isConnected === false) {
       setLikeIndicator(false);
       setShowTooltip(true);
     } else {
@@ -47,7 +49,7 @@ const OtherNews = ({
   };
 
   const handleDisLikeStates = () => {
-    if (bal1 === 0 && bal2 === 0 || isConnected === false) {
+    if ((bal1 === 0 && bal2 === 0 && isPremium === false) || isConnected === false) {
       setLikeIndicator(false);
       setShowTooltip(true)
     } else {

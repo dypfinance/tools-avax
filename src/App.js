@@ -227,7 +227,7 @@ class App extends React.Component {
                 exact
                 path="/news"
            
-            render={() => <News theme={this.state.theme}/>}
+            render={() => <News theme={this.state.theme}  isPremium={this.state.isPremium}/>}
               />
               <Route
                 exact

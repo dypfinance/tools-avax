@@ -19,6 +19,8 @@ const MainNews = ({
   onUpVoteClick,
   isConnected,
   onDownVoteClick,
+  isPremium
+
 }) => {
   const [likeIndicator, setLikeIndicator] = useState(false);
   const [dislikeIndicator, setDislikeIndicator] = useState(false);
@@ -27,7 +29,7 @@ const MainNews = ({
   const bal2 = Number(localStorage.getItem("balance2"));
 
   const handleLikeStates = () => {
-    if ((bal1 === 0 && bal2 === 0) || isConnected === false) {
+    if ((bal1 === 0 && bal2 === 0 && isPremium === false) || isConnected === false) {
       setLikeIndicator(false);
       onUpVoteClick();
     } else {
@@ -42,7 +44,7 @@ const MainNews = ({
   };
 
   const handleDisLikeStates = () => {
-    if ((bal1 === 0 && bal2 === 0) || isConnected === false) {
+    if ((bal1 === 0 && bal2 === 0 && isPremium === false) || isConnected === false) {
       setLikeIndicator(false);
       onDownVoteClick();
     } else {

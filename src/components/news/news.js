@@ -3,27 +3,25 @@ import SingleNews from "./singleNews";
 import MainNews from "./mainNews";
 import PressRealease from "./PressRelease";
 import OtherNews from "./OtherNews";
-import OwlCarousel from "react-owl-carousel";
 import NewsModal from "./NewsModal";
 import axios from "axios";
 import ToolTip from "./ToolTip";
 import OutsideClickHandler from "react-outside-click-handler";
 import * as _ from "lodash";
 import { useWeb3React } from "@web3-react/core";
-import SvgArrow from "./SvgArrow";
-import LeftArrow from "./LeftArrow";
 import Carousel from 'better-react-carousel'
 
-const News = ({ theme }) => {
+const News = ({ theme, isPremium }) => {
 
  const responsive1 = [
     {
-      breakpoint: 985,
-      cols: 1,
+      breakpoint: 1220,
+      cols: 2,
       rows: 1,
-      gap: 10,
+      gap: 1,
       loop: true,
-      autoplay: 4000
+      autoplay: 4000,
+      showDots: true
     }
   ]
   
@@ -5983,7 +5981,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
   const bal2 = Number(localStorage.getItem("balance2"));
 
   const handleUpVoting = async (itemId) => {
-    if ((bal1 === 0 && bal2 === 0) || isConnected === false) {
+    if ((bal1 === 0 && bal2 === 0 && isPremium === false) || isConnected === false) {
       setShowTooltip(true);
     } else {
       let response = null;
@@ -6028,7 +6026,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
   };
 
   const handleDownVoting = async (itemId) => {
-    if ((bal1 === 0 && bal2 === 0) || isConnected === false) {
+    if ((bal1 === 0 && bal2 === 0 && isPremium === false) || isConnected === false) {
       setShowTooltip(true);
   } else {
       return await axios
@@ -6135,6 +6133,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
               }}
               isConnected={isConnected}
               onModalClose={()=>{setShowModal(false)}}
+              isPremium={isPremium}
             />
           ) : (
             <div className="brand-wrapper banner-wrapper news-left-wrapper">
@@ -6167,6 +6166,8 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                             handleDownVoting(item.id);
                           }}
                           isConnected={isConnected}
+              isPremium={isPremium}
+
                         />
                       </div></Carousel.Item>
                     );
@@ -6255,6 +6256,8 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                       }}
                       onNewsClick={() => handleSingleNewsUpdate(item.id)}
                       isConnected={isConnected}
+              isPremium={isPremium}
+
                     />
                   </div>
                 );
@@ -6289,6 +6292,8 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                         }}
                         onNewsClick={() => handleSingleNewsUpdate(item.id)}
                         isConnected={isConnected}
+              isPremium={isPremium}
+
                       />
                     </div>
                   );
@@ -6376,6 +6381,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                       handleDownVoting(item.id);
                     }}
                     isConnected={isConnected}
+              isPremium={isPremium}
                   />
                 </div>
               );

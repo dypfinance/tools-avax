@@ -122,6 +122,15 @@ body.theme-dark .upgrade-text {
     color: #E30613 !important;
 }
 
+body.theme-dark .freetext, .tabledata {
+    color: #fff !important;
+}
+
+body.theme-dark .tablerow:nth-child(even),
+body.theme-dark .inputfile-wrapper {
+    background: rgba(255, 255, 255, 0.1) !important;
+}
+
 
 
 body.theme-dark .table-data-item a,
@@ -384,6 +393,10 @@ body.theme-white .popup-close button {
 
     background: var(--preloader-clr);
     color: var(--white);
+}
+
+body.theme-white .tabledata {
+    color: #303134 !important;
 }
 
 body.theme-white .close-sidebar i {

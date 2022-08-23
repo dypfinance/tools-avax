@@ -312,7 +312,7 @@ export default class PairExplorer extends React.Component {
       let tokenBalance = Number(
         await window.getTokenHolderBalance(mainToken.id, coinbase)
       );
-      if (bal1 === 0 && bal2 === 0) {
+      if (bal1 === 0 && bal2 === 0 && this.props.isPremium === false) {
         window.alertify.message(
           `Buy some ${mainToken.symbol} to vote! The voting process is free, but available only for ${mainToken.symbol} token holders!`
         );
