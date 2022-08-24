@@ -38,7 +38,6 @@ class App extends React.Component {
       network: "avalanche",
       subscribedPlatformTokenAmount: "...",
       isPremium: false,
-
       hotPairs: [],
     };
   }
@@ -116,7 +115,7 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-    this.handleConnection();
+    // this.handleConnection();
     // console.log(window.ethereum?.chainId);
     // getSyncStats()
     // .then((syncStatus) => {
@@ -136,18 +135,18 @@ class App extends React.Component {
     //   m.element.style.lineHeight = 1.7;
     // })
     // .catch(console.error);
-    window.connectWallet().then();
+    // window.connectWallet().then();
     // if(window.ethereum) {
-    //   console.log(window.getCoinbase().then())
+    // console.log(this.state.co)
     // }
     this.getAddress();
-
-    // this.refreshHotPairs();
+    this.refreshHotPairs();
     this.subscriptionInterval = setInterval(this.refreshSubscription, 5e3);
   }
 
   componentWillUnmount() {
     clearInterval(this.subscriptionInterval);
+
   }
 
   toggleTheme = () => {
@@ -204,7 +203,7 @@ class App extends React.Component {
             appState={this.state}
             theme={this.state.theme}
             isConnected={this.state.isConnected}
-            handleConnection={this.handleConnection}
+            handleConnection={this.getAddress}
             toggleMobileSidebar={this.toggleMobileSidebar}
             isOpenInMobile={this.state.isOpenInMobile}
           />
@@ -290,7 +289,7 @@ class App extends React.Component {
                 path="/admin"
                 render={(props) => (
                   <Admin
-                    handleConnection={this.handleConnection}
+                    handleConnection={this.getAddress}
                     isConnected={this.state.isConnected}
                     appState={this.state}
                     {...props}
@@ -302,7 +301,7 @@ class App extends React.Component {
                 path="/farms"
                 render={(props) => (
                   <Farms
-                    handleConnection={this.handleConnection}
+                    handleConnection={this.getAddress}
                     isConnected={this.state.isConnected}
                     appState={this.state}
                     {...props}

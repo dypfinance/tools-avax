@@ -3,6 +3,7 @@ import moment from "moment";
 import DataTable, { createTheme } from "react-data-table-component";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { NavLink, Redirect } from "react-router-dom";
+import Web3 from "web3";
 
 // import Chart from 'kaktana-react-lightweight-charts'
 import { TVChartContainer } from "../tv-chart-container/index";
@@ -288,9 +289,6 @@ export default class PairExplorer extends React.Component {
     }
   };
   registerVote = async (upvote = true) => {
-    const bal1 = Number(localStorage.getItem("balance1"));
-    const bal2 = Number(localStorage.getItem("balance2"));
-
     if (!this.state.pair) {
       window.alertify.message("Wait for pair to load!");
       return;
@@ -309,10 +307,12 @@ export default class PairExplorer extends React.Component {
 
     try {
       let mainToken = await window.getMainToken(this.state.pair);
+      
       let tokenBalance = Number(
         await window.getTokenHolderBalance(mainToken.id, coinbase)
       );
-      if (bal1 === 0 && bal2 === 0 && this.props.isPremium === false) {
+      
+      if (!(tokenBalance > 0) && this.props.isPremium === false) {
         window.alertify.message(
           `Buy some ${mainToken.symbol} to vote! The voting process is free, but available only for ${mainToken.symbol} token holders!`
         );

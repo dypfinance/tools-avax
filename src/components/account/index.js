@@ -33,10 +33,16 @@ export default class Subscription extends React.Component {
       status: "",
       loadspinner: false,
       loadspinnerSub: false,
+      loadspinnerSave: false,
+      loadspinnerRemove: false,
+      showSavebtn: false,
+      showRemovebtn: false,
+      subscribe_now: false,
     };
   }
 
   componentDidMount() {
+    this.fetchAvatar().then();
     if (window.ethereum?.chainId === "0x1") {
       window
         .getFavoritesETH()
@@ -72,6 +78,7 @@ export default class Subscription extends React.Component {
   onComponentMount = async () => {
     this.setState({ coinbase: await window.getCoinbase() });
     this.handleSubscriptionTokenChange(this.state.selectedSubscriptionToken);
+    this.fetchAvatar().then();
   };
 
   handleSubscriptionTokenChange = async (tokenAddress) => {
@@ -170,13 +177,100 @@ export default class Subscription extends React.Component {
   };
 
   onImageChange = (event) => {
-    if (event.target.files && event.target.files[0]) {
-      let reader = new FileReader();
-      reader.onload = (e) => {
-        this.setState({ image: e.target.result });
-      };
-      reader.readAsDataURL(event.target.files[0]);
+    const fileTypes = [
+      "image/apng",
+      "image/bmp",
+      "image/gif",
+      "image/jpeg",
+      "image/pjpeg",
+      "image/png",
+      "image/svg+xml",
+      "image/tiff",
+      "image/webp",
+      "image/x-icon",
+    ];
+
+    this.setState({ showSavebtn: true, showRemovebtn: true });
+
+    if (fileTypes.includes(event.target.files[0].type)) {
+      if (event.target.files && event.target.files[0]) {
+        this.setState({ selectedFile: event.target.files[0] });
+        let reader = new FileReader();
+        reader.onload = (e) => {
+          this.setState({ image: e.target.result });
+        };
+        reader.readAsDataURL(event.target.files[0]);
+      }
+    } else {
+      window.alertify.error("Image type not supported");
     }
+  };
+
+  handleSubmission = async () => {
+    const formData = new FormData();
+    formData.append("image", this.state.selectedFile);
+
+    let coinbase = await window.getCoinbase();
+    this.setState({ loadspinnerSave: true });
+
+    if (!coinbase) {
+      await window.connectWallet();
+    }
+
+    let signature;
+
+    try {
+      signature = await window.sign(
+        window.config.metamask_message,
+        await window.getCoinbase()
+      );
+    } catch (e) {
+      console.error(e);
+      console.log(e);
+      this.setState({ loadspinnerSave: false });
+
+      return;
+    }
+
+    if (!signature) {
+      window.alertify("No Signature provided");
+      this.setState({ loadspinnerSave: false });
+
+      return;
+    }
+
+    formData.append("signature", signature);
+
+    await fetch("https://api-image.dyp.finance/api/v1/upload/avatar", {
+      method: "POST",
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        console.log("Success:", result);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+
+    window.alertify.message("Avatar has been uploaded successfully!");
+    this.setState({ loadspinnerSave: false, showSavebtn: false });
+  };
+
+  fetchAvatar = async () => {
+    let coinbase = await window.getCoinbase();
+    const response = await fetch(
+      `https://api-image.dyp.finance/api/v1/avatar/${coinbase}`
+    )
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        this.setState({ image: data.avatar });
+      })
+      .catch(console.error);
+
+    return response;
   };
 
   GetSubscriptionForm = () => {
@@ -238,188 +332,186 @@ export default class Subscription extends React.Component {
             </table>
             <div className="premiumbanner">
               <div className="row m-0 justify-content-between">
-              <div style={{maxWidth: 335}}>
-                <h3 className="subscr-title">Lifetime subscription</h3>
-                <p className="subscr-subtitle">
-                  The subscription tokens will be used to buy and lock DYP
-                </p>
-                <p className="subscr-note">
-                  *When you unsubscribe the DYP will be unlocked and sent to
-                  your wallet
-                </p>
-              </div>
-              <div>
-                <h3 className="subscr-price">75 USD</h3>
-                <p className="subscr-note">*Exclusive offer</p>
-                {/* <button></button> */}
-              </div>
-              </div>
-            </div>
-          </div>
-          <div className="mt-3 mb-3">
-            <strong
-              style={{ fontSize: "1.2rem" }}
-              className="d-block mb-3 mt-5"
-            >
-              Avatar profile
-            </strong>
-            <div className="inputfile-wrapper">
-              <img
-                src={this.state.image}
-                alt="your image"
-                style={{ marginRight: 5, height: 70 }}
-              />
-              <input
-                type="file"
-                id="group_image"
-                value={this.state.selectedFile}
-                onChange={this.onImageChange}
-              />
-              <div
-                className="removebtn"
-                type=""
-                onClick={() => this.setState({ image: "" })}
-              >
-                Remove
+                <div
+                  style={{
+                    maxWidth: 335,
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 10,
+                  }}
+                >
+                  <h3 className="subscr-title">Lifetime subscription</h3>
+                  <p className="subscr-subtitle">
+                    The subscription tokens will be used to buy and lock DYP
+                  </p>
+                  <p className="subscr-note">
+                    *When you unsubscribe the DYP will be unlocked and sent to
+                    your wallet
+                  </p>
+                </div>
+                <div>
+                  <h3 className="subscr-price">75 USD</h3>
+                  <p className="subscr-note">*Exclusive offer</p>
+                  <div
+                    className="subscribebtn w-auto mt-2"
+                    type=""
+                    onClick={() => this.setState({ subscribe_now: true })}
+                  >
+                    Subscribe now
+                  </div>
+                </div>
               </div>
             </div>
           </div>
           {!this.props.appState.isPremium ? (
-            <div>
-              <div className="row m-0" style={{ gap: 100 }}>
-                <div
-                  className="form-group"
-                  style={{ maxWidth: 490, width: "100%" }}
-                >
-                  <p>Select Subscription Token</p>
-                  <div className="row m-0" style={{ gap: 10 }}>
-                    {Object.keys(
-                      window.ethereum?.chainId === "0x1"
-                        ? window.config.subscriptioneth_tokens
-                        : window.config.subscription_tokens
-                    ).map((t, i) => (
-                      <span className="radio-wrapper">
-                        <input
-                          type="radio"
-                          key={t}
-                          value={t}
-                          name={"tokensymbol"}
-                          checked={t == this.state.selectedSubscriptionToken}
-                          disabled={!this.props.appState.isConnected}
-                          onChange={
-                            (e) =>
-                              this.handleSubscriptionTokenChange(e.target.value)
-                            // console.log(e.target)
-                          }
-                        />
-                        {window.ethereum?.chainId === "0x1"
-                          ? window.config.subscriptioneth_tokens[t]?.symbol
-                          : window.config.subscription_tokens[t]?.symbol}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="form-group">
-                  <div>
-                    <p>Token Amount</p>
-                    <span className="subscription-subtitle">
-                      Subcription token amount
-                    </span>
+            this.state.subscribe_now === true ? (
+              <>
+                <div className="mt-4 ml-0">
+                  <div className="row m-0" style={{ gap: 100 }}>
                     <div
-                      className="align-items-center row m-0"
-                      style={{ gap: 40 }}
+                      className="form-group"
+                      style={{ maxWidth: 490, width: "100%" }}
                     >
-                      <input
-                        style={{ width: "266px", height: 42 }}
-                        disabled
-                        onChange={(e) => {
-                          let amount = new window.BigNumber(e.target.value);
-                          amount = amount.times(1e18).toFixed(0);
-                          this.setState({ amount });
-                        }}
-                        value={this.state.formattedPrice}
-                        type="number"
-                        placeholder="Subscription Token Amount"
-                        className="form-control"
-                      />
-                      <div className="d-flex flex-column">
-                        <span className="balance-placeholder">Balance:</span>
-                        <span className="balance-text">
-                          {getFormattedNumber(
-                            this.state.tokenBalance / 10 ** tokenDecimals,
-                            6
-                          )}
-                        </span>
+                      <p>Select Subscription Token</p>
+                      <div className="row m-0" style={{ gap: 10 }}>
+                        {Object.keys(
+                          window.ethereum?.chainId === "0x1"
+                            ? window.config.subscriptioneth_tokens
+                            : window.config.subscription_tokens
+                        ).map((t, i) => (
+                          <span className="radio-wrapper">
+                            <input
+                              type="radio"
+                              key={t}
+                              value={t}
+                              name={"tokensymbol"}
+                              checked={
+                                t == this.state.selectedSubscriptionToken
+                              }
+                              disabled={!this.props.appState.isConnected}
+                              onChange={
+                                (e) =>
+                                  this.handleSubscriptionTokenChange(
+                                    e.target.value
+                                  )
+                                // console.log(e.target)
+                              }
+                            />
+                            {window.ethereum?.chainId === "0x1"
+                              ? window.config.subscriptioneth_tokens[t]?.symbol
+                              : window.config.subscription_tokens[t]?.symbol}
+                          </span>
+                        ))}
                       </div>
                     </div>
-                    <br />
+
+                    <div className="form-group">
+                      <div>
+                        <p>Token Amount</p>
+                        <span className="subscription-subtitle">
+                          Subcription token amount
+                        </span>
+                        <div
+                          className="align-items-center row m-0"
+                          style={{ gap: 40 }}
+                        >
+                          <input
+                            style={{ width: "266px", height: 42 }}
+                            disabled
+                            onChange={(e) => {
+                              let amount = new window.BigNumber(e.target.value);
+                              amount = amount.times(1e18).toFixed(0);
+                              this.setState({ amount });
+                            }}
+                            value={this.state.formattedPrice}
+                            type="number"
+                            placeholder="Subscription Token Amount"
+                            className="form-control"
+                          />
+                          <div className="d-flex flex-column">
+                            <span className="balance-placeholder">
+                              Balance:
+                            </span>
+                            <span className="balance-text">
+                              {getFormattedNumber(
+                                this.state.tokenBalance / 10 ** tokenDecimals,
+                                6
+                              )}
+                            </span>
+                          </div>
+                        </div>
+                        <br />
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-              <div className="row m-0" style={{ gap: 30 }}>
-                <button
-                  disabled={!this.props.appState.isConnected}
-                  onClick={this.handleApprove}
-                  className="btn v1"
-                  style={{
-                    background:
-                      "linear-gradient(51.32deg, #E30613 -12.3%, #FA4A33 50.14%)",
-                    width: 230,
-                  }}
-                  type="button"
-                >
-                  {this.state.loadspinner === true ? (
-                    <>
-                      <div
-                        className="spinner-border "
-                        role="status"
-                        style={{ height: "1.5rem", width: "1.5rem" }}
-                      ></div>
-                    </>
-                  ) : (
-                    "APPROVE"
+                  <div className="row m-0" style={{ gap: 30 }}>
+                    <button
+                      disabled={!this.props.appState.isConnected}
+                      onClick={this.handleApprove}
+                      className="btn v1"
+                      style={{
+                        background:
+                          "linear-gradient(51.32deg, #E30613 -12.3%, #FA4A33 50.14%)",
+                        width: 230,
+                      }}
+                      type="button"
+                    >
+                      {this.state.loadspinner === true ? (
+                        <>
+                          <div
+                            className="spinner-border "
+                            role="status"
+                            style={{ height: "1.5rem", width: "1.5rem" }}
+                          ></div>
+                        </>
+                      ) : (
+                        "APPROVE"
+                      )}
+                    </button>
+                    <button
+                      disabled={!this.props.appState.isConnected}
+                      className="btn v1 ml-0"
+                      type="submit"
+                      style={{
+                        background:
+                          this.state.lockActive === false
+                            ? "#C4C4C4"
+                            : "linear-gradient(51.32deg, #E30613 -12.3%, #FA4A33 50.14%)",
+                        width: 230,
+                        pointerEvents:
+                          this.state.lockActive === false ? "none" : "auto",
+                      }}
+                    >
+                      {this.state.loadspinnerSub === true ? (
+                        <>
+                          <div
+                            className="spinner-border "
+                            role="status"
+                            style={{ height: "1.5rem", width: "1.5rem" }}
+                          ></div>
+                        </>
+                      ) : (
+                        "SUBSCRIBE"
+                      )}
+                    </button>
+                  </div>
+                  {this.state.status !== "" && (
+                    <div className="status-wrapper">
+                      <p style={{ color: "#E30613" }}>
+                        <img src={Error} alt="" /> {this.state.status}
+                      </p>
+                    </div>
                   )}
-                </button>
-                <button
-                  disabled={!this.props.appState.isConnected}
-                  className="btn v1 ml-0"
-                  type="submit"
-                  style={{
-                    background:
-                      this.state.lockActive === false
-                        ? "#C4C4C4"
-                        : "linear-gradient(51.32deg, #E30613 -12.3%, #FA4A33 50.14%)",
-                    width: 230,
-                    pointerEvents:
-                      this.state.lockActive === false ? "none" : "auto",
-                  }}
-                >
-                  {this.state.loadspinnerSub === true ? (
-                    <>
-                      <div
-                        className="spinner-border "
-                        role="status"
-                        style={{ height: "1.5rem", width: "1.5rem" }}
-                      ></div>
-                    </>
-                  ) : (
-                    "SUBSCRIBE"
-                  )}
-                </button>
-              </div>
-              {this.state.status !== "" && (
-                <div className="status-wrapper">
-                  <p style={{ color: "#E30613" }}>
-                    <img src={Error} alt="" /> {this.state.status}
-                  </p>
                 </div>
-              )}
-            </div>
+              </>
+            ) : (
+              <></>
+            )
           ) : (
-            <div>
+            <>
+              {/* <div>
               <p>
-                <i className="fas fa-check-circle"></i> Premium Member
+                <i className="fas fa-check-circle"></i> Premium Member 
               </p>
               <p>
                 DYP Locked in Subscription:{" "}
@@ -429,16 +521,107 @@ export default class Subscription extends React.Component {
                 )}{" "}
                 DYP
               </p>
-              <button
-                disabled={!this.props.appState.isConnected}
-                onClick={this.handleUnsubscribe}
-                className="btn v1"
-                type="button"
-              >
-                UNSUBSCRIBE
-              </button>
-            </div>
+              
+            </div> */}
+              <div className="premiumbanner2">
+                <div className="row m-0 justify-content-between">
+                  <div
+                    style={{
+                      maxWidth: 335,
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: 10,
+                    }}
+                  >
+                    <h3 className="subscr-title">Welcome Premium User</h3>
+                    <p className="subscr-subtitle">
+                      When you unsubscribe the DYP will be unlocked and sent to
+                      your wallet
+                    </p>
+                  </div>
+                  <div>
+                    <button
+                      disabled={!this.props.appState.isConnected}
+                      onClick={this.handleUnsubscribe}
+                      className="savebtn w-auto mt-2 v1"
+                      type="button"
+                      style={{ padding: "10px 20px" }}
+                    >
+                      Unsubscribe
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </>
           )}
+          <div className="mt-3 mb-3">
+            <strong
+              style={{ fontSize: "1.2rem" }}
+              className="d-block mb-3 mt-5"
+            >
+              Avatar profile
+            </strong>
+            <div
+              className={
+                this.state.coinbase ? "inputfile-wrapper" : "passive-avatar"
+              }
+            >
+              <img
+                src={this.state.image}
+                alt="your image"
+                className="avatarimg"
+                style={{
+                  border:
+                    this.state.image === Placeholder
+                      ? "none"
+                      : "3px solid #E30613",
+                }}
+              />
+              <input
+                type="file"
+                id="group_image"
+                onChange={this.onImageChange}
+              />
+              {this.state.showSavebtn === true ? (
+                <div
+                  className="savebtn"
+                  type=""
+                  onClick={this.handleSubmission}
+                >
+                  {this.state.loadspinnerSave === true ? (
+                    <div
+                      className="spinner-border "
+                      role="status"
+                      style={{ height: "1.5rem", width: "1.5rem" }}
+                    ></div>
+                  ) : (
+                    "Save"
+                  )}
+                </div>
+              ) : (
+                <></>
+              )}
+              {this.state.showRemovebtn === true ? (
+                <div
+                  className="removebtn"
+                  type=""
+                  onClick={() => this.setState({ image: Placeholder })}
+                >
+                  {this.state.loadspinnerRemove === true ? (
+                    <div
+                      className="spinner-border "
+                      role="status"
+                      style={{ height: "1.5rem", width: "1.5rem" }}
+                    ></div>
+                  ) : (
+                    "Remove"
+                  )}
+                </div>
+              ) : (
+                <></>
+              )}
+            </div>
+          </div>
         </form>
         <strong style={{ fontSize: "1.2rem" }} className="d-block mb-3 mt-5">
           MY FAVORITES

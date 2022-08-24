@@ -31,6 +31,7 @@ const onSignIn = async ({ account, chainId }) => {
   return balance.toSignificant(6);
 };
 
+
 export function useEagerConnect() {
   const { library, account, chainId, active, activate } = useWeb3ReactCore();
 

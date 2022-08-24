@@ -16,7 +16,7 @@ import BadgeYellow from "../../assets/badge-yellow.svg";
 import BadgeGray from "../../assets/badge-gray.svg";
 import BadgeGrayLight from "../../assets/badge-gray-light.svg";
 import CountDownTimer from "./Countdown";
-import Skeleton from "@mui/material/Skeleton";
+import Skeleton from './Skeleton';
 import Error from "../../assets/error.svg";
 
 export default class Locker extends React.Component {
@@ -453,7 +453,6 @@ export default class Locker extends React.Component {
     iFrame.setAttribute("id", "locker-iframe");
     // navigator.clipboard.writeText(this.state.textToCopy)
   };
-
   GetPairLockInfo = () => {
     return (
       <div className="mb-4">
@@ -1335,34 +1334,11 @@ export default class Locker extends React.Component {
           >
             MY LOCKS
           </strong>
-          <div className="col-lg-12 row justify-content-between p-0 ml-0">
-            <div className="l-box col-lg-3 mt-3">
-              <Skeleton variant="text" /> <br />
-              <Skeleton variant="circular" width={40} height={40} />
-              <br />
-              <Skeleton variant="rectangular" width={"100%"} height={118} />
+          <div className="row justify-content-between p-0 ml-0">
+                <Skeleton /> 
+                <Skeleton/>
+                <Skeleton/>
             </div>
-
-            <div className="l-box col-lg-3 mt-3">
-              <Skeleton variant="text" /> <br />
-              <Skeleton variant="circular" width={40} height={40} />
-              <br />
-              <Skeleton variant="rectangular" width={"100%"} height={118} />
-            </div>
-
-            <div className="l-box col-lg-3 mt-3">
-              <Skeleton variant="text" /> <br />
-              <Skeleton variant="circular" width={40} height={40} />
-              <br />
-              <Skeleton variant="rectangular" width={"100%"} height={118} />
-            </div>
-            <div className="l-box col-lg-3 mt-3">
-              <Skeleton variant="text" /> <br />
-              <Skeleton variant="circular" width={40} height={40} />
-              <br />
-              <Skeleton variant="rectangular" width={"100%"} height={118} />
-            </div>
-          </div>
         </div>
       );
     }
@@ -1705,33 +1681,10 @@ export default class Locker extends React.Component {
             })}
 
           {this.state.tokenLocks.length == 0 && (
-            <div className="col-lg-12 row justify-content-between p-0 ml-0">
-              <div className="l-box col-lg-3 mt-3">
-                <Skeleton variant="text" /> <br />
-                <Skeleton variant="circular" width={40} height={40} />
-                <br />
-                <Skeleton variant="rectangular" width={"100%"} height={118} />
-              </div>
-
-              <div className="l-box col-lg-3 mt-3">
-                <Skeleton variant="text" /> <br />
-                <Skeleton variant="circular" width={40} height={40} />
-                <br />
-                <Skeleton variant="rectangular" width={"100%"} height={118} />
-              </div>
-
-              <div className="l-box col-lg-3 mt-3">
-                <Skeleton variant="text" /> <br />
-                <Skeleton variant="circular" width={40} height={40} />
-                <br />
-                <Skeleton variant="rectangular" width={"100%"} height={118} />
-              </div>
-              <div className="l-box col-lg-3 mt-3">
-                <Skeleton variant="text" /> <br />
-                <Skeleton variant="circular" width={40} height={40} />
-                <br />
-                <Skeleton variant="rectangular" width={"100%"} height={118} />
-              </div>
+            <div className="row justify-content-between p-0 ml-0">
+                <Skeleton /> 
+                <Skeleton/>
+                <Skeleton/>
             </div>
           )}
         </div>
@@ -1739,6 +1692,7 @@ export default class Locker extends React.Component {
     );
   };
   render() {
+
     return (
       <div className="locker">
         <div className="col-md-6 px-3">

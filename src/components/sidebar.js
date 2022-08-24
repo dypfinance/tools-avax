@@ -3,7 +3,7 @@ import Ethereum from "../assets/ethereum.svg";
 import Avax from "../assets/avalanche.svg";
 import Logo from "../assets/logo.svg";
 import LogoWhite from "../assets/logo-white.svg";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useWeb3React } from "@web3-react/core";
 import { handleSwitchNetwork } from "../functions/hooks";
 import { injected } from "../functions/connectors";
@@ -13,6 +13,7 @@ import SubmitInfo from "./submit-info/SubmitInfo";
 import Crown from "../assets/crown.png";
 import RightArrow from "../assets/rightarrow.svg";
 import { useEagerConnect, useInactiveListener } from "../functions/hooks";
+import axios from "axios";
 
 const activateLasers = () => {
   window.$.alert("Coming Soon!");
@@ -20,10 +21,32 @@ const activateLasers = () => {
 const Sidebar = (props) => {
   const [activeBtn, setActiveBtn] = useState("avax");
   const [activeLink, setActiveLink] = useState("news");
+  const [avatar, setAvatar] = useState("/assets/img/person.svg");
+
   const { chainId, active, account } = useWeb3React();
   const triedEager = useEagerConnect();
   useInactiveListener(!triedEager);
 
+
+  const fetchAvatar = async()=>{
+    const response = await fetch(`https://api-image.dyp.finance/api/v1/avatar/${account}`)
+    .then((res) => {
+      return res.json();
+    })
+    .then((data) => {
+      data.avatar ? setAvatar(data.avatar) : setAvatar("/assets/img/person.svg");
+    })
+    .catch(console.error);
+
+  return response;
+  }
+
+  useEffect(()=>{
+    fetchAvatar().then()
+  })
+
+  
+  
   return (
     <div
       onClick={props.toggleMobileSidebar}
@@ -80,8 +103,8 @@ const Sidebar = (props) => {
                   className="connectwalletbtn"
                   onClick={(e) => {
                     e.preventDefault();
-                    injected.activate(injected, undefined, true);
-                    window.connectWallet().then();
+                    // injected.activate(injected, undefined, true);
+                    props.handleConnection();
                   }}
                 >
                   Connect
@@ -462,6 +485,7 @@ const Sidebar = (props) => {
               >
                 <img
                   src={
+                    avatar.includes('thumbnails') ? avatar :
                      window.location.href.includes("account") &&
                     props.theme === "theme-white"
                       ? "/assets/img/person-active.svg"
@@ -470,6 +494,7 @@ const Sidebar = (props) => {
                       ? "/assets/img/person-white.svg"
                       : "/assets/img/person.svg"
                   }
+                  style={{borderRadius: '50%'}}
 
                   alt="Image"
                 />

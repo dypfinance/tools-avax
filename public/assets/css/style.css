@@ -451,6 +451,7 @@ a:hover {
   width: fit-content;
   margin: auto;
   gap: 20px;
+  align-items: center;
 }
 
 .dZkckO::before {
@@ -953,6 +954,7 @@ a:hover {
   font-size: 30px;
   padding-left: auto;
   text-align: center;
+  margin-right: 5px;
 }
 
 .menu-cat-one ul li a,
@@ -977,6 +979,7 @@ a:hover {
   color: var(--red);
   width: 30px;
   height: 30px;
+  
 }
 
 .navlinks {
@@ -996,6 +999,11 @@ a:hover {
 
 .navlinks:hover span {
   color: var(--red) !important;
+}
+
+.passive-avatar {
+  filter: blur(2px);
+  pointer-events: none;
 }
 
 .activenavlink {
@@ -1649,19 +1657,50 @@ body.theme-dark img.graph-two {
 }
 
 .premiumbanner {
-  background: url(../img/premium-banner.png) no-repeat;
+  background: url(../img/dyp_banner_sub.png) no-repeat;
   background-position: center;
   background-size: cover;
   min-height: 170px;
   height: 100%;
   margin-top: 2rem;
-  padding: 60px;
+  padding: 67px;
+}
+
+.premiumbanner2 {
+  background: url(../img/premiumbanner.png) no-repeat;
+  background-position: center;
+  background-size: cover;
+  min-height: 170px;
+  height: 100%;
+  margin-top: 2rem;
+  padding: 55px;
+}
+
+.subscribebtn {
+  background: #E30613;
+  border-radius: 6px;
+  width: 117px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-weight: 400;
+font-size: 12px !important;
+line-height: 15px;
+color: #FFFFFF !important;
+}
+
+#group_image {
+  background: #FFFFFF;
+  border: 1px solid #D8D8D8;
+  padding: 10px;
+  border-radius: 6px;
 }
 
 @media only screen and (max-width: 500px) {
   .premiumbanner {
-    background-size: auto !important;
-    padding: 45px 20px !important;
+    padding: 71px 20px !important;
   }
 }
 
@@ -1687,7 +1726,7 @@ color: #FFFFFF !important;
 font-size: 10px;
 line-height: 16px;
 letter-spacing: -0.018em;
-color: rgba(255, 255, 255, 0.7) !important;
+color: rgba(255, 255, 255, 1) !important;
 }
 
 .subscr-price {
@@ -2530,6 +2569,7 @@ color: #303134;
   width: 100%;
   display: flex;
   align-items: center;
+  gap: 5px;
 }
 
 .removebtn {
@@ -2537,7 +2577,7 @@ color: #303134;
   border-radius: 6px;
   outline: none !important;
   border: none !important;
-  padding: 10px 20px;
+  padding: 5px 20px;
   font-weight: 400;
   font-size: 10px;
   line-height: 13px;
@@ -2550,6 +2590,33 @@ color: #303134;
   align-items: center;
   margin: auto;
   cursor: pointer;
+}
+
+.savebtn {
+  background: #fff;
+  border-radius: 6px;
+  outline: none !important;
+  border: 1px solid #e30613;
+  padding: 5px 20px;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 13px;
+  text-align: center;
+  color: #e30613 !important;
+  width: 62px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  cursor: pointer;
+}
+
+.avatarimg {
+  margin-right: 5px;
+  height: 70px;
+  width: 70px;
+  border-radius: 50%;
 }
 
 input[type="radio"]:checked {
