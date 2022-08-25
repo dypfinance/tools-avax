@@ -9,14 +9,15 @@ import "rc-slider/assets/index.css";
 import InfoModal from "./InfoModal";
 import Badge from "../../assets/badge.svg";
 import BadgeSmall from "../../assets/badge-small.svg";
-
+import VerifiedLock from "./verifiedlock.svg";
+import LiqLocked from "./lock-liquidity.jpeg";
 import Active from "../../assets/active.svg";
 import InActive from "../../assets/inactive.svg";
 import BadgeYellow from "../../assets/badge-yellow.svg";
 import BadgeGray from "../../assets/badge-gray.svg";
 import BadgeGrayLight from "../../assets/badge-gray-light.svg";
 import CountDownTimer from "./Countdown";
-import Skeleton from './Skeleton';
+import Skeleton from "./Skeleton";
 import Error from "../../assets/error.svg";
 
 export default class Locker extends React.Component {
@@ -519,15 +520,63 @@ export default class Locker extends React.Component {
           <div>
             <form>
               <p
-                className="text-muted"
-                style={{ fontSize: ".8rem", width: "fit-content" }}
+                className="text-muted lock-text-wrapper"
+                style={{ fontSize: ".8rem" }}
               >
-                <i className="fas fa-info-circle"></i> Approx. 1% of the LP
-                value will be sent as{" "}
-                {window.ethereum?.chainId === "0x1" ? "ETH" : "AVAX"} , which
-                will be used to buy and lock DYP with the liquidity, DYP will be
-                released to recipient wallet along with liquidity once unlocked.
+                DYP Locker is a solution that supports liquidity lock
+                functionality to every new project. Liquidity is the first thing
+                that users check for, therefore having it encrypted via DYP
+                Locker will assure them on the project validity and security.
               </p>
+              <div className="row m-0" style={{ gap: 20, alignItems: 'center', paddingBottom: '1rem'}}>
+                <div>
+                  <img
+                    src={LiqLocked}
+                    alt=""
+                    style={{ width: 80, height: 80 }}
+                  />
+                </div>
+                <div className="lock-text-wrapper">
+                  <h6>
+                    <strong>Locking Liquidity</strong>
+                  </h6>
+                  <p
+                    className="text-muted"
+                    style={{ fontSize: ".8rem", width: "fit-content" }}
+                  >
+                    This makes the funds immovable until they are unlocked.
+                    Every owner of the project can encrypt a portion of the
+                    asset for a specific period of time and this liquidity
+                    cannot be withdrawn until the time is over. This way users
+                    will create a sense of security against projects. Liquidity
+                    is locked using time-locked smart contracts and DYP Locker
+                    offers this functionality with no additional costs.
+                  </p>
+                </div>
+              </div>
+              <div className="row m-0" style={{ gap: 20, alignItems: 'center' }}>
+                <div>
+                  <img
+                    src={VerifiedLock}
+                    alt=""
+                    style={{ width: 80, height: 80 }}
+                  />
+                </div>
+                <div className="lock-text-wrapper">
+                  <h6>
+                    <strong>Verified Security</strong>
+                  </h6>
+                  <p
+                    className="text-muted"
+                    style={{ fontSize: ".8rem", width: "fit-content" }}
+                  >
+                    Each project that locks liquidity on DYP Locker will be
+                    given a verified security badge. Owners of the project can
+                    share it to their communities in order to increase
+                    credibility.
+                  </p>
+                </div>
+              </div>
               <br />
               <div style={{ gap: 100 }} className="row m-0">
                 <div>
@@ -581,15 +630,63 @@ export default class Locker extends React.Component {
           <div>
             <form onSubmit={this.handleLockSubmit}>
               <p
-                className="text-muted"
-                style={{ fontSize: ".8rem", width: "fit-content" }}
+                className="text-muted lock-text-wrapper"
+                style={{ fontSize: ".8rem" }}
               >
-                <i className="fas fa-info-circle"></i> Approx. 1% of the LP
-                value will be sent as{" "}
-                {window.ethereum?.chainId === "0x1" ? "ETH" : "AVAX"} , which
-                will be used to buy and lock DYP with the liquidity, DYP will be
-                released to recipient wallet along with liquidity once unlocked.
+                DYP Locker is a solution that supports liquidity lock
+                functionality to every new project. Liquidity is the first thing
+                that users check for, therefore having it encrypted via DYP
+                Locker will assure them on the project validity and security.
               </p>
+              <div className="row m-0" style={{ gap: 20, alignItems: 'center', paddingBottom: '1rem' }}>
+                <div>
+                  <img
+                    src={LiqLocked}
+                    alt=""
+                    style={{ width: 80, height: 80 }}
+                  />
+                </div>
+                <div className="lock-text-wrapper">
+                  <h6>
+                    <strong>Locking Liquidity</strong>
+                  </h6>
+                  <p
+                    className="text-muted"
+                    style={{ fontSize: ".8rem", width: "fit-content" }}
+                  >
+                    This makes the funds immovable until they are unlocked.
+                    Every owner of the project can encrypt a portion of the
+                    asset for a specific period of time and this liquidity
+                    cannot be withdrawn until the time is over. This way users
+                    will create a sense of security against projects. Liquidity
+                    is locked using time-locked smart contracts and DYP Locker
+                    offers this functionality with no additional costs.
+                  </p>
+                </div>
+              </div>
+              <div className="row m-0" style={{ gap: 20, alignItems: 'center' }}>
+                <div>
+                  <img
+                    src={VerifiedLock}
+                    alt=""
+                    style={{ width: 80, height: 80 }}
+                  />
+                </div>
+                <div className="lock-text-wrapper">
+                  <h6>
+                    <strong>Verified Security</strong>
+                  </h6>
+                  <p
+                    className="text-muted"
+                    style={{ fontSize: ".8rem", width: "fit-content" }}
+                  >
+                    Each project that locks liquidity on DYP Locker will be
+                    given a verified security badge. Owners of the project can
+                    share it to their communities in order to increase
+                    credibility.
+                  </p>
+                </div>
+              </div>
               <br />
               <div style={{ gap: 100 }} className="row m-0">
                 <div>
@@ -1335,10 +1432,10 @@ export default class Locker extends React.Component {
             MY LOCKS
           </strong>
           <div className="row justify-content-between p-0 ml-0">
-                <Skeleton /> 
-                <Skeleton/>
-                <Skeleton/>
-            </div>
+            <Skeleton />
+            <Skeleton />
+            <Skeleton />
+          </div>
         </div>
       );
     }
@@ -1682,9 +1779,9 @@ export default class Locker extends React.Component {
 
           {this.state.tokenLocks.length == 0 && (
             <div className="row justify-content-between p-0 ml-0">
-                <Skeleton /> 
-                <Skeleton/>
-                <Skeleton/>
+              <Skeleton />
+              <Skeleton />
+              <Skeleton />
             </div>
           )}
         </div>
@@ -1692,7 +1789,6 @@ export default class Locker extends React.Component {
     );
   };
   render() {
-
     return (
       <div className="locker">
         <div className="col-md-6 px-3">

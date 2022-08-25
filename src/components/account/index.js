@@ -10,7 +10,8 @@ import Cross from "./cross.svg";
 import Free from "./free.svg";
 import Premium from "./premium.svg";
 import FreeWhite from "./free-white.svg";
-import PremiumBanner from "./premium-banner.png";
+import Collapsible from "react-collapsible";
+
 const { BigNumber } = window;
 
 export default class Subscription extends React.Component {
@@ -38,6 +39,7 @@ export default class Subscription extends React.Component {
       showSavebtn: false,
       showRemovebtn: false,
       subscribe_now: false,
+      triggerText: "See more V",
     };
   }
 
@@ -49,6 +51,10 @@ export default class Subscription extends React.Component {
         .then((favorites) => this.setState({ favorites }))
         .catch(console.error);
     }
+
+    // if(this.state.appState.isPremium === true) {
+    //   this.setState({subscribe_now: false})
+    // }
 
     if (window.ethereum?.chainId === "0xa86a") {
       window
@@ -290,78 +296,172 @@ export default class Subscription extends React.Component {
         </h4>
         <form onSubmit={this.handleSubscribe}>
           <div>
-            <table className="w-100">
-              <tr
-                className="tablerow"
-                style={{ position: "relative", top: "-10px" }}
-              >
-                <th className="tableheader"></th>
-                <th className="tableheader freetext">
-                  <img
-                    src={this.props.theme === "theme-dark" ? FreeWhite : Free}
-                    alt=""
-                  />{" "}
-                  Free
-                </th>
-                <th className="tableheader premiumtext">
-                  <img src={Premium} alt="" /> Premium
-                </th>
-              </tr>
-              {benefits.length > 0 &&
-                benefits.map((item, key) => {
-                  return (
-                    <>
-                      <tr key={key} className="tablerow">
-                        <td className="tabledata">{item.title}</td>
-                        <td className="tabledata">
-                          <img
-                            src={item.free === "yes" ? Check : Cross}
-                            alt=""
-                          />{" "}
-                        </td>
-                        <td className="tabledata">
-                          <img
-                            src={item.premium === "yes" ? Check : Cross}
-                            alt=""
-                          />
-                        </td>
-                      </tr>
-                    </>
-                  );
-                })}
-            </table>
-            <div className="premiumbanner">
-              <div className="row m-0 justify-content-between">
-                <div
-                  style={{
-                    maxWidth: 335,
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: 10,
+            {this.props.appState.isPremium ? (
+              <table className="w-100">
+                <tr
+                  className="tablerow"
+                  style={{ position: "relative", top: "-10px" }}
+                >
+                  <th className="tableheader"></th>
+                  <th className="tableheader freetext">
+                    <img
+                      src={this.props.theme === "theme-dark" ? FreeWhite : Free}
+                      alt=""
+                    />{" "}
+                    Free
+                  </th>
+                  <th className="tableheader premiumtext">
+                    <img src={Premium} alt="" /> Premium
+                  </th>
+                </tr>
+                {benefits.length > 0 &&
+                  benefits.map((item, key) => {
+                    return (
+                      <>
+                        <tr key={key} className="tablerow">
+                          <td className="tabledata">{item.title}</td>
+                          <td className="tabledata">
+                            <img
+                              src={item.free === "yes" ? Check : Cross}
+                              alt=""
+                            />{" "}
+                          </td>
+                          <td className="tabledata">
+                            <img
+                              src={item.premium === "yes" ? Check : Cross}
+                              alt=""
+                            />
+                          </td>
+                        </tr>
+                      </>
+                    );
+                  })}
+              </table>
+            ) : (
+              <>
+                <table className="w-100">
+                  <tr
+                    className="tablerow"
+                    style={{ position: "relative", top: "-10px" }}
+                  >
+                    <th className="tableheader"></th>
+                    <th className="tableheader freetext">
+                      <img
+                        src={
+                          this.props.theme === "theme-dark" ? FreeWhite : Free
+                        }
+                        alt=""
+                      />{" "}
+                      Free
+                    </th>
+                    <th className="tableheader premiumtext">
+                      <img src={Premium} alt="" /> Premium
+                    </th>
+                  </tr>
+                  {benefits.length > 0 &&
+                    benefits.slice(0, 1).map((item, key) => {
+                      return (
+                        <>
+                          <tr key={key} className="tablerow">
+                            <td className="tabledata" style={{ width: "79%" }}>
+                              {item.title}
+                            </td>
+                            <td className="tabledata">
+                              <img
+                                src={item.free === "yes" ? Check : Cross}
+                                alt=""
+                              />{" "}
+                            </td>
+                            <td className="tabledata">
+                              <img
+                                src={item.premium === "yes" ? Check : Cross}
+                                alt=""
+                              />
+                            </td>
+                          </tr>
+                        </>
+                      );
+                    })}
+                </table>
+
+                <Collapsible
+                  trigger={this.state.triggerText}
+                  onClose={() => {
+                    this.setState({ triggerText: "See more V" });
+                  }}
+                  onOpen={() => {
+                    this.setState({ triggerText: "See less Ʌ" });
                   }}
                 >
-                  <h3 className="subscr-title">Lifetime subscription</h3>
-                  <p className="subscr-subtitle">
-                    The subscription tokens will be used to buy and lock DYP
-                  </p>
-                  <p className="subscr-note">
-                    *When you unsubscribe the DYP will be unlocked and sent to
-                    your wallet
-                  </p>
-                </div>
-                <div>
-                  <h3 className="subscr-price">75 USD</h3>
-                  <p className="subscr-note">*Exclusive offer</p>
+                  <table className="w-100">
+                    {benefits.length > 0 &&
+                      benefits.slice(1, benefits.length).map((item, key) => {
+                        return (
+                          <>
+                            <tr key={key} className="tablerow">
+                              <td
+                                className="tabledata"
+                                style={{ width: "77%" }}
+                              >
+                                {item.title}
+                              </td>
+                              <td className="tabledata">
+                                <img
+                                  src={item.free === "yes" ? Check : Cross}
+                                  alt=""
+                                />{" "}
+                              </td>
+                              <td className="tabledata">
+                                <img
+                                  src={item.premium === "yes" ? Check : Cross}
+                                  alt=""
+                                />
+                              </td>
+                            </tr>
+                          </>
+                        );
+                      })}
+                  </table>
+                </Collapsible>
+              </>
+            )}
+
+            {!this.props.appState.isPremium ? (
+              <div className="premiumbanner">
+                <div className="row m-0 justify-content-between">
                   <div
-                    className="subscribebtn w-auto mt-2"
-                    type=""
-                    onClick={() => this.setState({ subscribe_now: true })}
+                    style={{
+                      maxWidth: 335,
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: 10,
+                    }}
                   >
-                    Subscribe now
+                    <h3 className="subscr-title">Lifetime subscription </h3>
+                    <p className="subscr-subtitle">
+                      The subscription tokens will be used to buy and lock DYP
+                    </p>
+                    <p className="subscr-note">
+                      *When you unsubscribe the DYP will be unlocked and sent to
+                      your wallet
+                    </p>
+                  </div>
+                  <div>
+                    <h3 className="subscr-price">75 USD</h3>
+                    <p className="subscr-note">*Exclusive offer</p>
+                    <div
+                      className="subscribebtn w-auto mt-2"
+                      type=""
+                      onClick={() => this.setState({ subscribe_now: true })}
+                    >
+                      Subscribe now
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            ) : (
+              <></>
+            )}
           </div>
           {!this.props.appState.isPremium ? (
             this.state.subscribe_now === true ? (

@@ -307,11 +307,11 @@ export default class PairExplorer extends React.Component {
 
     try {
       let mainToken = await window.getMainToken(this.state.pair);
-      
+
       let tokenBalance = Number(
         await window.getTokenHolderBalance(mainToken.id, coinbase)
       );
-      
+
       if (!(tokenBalance > 0) && this.props.isPremium === false) {
         window.alertify.message(
           `Buy some ${mainToken.symbol} to vote! The voting process is free, but available only for ${mainToken.symbol} token holders!`
@@ -844,7 +844,292 @@ export default class PairExplorer extends React.Component {
     return (
       <div className="l-pair-explorer">
         <div className="graph-wrap">
-          <div className="graph-left">
+          <div className="firstbox-wrapper">
+            <div className="firstbox-inner">
+              <div className="graph-header">
+                <div className="graph-header-left">
+                  <h2 className="firstbox-title">
+                    {this.state.pair?.token0.symbol || "..."} /{" "}
+                    {this.state.pair?.token1.symbol || "..."}
+                    {"  "}
+                    INFO
+                  </h2>
+                </div>
+                <div className="graph-header-right">
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={
+                      window.ethereum?.chainId === "0x1"
+                        ? `https://app.uniswap.org/#/swap?outputCurrency=${this.state.mainToken?.id}`
+                        : `https://app.pangolin.exchange/#/swap?outputCurrency=${this.state.mainToken?.id}`
+                    }
+                  >
+                    <button className="tradebtn">
+                      <svg
+                        width="12"
+                        height="10"
+                        viewBox="0 0 12 10"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M2.66 4.3335L0 7.00016L2.66 9.66683V7.66683H7.33333V6.3335H2.66V4.3335ZM12 3.00016L9.34 0.333496V2.3335H4.66667V3.66683H9.34V5.66683L12 3.00016Z"
+                          fill="white"
+                        />
+                      </svg>
+                      Trade
+                    </button>
+                  </a>
+                </div>
+              </div>
+              <div className="graph-data mb-0">
+                <div className="graph-data-item">
+                  <p className="firstbox-text">Total liquidity:</p>
+                  <span className="firstbox-text">
+                    ${getFormattedNumber(this.state.pair?.reserveUSD, 2)}
+                  </span>
+                </div>
+                <div className="graph-data-item">
+                  <p className="firstbox-text">Daily volume:</p>
+                  <span className="firstbox-text">
+                    ${getFormattedNumber(this.state.diffVolumeUSD, 2)}
+                  </span>
+                </div>
+                <div className="graph-data-item">
+                  <p className="firstbox-text">
+                    Pooled {this.state.pair?.token0.symbol}:
+                  </p>
+                  <span className="firstbox-text">
+                    {getFormattedNumber(this.state.pair?.reserve0, 2)}
+                  </span>
+                </div>
+                <div className="graph-data-item">
+                  <p className="firstbox-text">
+                    Pooled {this.state.pair?.token1.symbol}:
+                  </p>
+                  <span className="firstbox-text">
+                    {getFormattedNumber(this.state.pair?.reserve1, 2)}
+                  </span>
+                </div>
+                <div className="graph-data-item">
+                  <p className="firstbox-text">Pair txns:</p>
+                  <span className="firstbox-text">
+                    {getFormattedNumber(this.state.pair?.txCount, 0)}
+                  </span>
+                </div>
+                <div className="graph-data-item">
+                  <p className="firstbox-text">LP Holders:</p>
+                  <span className="firstbox-text">
+                    {getFormattedNumber(
+                      this.state.pair?.liquidityProviderCount,
+                      0
+                    )}
+                  </span>
+                </div>
+                <br />
+                <a
+                  onClick={this.toggleModal}
+                  style={{ fontSize: ".7rem" }}
+                  className="popup-btn "
+                  href="javascript:void(0)"
+                >
+                  <i className="fas fa-info-circle"></i> View More Info
+                </a>
+              </div>
+            </div>
+          </div>
+          <div className="firstbox-wrapper">
+            <div className="firstbox-inner">
+              {false && !isNaN(this.state.pairInfo?.ts_score_avg) ? (
+                <div className="graph-progress">
+                  <div className="progress-title">
+                    <p>DYP Score</p>
+                    <span>
+                      {getFormattedNumber(this.state.pairInfo?.ts_score_avg, 2)}
+                      %
+                    </span>
+                  </div>
+                  <div
+                    title={`Security: ${getFormattedNumber(
+                      this.state.pairInfo?.ts_score_security,
+                      2
+                    )}%`}
+                    className="progress v1"
+                  >
+                    <div
+                      style={{
+                        width: `${getFormattedNumber(
+                          this.state.pairInfo?.ts_score_security,
+                          2
+                        )}%`,
+                        opacity: 1,
+                      }}
+                      className="progress-done-one"
+                      data-done="45"
+                    ></div>
+                  </div>
+                  <div
+                    title={`Information: ${getFormattedNumber(
+                      this.state.pairInfo?.ts_score_information,
+                      2
+                    )}%`}
+                    className="progress"
+                  >
+                    <div
+                      style={{
+                        width: `${getFormattedNumber(
+                          this.state.pairInfo?.ts_score_information,
+                          2
+                        )}%`,
+                        opacity: 1,
+                      }}
+                      className="progress-done-two"
+                      data-done="95"
+                    ></div>
+                  </div>
+                  <div
+                    title={`Liquidity: ${getFormattedNumber(
+                      this.state.pairInfo?.ts_score_liquidity,
+                      2
+                    )}%`}
+                    className="progress"
+                  >
+                    <div
+                      style={{
+                        width: `${getFormattedNumber(
+                          this.state.pairInfo?.ts_score_liquidity,
+                          2
+                        )}%`,
+                        opacity: 1,
+                      }}
+                      className="progress-done-three"
+                      data-done="95"
+                    ></div>
+                  </div>
+                  <div
+                    title={`Tokenomics: ${getFormattedNumber(
+                      this.state.pairInfo?.ts_score_tokenomics,
+                      2
+                    )}%`}
+                    className="progress"
+                  >
+                    <div
+                      style={{
+                        width: `${getFormattedNumber(
+                          this.state.pairInfo?.ts_score_tokenomics,
+                          2
+                        )}%`,
+                        opacity: 1,
+                      }}
+                      className="progress-done-four"
+                      data-done="95"
+                    ></div>
+                  </div>
+                </div>
+              ) : (
+                <div className="graph-progress">
+                  <div className="progress-title">
+                    <p>DYP Score</p>
+                    <span>{getFormattedNumber(avg_weighted, 2)}%</span>
+                  </div>
+                  {scores.map((score, i) => (
+                    <div
+                      key={i}
+                      title={`${score.name}: ${getFormattedNumber(
+                        score.score,
+                        2
+                      )}%`}
+                      className={`progress ${i == 0 ? "v1" : ""}`}
+                    >
+                      <div
+                        style={{
+                          width: `${getFormattedNumber(score.score, 2)}%`,
+                          opacity: 1,
+                        }}
+                        className="progress-done-one"
+                      ></div>
+                    </div>
+                  ))}
+                  {/* <div title={`Security: ${getFormattedNumber(this.state.pairInfo?.ts_score_security, 2)}%`} className="progress v1">
+                                <div style={{width: `${getFormattedNumber(this.state.pairInfo?.ts_score_security, 2)}%`, opacity: 1}} className="progress-done-one" data-done="45">
+                                </div>
+                            </div>
+                            <div title={`Information: ${getFormattedNumber(this.state.pairInfo?.ts_score_information, 2)}%`} className="progress">
+                                <div style={{width: `${getFormattedNumber(this.state.pairInfo?.ts_score_information, 2)}%`, opacity: 1}} className="progress-done-two" data-done="95">
+                                </div>
+                            </div>
+                            <div title={`Liquidity: ${getFormattedNumber(this.state.pairInfo?.ts_score_liquidity, 2)}%`} className="progress">
+                                <div style={{width: `${getFormattedNumber(this.state.pairInfo?.ts_score_liquidity, 2)}%`, opacity: 1}} className="progress-done-three" data-done="95">
+                                </div>
+                            </div>
+                            <div title={`Tokenomics: ${getFormattedNumber(this.state.pairInfo?.ts_score_tokenomics, 2)}%`} className="progress">
+                                <div style={{width: `${getFormattedNumber(this.state.pairInfo?.ts_score_tokenomics, 2)}%`, opacity: 1}} className="progress-done-four" data-done="95">
+                                </div>
+                            </div> */}
+                </div>
+              )}
+
+              <div className="graph-progress mt-30">
+                <div className="progress-title">
+                  <p>Community Trust ({this.state.voteCount} votes)</p>
+                  <span>
+                    {(
+                      (this.state.upvoteCount / (this.state.voteCount || 1)) *
+                      100
+                    ).toFixed(2)}
+                    %
+                  </span>
+                </div>
+                <div className="container">
+                  <div className="row">
+                    <div className="col-1 pl-0 pr-0">
+                      <span
+                        onClick={() => this.registerVote(true)}
+                        style={{
+                          position: "relative",
+                          cursor: "pointer",
+                          top: "-3px",
+                        }}
+                        className={`fa${
+                          this.state.coinbaseVote === true ? "s" : "r"
+                        } fa-thumbs-up`}
+                      ></span>
+                    </div>
+                    <div className="col-10 pl-0 pr-0">
+                      <div className="progress">
+                        <div
+                          style={{
+                            width: `${(
+                              (this.state.upvoteCount /
+                                (this.state.voteCount || 1)) *
+                              100
+                            ).toFixed(2)}%`,
+                            opacity: 1,
+                          }}
+                          className="progress-done-five"
+                        ></div>
+                      </div>
+                    </div>
+                    <div className="col-1 pl-0 pr-0 text-right">
+                      <span
+                        onClick={() => this.registerVote(false)}
+                        style={{
+                          position: "relative",
+                          cursor: "pointer",
+                          top: "-3px",
+                        }}
+                        className={`fa${
+                          this.state.coinbaseVote === false ? "s" : "r"
+                        } fa-thumbs-down`}
+                      ></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
             <div className="content-title">
               <div className="content-title-top">
                 <h2>
@@ -862,8 +1147,87 @@ export default class PairExplorer extends React.Component {
                   )}{" "}
                   {this.state.pair?.token0.symbol || "..."} /{" "}
                   {this.state.pair?.token1.symbol || "..."}{" "}
+                  <button
+                    onClick={this.toggleFavorite}
+                    className={`btn v2 ${
+                      this.state.isFavorite ? "is-favorite" : ""
+                    }`}
+                  >
+                    <i
+                      style={{
+                        color: "gray",
+                        position: "absolute",
+                        right: "122px",
+                        top: 0,
+                      }}
+                      className={`fa${
+                        this.state.isFavorite ? "s" : "r"
+                      } fa-star`}
+                    ></i>
+                  </button>
                 </h2>
-                <ul className="l-social-icons-list">
+                <h2>
+                  $
+                  {(
+                    this.state.mainToken?.derivedETH * this.state.ethPrice
+                  ).toFixed(4) * 1 || "..."}
+                </h2>
+              </div>
+              <div className="d-flex justify-content-between">
+                <p style={{ fontSize: ".8rem" }}>
+                  ({this.state.mainToken?.name || "..."}) <br />
+                  Token contract:{" "}
+                  <a
+                    rel="noopener noreferrer"
+                    target="_blank"
+                    href={
+                      window.ethereum?.chainId === "0x1"
+                        ? `https://etherscan.io/token/${this.state.mainToken?.id}`
+                        : `https://cchain.explorer.avax.network/tokens/${this.state.mainToken?.id}`
+                    }
+                  >
+                    ...{this.state.mainToken?.id.slice(34)}
+                  </a>{" "}
+                </p>
+                <p
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    fontSize: 12,
+                  }}
+                >
+                  {this.state[
+                    `diffUsdPerToken${this.state.mainToken?.__number}Percent`
+                  ] != "..." && (
+                    <span
+                      className={
+                        this.state[
+                          `diffUsdPerToken${this.state.mainToken?.__number}Percent`
+                        ] *
+                          1 >=
+                        0
+                          ? "green-text"
+                          : ""
+                      }
+                    >
+                      (24h:{" "}
+                      {
+                        this.state[
+                          `diffUsdPerToken${this.state.mainToken?.__number}Percent`
+                        ]
+                      }
+                      %)
+                    </span>
+                  )}{" "}
+                  {(this.state.mainToken?.derivedETH * 1).toFixed(6) * 1 ||
+                    "..."}{" "}
+                  {window.ethereum?.chainId === "0x1" ? "ETH" : "AVAX"}
+                </p>
+              </div>
+            </div>
+            <div className="graph-header">
+              <div className="graph-header-left">
+                <ul className="l-social-icons-list d-flex" style={{ gap: 10 }}>
                   <li>
                     <a
                       rel="noopener noreferrer"
@@ -1045,58 +1409,6 @@ export default class PairExplorer extends React.Component {
                                     <li><a href="#"><img src="/assets/img/8.png" alt="Image" /></a></li> */}
                 </ul>
               </div>
-              <p style={{ fontSize: ".8rem" }}>
-                ({this.state.mainToken?.name || "..."})Token contract:{" "}
-                <a
-                  rel="noopener noreferrer"
-                  target="_blank"
-                  href={
-                    window.ethereum?.chainId === "0x1"
-                      ? `https://etherscan.io/token/${this.state.mainToken?.id}`
-                      : `https://cchain.explorer.avax.network/tokens/${this.state.mainToken?.id}`
-                  }
-                >
-                  ...{this.state.mainToken?.id.slice(34)}
-                </a>{" "}
-              </p>
-            </div>
-            <div className="graph-header">
-              <div className="graph-header-left">
-                <h2>
-                  $
-                  {(
-                    this.state.mainToken?.derivedETH * this.state.ethPrice
-                  ).toFixed(4) * 1 || "..."}
-                </h2>
-                <p>
-                  {this.state[
-                    `diffUsdPerToken${this.state.mainToken?.__number}Percent`
-                  ] != "..." && (
-                    <span
-                      className={
-                        this.state[
-                          `diffUsdPerToken${this.state.mainToken?.__number}Percent`
-                        ] *
-                          1 >=
-                        0
-                          ? "green-text"
-                          : ""
-                      }
-                    >
-                      (24h:{" "}
-                      {
-                        this.state[
-                          `diffUsdPerToken${this.state.mainToken?.__number}Percent`
-                        ]
-                      }
-                      %)
-                    </span>
-                  )}{" "}
-                  {(this.state.mainToken?.derivedETH * 1).toFixed(6) * 1 ||
-                    "..."}{" "}
-                  {window.ethereum?.chainId === "0x1" ? "ETH" : "AVAX"}
-                </p>
-              </div>
               <div className="graph-header-right">
                 <a
                   target="_blank"
@@ -1109,16 +1421,7 @@ export default class PairExplorer extends React.Component {
                 >
                   <button className="btn v1">Trade</button>
                 </a>
-                <button
-                  onClick={this.toggleFavorite}
-                  className={`btn v2 ${
-                    this.state.isFavorite ? "is-favorite" : ""
-                  }`}
-                >
-                  <i
-                    className={`fa${this.state.isFavorite ? "s" : "r"} fa-star`}
-                  ></i>{" "}
-                </button>
+
                 <div
                   className="social-share-parent"
                   style={{ display: "inline-block", position: "relative" }}
@@ -1197,6 +1500,8 @@ export default class PairExplorer extends React.Component {
                 </div>
               </div>
             </div>
+          </div>
+          <div className="graph-left">
             <div className="graph-data">
               <div className="graph-data-item">
                 <p>Total liquidity:</p>
@@ -1238,191 +1543,6 @@ export default class PairExplorer extends React.Component {
               >
                 <i className="fas fa-info-circle"></i> View More Info
               </a>
-            </div>
-            {false && !isNaN(this.state.pairInfo?.ts_score_avg) ? (
-              <div className="graph-progress">
-                <div className="progress-title">
-                  <p>DYP Score</p>
-                  <span>
-                    {getFormattedNumber(this.state.pairInfo?.ts_score_avg, 2)}%
-                  </span>
-                </div>
-                <div
-                  title={`Security: ${getFormattedNumber(
-                    this.state.pairInfo?.ts_score_security,
-                    2
-                  )}%`}
-                  className="progress v1"
-                >
-                  <div
-                    style={{
-                      width: `${getFormattedNumber(
-                        this.state.pairInfo?.ts_score_security,
-                        2
-                      )}%`,
-                      opacity: 1,
-                    }}
-                    className="progress-done-one"
-                    data-done="45"
-                  ></div>
-                </div>
-                <div
-                  title={`Information: ${getFormattedNumber(
-                    this.state.pairInfo?.ts_score_information,
-                    2
-                  )}%`}
-                  className="progress"
-                >
-                  <div
-                    style={{
-                      width: `${getFormattedNumber(
-                        this.state.pairInfo?.ts_score_information,
-                        2
-                      )}%`,
-                      opacity: 1,
-                    }}
-                    className="progress-done-two"
-                    data-done="95"
-                  ></div>
-                </div>
-                <div
-                  title={`Liquidity: ${getFormattedNumber(
-                    this.state.pairInfo?.ts_score_liquidity,
-                    2
-                  )}%`}
-                  className="progress"
-                >
-                  <div
-                    style={{
-                      width: `${getFormattedNumber(
-                        this.state.pairInfo?.ts_score_liquidity,
-                        2
-                      )}%`,
-                      opacity: 1,
-                    }}
-                    className="progress-done-three"
-                    data-done="95"
-                  ></div>
-                </div>
-                <div
-                  title={`Tokenomics: ${getFormattedNumber(
-                    this.state.pairInfo?.ts_score_tokenomics,
-                    2
-                  )}%`}
-                  className="progress"
-                >
-                  <div
-                    style={{
-                      width: `${getFormattedNumber(
-                        this.state.pairInfo?.ts_score_tokenomics,
-                        2
-                      )}%`,
-                      opacity: 1,
-                    }}
-                    className="progress-done-four"
-                    data-done="95"
-                  ></div>
-                </div>
-              </div>
-            ) : (
-              <div className="graph-progress">
-                <div className="progress-title">
-                  <p>DYP Score</p>
-                  <span>{getFormattedNumber(avg_weighted, 2)}%</span>
-                </div>
-                {scores.map((score, i) => (
-                  <div
-                    key={i}
-                    title={`${score.name}: ${getFormattedNumber(
-                      score.score,
-                      2
-                    )}%`}
-                    className={`progress ${i == 0 ? "v1" : ""}`}
-                  >
-                    <div
-                      style={{
-                        width: `${getFormattedNumber(score.score, 2)}%`,
-                        opacity: 1,
-                      }}
-                      className="progress-done-one"
-                    ></div>
-                  </div>
-                ))}
-                {/* <div title={`Security: ${getFormattedNumber(this.state.pairInfo?.ts_score_security, 2)}%`} className="progress v1">
-                                <div style={{width: `${getFormattedNumber(this.state.pairInfo?.ts_score_security, 2)}%`, opacity: 1}} className="progress-done-one" data-done="45">
-                                </div>
-                            </div>
-                            <div title={`Information: ${getFormattedNumber(this.state.pairInfo?.ts_score_information, 2)}%`} className="progress">
-                                <div style={{width: `${getFormattedNumber(this.state.pairInfo?.ts_score_information, 2)}%`, opacity: 1}} className="progress-done-two" data-done="95">
-                                </div>
-                            </div>
-                            <div title={`Liquidity: ${getFormattedNumber(this.state.pairInfo?.ts_score_liquidity, 2)}%`} className="progress">
-                                <div style={{width: `${getFormattedNumber(this.state.pairInfo?.ts_score_liquidity, 2)}%`, opacity: 1}} className="progress-done-three" data-done="95">
-                                </div>
-                            </div>
-                            <div title={`Tokenomics: ${getFormattedNumber(this.state.pairInfo?.ts_score_tokenomics, 2)}%`} className="progress">
-                                <div style={{width: `${getFormattedNumber(this.state.pairInfo?.ts_score_tokenomics, 2)}%`, opacity: 1}} className="progress-done-four" data-done="95">
-                                </div>
-                            </div> */}
-              </div>
-            )}
-
-            <div className="graph-progress mt-30">
-              <div className="progress-title">
-                <p>Community Trust ({this.state.voteCount} votes)</p>
-                <span>
-                  {(
-                    (this.state.upvoteCount / (this.state.voteCount || 1)) *
-                    100
-                  ).toFixed(2)}
-                  %
-                </span>
-              </div>
-              <div className="container">
-                <div className="row">
-                  <div className="col-1 pl-0 pr-0">
-                    <span
-                      onClick={() => this.registerVote(true)}
-                      style={{
-                        position: "relative",
-                        cursor: "pointer",
-                        top: "-3px",
-                      }}
-                      className={`fa${
-                        this.state.coinbaseVote === true ? "s" : "r"
-                      } fa-thumbs-up`}
-                    ></span>
-                  </div>
-                  <div className="col-10 pl-0 pr-0">
-                    <div className="progress">
-                      <div
-                        style={{
-                          width: `${(
-                            (this.state.upvoteCount /
-                              (this.state.voteCount || 1)) *
-                            100
-                          ).toFixed(2)}%`,
-                          opacity: 1,
-                        }}
-                        className="progress-done-five"
-                      ></div>
-                    </div>
-                  </div>
-                  <div className="col-1 pl-0 pr-0 text-right">
-                    <span
-                      onClick={() => this.registerVote(false)}
-                      style={{
-                        position: "relative",
-                        cursor: "pointer",
-                        top: "-3px",
-                      }}
-                      className={`fa${
-                        this.state.coinbaseVote === false ? "s" : "r"
-                      } fa-thumbs-down`}
-                    ></span>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
           <div className="graph-right">
