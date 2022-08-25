@@ -66,13 +66,34 @@ export default class TopTokens extends React.Component {
       isLoading: true,
       filteredByTokenId: "",
       filteredByTxnType: "", // 'burn' | 'mint' | ''
+      networkId: "1",
     };
+  }
+
+  checkNetworkId() {
+    if (window.ethereum) {
+      window.ethereum
+        .request({ method: "net_version" })
+        .then((data) => {
+          this.setState({
+            networkId: data,
+          });
+          this.fetchTopTokens().then();
+        })
+        .catch(console.error);
+    } else {
+    this.fetchTopTokens().then();  
+      this.setState({
+        networkId: "1",
+      });
+      
+    }
   }
 
   componentDidMount() {
     // this.fetchTransactions()
     // this.fetchSwaps()
-    this.fetchTopTokens();
+    this.checkNetworkId();
   }
 
   fetchTopTokens = async () => {

@@ -64,13 +64,36 @@ export default class BigSwapExplorer extends React.Component {
       isLoading: true,
       filteredByTokenId: "",
       filteredByTxnType: "", // 'burn' | 'mint' | ''
+      networkId: '1'
     };
   }
 
   componentDidMount() {
     // this.fetchTransactions()
-    this.fetchSwaps();
+    this.checkNetworkId();
   }
+
+  checkNetworkId() {
+    if (window.ethereum) {
+      window.ethereum
+        .request({ method: "net_version" })
+        .then((data) => {
+          this.setState({
+            networkId: data,
+          });
+          this.this.fetchSwaps().then();
+        })
+        .catch(console.error);
+    } else {
+    this.fetchSwaps().then();  
+      this.setState({
+        networkId: "1",
+      });
+      
+    }
+  }
+
+
 
   // fetchTransactions = async () => {
   //     try {
@@ -229,7 +252,11 @@ export default class BigSwapExplorer extends React.Component {
             className="l-clr-purple"
             target="_blank"
             rel="noopener noreferrer"
-            href={ window.ethereum?.chainId === '0x1' ? `https://etherscan.io/address/${txn.maker}` : `https://cchain.explorer.avax.network/address/${txn.maker}`}
+            href={
+              this.state.networkId === '1'
+                ? `https://etherscan.io/address/${txn.maker}`
+                : `https://cchain.explorer.avax.network/address/${txn.maker}`
+            }
           >
             ...{txn.maker?.slice(34)}
           </a>
@@ -249,13 +276,21 @@ export default class BigSwapExplorer extends React.Component {
               rel="noopener noreferrer"
               target="_blank"
               title={txn.id.split("-")[0]}
-              href={ window.ethereum?.chainId === '0x1' ? `https://etherscan.io/tx/${txn.id.split("-")[0]}` : `https://cchain.explorer.avax.network/tx/${
-                txn.id.split("-")[0]
-              }`}
+              href={
+                this.state.networkId === '1'
+                  ? `https://etherscan.io/tx/${txn.id.split("-")[0]}`
+                  : `https://cchain.explorer.avax.network/tx/${
+                      txn.id.split("-")[0]
+                    }`
+              }
             >
               <img
                 className="icon-bg-white-rounded"
-                src={ window.ethereum?.chainId === '0x1' ? "/images/etherscan.png"  : "/images/cchain.png"}
+                src={
+                  this.state.networkId === '1'
+                    ? "/images/etherscan.png"
+                    : "/images/cchain.png"
+                }
                 width="18"
                 alt=""
               />

@@ -69,21 +69,43 @@ export default class PoolExplorer extends React.Component {
       screen: "pool",
       filteredByTokenId: "",
       filteredByTxnType: "", // 'burn' | 'mint' | ''
+      networkId: "1", //this to replace using window.ethereum.chainId
     };
   }
 
-  componentDidMount() {
-    this.fetchTransactions();
+  checkNetworkId() {
+    if (window.ethereum) {
+      window.ethereum
+        .request({ method: "net_version" })
+        .then((data) => {
+          this.setState({
+            networkId: data,
+          });
+          this.fetchTransactions().then();
+        })
+        .catch(console.error);
+    } else {
+    this.fetchTransactions().then();  
+      this.setState({
+        networkId: "1",
+      });
+      
+    }
   }
 
-  // componentDidUpdate() {
-  //     //this.fetchTransactions()
+  componentDidMount() {
+    this.checkNetworkId();
+  }
+
+  //   componentDidUpdate() {
+  //     this.checkNetworkId()
   // }
 
   fetchTransactions = async () => {
+    
     try {
       let network = this.props.network;
-      if(window.ethereum?.chainId === '0x1') {
+      if (this.state.networkId === "1") {
         let { transactions, ethPrice } = await getProcessedTransactionsETH();
 
         // TODO: Filter this to last 4 hour transactions once synced
@@ -95,19 +117,19 @@ export default class PoolExplorer extends React.Component {
           ethPrice,
         });
       }
-      if(window.ethereum?.chainId === '0xa86a') {
-         let { transactions, ethPrice } = await getProcessedTransactions(network);
-
-      // TODO: Filter this to last 4 hour transactions once synced
-      transactions = transactions;
-      // .filter(txn => txn.timestamp*1e3 >= Date.now() - 4 * 60 * 60 * 1000)
-      this.setState({
-        processedTransactions: transactions,
-        filteredTransactions: transactions,
-        ethPrice,
-      });
+      if (this.state.networkId === "43114") {
+        let { transactions, ethPrice } = await getProcessedTransactions(
+          network
+        );
+        // TODO: Filter this to last 4 hour transactions once synced
+        transactions = transactions;
+        // .filter(txn => txn.timestamp*1e3 >= Date.now() - 4 * 60 * 60 * 1000)
+        this.setState({
+          processedTransactions: transactions,
+          filteredTransactions: transactions,
+          ethPrice,
+        });
       }
-     
     } finally {
       this.setState({ isLoading: false });
     }
@@ -185,7 +207,7 @@ export default class PoolExplorer extends React.Component {
             rel="noopener noreferrer"
             target="_blank"
             href={
-              window.ethereum?.chainId === "0x1"
+              this.state.networkId === "1"
                 ? `https://etherscan.io/address/${txn.tokenId}`
                 : `https://cchain.explorer.avax.network/address/${txn.tokenId}`
             }
@@ -240,19 +262,19 @@ export default class PoolExplorer extends React.Component {
               rel="noopener noreferrer"
               target="_blank"
               title={
-                window.ethereum?.chainId === "0x1"
+                this.state.networkId === "1"
                   ? "Buy at Uniswap"
                   : "Buy at Pangolin"
               }
               href={
-                window.ethereum?.chainId === "0x1"
+                this.state.networkId === "1"
                   ? `https://app.uniswap.org/#/swap?outputCurrency=${txn.tokenId}`
                   : `https://app.pangolin.exchange/#/swap?outputCurrency=${txn.tokenId}`
               }
             >
               <img
                 src={
-                  window.ethereum?.chainId === "0x1"
+                  this.state.networkId === "1"
                     ? "/images/uniswap-logo-home.png"
                     : "/images/pangolin.png"
                 }
@@ -265,7 +287,7 @@ export default class PoolExplorer extends React.Component {
               target="_blank"
               title={txn.id.split("-")[0]}
               href={
-                window.ethereum?.chainId === "0x1"
+                this.state.networkId === "1"
                   ? `https://etherscan.io/tx/${txn.id.split("-")[0]}`
                   : `https://cchain.explorer.avax.network/tx/${
                       txn.id.split("-")[0]
@@ -275,7 +297,7 @@ export default class PoolExplorer extends React.Component {
               <img
                 className="icon-bg-white-rounded"
                 src={
-                  window.ethereum?.chainId === "0x1"
+                  this.state.networkId === "1"
                     ? "/images/etherscan.png"
                     : "/images/cchain.png"
                 }
@@ -317,7 +339,7 @@ export default class PoolExplorer extends React.Component {
             target="_blank"
             rel="noopener noreferrer"
             href={
-              window.ethereum?.chainId === "0x1"
+              this.state.networkId === "1"
                 ? `https://v2.info.uniswap.org/pair/${txn.pairId}`
                 : `https://cchain.explorer.avax.network/address/${txn.pairId}`
             }
@@ -353,10 +375,13 @@ export default class PoolExplorer extends React.Component {
           `${getFormattedNumber(txn.tokenAmount, 8)} ${txn.tokenSymbol}`,
       },
       {
-        name: window.ethereum?.chainId === '0x1' ? 'ETH Amount' : "AVAX Amount",
+        name: this.state.networkId === "1" ? "ETH Amount" : "AVAX Amount",
         selector: "ethAmount",
         sortable: true,
-        format: (txn) => window.ethereum?.chainId === '0x1' ?  `${getFormattedNumber(txn.ethAmount, 8)} ETH` : `${getFormattedNumber(txn.ethAmount, 8)} AVAX`,
+        format: (txn) =>
+          this.state.networkId === "1"
+            ? `${getFormattedNumber(txn.ethAmount, 8)} ETH`
+            : `${getFormattedNumber(txn.ethAmount, 8)} AVAX`,
       },
       {
         name: "Pair Created",
@@ -390,7 +415,6 @@ export default class PoolExplorer extends React.Component {
   };
 
   render() {
-    
     return (
       <div>
         <div className="row px-3 table-title">
@@ -410,8 +434,9 @@ export default class PoolExplorer extends React.Component {
                   Big Swap Explorer
                 </h2>
                 <p className="d-block">
-                  {window.ethereum?.chainId === '0x1' ? ' Search for Big Swaps on Uniswap with useful information.' : ' Search for Big Swaps on Pangolin with useful information.'}
-                 
+                  {this.state.networkId === "1"
+                    ? " Search for Big Swaps on Uniswap with useful information."
+                    : " Search for Big Swaps on Pangolin with useful information."}
                 </p>
               </>
             ) : this.state.screen === "tokens" ? (
@@ -420,8 +445,10 @@ export default class PoolExplorer extends React.Component {
                   Top Tokens
                 </h2>
                 <p className="d-block">
-                  {window.ethereum?.chainId === '0x1' ? 'Showing Uniswap Top Tokens' : 'Showing Pangolin Top Tokens'}
-                  </p>
+                  {this.state.networkId === "1"
+                    ? "Showing Uniswap Top Tokens"
+                    : "Showing Pangolin Top Tokens"}
+                </p>
               </>
             ) : (
               <>
@@ -526,14 +553,18 @@ export default class PoolExplorer extends React.Component {
           <div className="table-title">
             {this.state.screen === "pool" ? (
               <h4>
-                {window.ethereum?.chainId === "0x1"
+                {this.state.networkId === "1"
                   ? "Uniswap Pools Activity"
                   : "Pangolin Pools Activity"}
               </h4>
             ) : this.state.screen === "swap" ? (
               <h4>Latest Big Swaps</h4>
             ) : this.state.screen === "tokens" ? (
-              <h4>{window.ethereum?.chainId === '0x1' ? 'Uniswap Top Tokens' : 'Pangolin Top Tokens'}</h4>
+              <h4>
+                {this.state.networkId === "1"
+                  ? "Uniswap Top Tokens"
+                  : "Pangolin Top Tokens"}
+              </h4>
             ) : (
               <h4>Yields Rankings</h4>
             )}

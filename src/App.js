@@ -39,7 +39,18 @@ class App extends React.Component {
       subscribedPlatformTokenAmount: "...",
       isPremium: false,
       hotPairs: [],
+      networkId: '1'
     };
+  }
+
+  checkNetworkId() {
+    window.ethereum?.request({ method: "net_version" })
+      .then((data) => {
+        this.setState({
+          networkId: data
+        });
+      })
+      .catch(console.error);
   }
 
   refreshSubscription = async () => {
@@ -62,13 +73,13 @@ class App extends React.Component {
     });
 
     let subscribedPlatformTokenAmount;
-    if (window.ethereum?.chainId === "0x1") {
+    if (this.state.networkId === "1") {
       await window.subscriptionPlatformTokenAmountETH(coinbase);
       let isPremium = Number(subscribedPlatformTokenAmount) > 0;
       this.setState({ subscribedPlatformTokenAmount, isPremium });
     }
 
-    if (window.ethereum?.chainId === "0xa86a") {
+    if (this.state.networkId === "43114") {
       await window.subscriptionPlatformTokenAmount(coinbase);
       let isPremium = Number(subscribedPlatformTokenAmount) > 0;
       this.setState({ subscribedPlatformTokenAmount, isPremium });
@@ -102,7 +113,7 @@ class App extends React.Component {
   refreshHotPairs = async () => {
     window.$.get(
       `${
-        window.ethereum?.chainId === "0x1"
+        this.state.networkId === "1"
           ? "https://app-tools.dyp.finance"
           : "https://app-tools-avax.dyp.finance"
       }/api/hot-pairs`
@@ -116,7 +127,7 @@ class App extends React.Component {
 
   componentDidMount() {
     // this.handleConnection();
-    // console.log(window.ethereum?.chainId);
+    // console.log(this.state.networkId);
     // getSyncStats()
     // .then((syncStatus) => {
     // let m = window.alertify.message(
@@ -137,16 +148,28 @@ class App extends React.Component {
     // .catch(console.error);
     // window.connectWallet().then();
     // if(window.ethereum) {
-    // console.log(this.state.co)
+    // console.log(this.state.coinbase)
     // }
-    this.getAddress();
+    this.checkConnection();
+    this.checkNetworkId();
     this.refreshHotPairs();
     this.subscriptionInterval = setInterval(this.refreshSubscription, 5e3);
   }
 
+  checkConnection() {
+    window.ethereum?.request({ method: "eth_accounts" })
+      .then((data) => {
+        this.setState({
+          isConnected: data.length === 0 ? false : true,
+          coinbase: data.length === 0 ? undefined : data[0],
+        });
+      })
+      .catch(console.error);
+  }
+
+
   componentWillUnmount() {
     clearInterval(this.subscriptionInterval);
-
   }
 
   toggleTheme = () => {
@@ -177,9 +200,8 @@ class App extends React.Component {
     this.setState({ isOpenInMobile: !this.state.isOpenInMobile });
   };
 
-
   render() {
-    document.addEventListener('touchstart', {passive: true});
+    document.addEventListener("touchstart", { passive: true });
     return (
       <div
         className={`page_wrapper ${this.state.isMinimized ? "minimize" : ""}`}
@@ -225,8 +247,12 @@ class App extends React.Component {
               <Route
                 exact
                 path="/news"
-           
-            render={() => <News theme={this.state.theme}  isPremium={this.state.isPremium}/>}
+                render={() => (
+                  <News
+                    theme={this.state.theme}
+                    isPremium={this.state.isPremium}
+                  />
+                )}
               />
               <Route
                 exact

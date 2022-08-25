@@ -68,10 +68,10 @@ const Sidebar = (props) => {
             className="top-right-header"
             style={{
               background: account
-                ? window.ethereum?.chainId === "0x1"
+                ? chainId === 1
                   ? "linear-gradient(87.56deg, #1D91D0 9.37%, #32B1F7 93.57%)"
                   : "linear-gradient(87.56deg, #FC4F36 9.37%, #E30613 93.57%)"
-                : "#fff",
+                : "rgba(255, 255, 255, 0.3)",
             }}
           >
             <div className="home-menu">
@@ -124,7 +124,7 @@ const Sidebar = (props) => {
               style={{ background: chainId === 1 ? "#1D91D0" : "transparent" }}
               onClick={() => {
                 setActiveBtn("eth");
-                handleSwitchNetwork("0x1");
+                handleSwitchNetwork(1);
               }}
             >
               <img src={Ethereum} alt="Image not found" />
@@ -433,7 +433,7 @@ const Sidebar = (props) => {
                 target="_blank"
                 rel="noopener noreferrer"
                 href={
-                  window.ethereum?.chainId === "0x1"
+                  chainId === 1
                     ? "https://app.uniswap.org/#/swap?outputCurrency=0x961c8c0b1aad0c0b10a51fef6a867e3091bcef17"
                     : "https://app.pangolin.exchange/#/swap?outputCurrency=0x961c8c0b1aad0c0b10a51fef6a867e3091bcef17"
                 }

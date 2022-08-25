@@ -5,12 +5,22 @@ export const benefits = [
         premium: 'yes',
     },
     {
+        title: 'Pair Explorer',
+        free: 'yes',
+        premium: 'yes',
+    },
+    {
         title: 'Big Swap Explorer',
         free: 'yes',
         premium: 'yes',
     },
     {
         title: 'Top Tokens',
+        free: 'yes',
+        premium: 'yes',
+    },
+    {
+        title: 'Yields',
         free: 'yes',
         premium: 'yes',
     },
@@ -25,12 +35,12 @@ export const benefits = [
         premium: 'yes',
     },
     {
-        title: 'Trust Vote',
+        title: 'Community Trust Vote',
         free: 'yes',
         premium: 'yes',
     },
     {
-        title: 'Access to manual research info for projects',
+        title: 'Manual research info for projects',
         free: 'no',
         premium: 'yes',
     },
@@ -45,12 +55,12 @@ export const benefits = [
         premium: 'yes',
     },
     {
-        title: 'Detailed token information',
+        title: 'Full access to Community Trust Vote',
         free: 'no',
         premium: 'yes',
     },
     {
-        title: 'Ability to vote a token without holding it',
+        title: 'Perform any votes on the News section',
         free: 'no',
         premium: 'yes',
     }

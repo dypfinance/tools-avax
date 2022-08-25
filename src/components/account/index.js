@@ -20,9 +20,7 @@ export default class Subscription extends React.Component {
     this.state = {
       coinbase: "",
       selectedSubscriptionToken: Object.keys(
-        window.ethereum?.chainId === "0x1"
-          ? window.config.subscriptioneth_tokens
-          : window.config.subscription_tokens
+        window.config.subscription_tokens
       )[0],
       tokenBalance: "",
       price: "",
@@ -40,42 +38,51 @@ export default class Subscription extends React.Component {
       showRemovebtn: false,
       subscribe_now: false,
       triggerText: "See more V",
+      networkId: '1'
     };
   }
 
-  componentDidMount() {
-    this.fetchAvatar().then();
-    if (window.ethereum?.chainId === "0x1") {
+  checkNetworkId() {
+    window.ethereum?.request({ method: "net_version" })
+      .then((data) => {
+        this.setState({
+          networkId: data
+        });
+        this.fetchfavData()
+      })
+      .catch(console.error);
+  }
+fetchfavData() {
+    if (this.state.networkId === "1") {
       window
         .getFavoritesETH()
         .then((favorites) => this.setState({ favorites }))
         .catch(console.error);
     }
 
-    // if(this.state.appState.isPremium === true) {
-    //   this.setState({subscribe_now: false})
-    // }
-
-    if (window.ethereum?.chainId === "0xa86a") {
+    if (this.state.networkId === "43114") {
       window
         .getFavorites()
         .then((favorites) => this.setState({ favorites }))
         .catch(console.error);
     }
 
+    this.setState({
+      selectedSubscriptionToken: Object.keys(
+        this.state.networkId === "1"
+          ? window.config.subscriptioneth_tokens
+          : window.config.subscription_tokens
+      )[0],
+    });
+}
+  componentDidMount() {
+    this.checkConnection()
+    this.checkNetworkId()
     if (window.isConnectedOneTime) {
       this.onComponentMount();
     } else {
       window.addOneTimeWalletConnectionListener(this.onComponentMount);
     }
-
-    this.setState({
-      selectedSubscriptionToken: Object.keys(
-        window.ethereum?.chainId === "0x1"
-          ? window.config.subscriptioneth_tokens
-          : window.config.subscription_tokens
-      )[0],
-    });
   }
   componentWillUnmount() {
     window.removeOneTimeWalletConnectionListener(this.onComponentMount);
@@ -84,12 +91,13 @@ export default class Subscription extends React.Component {
   onComponentMount = async () => {
     this.setState({ coinbase: await window.getCoinbase() });
     this.handleSubscriptionTokenChange(this.state.selectedSubscriptionToken);
-    this.fetchAvatar().then();
+    // this.fetchAvatar().then();
+    // this.checkConnection()
   };
 
   handleSubscriptionTokenChange = async (tokenAddress) => {
     let tokenDecimals =
-      window.ethereum?.chainId === "0x1"
+      this.state.networkId === "1"
         ? window.config.subscriptioneth_tokens[tokenAddress]?.decimals
         : window.config.subscription_tokens[tokenAddress]?.decimals;
     this.setState({
@@ -99,7 +107,7 @@ export default class Subscription extends React.Component {
       price: "",
     });
     let price =
-      window.ethereum?.chainId === "0x1"
+      this.state.networkId === "1"
         ? await window.getEstimatedTokenSubscriptionAmountETH(tokenAddress)
         : await window.getEstimatedTokenSubscriptionAmount(tokenAddress);
     price = new BigNumber(price).times(1.1).toFixed(0);
@@ -126,7 +134,7 @@ export default class Subscription extends React.Component {
 
     await tokenContract.methods
       .approve(
-        window.ethereum?.chainId === "0x1"
+        this.state.networkId === "1"
           ? window.config.subscriptioneth_address
           : window.config.subscriptioneth_address,
         this.state.price
@@ -147,7 +155,7 @@ export default class Subscription extends React.Component {
     console.log("handleSubscribe()");
     let subscriptionContract = await window.getContract({
       key:
-        window.ethereum?.chainId === "0x1" ? "SUBSCRIPTIONETH" : "SUBSCRIPTION",
+        this.state.networkId === "1" ? "SUBSCRIPTIONETH" : "SUBSCRIPTION",
     });
 
     this.setState({ loadspinnerSub: true });
@@ -168,7 +176,7 @@ export default class Subscription extends React.Component {
     e.preventDefault();
     let subscriptionContract = await window.getContract({
       key:
-        window.ethereum?.chainId === "0x1" ? "SUBSCRIPTIONETH" : "SUBSCRIPTION",
+        this.state.networkId === "1" ? "SUBSCRIPTIONETH" : "SUBSCRIPTION",
     });
     await subscriptionContract.methods
       .unsubscribe()
@@ -264,9 +272,9 @@ export default class Subscription extends React.Component {
   };
 
   fetchAvatar = async () => {
-    let coinbase = await window.getCoinbase();
+
     const response = await fetch(
-      `https://api-image.dyp.finance/api/v1/avatar/${coinbase}`
+      `https://api-image.dyp.finance/api/v1/avatar/${this.state.coinbase}`
     )
       .then((res) => {
         return res.json();
@@ -279,9 +287,21 @@ export default class Subscription extends React.Component {
     return response;
   };
 
+  checkConnection() {
+    window.ethereum?.request({ method: "eth_accounts" })
+      .then((data) => {
+        
+        this.setState({
+          coinbase: data.length === 0 ? undefined : data[0],
+        });
+        this.fetchAvatar().then()
+      })
+      .catch(console.error);
+  }
+
   GetSubscriptionForm = () => {
     let tokenDecimals =
-      window.ethereum?.chainId === "0x1"
+      this.state.networkId === "1"
         ? window.config.subscriptioneth_tokens[
             this.state.selectedSubscriptionToken
           ]?.decimals
@@ -296,7 +316,7 @@ export default class Subscription extends React.Component {
         </h4>
         <form onSubmit={this.handleSubscribe}>
           <div>
-            {this.props.appState.isPremium ? (
+            {!this.props.appState.isPremium ? (
               <table className="w-100">
                 <tr
                   className="tablerow"
@@ -441,10 +461,10 @@ export default class Subscription extends React.Component {
                     <p className="subscr-subtitle">
                       The subscription tokens will be used to buy and lock DYP
                     </p>
-                    <p className="subscr-note">
+                    {/* <p className="subscr-note">
                       *When you unsubscribe the DYP will be unlocked and sent to
                       your wallet
-                    </p>
+                    </p> */}
                   </div>
                   <div>
                     <h3 className="subscr-price">75 USD</h3>
@@ -475,7 +495,7 @@ export default class Subscription extends React.Component {
                       <p>Select Subscription Token</p>
                       <div className="row m-0" style={{ gap: 10 }}>
                         {Object.keys(
-                          window.ethereum?.chainId === "0x1"
+                          this.state.networkId === "0x1"
                             ? window.config.subscriptioneth_tokens
                             : window.config.subscription_tokens
                         ).map((t, i) => (
@@ -497,7 +517,7 @@ export default class Subscription extends React.Component {
                                 // console.log(e.target)
                               }
                             />
-                            {window.ethereum?.chainId === "0x1"
+                            {this.state.networkId === "0x1"
                               ? window.config.subscriptioneth_tokens[t]?.symbol
                               : window.config.subscription_tokens[t]?.symbol}
                           </span>
@@ -654,18 +674,14 @@ export default class Subscription extends React.Component {
               </div>
             </>
           )}
-          <div className="mt-3 mb-3">
+          <div className={this.state.coinbase ? "mt-3 mb-3" : "d-none"}>
             <strong
               style={{ fontSize: "1.2rem" }}
               className="d-block mb-3 mt-5"
             >
               Avatar profile
             </strong>
-            <div
-              className={
-                this.state.coinbase ? "inputfile-wrapper" : "passive-avatar"
-              }
-            >
+            <div className={this.state.coinbase ? "inputfile-wrapper" : ""}>
               <img
                 src={this.state.image}
                 alt="your image"

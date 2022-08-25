@@ -60,7 +60,7 @@ const News = ({ theme, isPremium }) => {
   };
 
   const fetchVotingdata = async () => {
-    const test = await fetch(`https://testd.dyp.finance/v1/votes/all`)
+    const test = await fetch(`https://news-manage.dyp.finance/api/v1/votes/all`)
       .then((res) => {
         return res.json();
       })
@@ -88,7 +88,7 @@ const News = ({ theme, isPremium }) => {
 
   const handlefetchSingleVotingData = async (itemId) => {
     const result = await axios
-      .get(`https://testd.dyp.finance/v1/votes/${itemId}`)
+      .get(`https://news-manage.dyp.finance/api/v1/votes/${itemId}`)
       .then((data) => {
         return data.data;
       })
@@ -5987,7 +5987,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       let response = null;
       try {
         response = await axios.get(
-          `https://testd.dyp.finance/v1/vote/${itemId}/up`
+          `https://news-manage.dyp.finance/api/v1/vote/${itemId}/up`
         );
         
         // await fetchVotingdata();
@@ -6009,7 +6009,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
   
   const handleSingleUpVoting = async (itemId) => {
     return await axios
-    .get(`https://testd.dyp.finance/v1/vote/${itemId}/up`)
+    .get(`https://news-manage.dyp.finance/api/v1/vote/${itemId}/up`)
     .then((data) => {
       data.status === 200 ? setnewsItemId(itemId) : console.error();
     })
@@ -6018,7 +6018,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
 
   const handleSingleDownVoting = async (itemId) => {
     return await axios
-      .get(`https://testd.dyp.finance/v1/vote/${itemId}/down`)
+      .get(`https://news-manage.dyp.finance/api/v1/vote/${itemId}/down`)
       .then((data) => {
         data.status === 200 ? setnewsItemId(itemId) : console.error();
       })
@@ -6030,7 +6030,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       setShowTooltip(true);
   } else {
       return await axios
-        .get(`https://testd.dyp.finance/v1/vote/${itemId}/down`)
+        .get(`https://news-manage.dyp.finance/api/v1/vote/${itemId}/down`)
         .then((data) => {
           data.status === 200 ? setnewsItemId(itemId) : console.error();
         })
