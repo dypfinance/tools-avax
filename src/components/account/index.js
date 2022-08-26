@@ -38,21 +38,31 @@ export default class Subscription extends React.Component {
       showRemovebtn: false,
       subscribe_now: false,
       triggerText: "See more V",
-      networkId: '1'
+      networkId: "1",
     };
   }
 
   checkNetworkId() {
-    window.ethereum?.request({ method: "net_version" })
-      .then((data) => {
-        this.setState({
-          networkId: data
-        });
-        this.fetchfavData()
-      })
-      .catch(console.error);
+    if (window.ethereum) {
+      window.ethereum
+        .request({ method: "net_version" })
+        .then((data) => {
+          this.setState({
+            networkId: data,
+          });
+
+          this.fetchfavData();
+        })
+        .catch(console.error);
+    } else {
+      this.fetchfavData();
+      this.setState({
+        networkId: "1",
+      });
+    }
   }
-fetchfavData() {
+
+  fetchfavData() {
     if (this.state.networkId === "1") {
       window
         .getFavoritesETH()
@@ -74,10 +84,29 @@ fetchfavData() {
           : window.config.subscription_tokens
       )[0],
     });
-}
+  }
+
+  checkConnection() {
+    if (window.ethereum) {
+      window.ethereum
+        .request({ method: "eth_accounts" })
+        .then((data) => {
+          this.setState({
+            coinbase: data.length === 0 ? undefined : data[0],
+          });
+          this.fetchAvatar().then();
+        })
+        .catch(console.error);
+    } else {
+      this.setState({
+        networkId: "1",
+      });
+    }
+  }
+
   componentDidMount() {
-    this.checkConnection()
-    this.checkNetworkId()
+    this.checkConnection();
+    this.checkNetworkId();
     if (window.isConnectedOneTime) {
       this.onComponentMount();
     } else {
@@ -91,6 +120,8 @@ fetchfavData() {
   onComponentMount = async () => {
     this.setState({ coinbase: await window.getCoinbase() });
     this.handleSubscriptionTokenChange(this.state.selectedSubscriptionToken);
+    this.checkNetworkId();
+
     // this.fetchAvatar().then();
     // this.checkConnection()
   };
@@ -154,8 +185,7 @@ fetchfavData() {
     e.preventDefault();
     console.log("handleSubscribe()");
     let subscriptionContract = await window.getContract({
-      key:
-        this.state.networkId === "1" ? "SUBSCRIPTIONETH" : "SUBSCRIPTION",
+      key: this.state.networkId === "1" ? "SUBSCRIPTIONETH" : "SUBSCRIPTION",
     });
 
     this.setState({ loadspinnerSub: true });
@@ -175,8 +205,7 @@ fetchfavData() {
   handleUnsubscribe = async (e) => {
     e.preventDefault();
     let subscriptionContract = await window.getContract({
-      key:
-        this.state.networkId === "1" ? "SUBSCRIPTIONETH" : "SUBSCRIPTION",
+      key: this.state.networkId === "1" ? "SUBSCRIPTIONETH" : "SUBSCRIPTION",
     });
     await subscriptionContract.methods
       .unsubscribe()
@@ -272,7 +301,6 @@ fetchfavData() {
   };
 
   fetchAvatar = async () => {
-
     const response = await fetch(
       `https://api-image.dyp.finance/api/v1/avatar/${this.state.coinbase}`
     )
@@ -287,17 +315,7 @@ fetchfavData() {
     return response;
   };
 
-  checkConnection() {
-    window.ethereum?.request({ method: "eth_accounts" })
-      .then((data) => {
-        
-        this.setState({
-          coinbase: data.length === 0 ? undefined : data[0],
-        });
-        this.fetchAvatar().then()
-      })
-      .catch(console.error);
-  }
+  
 
   GetSubscriptionForm = () => {
     let tokenDecimals =
@@ -739,7 +757,8 @@ fetchfavData() {
             </div>
           </div>
         </form>
-        <strong style={{ fontSize: "1.2rem" }} className="d-block mb-3 mt-5">
+        
+        <strong style={{ fontSize: "1.2rem" }} className="d-block mb-3 mt-5" id="my-fav">
           MY FAVORITES
         </strong>
         <div className="row m-0" style={{ gap: 30 }}>

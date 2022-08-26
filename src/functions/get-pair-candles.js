@@ -3,9 +3,11 @@ import axios from "axios";
 async function getPairCandles(pair) {
     
   let candles = await axios.get(
-    window.ethereum?.chainId === "0x1"
+    window.ethereum ?
+    window.ethereum.chainId === "0x1"
       ? `${window.config.apieth_baseurl}/api/candles/minutes/${pair}`
       : `${window.config.api_baseurl}/api/candles/minutes/${pair}`
+      : `${window.config.apieth_baseurl}/api/candles/minutes/${pair}`
   );
   candles = candles.data;
   

@@ -44,13 +44,21 @@ class App extends React.Component {
   }
 
   checkNetworkId() {
-    window.ethereum?.request({ method: "net_version" })
+    if(window.ethereum) {
+      window.ethereum.request({ method: "net_version" })
       .then((data) => {
         this.setState({
           networkId: data
         });
+        this.refreshSubscription().then()
       })
       .catch(console.error);
+    }
+    else {
+      this.setState({
+        networkId: '1'
+      });
+    }
   }
 
   refreshSubscription = async () => {
@@ -68,9 +76,7 @@ class App extends React.Component {
     //   }
     // }.bind(this))
 
-    let coinbase = await window.getCoinbase().then((data) => {
-      return data;
-    });
+    let coinbase = this.state.coinbase
 
     let subscribedPlatformTokenAmount;
     if (this.state.networkId === "1") {
@@ -153,7 +159,7 @@ class App extends React.Component {
     this.checkConnection();
     this.checkNetworkId();
     this.refreshHotPairs();
-    this.subscriptionInterval = setInterval(this.refreshSubscription, 5e3);
+    // this.subscriptionInterval = setInterval(this.refreshSubscription, 5e3);
   }
 
   checkConnection() {
@@ -169,7 +175,7 @@ class App extends React.Component {
 
 
   componentWillUnmount() {
-    clearInterval(this.subscriptionInterval);
+    // clearInterval(this.subscriptionInterval);
   }
 
   toggleTheme = () => {
@@ -201,6 +207,7 @@ class App extends React.Component {
   };
 
   render() {
+    console.log(window.location.href)
     document.addEventListener("touchstart", { passive: true });
     return (
       <div

@@ -251,7 +251,7 @@ function handleTheGraphData({ data }) {
 
 function getFormattedMintOrBurn(mintOrBurn, type) {
   if (window.ethereum) {
-    if (window.ethereum?.chainId === "0xa86a") {
+    if (window.ethereum.chainId === "0xa86a") {
       let tokenAmount,
         ethAmount,
         tokenDecimals = 18,
@@ -295,7 +295,7 @@ function getFormattedMintOrBurn(mintOrBurn, type) {
       };
     }
 
-    if (window.ethereum?.chainId === "0x1") {
+    if (window.ethereum.chainId === "0x1") {
       let tokenAmount,
         ethAmount,
         tokenDecimals = 18,

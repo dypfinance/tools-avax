@@ -23,6 +23,8 @@ const Sidebar = (props) => {
   const [activeLink, setActiveLink] = useState("news");
   const [avatar, setAvatar] = useState("/assets/img/person.svg");
 
+
+
   const { chainId, active, account } = useWeb3React();
   const triedEager = useEagerConnect();
   useInactiveListener(!triedEager);
@@ -45,8 +47,7 @@ const Sidebar = (props) => {
     fetchAvatar().then()
   })
 
-  
-  
+
   return (
     <div
       onClick={props.toggleMobileSidebar}

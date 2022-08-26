@@ -10,12 +10,17 @@ const Header = ({toggleMobileSidebar, toggleTheme, theme}) => {
   const [chainId, setChainId] = useState(1)
 
   const checkNetworkId = () => {
-    window.ethereum?.request({ method: "net_version" })
+    if(window.ethereum) {
+window.ethereum.request({ method: "net_version" })
       .then((data) => {
         setChainId(Number(data))
-        this.fetchfavData()
+        fetchData()
       })
       .catch(console.error);
+    }
+    else {
+      setChainId(1)
+    }
   }
 
 

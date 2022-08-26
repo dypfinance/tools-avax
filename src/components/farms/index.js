@@ -90,9 +90,11 @@ export default class Farms extends React.Component {
   fetchFarms = async () => {
     try {
       let farms = await window.$.get(
-        window.ethereum?.chainId === "0x1"
+        window.ethereum ?
+        window.ethereum.chainId === "0x1"
           ? `${window.config.farm_api}/api/farm-info/eth/`
           : `${window.config.farm_api}/api/farm-info-avax/`
+          :`${window.config.farm_api}/api/farm-info/eth/`
       );
       farms = farms.farmInfo;
       //console.log({ farms })
