@@ -253,11 +253,13 @@ class App extends React.Component {
               />
               <Route
                 exact
-                path="/news"
-                render={() => (
+                path="/news/:news_id?"
+                render={(props) => (
                   <News
                     theme={this.state.theme}
                     isPremium={this.state.isPremium}
+                    key={props.match.params.news_id}
+                    {...props}
                   />
                 )}
               />

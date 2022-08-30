@@ -1096,7 +1096,7 @@ export default class PairExplorer extends React.Component {
                 ) : (
                   <div className="graph-progress">
                     <div className="progress-title">
-                      <p>DYP Score</p>
+                      <p style={{fontSize: 18}}>DYP Score</p>
                       <GearProgress
                         values={[0, getFormattedNumber(avg_weighted, 2)]}
                       >
@@ -1214,7 +1214,9 @@ export default class PairExplorer extends React.Component {
                 </div>
               </div>
             </div>
-            <LatestNews/>
+     
+            <div> <h5 className="mb-2 latestnews-title">Latest news</h5>
+            <LatestNews/></div>
           </div>
 
           <div className="rightside">

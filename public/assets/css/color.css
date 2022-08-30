@@ -185,7 +185,8 @@ body.theme-dark .latestnews-wrapper {
   color: var(--white);
 }
 
-body.theme-dark .output::before {
+body.theme-dark .output::before,
+body.theme-dark .latestnews-title  {
   color: var(--white);
 }
 
@@ -268,7 +269,7 @@ body.theme-dark .hamburger-menu {
   background-color: var(--white);
 }
 
-body.theme-dark .hamburger-menu span {
+body.theme-dark .hamburger-menu span{
   color: var(--black);
 }
 

@@ -10,8 +10,9 @@ import OutsideClickHandler from "react-outside-click-handler";
 import * as _ from "lodash";
 import { useWeb3React } from "@web3-react/core";
 import Carousel from 'better-react-carousel'
+import { useParams } from "react-router-dom";
 
-const News = ({ theme, isPremium }) => {
+const News = ({ theme, isPremium, key }) => {
 
  const responsive1 = [
     {
@@ -105,10 +106,27 @@ const News = ({ theme, isPremium }) => {
   useEffect(() => {
     fetchVotingdata().then();
   },[showModal, activeNews]);
+  const { news_id } = useParams();
+
+  const handleSelectOtherNews=(key)=> {
+    const search = obj => obj.id === key;
+    const index = newsArray.findIndex(search)
+    setActiveNews(newsArray[index]);
+  }
 
   useEffect(()=>{
     fetchNewsdata().then()
   }, [])
+
+  useEffect(()=>{
+    
+    if(news_id != undefined) {
+      window.scrollTo(0,0)
+      setShowModal(true);
+      handleSelectOtherNews(parseInt(news_id))
+    }
+  },[]) //todo
+
 
   const newsArray = [
     {
@@ -5992,7 +6010,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         
         // await fetchVotingdata();
          fetchVotingdata().then();
-         console.log('itemid', newsItemId)
+         
 
         // find which news was updated in the 3 array of news
         // if (newsArray.some(item => item.id === getUpdatedUpvoted.id)) {
@@ -6060,14 +6078,6 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
     }
   };
 
-  const updateCarouselPosition2 = (object) => {
-    if (typeof object === "number") {
-      setStartPosition2(object);
-    } else if (object.item.index != startPosition) {
-      setStartPosition2(object.item.index - 2);
-    }
-  };
-
   const listInnerRef = useRef();
 
   useEffect(() => {
@@ -6087,12 +6097,8 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
   };
 
   
-  const handleSelectOtherNews=(key)=> {
-    const search = obj => obj.id === key;
-    const index = newsArray.findIndex(search)
-    setActiveNews(newsArray[index]);
-  }
 
+  
   
   return (
     <div onScroll={onScroll} ref={listInnerRef} id="header">

@@ -1581,11 +1581,12 @@ font-size: 15px !important;
 
 .CircularProgressbar {
   width: 50% !important;
+  border-radius: 50%;
 }
 
 .CircularProgressbar .CircularProgressbar-path {
   stroke: #E30613 !important;
-  box-shadow: 0px 4px 8px rgb(248 69 49 / 60%) !important;
+  filter: drop-shadow(0px 4px 10px rgba(248, 69, 49, 0.6)) !important;
 }
 
 .CircularProgressbar .CircularProgressbar-text {
