@@ -23,8 +23,11 @@ body.theme-dark a,
 body.theme-dark span,
 body.theme-dark .header-left a,
 body.theme-dark .header-left span,
-body.theme-dark .news-title {
+body.theme-dark .news-title, 
+body.theme-dark .CircularProgressbar .CircularProgressbar-text {
   color: var(--white) !important;
+  fill: var(--white) !important;
+
 }
 
 /* body.theme-dark .hoverNetwork, */
@@ -43,7 +46,6 @@ body.theme-dark .form-control {
 body.theme-dark .header-wrap,
 body.theme-dark .sidebar,
 body.theme-dark .graph-wrap,
-body.theme-dark .firstbox-wrapper,
 body.theme-dark .content-footer,
 body.theme-dark .table-title,
 body.theme-dark .news-wrapper,
@@ -115,8 +117,9 @@ body.theme-dark .premium-subtitle {
   color: #939393 !important;
 }
 
-body.theme-dark .upgrade-text {
-  color: #e30613 !important;
+body.theme-dark .upgrade-text,
+body.theme-dark .MuiCircularProgress-root {
+  /* color: #e30613 !important; */
 }
 
 body.theme-dark .freetext,
@@ -175,10 +178,11 @@ body.theme-dark .content-title p {
 
 body.theme-dark #search-bar,
 body.theme-dark .firstbox-inner,
-body.theme-dark .secondbox-wrapper {
+body.theme-dark .firstbox-wrapper,
+body.theme-dark .secondbox-wrapper,
+body.theme-dark .latestnews-wrapper {
   background: var(--grey);
-
-  color: var(--black2);
+  color: var(--white);
 }
 
 body.theme-dark .output::before {
@@ -211,12 +215,7 @@ body.theme-dark .progress-done-two,
 body.theme-dark .progress-done-three,
 body.theme-dark .progress-done-four,
 body.theme-dark .progress-done-five {
-  background: linear-gradient(
-    90deg,
-    rgba(249, 101, 110, 1) 0%,
-    rgba(233, 89, 98, 1) 35%,
-    rgba(145, 43, 49, 1) 100%
-  );
+  background:  linear-gradient(90deg, #E30613 2.37%, #F84531 98.62%);
   color: var(--white);
 }
 
@@ -449,7 +448,7 @@ body.theme-white .progress-done-two,
 body.theme-white .progress-done-three,
 body.theme-white .progress-done-four,
 body.theme-white .progress-done-five {
-  background: var(--preloader-clr);
+  background: linear-gradient(90deg, #E30613 2.37%, #F84531 98.62%);;
   color: var(--white);
 }
 

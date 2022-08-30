@@ -317,7 +317,7 @@ export default class PoolExplorer extends React.Component {
                 className="fas fa-lock"
               />
             </NavLink>
-            <NavLink title="Pair Explorer" to={`/pair-explorer/${txn.pairId}`}>
+            <NavLink title="Pair Explorer" to={`/pair-explorer/${txn.pairId}`} onClick={()=>{window.location.replace(`/pair-explorer/${txn.pairId}`)}}>
               <i
                 style={{
                   fontSize: "20px",

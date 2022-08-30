@@ -21,6 +21,8 @@ const activateLasers = () => {
 const Sidebar = (props) => {
   const [activeBtn, setActiveBtn] = useState("avax");
   const [activeLink, setActiveLink] = useState("news");
+  const [location, setlocation] = useState("news");
+
   const [avatar, setAvatar] = useState("/assets/img/person.svg");
 
 
@@ -48,7 +50,12 @@ const Sidebar = (props) => {
   })
 
 
+  useEffect(()=>{
+    const fetchInterval = setInterval(() => setlocation(window.location.pathname), 1000)
+  })
+ 
   return (
+   
     <div
       onClick={props.toggleMobileSidebar}
       className={`sidebar ${props.isOpenInMobile ? "open" : ""}`}
@@ -162,7 +169,7 @@ const Sidebar = (props) => {
           >
             <li
               className={
-                window.location.href.includes("pool-explorer")
+                location.includes("pool-explorer")
                   ? "activenavlink"
                   : "navlinks"
               }
@@ -174,7 +181,7 @@ const Sidebar = (props) => {
                   setActiveLink("explorer");
                 }}
                 className={
-                  window.location.href.includes("pool-explorer")
+                  location.includes("pool-explorer")
                     ? "activelink"
                     : ""
                 }
@@ -187,10 +194,10 @@ const Sidebar = (props) => {
               >
                 <img
                   src={
-                    window.location.href.includes("pool-explorer") &&
+                    location.includes("pool-explorer") &&
                     props.theme === "theme-white"
                       ? "/assets/img/search.svg"
-                      : window.location.href.includes("pool-explorer") &&
+                      : location.includes("pool-explorer") &&
                         props.theme === "theme-dark"
                       ? "/assets/img/search-white.svg"
                       : "/assets/img/search-passive.svg"
@@ -202,7 +209,7 @@ const Sidebar = (props) => {
             </li>
             <li
               className={
-                window.location.href.includes("pair-explorer")
+                location.includes("pair-explorer")
                   ? "activenavlink"
                   : "navlinks"
               }
@@ -213,7 +220,7 @@ const Sidebar = (props) => {
                   setActiveLink("pair");
                 }}
                 className={
-                  window.location.href.includes("pair-explorer")
+                  location.includes("pair-explorer")
                     ? "activelink"
                     : ""
                 }
@@ -226,10 +233,10 @@ const Sidebar = (props) => {
               >
                 <img
                   src={
-                    window.location.href.includes("pair-explorer") &&
+                    location.includes("pair-explorer") &&
                     props.theme === "theme-white"
                       ? "/assets/img/compass.svg"
-                      : window.location.href.includes("pair-explorer") &&
+                      : location.includes("pair-explorer") &&
                         props.theme === "theme-dark"
                       ? "/assets/img/compass-white.svg"
                       : "/assets/img/compass-passive.svg"
@@ -251,7 +258,7 @@ const Sidebar = (props) => {
           >
             <li
               className={
-                window.location.href.includes("locker")
+                location.includes("locker")
                   ? "activenavlink"
                   : "navlinks"
               }
@@ -262,7 +269,7 @@ const Sidebar = (props) => {
                   setActiveLink("lock");
                 }}
                 className={
-                  window.location.href.includes("locker") ? "activelink" : ""
+                  location.includes("locker") ? "activelink" : ""
                 }
                 style={{
                   flexDirection: "column",
@@ -273,10 +280,10 @@ const Sidebar = (props) => {
               >
                 <img
                   src={
-                    window.location.href.includes("locker") &&
+                    location.includes("locker") &&
                     props.theme === "theme-white"
                       ? "/assets/img/locker-active.svg"
-                      : window.location.href.includes("locker") &&
+                      : location.includes("locker") &&
                         props.theme === "theme-dark"
                       ? "/assets/img/locker-white.svg"
                       : "/assets/img/locker-passive.svg"
@@ -288,7 +295,7 @@ const Sidebar = (props) => {
             </li>
             <li
               className={
-                window.location.href.includes("news")
+                location.includes("news")
                   ? "activenavlink"
                   : "navlinks"
               }
@@ -299,7 +306,7 @@ const Sidebar = (props) => {
                   setActiveLink("news");
                 }}
                 className={
-                  window.location.href.includes("news") ? "activelink" : ""
+                  location.includes("news") ? "activelink" : ""
                 }
                 style={{
                   flexDirection: "column",
@@ -310,10 +317,10 @@ const Sidebar = (props) => {
               >
                 <img
                   src={
-                    window.location.href.includes("news") &&
+                    location.includes("news") &&
                     props.theme === "theme-white"
                       ? "/assets/img/news-active.svg"
-                      : window.location.href.includes("news") &&
+                      : location.includes("news") &&
                         props.theme === "theme-dark"
                       ? "/assets/img/news-white.svg"
                       : "/assets/img/news-passive.svg"
@@ -348,7 +355,7 @@ const Sidebar = (props) => {
           >
             <li
               className={
-                window.location.href.includes("info")
+                location.includes("info")
                   ? "activenavlink"
                   : "navlinks"
               }
@@ -362,7 +369,7 @@ const Sidebar = (props) => {
                   setActiveLink("info");
                 }}
                 className={
-                  window.location.href.includes("info") ? "activelink" : ""
+                  location.includes("info") ? "activelink" : ""
                 }
                 style={{
                   flexDirection: "column",
@@ -373,10 +380,10 @@ const Sidebar = (props) => {
               >
                 <img
                   src={
-                    window.location.href.includes("info") &&
+                    location.includes("info") &&
                     props.theme === "theme-white"
                       ? "/assets/img/info-active.svg"
-                      : window.location.href.includes("info") &&
+                      : location.includes("info") &&
                         props.theme === "theme-dark"
                       ? "/assets/img/info-white.svg"
                       : "/assets/img/info-passive.svg"
@@ -463,7 +470,7 @@ const Sidebar = (props) => {
             </li>
             <li
               className={
-                window.location.href.includes("account")
+                location.includes("account")
                   ? "activenavlink"
                   : "navlinks"
               }
@@ -475,7 +482,7 @@ const Sidebar = (props) => {
                   setActiveLink("account");
                 }}
                 className={
-                  window.location.href.includes("account") ? "activelink" : ""
+                  location.includes("account") ? "activelink" : ""
                 }
                 style={{
                   flexDirection: "column",
@@ -487,10 +494,10 @@ const Sidebar = (props) => {
                 <img
                   src={
                     avatar.includes('thumbnails') ? avatar :
-                     window.location.href.includes("account") &&
+                     location.includes("account") &&
                     props.theme === "theme-white"
                       ? "/assets/img/person-active.svg"
-                      :  window.location.href.includes("account") &&
+                      :  location.includes("account") &&
                         props.theme === "theme-dark"
                       ? "/assets/img/person-white.svg"
                       : "/assets/img/person.svg"

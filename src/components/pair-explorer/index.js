@@ -3,22 +3,26 @@ import moment from "moment";
 import DataTable, { createTheme } from "react-data-table-component";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { NavLink, Redirect } from "react-router-dom";
-import Web3 from "web3";
 
 // import Chart from 'kaktana-react-lightweight-charts'
 import { TVChartContainer } from "../tv-chart-container/index";
 
 import getProcessedSwaps from "../../functions/get-processed-swaps";
 import getFormattedNumber from "../../functions/get-formatted-number";
-
 import getSearchResults from "../../functions/get-search-results";
 import { get24hEarlierBlock } from "../../functions/get-block-from-timestamp";
 import fetchGql from "../../functions/fetch-gql";
 import { getPairCandles } from "../../functions/datafeed";
 import PairLocker from "./pairlocker.svg";
 import { Modal, Button } from "react-bootstrap";
-
+import GearProgress from "./GearProgress";
 import axios from "axios";
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
+import LatestNews from './LatestNews'
+
+
+
 
 async function getTokenInformation(address) {
   let res = await axios.get(
@@ -102,7 +106,6 @@ export default class PairExplorer extends React.Component {
       isLoading: true,
       isSearching: false,
       _24hEarlierBlock: null,
-
       show: false,
 
       mainToken: null,
@@ -131,6 +134,7 @@ export default class PairExplorer extends React.Component {
       histogramSeries: [],
     };
   }
+
 
   checkNetworkId() {
     if (window.ethereum) {
@@ -170,7 +174,6 @@ export default class PairExplorer extends React.Component {
 
   fetchfavData() {
     if (this.state.networkId === "1") {
-      console.log("yes");
       window
         .getFavoritesETH()
         .then((favorites) => this.setState({ favorites }))
@@ -185,6 +188,7 @@ export default class PairExplorer extends React.Component {
     }
   }
 
+  
   componentDidMount() {
     this.oldTitle = document.querySelector("title").innerText;
     let pair_id = this.props.match.params.pair_id;
@@ -192,7 +196,6 @@ export default class PairExplorer extends React.Component {
     this.checkNetworkId();
     window.addOneTimeWalletConnectionListener(this.refreshVoteCount);
     window.addOneTimeWalletConnectionListener(this.refreshPairInfo);
-
     this.fetchInterval = setInterval(() => this.fetchSwaps(pair_id), 15000);
   }
   componentWillUnmount() {
@@ -203,8 +206,9 @@ export default class PairExplorer extends React.Component {
     window.removeOneTimeWalletConnectionListener(this.refreshPairInfo);
   }
 
+
   refreshCGInfo = async (tokenAddress) => {
-    // alert(tokenAddress)
+    
     try {
       let info = await getTokenInformation(tokenAddress);
       let cgInfo = {};
@@ -848,6 +852,9 @@ export default class PairExplorer extends React.Component {
   };
 
   render() {
+    // this.state.newsData[0].slice(0,10)
+ 
+ 
     if (!this.props.match.params.pair_id) {
       return (
         <Redirect
@@ -891,6 +898,7 @@ export default class PairExplorer extends React.Component {
         baseTokenKey = "0";
       }
     }
+    
 
     return (
       <div className="l-pair-explorer">
@@ -1089,48 +1097,66 @@ export default class PairExplorer extends React.Component {
                   <div className="graph-progress">
                     <div className="progress-title">
                       <p>DYP Score</p>
-                      <span>{getFormattedNumber(avg_weighted, 2)}%</span>
-                    </div>
-                    {scores.map((score, i) => (
-                      <div
-                        key={i}
-                        title={`${score.name}: ${getFormattedNumber(
-                          score.score,
-                          2
-                        )}%`}
-                        className={`progress ${i == 0 ? "v1" : ""}`}
+                      <GearProgress
+                        values={[0, getFormattedNumber(avg_weighted, 2)]}
                       >
-                        <div
-                          style={{
-                            width: `${getFormattedNumber(score.score, 2)}%`,
-                            opacity: 1,
-                          }}
-                          className="progress-done-one"
-                        ></div>
-                      </div>
-                    ))}
-                    {/* <div title={`Security: ${getFormattedNumber(this.state.pairInfo?.ts_score_security, 2)}%`} className="progress v1">
-                                <div style={{width: `${getFormattedNumber(this.state.pairInfo?.ts_score_security, 2)}%`, opacity: 1}} className="progress-done-one" data-done="45">
-                                </div>
-                            </div>
-                            <div title={`Information: ${getFormattedNumber(this.state.pairInfo?.ts_score_information, 2)}%`} className="progress">
-                                <div style={{width: `${getFormattedNumber(this.state.pairInfo?.ts_score_information, 2)}%`, opacity: 1}} className="progress-done-two" data-done="95">
-                                </div>
-                            </div>
-                            <div title={`Liquidity: ${getFormattedNumber(this.state.pairInfo?.ts_score_liquidity, 2)}%`} className="progress">
-                                <div style={{width: `${getFormattedNumber(this.state.pairInfo?.ts_score_liquidity, 2)}%`, opacity: 1}} className="progress-done-three" data-done="95">
-                                </div>
-                            </div>
-                            <div title={`Tokenomics: ${getFormattedNumber(this.state.pairInfo?.ts_score_tokenomics, 2)}%`} className="progress">
-                                <div style={{width: `${getFormattedNumber(this.state.pairInfo?.ts_score_tokenomics, 2)}%`, opacity: 1}} className="progress-done-four" data-done="95">
-                                </div>
-                            </div> */}
+                        {(value) => (
+                          <CircularProgressbar
+                            value={value}
+                            text={`${value}%`}
+                            circleRatio={0.75}
+                            styles={buildStyles({
+                              rotation: 1 / 2 + 1 / 8,
+                              strokeLinecap: "butt",
+                              trailColor: "#D6D8E7",
+                            })}
+                          />
+                        )}
+                      </GearProgress>
+                    </div>
+                    <div
+                      className="row m-0 justify-content-center"
+                      style={{ gap: 10 }}
+                    >
+                      {scores.map((score, i) => (
+                        <div className="score-wrapper" key={i}>
+                          <GearProgress values={[0, 100]}>
+                            {(value) => (
+                              <CircularProgressbar
+                                value={getFormattedNumber(score.score, 2)}
+                                text={`${
+                                  getFormattedNumber(score.score, 2) ===
+                                  "100.00"
+                                    ? 100
+                                    : getFormattedNumber(score.score, 2)
+                                }%`}
+                                circleRatio={0.75}
+                                styles={buildStyles({
+                                  rotation: 1 / 2 + 1 / 8,
+                                  strokeLinecap: "butt",
+                                  trailColor: "#D6D8E7",
+                                })}
+                              />
+                            )}
+                          </GearProgress>
+
+                          <span className="score-title">{score.name}</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 )}
-
-                <div className="graph-progress mt-30">
-                  <div className="progress-title">
-                    <p>Community Trust ({this.state.voteCount} votes)</p>
+              </div>
+              <div className="graph-progress mt-30">
+                <div
+                  className="progress-title"
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <p>
+                    Community Trust{" "}
                     <span>
                       {(
                         (this.state.upvoteCount / (this.state.voteCount || 1)) *
@@ -1138,55 +1164,57 @@ export default class PairExplorer extends React.Component {
                       ).toFixed(2)}
                       %
                     </span>
-                  </div>
-                  <div className="container">
-                    <div className="row">
-                      <div className="col-1 pl-0 pr-0">
-                        <span
-                          onClick={() => this.registerVote(true)}
+                  </p>
+                  <p>{this.state.voteCount} votes</p>
+                </div>
+                <div className="container">
+                  <div className="row">
+                    <div className="col-1 pl-0 pr-0">
+                      <span
+                        onClick={() => this.registerVote(true)}
+                        style={{
+                          position: "relative",
+                          cursor: "pointer",
+                          top: "-3px",
+                        }}
+                        className={`fa${
+                          this.state.coinbaseVote === true ? "s" : "r"
+                        } fa-thumbs-up`}
+                      ></span>
+                    </div>
+                    <div className="col-10 pl-0 pr-0">
+                      <div className="progress">
+                        <div
                           style={{
-                            position: "relative",
-                            cursor: "pointer",
-                            top: "-3px",
+                            width: `${(
+                              (this.state.upvoteCount /
+                                (this.state.voteCount || 1)) *
+                              100
+                            ).toFixed(2)}%`,
+                            opacity: 1,
                           }}
-                          className={`fa${
-                            this.state.coinbaseVote === true ? "s" : "r"
-                          } fa-thumbs-up`}
-                        ></span>
+                          className="progress-done-five"
+                        ></div>
                       </div>
-                      <div className="col-10 pl-0 pr-0">
-                        <div className="progress">
-                          <div
-                            style={{
-                              width: `${(
-                                (this.state.upvoteCount /
-                                  (this.state.voteCount || 1)) *
-                                100
-                              ).toFixed(2)}%`,
-                              opacity: 1,
-                            }}
-                            className="progress-done-five"
-                          ></div>
-                        </div>
-                      </div>
-                      <div className="col-1 pl-0 pr-0 text-right">
-                        <span
-                          onClick={() => this.registerVote(false)}
-                          style={{
-                            position: "relative",
-                            cursor: "pointer",
-                            top: "-3px",
-                          }}
-                          className={`fa${
-                            this.state.coinbaseVote === false ? "s" : "r"
-                          } fa-thumbs-down`}
-                        ></span>
-                      </div>
+                    </div>
+                    <div className="col-1 pl-0 pr-0 text-right">
+                      <span
+                        onClick={() => this.registerVote(false)}
+                        style={{
+                          position: "relative",
+                          cursor: "pointer",
+                          top: "-3px",
+                        }}
+                        className={`fa${
+                          this.state.coinbaseVote === false ? "s" : "r"
+                        } fa-thumbs-down`}
+                      ></span>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+            <LatestNews/>
           </div>
 
           <div className="rightside">
@@ -1569,10 +1597,19 @@ export default class PairExplorer extends React.Component {
                 </div>
               </div>
               <div className="secondbox-wrapper favorites">
-                <div className="content-title m-0 p-0">
+                <div
+                  className="content-title m-0 p-0"
+                  style={{ borderBottom: "none" }}
+                >
                   <div className="content-title-top">
                     <h2>FAVOURITES</h2>
-                    <button className="tradebtn m-0 w-auto" style={{ gap: 5 }} onClick={()=>{window.location.assign('/account#my-fav')}}>
+                    <button
+                      className="tradebtn m-0 w-auto"
+                      style={{ gap: 5 }}
+                      onClick={() => {
+                        window.location.assign("/account#my-fav");
+                      }}
+                    >
                       <svg
                         width="10"
                         height="10"

@@ -207,7 +207,7 @@ class App extends React.Component {
   };
 
   render() {
-    console.log(window.location.href)
+
     document.addEventListener("touchstart", { passive: true });
     return (
       <div

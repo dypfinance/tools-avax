@@ -19,7 +19,6 @@ import BadgeGrayLight from "../../assets/badge-gray-light.svg";
 import CountDownTimer from "./Countdown";
 import Skeleton from "./Skeleton";
 import Error from "../../assets/error.svg";
-
 export default class Locker extends React.Component {
   constructor(props) {
     super(props);

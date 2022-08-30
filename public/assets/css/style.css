@@ -464,6 +464,15 @@ min-height: 100px;
 padding: 20px;
 }
 
+.MuiCircularProgress-root {
+  transform: rotate(-180deg) !important;
+  color: #d32f2f !important;
+}
+
+.css-nt50a2-MuiCircularProgress-root {
+  color: #D6D8E7 !important;
+}
+
 .favorites {
   width: 47%;
 }
@@ -1535,6 +1544,7 @@ body.theme-dark img.graph-two {
 
 .progress-title {
   display: flex;
+  flex-direction: column-reverse;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
@@ -1542,10 +1552,58 @@ body.theme-dark img.graph-two {
 }
 
 .progress-title p {
-  /* font-size: 24px; */
-  margin: 0;
-  /* line-height: 24px; */
-  opacity: 0.7;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 22px;
+  letter-spacing: -0.018em;
+  color: #71757E !important;
+}
+
+.dXdHiN {
+  background: #E30613 !important;
+box-shadow: 0px 4px 4px rgba(227, 7, 19, 0.3) !important;
+}
+
+.css-ol7wxs-MuiTypography-root {
+  color: #303134 !important;
+  font-weight: 700 !important;
+font-size: 15px !important;
+}
+
+.score-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 30%;
+}
+
+.CircularProgressbar {
+  width: 50% !important;
+}
+
+.CircularProgressbar .CircularProgressbar-path {
+  stroke: #E30613 !important;
+  box-shadow: 0px 4px 8px rgb(248 69 49 / 60%) !important;
+}
+
+.CircularProgressbar .CircularProgressbar-text {
+  font-weight: 400 !important;
+font-size: 20px;
+line-height: 24px;
+letter-spacing: -0.018em;
+fill: #303134 !important;
+}
+
+.score-title {
+  font-weight: 500;
+font-size: 11px;
+line-height: 13px;
+text-align: center;
+letter-spacing: -0.018em;
+color: #303134 !important;
+
 }
 
 .progress-title span {
@@ -1567,7 +1625,7 @@ body.theme-dark img.graph-two {
 .progress-done-three,
 .progress-done-four,
 .progress-done-five {
-  background: #f9656e;
+  background: linear-gradient(90deg, #E30613 2.37%, #F84531 98.62%);
   border-radius: 20px;
   display: flex;
   align-items: center;
@@ -3394,12 +3452,19 @@ font-size: 12px !important;
   background: #FFFFFF;
 box-shadow: 10px 20px 40px rgba(0, 0, 0, 0.1);
 border-radius: 8px;
-max-width: 415px;
+/* max-width: 415px; */
 min-height: 270px;
 width: 100%;
 padding: 20px;
 /* height: 100%; */
 position: relative;
+}
+
+.latestnews-wrapper {
+  background: #FFFFFF;
+    box-shadow: 12px 16px 44px rgb(0 0 0 / 12%);
+    border-radius: 8px;
+    padding-bottom: 10px;
 }
 
 .firstbox-text {
