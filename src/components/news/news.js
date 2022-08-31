@@ -6110,7 +6110,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
     <div onScroll={onScroll} ref={listInnerRef} id="header">
       <div className="news-wrapper">
         {!showModal ? <h1 className="news-title">Popular News</h1> : ""}
-        <div className="row m-0 main-news-content-wrapper justify-content-center">
+        <div className="row m-0 main-news-content-wrapper">
           {showModal === true ? (
             <NewsModal
               style={{ width: "fit-content" }}

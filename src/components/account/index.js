@@ -329,8 +329,8 @@ export default class Subscription extends React.Component {
 
     return (
       <div>
-        <h4 style={{ fontSize: "1.2rem" }} className="d-block mb-3">
-          SUBSCRIBE TO DYP TOOLS PREMIUM
+        <h4 className="d-block mb-3">
+          Subscribe to DYP Tools premium
         </h4>
         <form onSubmit={this.handleSubscribe}>
           <div>
@@ -693,12 +693,9 @@ export default class Subscription extends React.Component {
             </>
           )}
           <div className={this.state.coinbase ? "mt-3 mb-3" : "d-none"}>
-            <strong
-              style={{ fontSize: "1.2rem" }}
-              className="d-block mb-3 mt-5"
-            >
-              Avatar profile
-            </strong>
+
+              <h4 className="d-block mb-3 mt-5"> Avatar profile</h4>
+             
             <div className={this.state.coinbase ? "inputfile-wrapper" : ""}>
               <img
                 src={this.state.image}
@@ -758,9 +755,9 @@ export default class Subscription extends React.Component {
           </div>
         </form>
         
-        <strong style={{ fontSize: "1.2rem" }} className="d-block mb-3 mt-5" id="my-fav">
-          MY FAVORITES
-        </strong>
+        <h4 className="d-block mb-3 mt-5" id="my-fav">
+         My favorites
+      </h4>
         <div className="row m-0" style={{ gap: 30 }}>
           {this.state.favorites.map((lock, index) => {
             return (

@@ -39,6 +39,14 @@ iframe {
   box-shadow: none;
 }
 
+b {
+  font-weight: bold;
+}
+
+.lockertitle-text {
+  font-size: 18px;
+}
+
 a,
 button,
 input[type="submit"] {
@@ -74,6 +82,15 @@ h5,
 h6 {
   margin: 0;
   font-weight: 600;
+  font-size: 24px;
+}
+
+h5 {
+  font-size: 20px;
+}
+
+h4 {
+  font-size: 18px;
 }
 
 body {
@@ -81,6 +98,7 @@ body {
   padding: 0;
   color: #000000;
   font-weight: 400;
+  font-size: 14px;
   /* font-family: "Calibre Regular"; */
   font-family: "Inter", sans-serif;
   /* overflow-x: hidden !important; */
@@ -98,6 +116,8 @@ li {
 
 p {
   line-height: 1.7;
+  font-size: 12px;
+  margin-bottom: 0;
 }
 
 a {
@@ -1670,7 +1690,7 @@ color: #303134 !important;
   }
 
   .news-title {
-    font-size: 28px !important;
+    font-size: 24px !important;
     margin-bottom: 10px !important;
   }
 
@@ -1699,17 +1719,31 @@ color: #303134 !important;
 /*-----table----*/
 
 .table-title h4 {
-  font-size: 20px;
-  text-transform: uppercase;
+  font-size: 18px;
+  /* text-transform: uppercase; */
   line-height: 20px;
   /* font-family: "Calibre Medium"; */
   letter-spacing: 0.5px;
 }
 
 .table-title {
-  padding: 21px 25px 16px;
+  padding: 21px 17px 16px;
   margin: 10px 0;
 }
+
+.jVeafb {
+  font-size: 12px !important;
+}
+
+.header-right ul li a {
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.dropdown-text {
+  font-size: 12px;
+}
+
 
 .table-head,
 .table-data {
@@ -1897,7 +1931,7 @@ color: #303134 !important;
 
 .news-title {
   font-weight: 700;
-  font-size: 32px;
+  font-size: 24px;
   line-height: 39px;
   color: #000000;
 }
@@ -2745,7 +2779,7 @@ input[type="radio"] {
 }
 
 .footer-menu ul li a {
-  font-size: 18px;
+  font-size: 12px;
   line-height: 24px;
   text-transform: capitalize;
   /* font-family: "Calibre Regular"; */
@@ -3011,9 +3045,10 @@ body {
 }
 body.theme-white p.text-muted {
   color: #777 !important;
+  font-size: 12px;
   /* background: #f5f5f5; */
   border-radius: 6px;
-  padding: 10px;
+  padding: 10px 10px 10px 0;
 }
 body.theme-dark p.text-muted {
   color: var(--black2) !important;

@@ -138,8 +138,8 @@ window.ethereum.request({ method: "net_version" })
           </div>
         ) : (
           <div className="dropdown bridged">
-            <span>Bridged on Avalanche</span>
-            <span>{getFormattedNumber(gasPrice, 2)} usd</span>
+            <span className="dropdown-text">Bridged on Avalanche</span>
+            <span className="dropdown-text">{getFormattedNumber(gasPrice, 2)} usd</span>
           </div>
         )}
       </div>

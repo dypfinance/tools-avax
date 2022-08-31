@@ -590,7 +590,7 @@ export default class Locker extends React.Component {
   GetPairLockInfo = () => {
     return (
       <div className="mb-4">
-        <p style={{ color: "#A4A4A4", fontSize: 14 }}>
+        <p style={{ color: "#A4A4A4", fontSize: 12 }}>
           Total{" "}
           {this.state.pair
             ? `${this.state.pair.token0.symbol}-${this.state.pair.token1.symbol}`
@@ -647,14 +647,14 @@ export default class Locker extends React.Component {
     if (this.state.placeholderState === true) {
       return (
         <div className="placeholderdiv">
-          <strong style={{ fontSize: "1.2rem" }} className="d-block mb-3">
-            CREATE A LOCK
+          <strong style={{ fontSize: "18px" }} className="d-block mb-3">
+          Create a lock
           </strong>
           <div>
             <form>
               <p
                 className="text-muted lock-text-wrapper"
-                style={{ fontSize: ".8rem" }}
+                
               >
                 DYP Locker is a solution that supports liquidity lock
                 functionality to every new project. Liquidity is the first thing
@@ -666,16 +666,16 @@ export default class Locker extends React.Component {
                   <img
                     src={LiqLocked}
                     alt=""
-                    style={{ width: 80, height: 80 }}
+                    style={{ width: 80, height: 80, borderRadius: 6 }}
                   />
                 </div>
                 <div className="lock-text-wrapper">
-                  <h6>
-                    <strong>Locking Liquidity</strong>
+                  <h6 className="lockertitle-text">
+                    <b>Locking Liquidity</b>
                   </h6>
                   <p
                     className="text-muted"
-                    style={{ fontSize: ".8rem", width: "fit-content" }}
+                    style={{  width: "fit-content" }}
                   >
                     This makes the funds immovable until they are unlocked.
                     Every owner of the project can encrypt a portion of the
@@ -692,16 +692,16 @@ export default class Locker extends React.Component {
                   <img
                     src={VerifiedLock}
                     alt=""
-                    style={{ width: 80, height: 80 }}
+                    style={{ width: 80, height: 80, borderRadius: 6 }}
                   />
                 </div>
                 <div className="lock-text-wrapper">
-                  <h6>
-                    <strong>Verified Security</strong>
+                  <h6 className="lockertitle-text">
+                    <b>Verified Security</b>
                   </h6>
                   <p
                     className="text-muted"
-                    style={{ fontSize: ".8rem", width: "fit-content" }}
+                    style={{  width: "fit-content" }}
                   >
                     Each project that locks liquidity on DYP Locker will be
                     given a verified security badge. Owners of the project can
@@ -711,7 +711,7 @@ export default class Locker extends React.Component {
                 </div>
               </div>
               <br />
-              <div style={{ gap: 100 }} className="row m-0">
+              <div style={{ gap: 100, marginTop: 40, marginBottom: 40 }} className="row ml-0">
                 <div>
                   <div className="row m-0 align-items-end" style={{ gap: 40 }}>
                     <div>
@@ -757,14 +757,14 @@ export default class Locker extends React.Component {
     } else if (this.state.placeholderState === false) {
       return (
         <div>
-          <strong style={{ fontSize: "1.2rem" }} className="d-block mb-3">
-            CREATE A LOCK
+          <strong style={{ fontSize: "18px" }} className="d-block mb-3">
+          Create a lock
           </strong>
           <div>
             <form onSubmit={this.handleLockSubmit}>
               <p
                 className="text-muted lock-text-wrapper"
-                style={{ fontSize: ".8rem" }}
+                
               >
                 DYP Locker is a solution that supports liquidity lock
                 functionality to every new project. Liquidity is the first thing
@@ -776,16 +776,16 @@ export default class Locker extends React.Component {
                   <img
                     src={LiqLocked}
                     alt=""
-                    style={{ width: 80, height: 80 }}
+                    style={{ width: 80, height: 80, borderRadius: 6 }}
                   />
                 </div>
                 <div className="lock-text-wrapper">
-                  <h6>
-                    <strong>Locking Liquidity</strong>
+                  <h6 className="lockertitle-text">
+                    <b>Locking Liquidity</b>
                   </h6>
                   <p
                     className="text-muted"
-                    style={{ fontSize: ".8rem", width: "fit-content" }}
+                    style={{  width: "fit-content" }}
                   >
                     This makes the funds immovable until they are unlocked.
                     Every owner of the project can encrypt a portion of the
@@ -802,16 +802,16 @@ export default class Locker extends React.Component {
                   <img
                     src={VerifiedLock}
                     alt=""
-                    style={{ width: 80, height: 80 }}
+                    style={{ width: 80, height: 80, borderRadius: 6 }}
                   />
                 </div>
                 <div className="lock-text-wrapper">
-                  <h6>
-                    <strong>Verified Security</strong>
+                  <h6 className="lockertitle-text">
+                    <b>Verified Security</b>
                   </h6>
                   <p
                     className="text-muted"
-                    style={{ fontSize: ".8rem", width: "fit-content" }}
+                    style={{  width: "fit-content" }}
                   >
                     Each project that locks liquidity on DYP Locker will be
                     given a verified security badge. Owners of the project can
@@ -821,7 +821,7 @@ export default class Locker extends React.Component {
                 </div>
               </div>
               <br />
-              <div style={{ gap: 100 }} className="row m-0">
+              <div style={{ gap: 100, marginTop: 40, marginBottom: 40 }} className="row ml-0">
                 <div>
                   <div className="row m-0 align-items-end" style={{ gap: 40 }}>
                     <div>
@@ -1337,8 +1337,8 @@ export default class Locker extends React.Component {
     if (this.state.recipientLocks.length > 0) {
       return (
         <div>
-          <strong style={{ fontSize: "1.2rem" }} className="d-block mb-3 mt-3">
-            MY LOCKS
+          <strong style={{ fontSize: "18px" }} className="d-block mb-3 mt-3">
+            My locks
           </strong>
           <div
             style={{ display: "flex", flexWrap: "wrap", gap: 20, rowGap: 45 }}
@@ -1559,10 +1559,10 @@ export default class Locker extends React.Component {
       return (
         <div>
           <strong
-            style={{ fontSize: "1.2rem", marginTop: "3rem" }}
+            style={{ fontSize: "18px", marginTop: "3rem" }}
             className="d-block mb-3 mt-3"
           >
-            MY LOCKS
+            My locks
           </strong>
           <div className="row justify-content-between p-0 ml-0">
             <Skeleton />
@@ -1591,8 +1591,8 @@ export default class Locker extends React.Component {
 
     return (
       <div>
-        <strong style={{ fontSize: "1.2rem" }} className="d-block mb-3">
-          PAIR LOCKS
+        <strong style={{ fontSize: "18px" }} className="d-block mb-3">
+          Pair locks
         </strong>
         {this.GetPairLockInfo()}
         <div
@@ -1924,14 +1924,14 @@ export default class Locker extends React.Component {
   render() {
     return (
       <div className="locker">
-        <div className="col-md-6 px-3">
+        <div className="table-title">
           <h2 style={{ display: "block", color: `var(--preloader-clr)` }}>
             DYP Locker
           </h2>
 
           <p>
             Lock {window.ethereum ? window.ethereum.chainId === "0x1" ? "Uniswap" : "Pangolin" : 'Uniswap'}
-            Liquidity and Check Status of Liquidity Locks.
+            {" "}Liquidity and Check Status of Liquidity Locks.
           </p>
         </div>
         <div className="l-table-wrapper-div p-4">

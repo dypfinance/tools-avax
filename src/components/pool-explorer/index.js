@@ -418,7 +418,7 @@ export default class PoolExplorer extends React.Component {
     return (
       <div>
         <div className="row px-3 table-title">
-          <div className="col-md-6">
+          <div className="col-md-6 pl-0">
             {this.state.screen === "pool" ? (
               <>
                 <h2 style={{ display: "block", color: `var(--preloader-clr)` }}>
@@ -537,7 +537,7 @@ export default class PoolExplorer extends React.Component {
                   }}
                   type="text"
                   id="search-bar"
-                  style={{ paddingBottom: "3px" }}
+                  style={{ paddingBottom: "10px" }}
                   autoComplete="off"
                   placeholder="Filter by Token"
                   className="l-border-black"

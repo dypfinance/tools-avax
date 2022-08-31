@@ -24,7 +24,7 @@
 
 @media only screen and (min-width: 1440px) {
     .copyright {
-        font-size: 15px;
+        font-size: 12px;
     }
 
     .header-left {
@@ -36,7 +36,7 @@
 @media only screen and (min-width: 1200px) and (max-width: 1439px) {
 
     .copyright {
-        font-size: 15px;
+        font-size: 12px;
     }
 
     .right-content {
@@ -64,7 +64,7 @@
 @media only screen and (min-width: 992px) {
 
     .copyright {
-        font-size: 15px;
+        font-size: 12px;
     }
 
     .header-center,

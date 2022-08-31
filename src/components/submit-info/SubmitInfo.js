@@ -90,7 +90,7 @@ const SubmitInfo = () => {
         </div>
       </div>
       <div className="px-3 table-title" style={{ paddingBottom: "6rem" }}>
-        <form style={{ display: "flex", flexDirection: "column", gap: 20, margin: '2rem' }}>
+        <form style={{ display: "flex", flexDirection: "column", gap: 20, margin: '2rem'}}>
           <div style={{borderBottom: '1px solid #D5D7E6'}}>
             <h5>Your details</h5>
             <div className="row mt-3 mb-4">
