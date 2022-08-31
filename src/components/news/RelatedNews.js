@@ -5,6 +5,7 @@ import Downvote from "./assets/downvote.svg";
 import ToolTip from "./ToolTip";
 import OutsideClickHandler from "react-outside-click-handler";
 import Clock from "./assets/clock.svg";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const RelatedNews = ({
   title,
@@ -22,8 +23,7 @@ const RelatedNews = ({
   onHandleUpvote,
   onHandleDownvote,
   onDownVoteClick,
-  isPremium
-
+  isPremium,
 }) => {
   const [likeIndicator, setLikeIndicator] = useState(false);
   const [dislikeIndicator, setDislikeIndicator] = useState(false);
@@ -33,7 +33,10 @@ const RelatedNews = ({
   const bal2 = Number(localStorage.getItem("balance2"));
 
   const handleLikeStates = () => {
-    if ((bal1 === 0 && bal2 === 0 && isPremium === false)|| isConnected === false) {
+    if (
+      (bal1 === 0 && bal2 === 0 && isPremium === false) ||
+      isConnected === false
+    ) {
       setLikeIndicator(false);
       setShowTooltip(true);
     } else {
@@ -48,7 +51,10 @@ const RelatedNews = ({
   };
 
   const handleDisLikeStates = () => {
-    if ((bal1 === 0 && bal2 === 0 && isPremium === false) || isConnected === false) {
+    if (
+      (bal1 === 0 && bal2 === 0 && isPremium === false) ||
+      isConnected === false
+    ) {
       setLikeIndicator(false);
       setShowTooltip(true);
     } else {
@@ -62,19 +68,33 @@ const RelatedNews = ({
     }
   };
 
+  if (title === undefined) {
+    return (
+      <div
+        style={{ padding: "60px", display: "flex", justifyContent: "center" }}
+      >
+        <CircularProgress color="inherit" size={75} />
+      </div>
+    );
+  }
   return (
-      
-      <div  style={{display: title?.includes('http') ? 'none' : 'block'}}>
+    <div style={{ display: title?.includes("http") ? "none" : "block" }}>
       <div className="single-related-news-wrapper">
         <div
           className="d-flex align-items-center justify-content-between"
           style={{ gap: 5 }}
         >
-          <div
-            className="d-flex flex-column"
-            style={{ gap: 15 }}
-          >
-            <h6 className="related-subnews-title" onClick={() => {onSelectOtherNews(newsId);setLikeIndicator(false); setDislikeIndicator(false);}}>{title}</h6>
+          <div className="d-flex flex-column" style={{ gap: 15 }}>
+            <h6
+              className="related-subnews-title"
+              onClick={() => {
+                onSelectOtherNews(newsId);
+                setLikeIndicator(false);
+                setDislikeIndicator(false);
+              }}
+            >
+              {title}
+            </h6>
             <div className="news-bottom-wrapper">
               <div className="like-wrapper">
                 <img
@@ -92,22 +112,24 @@ const RelatedNews = ({
                     e.stopPropagation();
                   }}
                 />
-                 {showTooltip === true ? (
-                <OutsideClickHandler
-                  onOutsideClick={() => {
-                    setShowTooltip(false);
-                  }}
-                >
-                  <ToolTip status={
-                    isConnected
-                      ? "You need to be holding DYP to vote"
-                      : "Please connect your wallet"
-                  }/>
-                </OutsideClickHandler>
-              ) : (
-                <></>
-              )}
-               <span> {Number(upvotes) - Number(downvotes)}</span>
+                {showTooltip === true ? (
+                  <OutsideClickHandler
+                    onOutsideClick={() => {
+                      setShowTooltip(false);
+                    }}
+                  >
+                    <ToolTip
+                      status={
+                        isConnected
+                          ? "You need to be holding DYP to vote"
+                          : "Please connect your wallet"
+                      }
+                    />
+                  </OutsideClickHandler>
+                ) : (
+                  <></>
+                )}
+                <span> {Number(upvotes) - Number(downvotes)}</span>
                 <img
                   src={
                     likeIndicator === false && dislikeIndicator === false
@@ -138,7 +160,17 @@ const RelatedNews = ({
               </div>
             </div>
           </div>
-          <img src={image} alt="" className="singlenews-image" />
+
+          <img
+            src={image}
+            alt=""
+            className="singlenews-image"
+            onClick={() => {
+              onSelectOtherNews(newsId);
+              setLikeIndicator(false);
+              setDislikeIndicator(false);
+            }}
+          />
         </div>
       </div>
     </div>

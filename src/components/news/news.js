@@ -11,7 +11,7 @@ import * as _ from "lodash";
 import { useWeb3React } from "@web3-react/core";
 import Carousel from 'better-react-carousel'
 import { useParams } from "react-router-dom";
-
+import CircularProgress from "@material-ui/core/CircularProgress";
 const News = ({ theme, isPremium, key }) => {
 
  const responsive1 = [
@@ -40,7 +40,7 @@ const News = ({ theme, isPremium, key }) => {
   const [activeNews, setActiveNews] = useState([]);
   const [showTooltip, setShowTooltip] = useState(false);
   const [startPosition, setStartPosition] = useState(0);
-  const [startPosition2, setStartPosition2] = useState(0);
+  const [isParam, setIsParam] = useState(true);
   const [isConnected, setIsConnected] = useState();
   const { account, chainId, active } = useWeb3React();
 
@@ -66,6 +66,7 @@ const News = ({ theme, isPremium, key }) => {
         return res.json();
       })
       .then((data) => {
+        
         setVotes(data.Data);
       })
       .catch(console.error);
@@ -84,6 +85,7 @@ const News = ({ theme, isPremium, key }) => {
       .catch(console.error);
 
     return result;
+
   };
 
 
@@ -91,6 +93,7 @@ const News = ({ theme, isPremium, key }) => {
     const result = await axios
       .get(`https://news-manage.dyp.finance/api/v1/votes/${itemId}`)
       .then((data) => {
+        
         return data.data;
       })
       .catch(console.error);
@@ -105,28 +108,41 @@ const News = ({ theme, isPremium, key }) => {
 
   useEffect(() => {
     fetchVotingdata().then();
-  },[showModal, activeNews]);
+  },[showModal, newsItemId]);
+
   const { news_id } = useParams();
+
+
 
   const handleSelectOtherNews=(key)=> {
     const search = obj => obj.id === key;
     const index = newsArray.findIndex(search)
     setActiveNews(newsArray[index]);
+    // setIsParam(false)
   }
 
-  useEffect(()=>{
-    fetchNewsdata().then()
-  }, [])
-
-  useEffect(()=>{
-    
-    if(news_id != undefined) {
+  
+  const handleDisplayNewsFromParam = () => {
+    if(news_id != undefined && isParam === true) {
       window.scrollTo(0,0)
       setShowModal(true);
       handleSelectOtherNews(parseInt(news_id))
     }
-  },[]) //todo
+  }
 
+  useEffect(()=>{
+    fetchNewsdata().then()
+  
+  }, [])
+
+  useEffect(()=>{
+    if(activeNews.date !== undefined) {
+      setIsParam(false)
+    }
+    else {
+      handleDisplayNewsFromParam()
+    }
+  })
 
   const newsArray = [
     {
@@ -6004,20 +6020,13 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
     } else {
       let response = null;
       try {
+        
         response = await axios.get(
           `https://news-manage.dyp.finance/api/v1/vote/${itemId}/up`
         );
         
-        // await fetchVotingdata();
-         fetchVotingdata().then();
-         
-
-        // find which news was updated in the 3 array of news
-        // if (newsArray.some(item => item.id === getUpdatedUpvoted.id)) {
-        //   // news is in newsArray
-        //   const obj = newsArray.find(item => item.id === getUpdatedUpvoted.id);
-        //   obj.upvote = getUpdatedUpvoted.up;
-        //   console.log(newsArray);}
+       fetchVotingdata().then();
+        setnewsItemId(itemId)
       } catch (e) {
         console.log(e);
       }
@@ -6097,20 +6106,18 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
   };
 
   
-
-  
-  
   return (
     <div onScroll={onScroll} ref={listInnerRef} id="header">
       <div className="news-wrapper">
         {!showModal ? <h1 className="news-title">Popular News</h1> : ""}
-        <div className="row m-0 main-news-content-wrapper">
+        <div className="row m-0 main-news-content-wrapper justify-content-center">
           {showModal === true ? (
             <NewsModal
               style={{ width: "fit-content" }}
               onSelectOtherNews={(key) => {
                 window.scrollTo(0, 0);
-                handleSelectOtherNews(key)
+                handleSelectOtherNews(key);
+                 setIsParam(false)
               }}
               title={activeNews.content.title}
               link={activeNews.link}
@@ -6126,10 +6133,10 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
               newsId={activeNews.id}
               pressData={press_highlight}
               onHandleUpvote={(id) => {
-                handleSingleUpVoting(activeNews.id)
+                handleUpVoting(id)
               }}
               onHandleDownvote={(id) => {
-                handleDownVoting(activeNews.id);
+                handleDownVoting(id);
               }}
               onHandlePressUpvote={(id) => {
                 handleUpVoting(id);
@@ -6141,7 +6148,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
               onModalClose={()=>{setShowModal(false)}}
               isPremium={isPremium}
             />
-          ) : (
+          ) :  (
             <div className="brand-wrapper banner-wrapper news-left-wrapper">
 
               <Carousel cols={1} rows={1} gap={10} loop showDots={true} autoplay={4000}>
@@ -6200,7 +6207,15 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                 <></>
               )}
             </div>
-          )}
+          ) }
+
+          {/* {activeNews.date === undefined && (
+            <div
+            className="spinner-border "
+            role="status"
+            style={{ height: "1.5rem", width: "1.5rem" }}
+          ></div>
+          )} */}
 
           <div
             className="singlenews-side"
@@ -6324,10 +6339,10 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
             {press_highlight.length > 0 &&
               press_highlight.map((item, key) => {
                 return (
-                  <Carousel.Item>
+                  <Carousel.Item key={key}>
                   <div
                     className="banner-item"
-                    key={key}
+                   
                     style={{ background: "none" }}
                   >
                     <PressRealease

@@ -43,6 +43,7 @@ const NewsModal = ({
   const [likeIndicator, setLikeIndicator] = useState(false);
   const [dislikeIndicator, setDislikeIndicator] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
+  
   useEffect(() => {
     if (elementRef.current?.clientHeight !== 0) {
       setHeight(elementRef.current?.clientHeight);
@@ -61,10 +62,10 @@ const NewsModal = ({
     } else {
       if (likeIndicator === true) {
         setLikeIndicator(false);
-        onHandleDownvote(newsId);
+        onHandlePressDownvote(newsId);
       } else if (likeIndicator === false) {
         setLikeIndicator(true);
-        onHandleUpvote(newsId);
+        onHandlePressUpvote(newsId);
       }
     }
   };
@@ -76,9 +77,9 @@ const NewsModal = ({
     } else {
       if (dislikeIndicator === true) {
         setDislikeIndicator(false);
-        onHandleUpvote(newsId);
+        onHandlePressUpvote(newsId);
       } else if (dislikeIndicator === false) {
-        onHandleDownvote(newsId);
+        onHandlePressDownvote(newsId);
         setDislikeIndicator(true);
       }
     }
@@ -92,7 +93,7 @@ const NewsModal = ({
               <div className="backbtn" onClick={onModalClose}>
                 <i className="fas fa-arrow-left" style={{color: 'white'}}></i>
               </div>
-              <h2 className="left-col-title">{title}</h2>
+              <h2 className="left-col-title">{title} {newsId}</h2>
               <div
                 className="social-share-parent"
                 style={{
@@ -198,8 +199,9 @@ const NewsModal = ({
                   }
                   alt=""
                   className="like-indicator"
-                  onClick={() => {
+                  onClick={(e) => {
                     handleLikeStates();
+                    e.stopPropagation();
                   }}
                 />
                 {showTooltip === true ? (
@@ -298,7 +300,7 @@ const NewsModal = ({
             </div>
           </div>
         </div>
-        <div className="modal-bottom-wrapper d-none">
+        {/* <div className="modal-bottom-wrapper d-none">
           <h3>Press Realese</h3>
           <div className="row justify-content-center mt-4" style={{ gap: 15 }}>
             {pressData.length > 0 &&
@@ -331,7 +333,7 @@ const NewsModal = ({
                   );
                 })}
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
