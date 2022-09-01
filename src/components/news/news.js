@@ -6124,8 +6124,8 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
               image={activeNews.content.imageSrc}
               content={activeNews.content.content}
               theme={theme}
-              upvotes={activeNews.upvote}
-              downvotes={activeNews.downvote}
+              upvotes={votes.length !== 0 ? votes.find((obj) => obj.id === activeNews.id).up : activeNews.upvote}
+              downvotes={votes.length !== 0 ? votes.find((obj) => obj.id === activeNews.id).down : activeNews.downvote}
               day={activeNews.date}
               month={activeNews.month}
               year={activeNews.year}

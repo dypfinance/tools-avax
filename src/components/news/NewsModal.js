@@ -63,6 +63,7 @@ const NewsModal = ({
       if (likeIndicator === true) {
         setLikeIndicator(false);
         onHandlePressDownvote(newsId);
+        
       } else if (likeIndicator === false) {
         setLikeIndicator(true);
         onHandlePressUpvote(newsId);
@@ -93,7 +94,7 @@ const NewsModal = ({
               <div className="backbtn" onClick={onModalClose}>
                 <i className="fas fa-arrow-left" style={{color: 'white'}}></i>
               </div>
-              <h2 className="left-col-title">{title} {newsId}</h2>
+              <h2 className="left-col-title" style={{fontSize: 20}}>{title}</h2>
               <div
                 className="social-share-parent"
                 style={{
@@ -201,7 +202,7 @@ const NewsModal = ({
                   className="like-indicator"
                   onClick={(e) => {
                     handleLikeStates();
-                    e.stopPropagation();
+                    // e.stopPropagation();
                   }}
                 />
                 {showTooltip === true ? (
