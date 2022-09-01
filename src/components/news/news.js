@@ -112,8 +112,6 @@ const News = ({ theme, isPremium, key }) => {
 
   const { news_id } = useParams();
 
-
-
   const handleSelectOtherNews=(key)=> {
     const search = obj => obj.id === key;
     const index = newsArray.findIndex(search)

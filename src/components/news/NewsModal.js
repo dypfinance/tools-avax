@@ -107,6 +107,8 @@ const NewsModal = ({
                   className="btn v3"
                   style={{
                     background: "linear-gradient(to right, #ee0979, #ff6a00)",
+                    padding: '1px 10px',
+                    height: 30
                   }}
                 >
                   <i className="fas fa-share-alt"></i>
