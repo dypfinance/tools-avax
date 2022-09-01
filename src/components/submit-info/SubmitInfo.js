@@ -85,7 +85,7 @@ const SubmitInfo = () => {
             Submit form
           </h2>
           <p className="d-block">
-            Search for new pools, add or remove liquidity in a pair
+          Use this form to submit information about your project to DYP Tools
           </p>
         </div>
       </div>
@@ -185,7 +185,7 @@ const SubmitInfo = () => {
                     className="inputfield"
                     style={{height: 'auto', paddingTop:10, paddingBottom:10}}
                     id="inputAddress"
-                    placeholder="Enter project description, also include information about the project's liquidity, team profiles, smart contract security efforts, project mission etc."
+                    placeholder="Enter project description and include information about the project's liquidity, team profiles, smart contract security efforts, project mission etc."
                     name="about"
                     rows="8"
                     cols="2"
@@ -214,7 +214,7 @@ const SubmitInfo = () => {
                     id="audit_info"
                     value={values.audit_info}
                     onChange={handleChange}
-                    placeholder="Smart contract audit info"
+                    placeholder="Smart contract audit information"
                   />
                   {errors.audit_info && (
                     <span className="errormessage">{errors.audit_info}</span>
@@ -262,7 +262,7 @@ const SubmitInfo = () => {
                   )}
                 </div>
                 <div className="input-wrapper">
-                  <span className="required-text">512x512 png logo image</span>
+                  <span className="required-text">Transparent logo image</span>
                   <input
                     type="text"
                     className="inputfield"
@@ -311,7 +311,7 @@ const SubmitInfo = () => {
               </div>
               <div className="col-lg-4 single-cell">
                 <div className="input-wrapper">
-                  <span className="required-text">Coingecko</span>
+                  <span className="required-text">CoinGecko</span>
                   <input
                     type="text"
                     className="inputfield"

@@ -81,7 +81,7 @@ export default class BigSwapExplorer extends React.Component {
           this.setState({
             networkId: data,
           });
-          this.this.fetchSwaps().then();
+          this.fetchSwaps().then();
         })
         .catch(console.error);
     } else {

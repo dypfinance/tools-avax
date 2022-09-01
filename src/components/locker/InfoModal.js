@@ -7,22 +7,22 @@ import OutsideClickHandler from "react-outside-click-handler";
 
 const InfoModal = ({ modalId, visible, onModalClose }) => {
   return (
-    <Modal visible={visible} modalId={modalId} onModalClose={onModalClose}>
+    <Modal visible={visible} modalId={modalId} onModalClose={onModalClose} maxWidth={1000}>
       <OutsideClickHandler
         onOutsideClick={() => {
           onModalClose();
         }}
       >
         <div>
-          <div style={{padding: '30px 30px'}}>
+          <div style={{padding: '0 30px 30px'}}>
             <h2 style={{ maxWidth: 550 }} className="left-col-title">
               DYP Locker
             </h2>
-            <p>
+            <p style={{marginBottom: 20}}>
             A liquidity pool is a crowdsourced pool of cryptocurrencies or tokens locked in a smart contract that is used to facilitate trades between the assets on a decentralized exchange (DEX).
             </p>
             <div>
-              <div className="row m-0 justify-content-center" style={{gap: 100, alignItems: 'flex-start'}}>
+              <div className="row m-0 justify-content-center m-4" style={{gap: 100, alignItems: 'flex-start'}}>
                 <img src={Badge} alt="" />
                 <div>
                   <h6 className="info-title">Active – Liquidity Locked</h6>
@@ -33,7 +33,7 @@ const InfoModal = ({ modalId, visible, onModalClose }) => {
                 </div>
               </div>
               <hr/>
-              <div className="row m-0 justify-content-center" style={{gap: 100, alignItems: 'flex-start'}}>
+              <div className="row m-0 justify-content-center m-4" style={{gap: 100, alignItems: 'flex-start'}}>
                 <img src={BadgeYellow} alt="" style={{width: 112, height: '115'}}/>
                 <div>
                   <h6 className="info-title">Active – Potential Liquidity Unlock</h6>
@@ -44,7 +44,7 @@ const InfoModal = ({ modalId, visible, onModalClose }) => {
                 </div>
               </div>
               <hr/>
-              <div className="row m-0 justify-content-center" style={{gap: 100, alignItems: 'flex-start'}}>
+              <div className="row m-0 justify-content-center m-4" style={{gap: 100, alignItems: 'flex-start'}}>
                 <img src={BadgeGray} alt=""  style={{width: 112, height: '115'}}/>
                 <div>
                   <h6 className="info-title">Inactive – Liquidity Unlocked</h6>

@@ -128,7 +128,7 @@ const SingleNews = ({
             <div className="date-wrapper">
               <img src={Clock} alt="" style={{ width: "auto" }} />
               <h6 className="date-content">
-                {month} {day}, {year}
+                {month} {day} {year}
               </h6>
             </div>
           </div>

@@ -306,11 +306,15 @@ body.theme-white .dropdown.open ul {
 
 body.theme-white .header-wrap,
 /* body.theme-white .sidebar, */
-body.theme-white .graph-wrap,
 body.theme-white .content-footer,
 body.theme-white .table-title {
   background-color: var(--white);
 }
+
+body.theme-white .graph-wrap {
+  background: transparent;
+}
+
 
 body.theme-white .activenavlink,
 .navlinks:hover {

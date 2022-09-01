@@ -69,7 +69,8 @@ const Sidebar = (props) => {
           <img className="logo-black" src={Logo} alt="Image" />
         </a>
       </div>
-
+      <div className='premiumposition'>
+      
       <div className="menu-cat-one" style={{ marginTop: "2rem" }}>
         <div className="walletwrapper">
           <div
@@ -132,7 +133,7 @@ const Sidebar = (props) => {
               style={{ background: chainId === 1 ? "#1D91D0" : "transparent" }}
               onClick={() => {
                 setActiveBtn("eth");
-                handleSwitchNetwork(1);
+                handleSwitchNetwork('0x1');
               }}
             >
               <img src={Ethereum} alt="Image not found" />
@@ -512,7 +513,8 @@ const Sidebar = (props) => {
           </div>
         </ul>
       </div>
-      <div className="premium-wrapper">
+      </div>
+       <div className="premium-wrapper">
         <div style={{ padding: 15 }}>
           <div className="row m-0 pb-2 upper-wrapper">
             <div style={{ maxWidth: 110 }}>

@@ -315,6 +315,21 @@ export default class Subscription extends React.Component {
     return response;
   };
 
+  deleteAvatar = async () => {
+    const response = await fetch(
+      `https://api-image.dyp.finance/api/v1/avatar/${this.state.coinbase}/delete`
+    )
+      .then((res) => {
+        return res.json();
+      })
+      .then(() => {
+        this.setState({ image: Placeholder });
+      })
+      .catch(console.error);
+
+    return response;
+  };
+
   
 
   GetSubscriptionForm = () => {
@@ -330,7 +345,7 @@ export default class Subscription extends React.Component {
     return (
       <div>
         <h4 className="d-block mb-3">
-          Subscribe to DYP Tools premium
+          Subscribe to DYP Tools Premium
         </h4>
         <form onSubmit={this.handleSubscribe}>
           <div>
@@ -736,7 +751,7 @@ export default class Subscription extends React.Component {
                 <div
                   className="removebtn"
                   type=""
-                  onClick={() => this.setState({ image: Placeholder })}
+                  onClick={this.deleteAvatar}
                 >
                   {this.state.loadspinnerRemove === true ? (
                     <div

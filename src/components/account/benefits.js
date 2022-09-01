@@ -40,11 +40,6 @@ export const benefits = [
         premium: 'yes',
     },
     {
-        title: 'Manual research info for projects',
-        free: 'no',
-        premium: 'yes',
-    },
-    {
         title: 'Early access to new features released in the future',
         free: 'no',
         premium: 'yes',

@@ -675,7 +675,7 @@ export default class Locker extends React.Component {
                   </h6>
                   <p
                     className="text-muted"
-                    style={{  width: "fit-content" }}
+                    style={{  width: "85%" }}
                   >
                     This makes the funds immovable until they are unlocked.
                     Every owner of the project can encrypt a portion of the
@@ -716,7 +716,7 @@ export default class Locker extends React.Component {
                   <div className="row m-0 align-items-end" style={{ gap: 40 }}>
                     <div>
                       <p className="mt-0">
-                        <b>Enter Pair Address</b>
+                        <b>Enter Pair address</b>
                       </p>
                       <input
                         style={{ width: "266px", height: 46 }}
@@ -735,8 +735,8 @@ export default class Locker extends React.Component {
                     </div>
 
                     <div className="form-group m-0">
-                      <div className="search-pair-btn">
-                        <p className="search-pair-text">Search Pair</p>
+                      <div className="search-pair-btn" onClick={this.handleSearchPair}>
+                        <p className="search-pair-text">Search</p>
                       </div>
                     </div>
                   </div>
@@ -785,7 +785,7 @@ export default class Locker extends React.Component {
                   </h6>
                   <p
                     className="text-muted"
-                    style={{  width: "fit-content" }}
+                    style={{  width: "85%" }}
                   >
                     This makes the funds immovable until they are unlocked.
                     Every owner of the project can encrypt a portion of the
@@ -1931,7 +1931,7 @@ export default class Locker extends React.Component {
 
           <p>
             Lock {window.ethereum ? window.ethereum.chainId === "0x1" ? "Uniswap" : "Pangolin" : 'Uniswap'}
-            {" "}Liquidity and Check Status of Liquidity Locks.
+            {" "}liquidity and check status of liquidity locks.
           </p>
         </div>
         <div className="l-table-wrapper-div p-4">

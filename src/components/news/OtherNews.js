@@ -134,7 +134,7 @@ const OtherNews = ({
             /> */}
             <div className="date-wrapper">
               <img src={Clock} alt="" style={{ width: "auto" }} />
-              <h6 className="date-content">{date} {month}, {year}</h6>
+              <h6 className="date-content">{date} {month} {year}</h6>
             </div>
           </div>
         </div>

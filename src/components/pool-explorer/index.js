@@ -384,7 +384,7 @@ export default class PoolExplorer extends React.Component {
             : `${getFormattedNumber(txn.ethAmount, 8)} AVAX`,
       },
       {
-        name: "Pair Created",
+        name: "Created on",
         selector: "pairCreationTimestamp",
         sortable: true,
         cell: (txn) => (
@@ -435,8 +435,8 @@ export default class PoolExplorer extends React.Component {
                 </h2>
                 <p className="d-block">
                   {this.state.networkId === "1"
-                    ? " Search for Big Swaps on Uniswap with useful information."
-                    : " Search for Big Swaps on Pangolin with useful information."}
+                    ? " Search for Big Swaps on Uniswap with useful information"
+                    : " Search for Big Swaps on Pangolin with useful information"}
                 </p>
               </>
             ) : this.state.screen === "tokens" ? (
@@ -446,8 +446,8 @@ export default class PoolExplorer extends React.Component {
                 </h2>
                 <p className="d-block">
                   {this.state.networkId === "1"
-                    ? "Showing Uniswap Top Tokens"
-                    : "Showing Pangolin Top Tokens"}
+                    ? "Showing List of Uniswap Top Tokens"
+                    : "Showing List of Pangolin Top Tokens"}
                 </p>
               </>
             ) : (
@@ -457,8 +457,8 @@ export default class PoolExplorer extends React.Component {
                 </h2>
                 <p className="d-block" style={{ fontSize: "11px" }}>
                   This list does not imply endorsement by DeFi Yield Protocol.
-                  There might be Smart Contract risk and IL risk. Please Do Your
-                  Own Research before investing on any project.
+                  There might be Smart Contract risk and IL risk.<br/> <b>Please conduct your
+                  own research before investing on any project!</b>
                 </p>
               </>
             )}

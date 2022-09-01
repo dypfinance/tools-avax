@@ -155,7 +155,7 @@ const RelatedNews = ({
               <div className="date-wrapper">
                 <img src={Clock} alt="" style={{ width: "auto" }} />
                 <h6 className="date-content">
-                  {month} {date}, {year}
+                  {month} {date} {year}
                 </h6>
               </div>
             </div>
