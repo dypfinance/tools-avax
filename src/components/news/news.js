@@ -41,6 +41,37 @@ const News = ({ theme, isPremium, key }) => {
   const [isConnected, setIsConnected] = useState();
   const { account, chainId, active } = useWeb3React();
 
+  // date: newsData[0]?.date.slice(0, 10),
+  //     id: 58,
+  //     month: "",
+  //     upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 58).up : 0,
+  //     downvote:
+  //       votes.length !== 0 ? votes.find((obj) => obj.id === 58)?.down : 0,
+  //     title: newsData[0]?.title,
+  //     link: newsData[0]?.link,
+  //     imageSrc: newsData[0]?.image,
+  //     year: "",
+  //     content: {
+  //       imageSrc: newsData[0]?.image,
+  //       title: newsData[0]?.title,
+  //       content: newsData[0]?.content,
+  //     },
+
+  // const [newsDataTest, setNewsDataTest] = useState(
+  //  [ {
+  //     id: 0,
+  //     date: "",
+  //     month: "",
+  //     upvote: 0,
+  //     downvote: 0,
+  //     title: "",
+  //     link: "",
+  //     imageSrc: "",
+  //     year: "",
+  //     content: { imageSrc: "", title: "", content: "" },
+  //   },]
+  // );
+
   const [next, setNext] = useState(newsPerRow);
 
   const loadMore = () => {
@@ -76,20 +107,14 @@ const News = ({ theme, isPremium, key }) => {
         return res.json();
       })
       .then((data) => {
+        // console.log(data)
         setNewsData(data);
+        
+        // for(let i = 0; i< data.length; i++)
+        // {setNewsDataTest([newsDataTest, ({id: i, title: data[i].title, date: data[i].date, month: data[i].month, content: data[i].content})])}
       })
       .catch(console.error);
 
-    return result;
-  };
-
-  const handlefetchSingleVotingData = async (itemId) => {
-    const result = await axios
-      .get(`https://news-manage.dyp.finance/api/v1/votes/${itemId}`)
-      .then((data) => {
-        return data.data;
-      })
-      .catch(console.error);
     return result;
   };
 
@@ -122,8 +147,9 @@ const News = ({ theme, isPremium, key }) => {
 
   useEffect(() => {
     fetchNewsdata().then();
+   
   }, []);
-
+//  console.log(newsDataTest)
   useEffect(() => {
     if (activeNews.date !== undefined) {
       setIsParam(false);
@@ -6200,7 +6226,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                 padding: "60px",
                 display: "flex",
                 justifyContent: "center",
-                width: '100%'
+                width: "100%",
               }}
             >
               <CircularProgress color="inherit" size={75} />
