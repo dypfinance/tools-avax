@@ -40,37 +40,7 @@ const News = ({ theme, isPremium, key }) => {
   const [isParam, setIsParam] = useState(true);
   const [isConnected, setIsConnected] = useState();
   const { account, chainId, active } = useWeb3React();
-
-  // date: newsData[0]?.date.slice(0, 10),
-  //     id: 58,
-  //     month: "",
-  //     upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 58).up : 0,
-  //     downvote:
-  //       votes.length !== 0 ? votes.find((obj) => obj.id === 58)?.down : 0,
-  //     title: newsData[0]?.title,
-  //     link: newsData[0]?.link,
-  //     imageSrc: newsData[0]?.image,
-  //     year: "",
-  //     content: {
-  //       imageSrc: newsData[0]?.image,
-  //       title: newsData[0]?.title,
-  //       content: newsData[0]?.content,
-  //     },
-
-  // const [newsDataTest, setNewsDataTest] = useState(
-  //  [ {
-  //     id: 0,
-  //     date: "",
-  //     month: "",
-  //     upvote: 0,
-  //     downvote: 0,
-  //     title: "",
-  //     link: "",
-  //     imageSrc: "",
-  //     year: "",
-  //     content: { imageSrc: "", title: "", content: "" },
-  //   },]
-  // );
+  const [finalNewsData, setFinalNewsData] = useState([]);
 
   const [next, setNext] = useState(newsPerRow);
 
@@ -84,7 +54,7 @@ const News = ({ theme, isPremium, key }) => {
   };
 
   const handleSingleNewsUpdate = (id) => {
-    setActiveNews(newsArray[id]);
+    setActiveNews(finalNewsData[id]);
     setShowModal(true);
   };
 
@@ -107,11 +77,7 @@ const News = ({ theme, isPremium, key }) => {
         return res.json();
       })
       .then((data) => {
-        // console.log(data)
         setNewsData(data);
-        
-        // for(let i = 0; i< data.length; i++)
-        // {setNewsDataTest([newsDataTest, ({id: i, title: data[i].title, date: data[i].date, month: data[i].month, content: data[i].content})])}
       })
       .catch(console.error);
 
@@ -126,14 +92,15 @@ const News = ({ theme, isPremium, key }) => {
 
   useEffect(() => {
     fetchVotingdata().then();
+   
   }, [showModal, newsItemId]);
-
+//  console.log(finalNewsData)
   const { news_id } = useParams();
 
   const handleSelectOtherNews = (key) => {
-    const search = (obj) => obj.id === key;
-    const index = newsArray.findIndex(search);
-    setActiveNews(newsArray[index]);
+    const search = (obj) => obj.end?.id == key;
+    const index = finalNewsData.findIndex(search);
+    setActiveNews(finalNewsData[index]);
     // setIsParam(false)
   };
 
@@ -146,11 +113,6 @@ const News = ({ theme, isPremium, key }) => {
   };
 
   useEffect(() => {
-    fetchNewsdata().then();
-   
-  }, []);
-//  console.log(newsDataTest)
-  useEffect(() => {
     if (activeNews.date !== undefined) {
       setIsParam(false);
     } else {
@@ -160,2165 +122,6 @@ const News = ({ theme, isPremium, key }) => {
 
   const newsArray = [
     {
-      date: newsData[0]?.date.slice(0, 10),
-      id: 58,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 58).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 58)?.down : 0,
-      title: newsData[0]?.title,
-      link: newsData[0]?.link,
-      imageSrc: newsData[0]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[0]?.image,
-        title: newsData[0]?.title,
-        content: newsData[0]?.content,
-      },
-    },
-    {
-      date: newsData[1]?.date.slice(0, 10),
-      id: 59,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 59).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 59)?.down : 0,
-      title: newsData[1]?.title,
-      link: newsData[1]?.link,
-      imageSrc: newsData[1]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[1]?.image,
-        title: newsData[1]?.title,
-        content: newsData[1]?.content,
-      },
-    },
-    {
-      date: newsData[2]?.date.slice(0, 10),
-      id: 60,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 60).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 60)?.down : 0,
-      title: newsData[2]?.title,
-      link: newsData[2]?.link,
-      imageSrc: newsData[2]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[2]?.image,
-        title: newsData[2]?.title,
-        content: newsData[2]?.content,
-      },
-    },
-    {
-      date: newsData[3]?.date.slice(0, 10),
-      id: 61,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 61).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 61)?.down : 0,
-      title: newsData[3]?.title,
-      link: newsData[3]?.link,
-      imageSrc: newsData[3]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[3]?.image,
-        title: newsData[3]?.title,
-        content: newsData[3]?.content,
-      },
-    },
-    {
-      date: newsData[4]?.date.slice(0, 10),
-      id: 62,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 62).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 62)?.down : 0,
-      title: newsData[4]?.title,
-      link: newsData[4]?.link,
-      imageSrc: newsData[4]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[4]?.image,
-        title: newsData[4]?.title,
-        content: newsData[4]?.content,
-      },
-    },
-    {
-      date: newsData[5]?.date.slice(0, 10),
-      id: 63,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 63).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 63)?.down : 0,
-      title: newsData[5]?.title,
-      link: newsData[5]?.link,
-      imageSrc: newsData[5]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[5]?.image,
-        title: newsData[5]?.title,
-        content: newsData[5]?.content,
-      },
-    },
-    {
-      date: newsData[6]?.date.slice(0, 10),
-      id: 64,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 64).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 64)?.down : 0,
-      title: newsData[6]?.title,
-      link: newsData[6]?.link,
-      imageSrc: newsData[6]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[6]?.image,
-        title: newsData[6]?.title,
-        content: newsData[6]?.content,
-      },
-    },
-    {
-      date: newsData[7]?.date.slice(0, 10),
-      id: 65,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 65).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 65)?.down : 0,
-      title: newsData[7]?.title,
-      link: newsData[7]?.link,
-      imageSrc: newsData[7]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[7]?.image,
-        title: newsData[7]?.title,
-        content: newsData[7]?.content,
-      },
-    },
-    {
-      date: newsData[8]?.date.slice(0, 10),
-      id: 66,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 66).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 66)?.down : 0,
-      title: newsData[8]?.title,
-      link: newsData[8]?.link,
-      imageSrc: newsData[8]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[8]?.image,
-        title: newsData[8]?.title,
-        content: newsData[8]?.content,
-      },
-    },
-    {
-      date: newsData[9]?.date.slice(0, 10),
-      id: 67,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 67).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 67)?.down : 0,
-      title: newsData[9]?.title,
-      link: newsData[9]?.link,
-      imageSrc: newsData[9]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[9]?.image,
-        title: newsData[9]?.title,
-        content: newsData[9]?.content,
-      },
-    },
-    {
-      date: newsData[10]?.date.slice(0, 10),
-      id: 68,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 68).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 68)?.down : 0,
-      title: newsData[10]?.title,
-      link: newsData[10]?.link,
-      imageSrc: newsData[10]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[10]?.image,
-        title: newsData[10]?.title,
-        content: newsData[10]?.content,
-      },
-    },
-    {
-      date: newsData[11]?.date.slice(0, 10),
-      id: 56,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 56).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 56)?.down : 0,
-      title: newsData[11]?.title,
-      link: newsData[11]?.link,
-      imageSrc: newsData[11]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[11]?.image,
-        title: newsData[11]?.title,
-        content: newsData[11]?.content,
-      },
-    },
-    {
-      date: newsData[12]?.date.slice(0, 10),
-      id: 54,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 54).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 54)?.down : 0,
-      title: newsData[12]?.title,
-      link: newsData[12]?.link,
-      imageSrc: newsData[12]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[12]?.image,
-        title: newsData[12]?.title,
-        content: newsData[12]?.content,
-      },
-    },
-    {
-      date: newsData[13]?.date.slice(0, 10),
-      id: 55,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 55).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 55)?.down : 0,
-      title: newsData[13]?.title,
-      link: newsData[13]?.link,
-      imageSrc: newsData[13]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[13]?.image,
-        title: newsData[13]?.title,
-        content: newsData[13]?.content,
-      },
-    },
-    {
-      date: newsData[13]?.date.slice(0, 10),
-      id: 57,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 57).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 57)?.down : 0,
-      title: newsData[13]?.title,
-      link: newsData[13]?.link,
-      imageSrc: newsData[13]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[13]?.image,
-        title: newsData[13]?.title,
-        content: newsData[13]?.content,
-      },
-    },
-    {
-      date: newsData[14]?.date.slice(0, 10),
-      id: 69,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 69).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 69)?.down : 0,
-      title: newsData[14]?.title,
-      link: newsData[14]?.link,
-      imageSrc: newsData[14]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[14]?.image,
-        title: newsData[14]?.title,
-        content: newsData[14]?.content,
-      },
-    },
-    {
-      date: newsData[15]?.date.slice(0, 10),
-      id: 70,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 70).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 70)?.down : 0,
-      title: newsData[15]?.title,
-      link: newsData[15]?.link,
-      imageSrc: newsData[15]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[15]?.image,
-        title: newsData[15]?.title,
-        content: newsData[15]?.content,
-      },
-    },
-    {
-      date: newsData[16]?.date.slice(0, 10),
-      id: 71,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 71).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 71)?.down : 0,
-      title: newsData[16]?.title,
-      link: newsData[16]?.link,
-      imageSrc: newsData[16]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[16]?.image,
-        title: newsData[16]?.title,
-        content: newsData[16]?.content,
-      },
-    },
-    {
-      date: newsData[17]?.date.slice(0, 10),
-      id: 72,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 72).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 72)?.down : 0,
-      title: newsData[17]?.title,
-      link: newsData[17]?.link,
-      imageSrc: newsData[17]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[17]?.image,
-        title: newsData[17]?.title,
-        content: newsData[17]?.content,
-      },
-    },
-    {
-      date: newsData[18]?.date.slice(0, 10),
-      id: 73,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 73).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 73)?.down : 0,
-      title: newsData[18]?.title,
-      link: newsData[18]?.link,
-      imageSrc: newsData[18]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[18]?.image,
-        title: newsData[18]?.title,
-        content: newsData[18]?.content,
-      },
-    },
-    {
-      date: newsData[19]?.date.slice(0, 10),
-      id: 74,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 74).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 74)?.down : 0,
-      title: newsData[19]?.title,
-      link: newsData[19]?.link,
-      imageSrc: newsData[19]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[19]?.image,
-        title: newsData[19]?.title,
-        content: newsData[19]?.content,
-      },
-    },
-    {
-      date: newsData[20]?.date.slice(0, 10),
-      id: 75,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 75).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 75)?.down : 0,
-      title: newsData[20]?.title,
-      link: newsData[20]?.link,
-      imageSrc: newsData[20]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[20]?.image,
-        title: newsData[20]?.title,
-        content: newsData[20]?.content,
-      },
-    },
-    {
-      date: newsData[20]?.date.slice(0, 10),
-      id: 75,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 75).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 75)?.down : 0,
-      title: newsData[20]?.title,
-      link: newsData[20]?.link,
-      imageSrc: newsData[20]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[20]?.image,
-        title: newsData[20]?.title,
-        content: newsData[20]?.content,
-      },
-    },
-    {
-      date: newsData[21]?.date.slice(0, 10),
-      id: 76,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 76).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 76)?.down : 0,
-      title: newsData[21]?.title,
-      link: newsData[21]?.link,
-      imageSrc: newsData[21]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[21]?.image,
-        title: newsData[21]?.title,
-        content: newsData[21]?.content,
-      },
-    },
-    {
-      date: newsData[22]?.date.slice(0, 10),
-      id: 77,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 77).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 77)?.down : 0,
-      title: newsData[22]?.title,
-      link: newsData[22]?.link,
-      imageSrc: newsData[22]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[22]?.image,
-        title: newsData[22]?.title,
-        content: newsData[22]?.content,
-      },
-    },
-    {
-      date: newsData[23]?.date.slice(0, 10),
-      id: 78,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 78).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 78)?.down : 0,
-      title: newsData[23]?.title,
-      link: newsData[23]?.link,
-      imageSrc: newsData[23]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[23]?.image,
-        title: newsData[23]?.title,
-        content: newsData[23]?.content,
-      },
-    },
-    {
-      date: newsData[24]?.date.slice(0, 10),
-      id: 79,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 79).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 79)?.down : 0,
-      title: newsData[24]?.title,
-      link: newsData[24]?.link,
-      imageSrc: newsData[24]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[24]?.image,
-        title: newsData[24]?.title,
-        content: newsData[24]?.content,
-      },
-    },
-    {
-      date: newsData[25]?.date.slice(0, 10),
-      id: 80,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 80).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 80)?.down : 0,
-      title: newsData[25]?.title,
-      link: newsData[25]?.link,
-      imageSrc: newsData[25]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[25]?.image,
-        title: newsData[25]?.title,
-        content: newsData[25]?.content,
-      },
-    },
-    {
-      date: newsData[26]?.date.slice(0, 10),
-      id: 81,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 81).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 81)?.down : 0,
-      title: newsData[26]?.title,
-      link: newsData[26]?.link,
-      imageSrc: newsData[26]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[26]?.image,
-        title: newsData[26]?.title,
-        content: newsData[26]?.content,
-      },
-    },
-    {
-      date: newsData[27]?.date.slice(0, 10),
-      id: 82,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 82).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 82)?.down : 0,
-      title: newsData[27]?.title,
-      link: newsData[27]?.link,
-      imageSrc: newsData[27]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[27]?.image,
-        title: newsData[27]?.title,
-        content: newsData[27]?.content,
-      },
-    },
-    {
-      date: newsData[28]?.date.slice(0, 10),
-      id: 83,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 83).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 83)?.down : 0,
-      title: newsData[28]?.title,
-      link: newsData[28]?.link,
-      imageSrc: newsData[28]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[28]?.image,
-        title: newsData[28]?.title,
-        content: newsData[28]?.content,
-      },
-    },
-    {
-      date: newsData[29]?.date.slice(0, 10),
-      id: 84,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 84).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 84)?.down : 0,
-      title: newsData[29]?.title,
-      link: newsData[29]?.link,
-      imageSrc: newsData[29]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[29]?.image,
-        title: newsData[29]?.title,
-        content: newsData[29]?.content,
-      },
-    },
-    {
-      date: newsData[30]?.date.slice(0, 10),
-      id: 85,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 85).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 85)?.down : 0,
-      title: newsData[30]?.title,
-      link: newsData[30]?.link,
-      imageSrc: newsData[30]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[30]?.image,
-        title: newsData[30]?.title,
-        content: newsData[30]?.content,
-      },
-    },
-    {
-      date: newsData[31]?.date.slice(0, 10),
-      id: 86,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 86).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 86)?.down : 0,
-      title: newsData[31]?.title,
-      link: newsData[31]?.link,
-      imageSrc: newsData[31]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[31]?.image,
-        title: newsData[31]?.title,
-        content: newsData[31]?.content,
-      },
-    },
-    {
-      date: newsData[32]?.date.slice(0, 10),
-      id: 87,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 87).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 87)?.down : 0,
-      title: newsData[32]?.title,
-      link: newsData[32]?.link,
-      imageSrc: newsData[32]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[32]?.image,
-        title: newsData[32]?.title,
-        content: newsData[32]?.content,
-      },
-    },
-    {
-      date: newsData[33]?.date.slice(0, 10),
-      id: 88,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 88).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 88)?.down : 0,
-      title: newsData[33]?.title,
-      link: newsData[33]?.link,
-      imageSrc: newsData[33]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[33]?.image,
-        title: newsData[33]?.title,
-        content: newsData[33]?.content,
-      },
-    },
-    {
-      date: newsData[34]?.date.slice(0, 10),
-      id: 89,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 89).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 89)?.down : 0,
-      title: newsData[34]?.title,
-      link: newsData[34]?.link,
-      imageSrc: newsData[34]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[34]?.image,
-        title: newsData[34]?.title,
-        content: newsData[34]?.content,
-      },
-    },
-    {
-      date: newsData[35]?.date.slice(0, 10),
-      id: 90,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 90).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 90)?.down : 0,
-      title: newsData[35]?.title,
-      link: newsData[35]?.link,
-      imageSrc: newsData[35]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[35]?.image,
-        title: newsData[35]?.title,
-        content: newsData[35]?.content,
-      },
-    },
-    {
-      date: newsData[36]?.date.slice(0, 10),
-      id: 91,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 91).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 91)?.down : 0,
-      title: newsData[36]?.title,
-      link: newsData[36]?.link,
-      imageSrc: newsData[36]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[36]?.image,
-        title: newsData[36]?.title,
-        content: newsData[36]?.content,
-      },
-    },
-    {
-      date: newsData[37]?.date.slice(0, 10),
-      id: 92,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 92).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 92)?.down : 0,
-      title: newsData[37]?.title,
-      link: newsData[37]?.link,
-      imageSrc: newsData[37]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[37]?.image,
-        title: newsData[37]?.title,
-        content: newsData[37]?.content,
-      },
-    },
-    {
-      date: newsData[38]?.date.slice(0, 10),
-      id: 93,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 93).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 93)?.down : 0,
-      title: newsData[38]?.title,
-      link: newsData[38]?.link,
-      imageSrc: newsData[38]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[38]?.image,
-        title: newsData[38]?.title,
-        content: newsData[38]?.content,
-      },
-    },
-    {
-      date: newsData[39]?.date.slice(0, 10),
-      id: 94,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 94).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 94)?.down : 0,
-      title: newsData[39]?.title,
-      link: newsData[39]?.link,
-      imageSrc: newsData[39]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[39]?.image,
-        title: newsData[39]?.title,
-        content: newsData[39]?.content,
-      },
-    },
-    {
-      date: newsData[40]?.date.slice(0, 10),
-      id: 95,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 95).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 95)?.down : 0,
-      title: newsData[40]?.title,
-      link: newsData[40]?.link,
-      imageSrc: newsData[40]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[40]?.image,
-        title: newsData[40]?.title,
-        content: newsData[40]?.content,
-      },
-    },
-    {
-      date: newsData[41]?.date.slice(0, 10),
-      id: 96,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 96).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 96)?.down : 0,
-      title: newsData[41]?.title,
-      link: newsData[41]?.link,
-      imageSrc: newsData[41]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[41]?.image,
-        title: newsData[41]?.title,
-        content: newsData[41]?.content,
-      },
-    },
-    {
-      date: newsData[42]?.date.slice(0, 10),
-      id: 97,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 97).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 97)?.down : 0,
-      title: newsData[42]?.title,
-      link: newsData[42]?.link,
-      imageSrc: newsData[42]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[42]?.image,
-        title: newsData[42]?.title,
-        content: newsData[42]?.content,
-      },
-    },
-    {
-      date: newsData[43]?.date.slice(0, 10),
-      id: 98,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 98).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 98)?.down : 0,
-      title: newsData[43]?.title,
-      link: newsData[43]?.link,
-      imageSrc: newsData[43]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[43]?.image,
-        title: newsData[43]?.title,
-        content: newsData[43]?.content,
-      },
-    },
-    {
-      date: newsData[44]?.date.slice(0, 10),
-      id: 99,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 99).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 99)?.down : 0,
-      title: newsData[44]?.title,
-      link: newsData[44]?.link,
-      imageSrc: newsData[44]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[44]?.image,
-        title: newsData[44]?.title,
-        content: newsData[44]?.content,
-      },
-    },
-    {
-      date: newsData[45]?.date.slice(0, 10),
-      id: 100,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 100).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 100)?.down : 0,
-      title: newsData[45]?.title,
-      link: newsData[45]?.link,
-      imageSrc: newsData[45]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[45]?.image,
-        title: newsData[45]?.title,
-        content: newsData[45]?.content,
-      },
-    },
-    {
-      date: newsData[46]?.date.slice(0, 10),
-      id: 101,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 101).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 101)?.down : 0,
-      title: newsData[46]?.title,
-      link: newsData[46]?.link,
-      imageSrc: newsData[46]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[46]?.image,
-        title: newsData[46]?.title,
-        content: newsData[46]?.content,
-      },
-    },
-    {
-      date: newsData[47]?.date.slice(0, 10),
-      id: 102,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 102).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 102)?.down : 0,
-      title: newsData[47]?.title,
-      link: newsData[47]?.link,
-      imageSrc: newsData[47]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[47]?.image,
-        title: newsData[47]?.title,
-        content: newsData[47]?.content,
-      },
-    },
-    {
-      date: newsData[48]?.date.slice(0, 10),
-      id: 103,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 103).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 103)?.down : 0,
-      title: newsData[48]?.title,
-      link: newsData[48]?.link,
-      imageSrc: newsData[48]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[48]?.image,
-        title: newsData[48]?.title,
-        content: newsData[48]?.content,
-      },
-    },
-    {
-      date: newsData[49]?.date.slice(0, 10),
-      id: 104,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 104).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 104)?.down : 0,
-      title: newsData[49]?.title,
-      link: newsData[49]?.link,
-      imageSrc: newsData[49]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[49]?.image,
-        title: newsData[49]?.title,
-        content: newsData[49]?.content,
-      },
-    },
-    {
-      date: newsData[50]?.date.slice(0, 10),
-      id: 105,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 105).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 105)?.down : 0,
-      title: newsData[50]?.title,
-      link: newsData[50]?.link,
-      imageSrc: newsData[50]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[50]?.image,
-        title: newsData[50]?.title,
-        content: newsData[50]?.content,
-      },
-    },
-    {
-      date: newsData[51]?.date.slice(0, 10),
-      id: 106,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 106).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 106)?.down : 0,
-      title: newsData[51]?.title,
-      link: newsData[51]?.link,
-      imageSrc: newsData[51]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[51]?.image,
-        title: newsData[51]?.title,
-        content: newsData[51]?.content,
-      },
-    },
-    {
-      date: newsData[52]?.date.slice(0, 10),
-      id: 107,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 107).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 107)?.down : 0,
-      title: newsData[52]?.title,
-      link: newsData[52]?.link,
-      imageSrc: newsData[52]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[52]?.image,
-        title: newsData[52]?.title,
-        content: newsData[52]?.content,
-      },
-    },
-    {
-      date: newsData[53]?.date.slice(0, 10),
-      id: 108,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 108).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 108)?.down : 0,
-      title: newsData[53]?.title,
-      link: newsData[53]?.link,
-      imageSrc: newsData[53]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[53]?.image,
-        title: newsData[53]?.title,
-        content: newsData[53]?.content,
-      },
-    },
-    {
-      date: newsData[54]?.date.slice(0, 10),
-      id: 109,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 109).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 109)?.down : 0,
-      title: newsData[54]?.title,
-      link: newsData[54]?.link,
-      imageSrc: newsData[54]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[54]?.image,
-        title: newsData[54]?.title,
-        content: newsData[54]?.content,
-      },
-    },
-    {
-      date: newsData[55]?.date.slice(0, 10),
-      id: 110,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 110).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 110)?.down : 0,
-      title: newsData[55]?.title,
-      link: newsData[55]?.link,
-      imageSrc: newsData[55]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[55]?.image,
-        title: newsData[55]?.title,
-        content: newsData[55]?.content,
-      },
-    },
-    {
-      date: newsData[56]?.date.slice(0, 10),
-      id: 111,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 111).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 111)?.down : 0,
-      title: newsData[56]?.title,
-      link: newsData[56]?.link,
-      imageSrc: newsData[56]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[56]?.image,
-        title: newsData[56]?.title,
-        content: newsData[56]?.content,
-      },
-    },
-    {
-      date: newsData[57]?.date.slice(0, 10),
-      id: 112,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 112).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 112)?.down : 0,
-      title: newsData[57]?.title,
-      link: newsData[57]?.link,
-      imageSrc: newsData[57]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[57]?.image,
-        title: newsData[57]?.title,
-        content: newsData[57]?.content,
-      },
-    },
-    {
-      date: newsData[58]?.date.slice(0, 10),
-      id: 113,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 113).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 113)?.down : 0,
-      title: newsData[58]?.title,
-      link: newsData[58]?.link,
-      imageSrc: newsData[58]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[58]?.image,
-        title: newsData[58]?.title,
-        content: newsData[58]?.content,
-      },
-    },
-    {
-      date: newsData[59]?.date.slice(0, 10),
-      id: 114,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 114).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 114)?.down : 0,
-      title: newsData[59]?.title,
-      link: newsData[59]?.link,
-      imageSrc: newsData[59]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[59]?.image,
-        title: newsData[59]?.title,
-        content: newsData[59]?.content,
-      },
-    },
-    {
-      date: newsData[60]?.date.slice(0, 10),
-      id: 115,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 115).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 115)?.down : 0,
-      title: newsData[60]?.title,
-      link: newsData[60]?.link,
-      imageSrc: newsData[60]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[60]?.image,
-        title: newsData[60]?.title,
-        content: newsData[60]?.content,
-      },
-    },
-    {
-      date: newsData[61]?.date.slice(0, 10),
-      id: 116,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 116).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 116)?.down : 0,
-      title: newsData[61]?.title,
-      link: newsData[61]?.link,
-      imageSrc: newsData[61]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[61]?.image,
-        title: newsData[61]?.title,
-        content: newsData[61]?.content,
-      },
-    },
-    {
-      date: newsData[62]?.date.slice(0, 10),
-      id: 117,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 117).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 117)?.down : 0,
-      title: newsData[62]?.title,
-      link: newsData[62]?.link,
-      imageSrc: newsData[62]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[62]?.image,
-        title: newsData[62]?.title,
-        content: newsData[62]?.content,
-      },
-    },
-    {
-      date: newsData[63]?.date.slice(0, 10),
-      id: 118,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 118).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 118)?.down : 0,
-      title: newsData[63]?.title,
-      link: newsData[63]?.link,
-      imageSrc: newsData[63]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[63]?.image,
-        title: newsData[63]?.title,
-        content: newsData[63]?.content,
-      },
-    },
-    {
-      date: newsData[64]?.date.slice(0, 10),
-      id: 119,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 119).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 119)?.down : 0,
-      title: newsData[64]?.title,
-      link: newsData[64]?.link,
-      imageSrc: newsData[64]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[64]?.image,
-        title: newsData[64]?.title,
-        content: newsData[64]?.content,
-      },
-    },
-    {
-      date: newsData[65]?.date.slice(0, 10),
-      id: 120,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 120).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 120)?.down : 0,
-      title: newsData[65]?.title,
-      link: newsData[65]?.link,
-      imageSrc: newsData[65]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[65]?.image,
-        title: newsData[65]?.title,
-        content: newsData[65]?.content,
-      },
-    },
-    {
-      date: newsData[66]?.date.slice(0, 10),
-      id: 121,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 121).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 121)?.down : 0,
-      title: newsData[66]?.title,
-      link: newsData[66]?.link,
-      imageSrc: newsData[66]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[66]?.image,
-        title: newsData[66]?.title,
-        content: newsData[66]?.content,
-      },
-    },
-    {
-      date: newsData[67]?.date.slice(0, 10),
-      id: 122,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 122).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 122)?.down : 0,
-      title: newsData[67]?.title,
-      link: newsData[67]?.link,
-      imageSrc: newsData[67]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[67]?.image,
-        title: newsData[67]?.title,
-        content: newsData[67]?.content,
-      },
-    },
-    {
-      date: newsData[68]?.date.slice(0, 10),
-      id: 123,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 123).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 123)?.down : 0,
-      title: newsData[68]?.title,
-      link: newsData[68]?.link,
-      imageSrc: newsData[68]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[68]?.image,
-        title: newsData[68]?.title,
-        content: newsData[68]?.content,
-      },
-    },
-    {
-      date: newsData[69]?.date.slice(0, 10),
-      id: 124,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 124).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 124)?.down : 0,
-      title: newsData[69]?.title,
-      link: newsData[69]?.link,
-      imageSrc: newsData[69]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[69]?.image,
-        title: newsData[69]?.title,
-        content: newsData[69]?.content,
-      },
-    },
-    {
-      date: newsData[70]?.date.slice(0, 10),
-      id: 125,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 125).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 125)?.down : 0,
-      title: newsData[70]?.title,
-      link: newsData[70]?.link,
-      imageSrc: newsData[70]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[70]?.image,
-        title: newsData[70]?.title,
-        content: newsData[70]?.content,
-      },
-    },
-    {
-      date: newsData[71]?.date.slice(0, 10),
-      id: 126,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 126).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 126)?.down : 0,
-      title: newsData[71]?.title,
-      link: newsData[71]?.link,
-      imageSrc: newsData[71]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[71]?.image,
-        title: newsData[71]?.title,
-        content: newsData[71]?.content,
-      },
-    },
-    {
-      date: newsData[72]?.date.slice(0, 10),
-      id: 127,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 127).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 127)?.down : 0,
-      title: newsData[72]?.title,
-      link: newsData[72]?.link,
-      imageSrc: newsData[72]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[72]?.image,
-        title: newsData[72]?.title,
-        content: newsData[72]?.content,
-      },
-    },
-    {
-      date: newsData[73]?.date.slice(0, 10),
-      id: 128,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 128).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 128)?.down : 0,
-      title: newsData[73]?.title,
-      link: newsData[73]?.link,
-      imageSrc: newsData[73]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[73]?.image,
-        title: newsData[73]?.title,
-        content: newsData[73]?.content,
-      },
-    },
-    {
-      date: newsData[74]?.date.slice(0, 10),
-      id: 129,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 129).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 129)?.down : 0,
-      title: newsData[74]?.title,
-      link: newsData[74]?.link,
-      imageSrc: newsData[74]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[74]?.image,
-        title: newsData[74]?.title,
-        content: newsData[74]?.content,
-      },
-    },
-    {
-      date: newsData[75]?.date.slice(0, 10),
-      id: 130,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 130).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 130)?.down : 0,
-      title: newsData[75]?.title,
-      link: newsData[75]?.link,
-      imageSrc: newsData[75]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[75]?.image,
-        title: newsData[75]?.title,
-        content: newsData[75]?.content,
-      },
-    },
-    {
-      date: newsData[76]?.date.slice(0, 10),
-      id: 131,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 131).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 131)?.down : 0,
-      title: newsData[76]?.title,
-      link: newsData[76]?.link,
-      imageSrc: newsData[76]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[76]?.image,
-        title: newsData[76]?.title,
-        content: newsData[76]?.content,
-      },
-    },
-    {
-      date: newsData[77]?.date.slice(0, 10),
-      id: 132,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 132).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 132)?.down : 0,
-      title: newsData[77]?.title,
-      link: newsData[77]?.link,
-      imageSrc: newsData[77]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[77]?.image,
-        title: newsData[77]?.title,
-        content: newsData[77]?.content,
-      },
-    },
-    {
-      date: newsData[78]?.date.slice(0, 10),
-      id: 133,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 133).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 133)?.down : 0,
-      title: newsData[78]?.title,
-      link: newsData[78]?.link,
-      imageSrc: newsData[78]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[78]?.image,
-        title: newsData[78]?.title,
-        content: newsData[78]?.content,
-      },
-    },
-    {
-      date: newsData[79]?.date.slice(0, 10),
-      id: 134,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 134).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 134)?.down : 0,
-      title: newsData[79]?.title,
-      link: newsData[79]?.link,
-      imageSrc: newsData[79]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[79]?.image,
-        title: newsData[79]?.title,
-        content: newsData[79]?.content,
-      },
-    },
-    {
-      date: newsData[80]?.date.slice(0, 10),
-      id: 135,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 135).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 135)?.down : 0,
-      title: newsData[80]?.title,
-      link: newsData[80]?.link,
-      imageSrc: newsData[80]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[80]?.image,
-        title: newsData[80]?.title,
-        content: newsData[80]?.content,
-      },
-    },
-    {
-      date: newsData[81]?.date.slice(0, 10),
-      id: 136,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 136).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 136)?.down : 0,
-      title: newsData[81]?.title,
-      link: newsData[81]?.link,
-      imageSrc: newsData[81]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[81]?.image,
-        title: newsData[81]?.title,
-        content: newsData[81]?.content,
-      },
-    },
-    {
-      date: newsData[82]?.date.slice(0, 10),
-      id: 137,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 137).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 137)?.down : 0,
-      title: newsData[82]?.title,
-      link: newsData[82]?.link,
-      imageSrc: newsData[82]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[82]?.image,
-        title: newsData[82]?.title,
-        content: newsData[82]?.content,
-      },
-    },
-    {
-      date: newsData[83]?.date.slice(0, 10),
-      id: 138,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 138).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 138)?.down : 0,
-      title: newsData[83]?.title,
-      link: newsData[83]?.link,
-      imageSrc: newsData[83]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[83]?.image,
-        title: newsData[83]?.title,
-        content: newsData[83]?.content,
-      },
-    },
-    {
-      date: newsData[84]?.date.slice(0, 10),
-      id: 139,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 139).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 139)?.down : 0,
-      title: newsData[84]?.title,
-      link: newsData[84]?.link,
-      imageSrc: newsData[84]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[84]?.image,
-        title: newsData[84]?.title,
-        content: newsData[84]?.content,
-      },
-    },
-    {
-      date: newsData[85]?.date.slice(0, 10),
-      id: 140,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 140).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 140)?.down : 0,
-      title: newsData[85]?.title,
-      link: newsData[85]?.link,
-      imageSrc: newsData[85]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[85]?.image,
-        title: newsData[85]?.title,
-        content: newsData[85]?.content,
-      },
-    },
-    {
-      date: newsData[86]?.date.slice(0, 10),
-      id: 141,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 141).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 141)?.down : 0,
-      title: newsData[86]?.title,
-      link: newsData[86]?.link,
-      imageSrc: newsData[86]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[86]?.image,
-        title: newsData[86]?.title,
-        content: newsData[86]?.content,
-      },
-    },
-    {
-      date: newsData[87]?.date.slice(0, 10),
-      id: 142,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 142).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 142)?.down : 0,
-      title: newsData[87]?.title,
-      link: newsData[87]?.link,
-      imageSrc: newsData[87]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[87]?.image,
-        title: newsData[87]?.title,
-        content: newsData[87]?.content,
-      },
-    },
-    {
-      date: newsData[88]?.date.slice(0, 10),
-      id: 143,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 143).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 143)?.down : 0,
-      title: newsData[88]?.title,
-      link: newsData[88]?.link,
-      imageSrc: newsData[88]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[88]?.image,
-        title: newsData[88]?.title,
-        content: newsData[88]?.content,
-      },
-    },
-    {
-      date: newsData[89]?.date.slice(0, 10),
-      id: 144,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 144).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 144)?.down : 0,
-      title: newsData[89]?.title,
-      link: newsData[89]?.link,
-      imageSrc: newsData[89]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[89]?.image,
-        title: newsData[89]?.title,
-        content: newsData[89]?.content,
-      },
-    },
-    {
-      date: newsData[90]?.date.slice(0, 10),
-      id: 145,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 145).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 145)?.down : 0,
-      title: newsData[90]?.title,
-      link: newsData[90]?.link,
-      imageSrc: newsData[90]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[90]?.image,
-        title: newsData[90]?.title,
-        content: newsData[90]?.content,
-      },
-    },
-    {
-      date: newsData[91]?.date.slice(0, 10),
-      id: 146,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 146).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 146)?.down : 0,
-      title: newsData[91]?.title,
-      link: newsData[91]?.link,
-      imageSrc: newsData[91]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[91]?.image,
-        title: newsData[91]?.title,
-        content: newsData[91]?.content,
-      },
-    },
-    {
-      date: newsData[92]?.date.slice(0, 10),
-      id: 147,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 147).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 147)?.down : 0,
-      title: newsData[92]?.title,
-      link: newsData[92]?.link,
-      imageSrc: newsData[92]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[92]?.image,
-        title: newsData[92]?.title,
-        content: newsData[92]?.content,
-      },
-    },
-    {
-      date: newsData[93]?.date.slice(0, 10),
-      id: 148,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 148).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 148)?.down : 0,
-      title: newsData[93]?.title,
-      link: newsData[93]?.link,
-      imageSrc: newsData[93]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[93]?.image,
-        title: newsData[93]?.title,
-        content: newsData[93]?.content,
-      },
-    },
-    {
-      date: newsData[94]?.date.slice(0, 10),
-      id: 149,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 149).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 149)?.down : 0,
-      title: newsData[94]?.title,
-      link: newsData[94]?.link,
-      imageSrc: newsData[94]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[94]?.image,
-        title: newsData[94]?.title,
-        content: newsData[94]?.content,
-      },
-    },
-    {
-      date: newsData[95]?.date.slice(0, 10),
-      id: 150,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 150).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 150)?.down : 0,
-      title: newsData[95]?.title,
-      link: newsData[95]?.link,
-      imageSrc: newsData[95]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[95]?.image,
-        title: newsData[95]?.title,
-        content: newsData[95]?.content,
-      },
-    },
-    {
-      date: newsData[96]?.date.slice(0, 10),
-      id: 151,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 151).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 151)?.down : 0,
-      title: newsData[96]?.title,
-      link: newsData[96]?.link,
-      imageSrc: newsData[96]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[96]?.image,
-        title: newsData[96]?.title,
-        content: newsData[96]?.content,
-      },
-    },
-    {
-      date: newsData[97]?.date.slice(0, 10),
-      id: 152,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 152).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 152)?.down : 0,
-      title: newsData[97]?.title,
-      link: newsData[97]?.link,
-      imageSrc: newsData[97]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[97]?.image,
-        title: newsData[97]?.title,
-        content: newsData[97]?.content,
-      },
-    },
-    {
-      date: newsData[98]?.date.slice(0, 10),
-      id: 153,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 153).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 153)?.down : 0,
-      title: newsData[98]?.title,
-      link: newsData[98]?.link,
-      imageSrc: newsData[98]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[98]?.image,
-        title: newsData[98]?.title,
-        content: newsData[98]?.content,
-      },
-    },
-    {
-      date: newsData[99]?.date.slice(0, 10),
-      id: 154,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 154).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 154)?.down : 0,
-      title: newsData[99]?.title,
-      link: newsData[99]?.link,
-      imageSrc: newsData[99]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[99]?.image,
-        title: newsData[99]?.title,
-        content: newsData[99]?.content,
-      },
-    },
-    {
-      date: newsData[100]?.date.slice(0, 10),
-      id: 155,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 155).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 155)?.down : 0,
-      title: newsData[100]?.title,
-      link: newsData[100]?.link,
-      imageSrc: newsData[100]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[100]?.image,
-        title: newsData[100]?.title,
-        content: newsData[100]?.content,
-      },
-    },
-    {
-      date: newsData[101]?.date.slice(0, 10),
-      id: 156,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 156).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 156)?.down : 0,
-      title: newsData[101]?.title,
-      link: newsData[101]?.link,
-      imageSrc: newsData[101]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[101]?.image,
-        title: newsData[101]?.title,
-        content: newsData[101]?.content,
-      },
-    },
-    {
-      date: newsData[102]?.date.slice(0, 10),
-      id: 157,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 157).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 157)?.down : 0,
-      title: newsData[102]?.title,
-      link: newsData[102]?.link,
-      imageSrc: newsData[102]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[102]?.image,
-        title: newsData[102]?.title,
-        content: newsData[102]?.content,
-      },
-    },
-    {
-      date: newsData[103]?.date.slice(0, 10),
-      id: 158,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 158).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 158)?.down : 0,
-      title: newsData[103]?.title,
-      link: newsData[103]?.link,
-      imageSrc: newsData[103]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[103]?.image,
-        title: newsData[103]?.title,
-        content: newsData[103]?.content,
-      },
-    },
-    {
-      date: newsData[104]?.date.slice(0, 10),
-      id: 159,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 159).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 159)?.down : 0,
-      title: newsData[104]?.title,
-      link: newsData[104]?.link,
-      imageSrc: newsData[104]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[104]?.image,
-        title: newsData[104]?.title,
-        content: newsData[104]?.content,
-      },
-    },
-    {
-      date: newsData[105]?.date.slice(0, 10),
-      id: 160,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 160).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 160)?.down : 0,
-      title: newsData[105]?.title,
-      link: newsData[105]?.link,
-      imageSrc: newsData[105]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[105]?.image,
-        title: newsData[105]?.title,
-        content: newsData[105]?.content,
-      },
-    },
-    {
-      date: newsData[106]?.date.slice(0, 10),
-      id: 161,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 161).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 161)?.down : 0,
-      title: newsData[106]?.title,
-      link: newsData[106]?.link,
-      imageSrc: newsData[106]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[106]?.image,
-        title: newsData[106]?.title,
-        content: newsData[106]?.content,
-      },
-    },
-    {
-      date: newsData[107]?.date.slice(0, 10),
-      id: 162,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 162).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 162)?.down : 0,
-      title: newsData[107]?.title,
-      link: newsData[107]?.link,
-      imageSrc: newsData[107]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[107]?.image,
-        title: newsData[107]?.title,
-        content: newsData[107]?.content,
-      },
-    },
-    {
-      date: newsData[108]?.date.slice(0, 10),
-      id: 163,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 163).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 163)?.down : 0,
-      title: newsData[108]?.title,
-      link: newsData[108]?.link,
-      imageSrc: newsData[108]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[108]?.image,
-        title: newsData[108]?.title,
-        content: newsData[108]?.content,
-      },
-    },
-    {
-      date: newsData[109]?.date.slice(0, 10),
-      id: 164,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 164).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 164)?.down : 0,
-      title: newsData[109]?.title,
-      link: newsData[109]?.link,
-      imageSrc: newsData[109]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[109]?.image,
-        title: newsData[109]?.title,
-        content: newsData[109]?.content,
-      },
-    },
-    {
-      date: newsData[110]?.date.slice(0, 10),
-      id: 165,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 165).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 165)?.down : 0,
-      title: newsData[110]?.title,
-      link: newsData[110]?.link,
-      imageSrc: newsData[110]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[110]?.image,
-        title: newsData[110]?.title,
-        content: newsData[110]?.content,
-      },
-    },
-    {
-      date: newsData[111]?.date.slice(0, 10),
-      id: 166,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 166).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 166)?.down : 0,
-      title: newsData[111]?.title,
-      link: newsData[111]?.link,
-      imageSrc: newsData[111]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[111]?.image,
-        title: newsData[111]?.title,
-        content: newsData[111]?.content,
-      },
-    },
-    {
-      date: newsData[112]?.date.slice(0, 10),
-      id: 167,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 167).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 167)?.down : 0,
-      title: newsData[112]?.title,
-      link: newsData[112]?.link,
-      imageSrc: newsData[112]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[112]?.image,
-        title: newsData[112]?.title,
-        content: newsData[112]?.content,
-      },
-    },
-    {
-      date: newsData[113]?.date.slice(0, 10),
-      id: 168,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 168).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 168)?.down : 0,
-      title: newsData[113]?.title,
-      link: newsData[113]?.link,
-      imageSrc: newsData[113]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[113]?.image,
-        title: newsData[113]?.title,
-        content: newsData[113]?.content,
-      },
-    },
-    {
-      date: newsData[114]?.date.slice(0, 10),
-      id: 169,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 169).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 169)?.down : 0,
-      title: newsData[114]?.title,
-      link: newsData[114]?.link,
-      imageSrc: newsData[114]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[114]?.image,
-        title: newsData[114]?.title,
-        content: newsData[114]?.content,
-      },
-    },
-    {
-      date: newsData[115]?.date.slice(0, 10),
-      id: 170,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 170).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 170)?.down : 0,
-      title: newsData[115]?.title,
-      link: newsData[115]?.link,
-      imageSrc: newsData[115]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[115]?.image,
-        title: newsData[115]?.title,
-        content: newsData[115]?.content,
-      },
-    },
-    {
-      date: newsData[116]?.date.slice(0, 10),
-      id: 171,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 171).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 171)?.down : 0,
-      title: newsData[116]?.title,
-      link: newsData[116]?.link,
-      imageSrc: newsData[116]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[116]?.image,
-        title: newsData[116]?.title,
-        content: newsData[116]?.content,
-      },
-    },
-    {
-      date: newsData[117]?.date.slice(0, 10),
-      id: 172,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 172).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 172)?.down : 0,
-      title: newsData[117]?.title,
-      link: newsData[117]?.link,
-      imageSrc: newsData[117]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[117]?.image,
-        title: newsData[117]?.title,
-        content: newsData[117]?.content,
-      },
-    },
-    {
-      date: newsData[118]?.date.slice(0, 10),
-      id: 173,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 173).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 173)?.down : 0,
-      title: newsData[118]?.title,
-      link: newsData[118]?.link,
-      imageSrc: newsData[118]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[118]?.image,
-        title: newsData[118]?.title,
-        content: newsData[118]?.content,
-      },
-    },
-    {
-      date: newsData[119]?.date.slice(0, 10),
-      id: 174,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 174).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 174)?.down : 0,
-      title: newsData[119]?.title,
-      link: newsData[119]?.link,
-      imageSrc: newsData[119]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[119]?.image,
-        title: newsData[119]?.title,
-        content: newsData[119]?.content,
-      },
-    },
-    {
-      date: newsData[120]?.date.slice(0, 10),
-      id: 175,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 175).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 175)?.down : 0,
-      title: newsData[120]?.title,
-      link: newsData[120]?.link,
-      imageSrc: newsData[120]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[120]?.image,
-        title: newsData[120]?.title,
-        content: newsData[120]?.content,
-      },
-    },
-    {
-      date: newsData[121]?.date.slice(0, 10),
-      id: 176,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 176).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 176)?.down : 0,
-      title: newsData[121]?.title,
-      link: newsData[121]?.link,
-      imageSrc: newsData[121]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[121]?.image,
-        title: newsData[121]?.title,
-        content: newsData[121]?.content,
-      },
-    },
-    {
-      date: newsData[122]?.date.slice(0, 10),
-      id: 177,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 177).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 177)?.down : 0,
-      title: newsData[122]?.title,
-      link: newsData[122]?.link,
-      imageSrc: newsData[122]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[122]?.image,
-        title: newsData[122]?.title,
-        content: newsData[122]?.content,
-      },
-    },
-    {
-      date: newsData[123]?.date.slice(0, 10),
-      id: 178,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 178).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 178)?.down : 0,
-      title: newsData[123]?.title,
-      link: newsData[123]?.link,
-      imageSrc: newsData[123]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[123]?.image,
-        title: newsData[123]?.title,
-        content: newsData[123]?.content,
-      },
-    },
-    {
-      date: newsData[124]?.date.slice(0, 10),
-      id: 179,
-      month: "",
-      upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 179).up : 0,
-      downvote:
-        votes.length !== 0 ? votes.find((obj) => obj.id === 179)?.down : 0,
-      title: newsData[124]?.title,
-      link: newsData[124]?.link,
-      imageSrc: newsData[124]?.image,
-      year: "",
-      content: {
-        imageSrc: newsData[124]?.image,
-        title: newsData[124]?.title,
-        content: newsData[124]?.content,
-      },
-    },
-    {
       date: "22",
       id: 0,
       month: "Jun",
@@ -2327,16 +130,12 @@ const News = ({ theme, isPremium, key }) => {
         votes.length !== 0 ? votes.find((obj) => obj.id === 0)?.down : 0,
       title: "📣 DYPians, get ready for the next step!",
       link: "https://twitter.com/dypfinance/status/1539620413461958656",
-      imageSrc:
+      image:
         "https://pbs.twimg.com/media/FV3UaozWYAE8y_F?format=jpg&name=small",
       year: "2022",
-      content: {
-        imageSrc:
-          "https://pbs.twimg.com/media/FV3UaozWYAE8y_F?format=jpg&name=small",
-        title: "📣 DYPians, get ready for the next step!",
         content:
           "Starting from today, 22 June 2022, 09:00 AM PT, $DYP will be available for trading on @Coinbase & @CoinbaseExch. You can choose from #DYP-USD & #DYP-USDT pairs.",
-      },
+      
     },
     {
       date: "14",
@@ -2347,13 +146,10 @@ const News = ({ theme, isPremium, key }) => {
         votes.length !== 0 ? votes.find((obj) => obj.id === 1)?.down : 0,
       title: "Metaverse, the next step for DYP!",
       link: "https://dypfinance.medium.com/metaverse-the-next-step-for-dyp-4c6586a1e3f0",
-      imageSrc:
+      image:
         "https://miro.medium.com/max/1400/1*VKmKepkkPCmkMcF_0kU5Dg.jpeg",
       year: "2022",
-      content: {
-        imageSrc:
-          "https://miro.medium.com/max/1400/1*VKmKepkkPCmkMcF_0kU5Dg.jpeg",
-        title: "Metaverse, the next step for DYP!",
+      
         content: `Metaverse is an online 3D universe that combines multiple virtual spaces with endless possibilities which allows users to meet, socialize, play and even work. <br/><br/>
       The closest metaverse experience that is out there is provided by video games with developers that expanded the gaming universe, creating in-game complex ecosystems with different types of utility tokens and valuable collectibles like NFTs. <br/><br/>
       The metaverse is powered by virtual reality and each user will have its own avatar or character. Let’s take a quick example: with the help of a VR headset you will connect to a blockchain-based game, use your avatar and check your crypto portfolio inside a metaverse platform. <br/><br/>
@@ -2378,7 +174,7 @@ const News = ({ theme, isPremium, key }) => {
       Things will get more exciting once you will start to get experience and upgrade your character and your pet from beginner up to expert level.<br/><br/>
       Last but not least, we will have a Ballance section where you will be able <b>to deposit DYP and iDYP to your wallets, withdraw rewards or transfer credits inside the game.</b><br/><br/>
       Now that you know a little bit about the things that we are developing, we hope you are as excited as we are for the amazing things that are coming.`,
-      },
+     
     },
     {
       date: "31",
@@ -2389,16 +185,13 @@ const News = ({ theme, isPremium, key }) => {
         votes.length !== 0 ? votes.find((obj) => obj.id === 2)?.down : 0,
       title: "Game season it’s officially open! 👉🏽 #CAWS Adventures is here!",
       link: "https://twitter.com/dypfinance/status/1531613663450251264",
-      imageSrc:
+      image:
         "https://pbs.twimg.com/media/FUFifRpX0AEoGYt?format=jpg&name=small",
       year: "2022",
-      content: {
-        imageSrc:
-          "https://pbs.twimg.com/media/FUFifRpX0AEoGYt?format=jpg&name=small",
-        title: "Game season it’s officially open! 👉🏽 #CAWS Adventures is here!",
+   
         content:
           '🙀 Are you ready for a #GameFi Experience? Great! <br/><br/> Game season it’s officially open! 👉🏽 #CAWS Adventures is here. <br/> Connect your wallet and start the adventure!<br/> 😼 Don’t forget: you need to hold a CAWS #NFT in order to play. Game on DYPians! <br/><br/> <a href="https://game.dyp.finance/"  target="_blank">game.dyp.finance</a>',
-      },
+     
     },
     {
       date: "27",
@@ -2409,36 +202,30 @@ const News = ({ theme, isPremium, key }) => {
         votes.length !== 0 ? votes.find((obj) => obj.id === 3)?.down : 0,
       title: "Check out our new website!",
       link: "https://twitter.com/dypfinance/status/1530181037766189059",
-      imageSrc:
+      image:
         "https://pbs.twimg.com/media/FTxLMb9WIAE0fA7?format=jpg&name=medium",
       year: "2022",
-      content: {
-        imageSrc:
-          "https://pbs.twimg.com/media/FTxLMb9WIAE0fA7?format=jpg&name=medium",
-        title: "Check out our new website!",
+
         content:
           '🔥 That special moment is finally here! <br/><br> 🧐 Check out our new website. An upgraded UI version with new cool features 👉 an easier and more interactive way to stay connected to our platform! <br/><br/>This is DeFi Yield Protocol! ⤵️ <br/><br/><a href="https://dyp.finance/" target="_blank">dyp.finance</a>',
-      },
+    
     },
     {
       title: "Gate.io $DYP Lock-up ＆ Earn #3",
       id: 4,
-      imageSrc:
+      image:
         "https://pbs.twimg.com/media/FTG42MYWQAImetj?format=jpg&name=large",
       date: "May 19, 2022",
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 4).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 4)?.down : 0,
       link: "https://twitter.com/gate_io/status/1527204993052426241",
-      content: {
-        imageSrc:
-          "https://pbs.twimg.com/media/FTG42MYWQAImetj?format=jpg&name=large",
-        title: "Gate.io $DYP Lock-up ＆ Earn #3",
+
         content: `🔒#Gateio $DYP Lock-up ＆ Earn #3 @dypfinance <br/><br/> 
       🔷Token: $DYP <br/> 🔶Term: 7 days<br/> ⚡️Annual Interest Rate:150%<br/> 🕘Start: May 21, 8:00:00 UTC<br/>
       ➡️Try out: <a href='https://www.gate.io/zh/hodl/1263?ch=hodl_twi0516' target='_blank'><u>gate.io</u></a><br/>
       ➡️Check more: <a href='https://www.gate.io/zh/article/26591?ch=en_sm_0522' target='_blank'><u>gate.io</u></a>`,
-      },
+      
     },
     {
       date: "22",
@@ -2449,17 +236,14 @@ const News = ({ theme, isPremium, key }) => {
         votes.length !== 0 ? votes.find((obj) => obj.id === 5)?.down : 0,
       title: "V.R. is the next step for #DYP.",
       link: "https://twitter.com/dypfinance/status/1496072467814756353",
-      imageSrc:
+      image:
         "https://pbs.twimg.com/media/FMMd6vBXoAMb_je?format=jpg&name=4096x4096",
 
       year: "2022",
-      content: {
-        imageSrc:
-          "https://pbs.twimg.com/media/FMMd6vBXoAMb_je?format=jpg&name=4096x4096",
-        title: "V.R. is the next step for #DYP.",
+  
         content:
           "🔜 V.R. is the next step for #DYP. <br/><br> 🔥 ⚡️ Find out more about the #Metaverse play-to-earn game that we are developing. <br/><br/> 👉<a href='https://dypfinance.medium.com/how-defi-yield-protocol-is-changing-the-future-in-crypto-earnings-59d7774f570d' target='_blank'><u>How DeFi Yield Protocol is changing the future in the crypto world.</u></a>",
-      },
+     
     },
     {
       date: "11",
@@ -2470,15 +254,13 @@ const News = ({ theme, isPremium, key }) => {
         votes.length !== 0 ? votes.find((obj) => obj.id === 6)?.down : 0,
       title: "Cats and Watches Society Whitelist!",
       link: "https://twitter.com/dypfinance/status/1480623073208549380",
-      imageSrc: "https://dyp.finance/img/nft/roadmap_caws.jpg",
+      image: "https://dyp.finance/img/nft/roadmap_caws.jpg",
 
       year: "2022",
-      content: {
-        imageSrc: "https://dyp.finance/img/nft/roadmap_caws.jpg",
-        title: "Cats and Watches Society Whitelist!",
+
         content:
           "🔥Join Cats and Watches Society #NFTs Whitelist 🎉One Brand New Rolex Daytona Ceramic 116500LN worth $40k Giveaway <br/><br> 🔥 To win the watch: <br/><br/> <ul><li>✅Join <a href='http://dyp.finance/whitelist' target='_blank'><u>dyp.finance/whitelist</u></a></li><li>✅Mint one #NFT once available</li><li>✅Like & Retweet this post</li><li>✅Join <a href='http://discord.gg/dypcaws' target='_blank'><u>discord.gg/dypcaws</u></li><li>✅Tag 3 friends</li></ul>",
-      },
+    
     },
     {
       date: "11",
@@ -2489,15 +271,12 @@ const News = ({ theme, isPremium, key }) => {
         votes.length !== 0 ? votes.find((obj) => obj.id === 7)?.down : 0,
       title: "It's raining $KNC on KyberSwap for $DYP!",
       link: "https://twitter.com/KyberNetwork/status/1480850588980051969",
-      imageSrc: "https://miro.medium.com/max/1400/1*gmCDk8UdGNrpI4USFHYyJA.png",
+      image: "https://miro.medium.com/max/1400/1*gmCDk8UdGNrpI4USFHYyJA.png",
       year: "2022",
-      content: {
-        imageSrc:
-          "https://miro.medium.com/max/1400/1*gmCDk8UdGNrpI4USFHYyJA.png",
-        title: "It's raining $KNC on KyberSwap for $DYP!",
+
         content:
           "🌧It's raining $KNC on KyberSwap for @dypfinance $DYP! <br/><br> 💰Phase 2: $100K for DYP-WAVAX liquidity providers <br/><br/> 👉🏽Tue 11 Jan, 9.30pm GMT+8 <br/> <br/> ➡️Details: <a href ='https://bit.ly/3fikKjr' target ='_blank'><u>bit.ly/3fikKjr</u></a> <br/><br/>",
-      },
+    
     },
     {
       date: "10",
@@ -2508,16 +287,12 @@ const News = ({ theme, isPremium, key }) => {
         votes.length !== 0 ? votes.find((obj) => obj.id === 8)?.down : 0,
       title: "New smart contract for DYP staking!",
       link: "https://twitter.com/dypfinance/status/1524075021379022848",
-      imageSrc:
+      image:
         "https://pbs.twimg.com/media/FSKsEt2XMAA-ZUX?format=jpg&name=medium",
       year: "2022",
-      content: {
-        imageSrc:
-          "https://pbs.twimg.com/media/FSKsEt2XMAA-ZUX?format=jpg&name=medium",
-        title: "New smart contract for DYP staking!",
         content:
           'The game has changed! ⤵️ <br/><br> 💰 Stake your #DYP and earn 25% APR in #ETH, #AVAX or #BNB. <br/><br/>This new smart contract is available on all blockchains: ETH, BSC & C-CHAIN 👉🏽 no impermanent loss. <br/><br/>It all starts today! ⚡️<br/><br/>🔛<a href="https://dyp.finance/stakev2" target="_blank"><u>dyp.finance/stakev2</u></a>',
-      },
+     
     },
     {
       date: "14",
@@ -2528,17 +303,14 @@ const News = ({ theme, isPremium, key }) => {
         votes.length !== 0 ? votes.find((obj) => obj.id === 9)?.down : 0,
       title: "Gate.io support for DYP on BNB Chain and C-CHAIN!",
       link: "https://twitter.com/dypfinance/status/1514627082025852936",
-      imageSrc:
+      image:
         "https://pbs.twimg.com/media/FQUJHzJXEA0kQ7h?format=jpg&name=medium",
 
       year: "2022",
-      content: {
-        imageSrc:
-          "https://pbs.twimg.com/media/FQUJHzJXEA0kQ7h?format=jpg&name=medium",
-        title: "Gate.io support for DYP on BNB Chain and C-CHAIN!",
+
         content:
           "Now check this out! 🔊 <br/><br> Starting from today you can trade $DYP on Gate.io also on #BSC/BEP20 and #AVAX/C-CHAIN - no bridge required. 💥 <br/><br/>And this is only the beginning! 🚀",
-      },
+      
     },
     {
       date: "4",
@@ -2549,17 +321,14 @@ const News = ({ theme, isPremium, key }) => {
         votes.length !== 0 ? votes.find((obj) => obj.id === 10)?.down : 0,
       title: "March - DYP Vault is ready for action!",
       link: "https://twitter.com/dypfinance/status/1499761913001136136",
-      imageSrc:
+      image:
         "https://pbs.twimg.com/media/FNA4t82WUAUfX9z?format=jpg&name=medium",
 
       year: "2022",
-      content: {
-        imageSrc:
-          "https://pbs.twimg.com/media/FNA4t82WUAUfX9z?format=jpg&name=medium",
-        title: "March - DYP Vault is ready for action!",
+
         content:
           "📢 It's official! ⚡️ #DYP Vault is ready for action. <br/><br> 🔥 Check out our contracts with no lock time, deposit your #crypto and let us do the rest. 🚀 <br/><br/> 👉<a href='https://dyp.finance/vault-new' target='_blank'><u>dyp.finance/vault-new</u><a/><br/><br/>👏 Doing #crypto is easy with $DYP!",
-      },
+     
     },
     {
       date: "15",
@@ -2570,16 +339,13 @@ const News = ({ theme, isPremium, key }) => {
         votes.length !== 0 ? votes.find((obj) => obj.id === 11)?.down : 0,
       title: "Staking, Farming, and Buyback V2 ETH",
       link: "https://twitter.com/dypfinance/status/1471162808041713665",
-      imageSrc:
+      image:
         "https://miro.medium.com/max/1400/1*uQCbsnPYwQdlQ8Wdtrgojg.jpeg",
       year: "2021",
-      content: {
-        imageSrc:
-          "https://miro.medium.com/max/1400/1*uQCbsnPYwQdlQ8Wdtrgojg.jpeg",
-        title: "Staking, Farming, and Buyback V2 ETH",
+
         content:
           "We are excited to announce that the new pools for staking, buyback, and farming have been launched on #Ethereum <br/><br> Join staking if you are holding #DYP or buyback & farming if you are holding WETH, WBTC, USDC, USDT, LINK or #iDYP and earn #ETH as rewards👇<br/><br/>  <a href ='https://dyp.finance/earnv2' target ='_blank'><u>dyp.finance/earnv2</u></a>",
-      },
+   
     },
     {
       date: "08",
@@ -2590,16 +356,13 @@ const News = ({ theme, isPremium, key }) => {
         votes.length !== 0 ? votes.find((obj) => obj.id === 12).down : 0,
       title: "Staking, Farming, and Buyback V2 AVAX",
       link: "https://twitter.com/dypfinance/status/1468652091799482378",
-      imageSrc:
+      image:
         "https://miro.medium.com/max/1400/1*edJgopIexXunb7eiy4KTvA.jpeg",
       year: "2021",
-      content: {
-        imageSrc:
-          "https://miro.medium.com/max/1400/1*edJgopIexXunb7eiy4KTvA.jpeg",
-        title: "Staking, Farming, and Buyback V2 AVAX",
+
         content:
           "We are excited to announce that the new pools for staking, buyback, and farming have been launched on #Avalanche <br/><br> Join staking if you are holding #DYP or buyback & farming if you are holding #AVAX, USDC, WETH, #PNG, or WBTC, and earn #AVAX as rewards👇 <br/><br/>  <a href ='https://dyp.finance/earnv2' target ='_blank'><u>dyp.finance/earnv2</u></a>",
-      },
+    
     },
     {
       date: "20",
@@ -2610,16 +373,13 @@ const News = ({ theme, isPremium, key }) => {
         votes.length !== 0 ? votes.find((obj) => obj.id === 13)?.down : 0,
       title: "Staking, Farming, and Buyback V2 BSC",
       link: "https://twitter.com/dypfinance/status/1462032099708391428",
-      imageSrc:
+      image:
         "https://miro.medium.com/max/1400/1*5hnErea6YNBD8id8I5cm2A.jpeg",
       year: "2021",
-      content: {
-        imageSrc:
-          "https://miro.medium.com/max/1400/1*5hnErea6YNBD8id8I5cm2A.jpeg",
-        title: "Staking, Farming, and Buyback V2 BSC",
+
         content:
           "We are excited to announce that the new pools for staking, buyback, and farming have been launched on #BinanceSmartChain <br/><br> Join staking if you are holding #DYP or buyback & farming if you are holding WBNB, BTCB, ETH, BUSD, CAKE and earn #BNB as rewards👇 <br/><br/>  <a href ='https://dyp.finance/earnv2' target ='_blank'><u>dyp.finance/earnv2</u></a>",
-      },
+      
     },
     {
       date: "5",
@@ -2630,15 +390,12 @@ const News = ({ theme, isPremium, key }) => {
         votes.length !== 0 ? votes.find((obj) => obj.id === 14)?.down : 0,
       title: "It's raining $DYP + $KNC!",
       link: "https://twitter.com/KyberNetwork/status/1445210348944912388",
-      imageSrc: "https://miro.medium.com/max/1400/1*iM7ctAGi7pD0k_MmMuUWjg.png",
+      image: "https://miro.medium.com/max/1400/1*iM7ctAGi7pD0k_MmMuUWjg.png",
       year: "2021",
-      content: {
-        imageSrc:
-          "https://miro.medium.com/max/1400/1*iM7ctAGi7pD0k_MmMuUWjg.png",
-        title: "It's raining $DYP + $KNC!",
+
         content:
           "🌧It's raining $DYP + $KNC! <br/><br> @dypfinance and Kyber are enhancing $DYP liquidity on KyberDMM DEX - the best venue for LPs to deposit and earn! <br/><br/>  💰$300K for DYP-WAVAX liquidity providers! <br/><br/> Details: <a href='' target='_blank'><u>DeFi Yield Protocol Enhances DYP Token Liquidity on Avalanche with KyberSwap!</u></a> <br/><br/> Visit: <a href='https://dmm.exchange/#/about' target='_blank'><u>dmm.exchange/#/about</u></a>",
-      },
+    
     },
     {
       date: "21",
@@ -2649,12 +406,9 @@ const News = ({ theme, isPremium, key }) => {
         votes.length !== 0 ? votes.find((obj) => obj.id === 15)?.down : 0,
       title: "DeFi Yield Protocol $DYP is coming to @0xPolygon!",
       link: "https://twitter.com/dypfinance/status/1440337326077472771",
-      imageSrc: "https://miro.medium.com/max/1400/1*nYEM2TrjWAzBTxc-sNATUg.png",
+      image: "https://miro.medium.com/max/1400/1*nYEM2TrjWAzBTxc-sNATUg.png",
       year: "2021",
-      content: {
-        imageSrc:
-          "https://miro.medium.com/max/1400/1*nYEM2TrjWAzBTxc-sNATUg.png",
-        title: "DeFi Yield Protocol $DYP is coming to @0xPolygon!",
+
         content: `<i>This integration enables DeFi users to benefit from DeFi Yield Protocol’s unique products while taking advantage of Polygon’s full-stack scaling solution, and application performance.</i><br/><br/>
       The team at DeFi Yield Protocol is continuing to explore ways of making the ecosystem bigger and better through adding more promising blockchain networks. DeFi Yield Protocol currently supports the Ethereum, Binance Smart Chain, and Avalanche networks. <br/><br/>
       Today marks yet another level of expansion for our DeFi ecosystem, as we’re expanding to Polygon to implement its network and technology on the DeFi Yield Protocol.<br/><br/>
@@ -2680,7 +434,7 @@ const News = ({ theme, isPremium, key }) => {
       The central feature of the DYP is the decentralized tool dashboard. It provides advanced features, including Decentralized Score, Unique Community Trust Vote System, DYP Locker, Yield Farm Data, and Launch Pad, allowing users to make informed decisions.<br/><br/>
       <b><a href='https://dyp.finance/' target='_blank'><u>Website</u></a>|<a href='https://t.me/dypannouncements' target='_blank'><u>Announcements</u></a>|<a href='https://discord.com/invite/kYDT6pc' target='_blank'><u>Discord</u> </a>|<a href='https://twitter.com/dypfinance' target='_blank'> <u>Twitter</u> </a>|<a href='https://t.me/dypfinance' target='_blank'> <u>Telegram</u> </a>|<a href='https://github.com/dypfinance' target='_blank'> <u>GitHub</u> </a>|<a href='https://www.youtube.com/channel/UC6Wrn8A-pq79srb9OC-ufXw' target='_blank'> <u>YouTube</u> </a>|<a href='https://www.instagram.com/dyp.finance/' target='_blank'> <u>Instagram</u> </a></b><br/><br/>
       `,
-      },
+     
     },
     {
       date: "10",
@@ -2691,14 +445,12 @@ const News = ({ theme, isPremium, key }) => {
         votes.length !== 0 ? votes.find((obj) => obj.id === 16)?.down : 0,
       title: "DeFi Yield Protocol (DYP) is on DeFi Pulse!",
       link: "https://twitter.com/defipulse/status/1436388557896159235",
-      imageSrc: "https://dyp.finance/img/defipulse.png",
+      image: "https://dyp.finance/img/defipulse.png",
       year: "2021",
-      content: {
-        imageSrc: "https://dyp.finance/img/defipulse.png",
-        title: "DeFi Yield Protocol (DYP) is on DeFi Pulse!",
+ 
         content:
           "🎊🎊NEW LISTING 🎊🎊<br/><br> @dypfinance anis now listed in our #DeFi rankings at #120 with $198k Total Value Locked <a href='https://www.defipulse.com/address-tag/defi-yield-protocol' target='_blank'><u>DeFi Pulse</u></a> <br/><br/>  DeFi Yield Protocol (DYP) is a platform that offers solutions for yield farming, staking, NFTs, and trading tools.",
-      },
+     
     },
     {
       date: "11",
@@ -2709,13 +461,10 @@ const News = ({ theme, isPremium, key }) => {
         votes.length !== 0 ? votes.find((obj) => obj.id === 17)?.down : 0,
       title: "DeFi Yield Protocol will be integrated with Coin98 Wallet!",
       link: "https://twitter.com/dypfinance/status/1425400583012425730?s=20",
-      imageSrc:
+      image:
         "https://miro.medium.com/max/1400/1*gimouGn5M4Mp6t8opTsNLw.jpeg",
       year: "2021",
-      content: {
-        imageSrc:
-          "https://miro.medium.com/max/1400/1*gimouGn5M4Mp6t8opTsNLw.jpeg",
-        title: "DeFi Yield Protocol will be integrated with Coin98 Wallet!",
+
         content: `We’re excited to announce that <a href='https://dyp.finance/' target='_blank'><u>DeFi Yield Protocol</u></a> will be integrated with <a href='https://coin98.com/' target='_blank'><u>Coin98 Wallet</u></a>, a non-custodial wallet used to store, manage, trade, swap multi-chain, multi-source digital assets.<br/><br/>
       <a href='https://coin98.com/' target='_blank'><u>Coin98 Wallet</u></a> is now one of the supported wallets on <a href='https://dyp.finance/' target='_blank'><u>DeFi Yield Protocol</u></a>, enabling users to add liquidity to DeFi Yield Protocol’s <a href='https://dyp.finance/earn' target='_blank'><u>farming pools</u></a> as well as easily trade with the high speed, low fee advantages of the Avalanche, Binance Smart Chain or Ethereum Network. The <a href='https://dyp.finance/earn' target='_blank'><u>Stake</u></a>, <a href='https://dyp.finance/earn' target='_blank'><u>Buyback</u></a> and <a href='https://dyp.finance/earn' target='_blank'><u>Vault</u></a> products on DeFi Yield Protocol
        are also available for all <a href='https://coin98.com/' target='_blank'><u>Coin98 Wallet</u></a> users to access. Also, <a href='https://tools.dyp.finance/' target='_blank'><u>DYP Tools</u></a> (a decentralized tool dashboard that provides advanced features, such as Decentralized Score, Unique Community Trust Vote System, DYP Locker, Yield Farm Data, and LaunchPad, allowing users to make informed decisions) and <a href='https://nft.dyp.finance/' target='_blank'><u>NFT dApp</u></a> (the NFT dApp by Defi Yield Protocol acts as a marketplace and a gallery where users can mint, buy, sell and trade NFTs for a fixed price) are available for all <a href='https://coin98.com/' target='_blank'><u>Coin98 Wallet</u></a> users. <br/><br/>
@@ -2731,7 +480,7 @@ const News = ({ theme, isPremium, key }) => {
       Coin98 Wallet is a non-custodial wallet used to store, manage, trade, swap multi-chain, multi-source digital assets. It supports the most popular chains, including Ethereum, Binance Smart Chain, Solana, Polkadot, Kusama, HECO Chain, Near, Avalanche X-Chain & C-Chain, Celo, BandChain, Kava, Terra, Cosmos, ThorChain, Fantom, Polygon, Persistence, XDai, Kardiachain, Ronin. Coin98 Wallet has both the Mobile App and the Extension version that act as a gateway, connecting users to the DeFi world.<br/><br/>
       <b><a href='https://apps.apple.com/us/app/coin98-wallet/id1561969966' target='_blank'><u>iOS</u></a>|<a href='https://play.google.com/store/apps/details?id=coin98.crypto.finance.media' target='_blank'><u>Android</u></a>|<a href='https://chrome.google.com/webstore/detail/coin98-wallet/aeachknmefphepccionboohckonoeemg' target='_blank'><u>Extension</u> </a>|<a href='https://twitter.com/coin98_wallet' target='_blank'> <u>Twitter</u> </a>|<a href='https://coin98.com/wallet' target='_blank'> <u>Website</u> </a>|<a href='https://docs.coin98.com/' target='_blank'> <u>Docs</u> </a>|<a href='https://t.me/coin98_wallet' target='_blank'> <u>Telegram</u> </a>|<a href='https://www.facebook.com/groups/676418929362725' target='_blank'> <u>Facebook</u> </a></b><br/><br/>
       `,
-      },
+      
     },
     {
       date: "22",
@@ -2742,13 +491,11 @@ const News = ({ theme, isPremium, key }) => {
         votes.length !== 0 ? votes.find((obj) => obj.id === 18)?.down : 0,
       title: "DeFi Yield Protocol strategic integration with Aircoins.io",
       link: "https://dypfinance.medium.com/defi-yield-protocol-strategic-integration-with-aircoins-io-augmented-reality-app-666209ce08e",
-      imageSrc:
+      image:
         "https://miro.medium.com/max/1400/1*h95JYnco1tuL3IGB0TAjsg.jpeg",
       year: "2021",
-      content: {
-        imageSrc:
-          "https://miro.medium.com/max/1400/1*h95JYnco1tuL3IGB0TAjsg.jpeg",
-        title: "DeFi Yield Protocol strategic integration with Aircoins.io",
+
+
         content: `<a href='https://dyp.finance/' target='_blank'><u>DeFi Yield Protocol</u></a> has entered the metaverse! With the vision to get DYP out to more people we have successfully integrated DYP token to Aircoins.io Augmented Reality App. Players will be able to earn DYP tokens in Augmented Reality (AR) around the world. A global treasure hunt with DYP in AR, bringing adoption to blockchain and decentralized finance through mobile gaming.<br/><br/>
       More than 2 Billion people around the world play mobile games. It is estimated that by the end of 2022 app gaming revenues will reach $125B. In the chart see top world revenue generating game apps. Popular AR mobile game Pokémon Go alone has generated $5B in sales.<br/><br/>
       Aircoins.io is currently the largest coin Augmented Reality AR App in the world with +30 Million digital AR experiences since launch in 2017. Customizable geo-based treasure hunts allowing DYP benefits to be distributed in AR all round the world!<br/><br/>
@@ -2769,7 +516,7 @@ const News = ({ theme, isPremium, key }) => {
       We have a very enthusiastic community that genuinely enjoys finding & collecting coins on our platform. What’s even more encouraging is the amazing photos and testimonials we receive from users all around the world.
       <b><a href='https://www.aircoins.io/' target='_blank'><u>Website</u></a>|<a href='https://play.google.com/store/apps/details?id=com.aircoinscorp.aircoins' target='_blank'><u>Download Android App </u></a>|<a href='https://apps.apple.com/us/app/aircoins-treasure-hunt-in-ar/id1411209889?ls=1' target='_blank'><u>Download Apple iOS App </u> </a>|<a href='https://twitter.com/Aircoins_App' target='_blank'> <u>Twitter</u> </a>|<a href='https://t.me/aircoins' target='_blank'> <u>Telegram</u> </b><br/><br/>
       `,
-      },
+    
     },
     {
       date: "14",
@@ -2780,13 +527,10 @@ const News = ({ theme, isPremium, key }) => {
         votes.length !== 0 ? votes.find((obj) => obj.id === 19)?.down : 0,
       title: "Pangolin partners with DeFi Yield Protocol (DYP)",
       link: "https://dypfinance.medium.com/pangolin-partners-with-defi-yield-protocol-dyp-a-unique-cross-chain-platform-b52b7e93e0a9",
-      imageSrc:
+      image:
         "https://miro.medium.com/max/1400/1*e2gdKr1KM3QlpGPewZu-gw.jpeg",
       year: "2021",
-      content: {
-        imageSrc:
-          "https://miro.medium.com/max/1400/1*e2gdKr1KM3QlpGPewZu-gw.jpeg",
-        title: "Pangolin partners with DeFi Yield Protocol (DYP)",
+
         content: `As a premier DEX on Avalanche Network, Pangolin strives to build partnerships with platforms across all blockchain networks. Therefore we are excited to announce our partnership with DeFi Yield Protocol (DYP), a cross-chain yield farming and DeFi platform. <br/><br/>
       The DeFi Yield Protocol (DYP) is a unique platform that offers solutions for yield farming, staking, and enabling users to leverage the advanced trading tools of the DYP. DeFi Yield Protocol offers Farming, Staking, NFT Marketplace, and a custom bridge. DYP originated on Ethereum, expanded to Binance Smart Chain, and is now looking to build on Avalanche Network. <br/><br/>
       With our partnership with DeFi Yield Protocol, Pangolin is excited to work together to bring users and liquidity from other networks onto Avalanche and into Pangolin. The AVAX/DYP pair in Pangolin already has over $500k in liquidity just one week after DYP launched their app on Avalanche. Also, by launching DYP Tools that provide advanced features, such as Decentralized Score, Unique Community Trust Vote System, DYP Locker, Yield Farm Data, and LaunchPad, we allow users to make informed decisions.<br/><br/>
@@ -2799,7 +543,7 @@ const News = ({ theme, isPremium, key }) => {
       Pangolin Exchange is a community-driven decentralized exchange (DEX) with fast-settlement, low fees, and a democratic process. Built on the Avalanche Network. Pangolin brings you the best trading opportunities.
       <b><a href='https://pangolin.exchange/' target='_blank'><u>Website</u></a> | <a href='https://twitter.com/pangolindex' target='_blank'><u>Twitter</u></a> | <a href='https://discord.com/invite/PARrDYYbfw' target='_blank'><u>Discord</u></a> | <a href='https://github.com/pangolindex' target='_blank'><u>GitHub</u></a> | <a href='https://pangolin.exchange/litepaper/' target='_blank'><u>Documentation</u></a> | <a href='https://t.me/pangolindex' target='_blank'><u>Telegram</u></a> | <a href='https://www.linkedin.com/company/74288656/admin/' target='_blank'><u>LinkedIn</u></a> | <a href='https://www.reddit.com/r/PangolinExchange/' target='_blank'><u>Reddit</u></a> | <a href='https://www.youtube.com/channel/UClJJTG4FRL4z3AOf-ZWXZLw' target='_blank'><u>YouTube</u></a></b>
       `,
-      },
+     
     },
     {
       date: "08",
@@ -2810,11 +554,9 @@ const News = ({ theme, isPremium, key }) => {
         votes.length !== 0 ? votes.find((obj) => obj.id === 20)?.down : 0,
       title: "DeFi Yield Protocol Avalanche Bridge Tutorial",
       link: "https://dypfinance.medium.com/defi-yield-protocol-avalanche-bridge-tutorial-9404d827a4a",
-      imageSrc: "https://dyp.finance/img/avalanche.jpg",
+      image: "https://dyp.finance/img/avalanche.jpg",
       year: "2021",
-      content: {
-        imageSrc: "https://dyp.finance/img/avalanche.jpg",
-        title: "DeFi Yield Protocol Avalanche Bridge Tutorial",
+
         content: `The Bridge will help you swap DYP tokens between Ethereum Network and Avalanche Network. In this tutorial I will show you the exact steps for swapping DYP tokens from Ethereum Network to Avalanche Network.<br/><br/>
       1. You need to visit <a href='https://avax-bridge.dyp.finance/' target='_blank'><u>https://avax-bridge.dyp.finance/</u></a><br/>
       2. Now, you should click ‘’CONNECT WALLET’’ and log into your MetaMask wallet.<br/>
@@ -2846,7 +588,7 @@ const News = ({ theme, isPremium, key }) => {
       <b><a href='https://dyp.finance/' target='_blank'><u>Website</u></a>|<a href='https://t.me/dypannouncements' target='_blank'><u>Announcements</u></a>|<a href='https://discord.com/invite/kYDT6pc' target='_blank'><u>Discord</u> </a>|<a href='https://twitter.com/dypfinance' target='_blank'> <u>Twitter</u> </a>|<a href='https://t.me/dypfinance' target='_blank'> <u>Telegram</u> </a>|<a href='https://github.com/dypfinance' target='_blank'> <u>GitHub</u> </a>|<a href='https://www.youtube.com/channel/UC6Wrn8A-pq79srb9OC-ufXw' target='_blank'> <u>YouTube</u> </a></b><br/><br/>
      
       `,
-      },
+     
     },
     {
       date: "05",
@@ -2857,13 +599,11 @@ const News = ({ theme, isPremium, key }) => {
         votes.length !== 0 ? votes.find((obj) => obj.id === 21)?.down : 0,
       title: "Getting Started with the DeFi Yield Protocol NFT Marketplace",
       link: "https://dypfinance.medium.com/getting-started-with-the-defi-yield-protocol-nft-marketplace-a518356f47f",
-      imageSrc:
+      image:
         "https://miro.medium.com/max/1400/1*qnQkO4ajXw33Ox7PLSV77w.jpeg",
       year: "2021",
-      content: {
-        imageSrc:
-          "https://miro.medium.com/max/1400/1*qnQkO4ajXw33Ox7PLSV77w.jpeg",
-        title: "Getting Started with the DeFi Yield Protocol NFT Marketplace",
+
+
         content: `<a href='https://nft.dyp.finance/'><u>DeFi Yield Protocol’s NFT Marketplace</u></a> is a new platform for creators and collectors to mint and trade NFTs. Everyone can now create non-fungible tokens and experience the benefits of unique, digital ownership rights on the Ethereum network. All it takes is a few minutes of your time, a small fee, and something you feel is worth transforming it into an NFT.<br/><br/>
       NFTs are the collectible cards of today’s world. Instead, they are unique and exist on the blockchain. With the rise in the popularity of NFTs, every blockchain project wants to add an NFT marketplace to its platform. However, creating a thriving NFT marketplace requires robust integration with an underlying protocol.<br/><br/>
       DeFi Yield Protocol has launched its new NFT Marketplace to help any user (artist or not) mint and sell their works of art.<br/><br/>
@@ -2911,7 +651,6 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
      
       
       `,
-      },
     },
     {
       date: "22",
@@ -2922,13 +661,10 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         votes.length !== 0 ? votes.find((obj) => obj.id === 22)?.down : 0,
       title: "DeFi Yield Protocol launches NFT dApp V1",
       link: "https://dypfinance.medium.com/defi-yield-protocol-launches-nft-dapp-v1-a796b19aaabb",
-      imageSrc:
+      image:
         "https://miro.medium.com/max/1400/1*lkIkivLimWQL_eT2pfd64A.jpeg",
       year: "2021",
-      content: {
-        imageSrc:
-          "https://miro.medium.com/max/1400/1*lkIkivLimWQL_eT2pfd64A.jpeg",
-        title: "DeFi Yield Protocol launches NFT dApp V1",
+
         content: `NFTs are the collectible cards of today’s world. Instead, they are unique and exist on the blockchain. With the rise in the popularity of NFTs, every blockchain project wants to add an NFT marketplace to its platform. However, creating a thriving NFT marketplace requires robust integration with an underlying protocol.<br/><br/>
       DeFi Yield Protocol, a decentralized platform with an aim to create a transparent, unbiased, and reliable network, is launching its <a href='https://nft.dyp.finance/' target='_blank'><u>NFT dApp V1</u></a>.<br/><br/>
       <b>About the NFT dApp</b><br/><br/>
@@ -2963,7 +699,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       • <a href='https://t.me/dypannouncements' target='_blank'><u>Telegram Announcements</u></a><br/>
       • <a href='https://discord.com/invite/kYDT6pc' target='_blank'><u>Discord</u></a><br/>
       `,
-      },
+    
     },
     {
       date: "22",
@@ -2974,13 +710,10 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         votes.length !== 0 ? votes.find((obj) => obj.id === 23)?.down : 0,
       title: "DeFi Yield Protocol Integrates Chainlink",
       link: "https://dypfinance.medium.com/defi-yield-protocol-integrates-chainlink-price-feeds-to-secure-yield-farming-data-on-ethereum-and-3fe85062a0e5",
-      imageSrc:
+      image:
         "https://miro.medium.com/max/1400/1*lut5I2B3ZEnaIULOfGnDVw.jpeg",
       year: "2021",
-      content: {
-        imageSrc:
-          "https://miro.medium.com/max/1400/1*lut5I2B3ZEnaIULOfGnDVw.jpeg",
-        title: "DeFi Yield Protocol Integrates Chainlink",
+
         content: `We’re excited to announce that DeFi Yield Protocol, a unique platform that allows any user to provide liquidity has integrated <a href='https://data.chain.link/' target='_blank'><u>Chainlink Price Feeds</u></a> on the Ethereum and Binance Smart Chain mainnet. By integrating Chainlink’s industry-leading decentralized oracle network, DeFi Yield Protocol has access to high-quality, tamper-proof price feeds needed to provide the exact value in USD. This will provide our users with strong assurances that all the values are provided in a fully decentralized manner and cannot be manipulated.<br/><br>
       Our initial integration involves the use of the following Chainlink Price Feeds: ETH-USD and BNB-USD. We chose Chainlink as our go-to oracle solution because its infrastructure is seamless to integrate and time-tested in production. Chainlink already secures leading DeFi protocols responsible for billions of dollars in smart contract value, maintaining robust security and high availability even amidst unexpected events, such as exchange downtime, flash crashes, and <a href='https://blog.chain.link/flash-loans/' target='_blank'><u>data manipulation attacks via flash loans.</u></a><br/><br/>
       DeFi Yield Protocol is a unique platform that allows any user to provide liquidity and uses an anti-manipulation feature.<br/><br/>
@@ -3004,44 +737,39 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       The central feature of the DYP is the decentralized tool dashboard. It provides advanced features, including Decentralized Score, Unique Community Trust Vote System, DYP Locker, Yield Farm Data, and Launch Pad, allowing users to make informed decisions.<br/><br/>
       <b><a href='https://dyp.finance/' target='_blank'><u>Website</u></a> | <a href='https://t.me/dypannouncements' target='_blank'><u>Announcements</u></a> | <a href='https://discord.com/invite/kYDT6pc' target='_blank'><u>Discord</u> </a> | <a href='https://twitter.com/dypfinance' target='_blank'> <u>Twitter</u> </a>|<a href='https://t.me/dypfinance' target='_blank'> <u>Telegram</u> </a>|<a href='https://github.com/dypfinance' target='_blank'> <u>GitHub</u> </a>|<a href='https://www.youtube.com/channel/UC6Wrn8A-pq79srb9OC-ufXw' target='_blank'> <u>YouTube</u> </a></b><br/><br/>
       `,
-      },
+      
     },
     {
       title: "Gate.io $DYP Lock-up ＆ Earn #2",
       id: 24,
-      imageSrc:
+      image:
         "https://pbs.twimg.com/media/FRVwHCUXwAMuR2r?format=jpg&name=large",
       date: "Apr 27, 2022",
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 24).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 24).down : 0,
       link: "https://twitter.com/gate_io/status/1519243718141874177",
-      content: {
-        imageSrc:
-          "https://pbs.twimg.com/media/FRVwHCUXwAMuR2r?format=jpg&name=large",
-        title: "Gate.io $DYP Lock-up ＆ Earn #2",
+
+
         content: `🔒#Gate.io $DYP Lock-up ＆ Earn #2 @dypfinance <br/><br/> 
       🕘Launch Time: May 1, 8:00:00 UTC<br/><br/>Win an estimated reward of 100% P.A.!<br/><br/>
       ➡️Purchase: <a href='https://www.gate.io/zh/hodl/1231?ch=en_sm_0422' target='_blank'><u>gate.io</u></a><br/>
       ➡️Details: <a href='https://www.gate.io/zh/article/26346?ch=en_sm_0422' target='_blank'><u>gate.io</u></a><br/>
       ➡️Telegram: <a href='https://t.me/gateio_hodl_en' target='_blank'><u>gate.io</u></a><br/>
       `,
-      },
+    
     },
     {
       title: "10 #ETH Giveaway",
       id: 25,
-      imageSrc:
+      image:
         "https://pbs.twimg.com/media/FQpLyBBXMAE8AsS?format=jpg&name=large",
       date: "Apr 18, 2022",
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 25).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 25).down : 0,
       link: "https://twitter.com/dypfinance/status/1516108338685165569",
-      content: {
-        imageSrc:
-          "https://pbs.twimg.com/media/FQpLyBBXMAE8AsS?format=jpg&name=large",
-        title: "10 #ETH Giveaway",
+
         content: `🚨 Attention #CAWS holders! <br/><br/> 
       We would like to announce a raffle of 10 #ETH to our community!<br/><br/>To enter:<br/><br/>
       ✅ Hold at least one CAWS at the time token id #2500 is minted! <br/>
@@ -3051,22 +779,19 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       2 x 1.5 ETH<br/>
       9 x 0.5 ETH<br/>
       `,
-      },
+    
     },
     {
       title: "Gate.io $DYP Lock-up ＆ Earn #1",
       id: 26,
-      imageSrc:
+      image:
         "https://pbs.twimg.com/media/FQXlDOEWQAErq1G?format=jpg&name=large",
       date: "Apr 15, 2022",
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 26).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 26).down : 0,
       link: "https://twitter.com/gate_io/status/1514868696069595139",
-      content: {
-        imageSrc:
-          "https://pbs.twimg.com/media/FQXlDOEWQAErq1G?format=jpg&name=large",
-        title: "Gate.io $DYP Lock-up ＆ Earn #1",
+
         content: `🔒#Gate.io $DYP Lock-up ＆ Earn #1  @dypfinance<br/><br/> 
       🕘Launch Time: Apr 18, 8:00:00 UTC<br/><br/>
       🔶Term: 14 days <br/>
@@ -3076,21 +801,18 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       ➡️Details:<a href='https://www.gate.io/zh/article/26195?ch=en_sm_0422' target='_blank'><u>gate.io</u></a><br/>
       ➡️Telegram:<a href='https://t.me/gateio_hodl_en' target='_blank'><u>gate.io</u></a><br/>
       `,
-      },
+   
     },
     {
       title: "KyberDMM Joint Liquidity Mining on Avalanche.",
       id: 27,
-      imageSrc: "https://miro.medium.com/max/1400/1*GRqMiBZbPRrxqWcshIwU8A.png",
+      image: "https://miro.medium.com/max/1400/1*GRqMiBZbPRrxqWcshIwU8A.png",
       date: "Sep 19, 2021",
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 27).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 27).down : 0,
       link: "https://twitter.com/dypfinance/status/1439562983663968262?s=20",
-      content: {
-        imageSrc:
-          "https://miro.medium.com/max/1400/1*GRqMiBZbPRrxqWcshIwU8A.png",
-        title: "KyberDMM Joint Liquidity Mining on Avalanche.",
+
         content: `<h3>We've submitted a proposal to launch one of the first joint liquidity mining programs for the @KyberNetwork #KyberDMM on @avalancheavax featuring $DYP and $KNC rewards!</h3><br/><br/>
       <b>1. Project Introduction</b><br/>
       The DeFi Yield Protocol (DYP) is a unique platform that offers solutions for yield farming, staking, NFTs, and enabling users to leverage the advanced trading tools of the DYP. What makes the DYP a unique yield farming aggregator? The DYP made history in the DeFi space by becoming the first and only protocol to reward users in Ethereum.<br/>
@@ -3143,22 +865,18 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       CoinMarketCap: <a href="https://coinmarketcap.com/currencies/defi-yield-protocol/" target='_blank'><u>DeFi Yield Protocol price today, DYP to USD live, marketcap and chart | CoinMarketCap</u></a><br/>
       CoinGecko: <a href="https://www.coingecko.com/en/coins/defi-yield-protocol" target='_blank'><u>DeFi Yield Protocol price, DYP chart, market cap, and info | CoinGecko</u></a><br/>
       `,
-      },
     },
     {
       title: "@dypfinance is extending its liquidity mining campaign.",
       id: 28,
-      imageSrc:
+      image:
         "https://pbs.twimg.com/media/E_bHfp3UYAEHsbt?format=jpg&name=4096x4096",
       date: "Sep 16, 2021",
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 28).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 28).down : 0,
       link: "https://twitter.com/hummingbot_io/status/1438559792927178755?s=20",
-      content: {
-        imageSrc:
-          "https://pbs.twimg.com/media/E_bHfp3UYAEHsbt?format=jpg&name=4096x4096",
-        title: "12-week extension for DYP Liquidity Mining Campaign!",
+
         content: `
       DYP is extending its campaign on <b>KuCoin</b> for another <b>12-weeks</b>. We will continue payouts in the <b>DYP</b> token from <b>September 14, 2021 to September 20, 2021</b> but for the remaining weeks, payouts will be in <b>USDT</b> beginning on <b>September 21, 2021</b>.<br/><br/>
       <h3>Campaign Terms</h3><br/><br/>
@@ -3184,102 +902,87 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       1. <b>Eligibility requirements:</b> participation in liquidity mining is subject to eligibility requirements as specified in the <a href='https://hummingbot.io/en/liquidity-mining-policy/' target='_blank'><u>liquidity mining policy</u></a>.<br/>
       2. <b>Campaign terms subject to change:</b> terms may be modified over the course of the campaign. We will announce any changes, if any, on our <a href='https://discord.com/invite/hummingbot' target='_blank'><u>discord</u></a> and <a href='https://www.reddit.com/r/Hummingbot/' target='_blank'><u>reddit</u></a>; the most up to date terms will also be posted on the <a href='https://support.hummingbot.io/hc/en-us/sections/900002130663-Campaigns' target='_blank'><u>liquidity mining campaign terms</u></a> and the <a href='https://miner.hummingbot.io/' target='_blank'><u>miners app</u></a>.<br/>
       `,
-      },
+    
     },
     {
       title: "New $PNG reward pools are ready for pre-deposits!",
       id: 29,
-      imageSrc:
+      image:
         "https://pbs.twimg.com/media/E9NFwuPVoAQMtdw?format=png&name=900x900",
       date: "Aug 20, 2021",
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 29).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 29).down : 0,
       link: "https://twitter.com/pangolindex/status/1428563006481260547?s=20",
-      content: {
-        title: "New $PNG reward pools are ready for pre-deposits!",
-        imageSrc:
-          "https://pbs.twimg.com/media/E9NFwuPVoAQMtdw?format=png&name=900x900",
+
         content: `<h3>💰New $PNG reward pools are ready for pre-deposits!</h3><br/><br>
       ⏰Rewards start Friday at 1pm UTC<br/><br/>$QI $DYP $WALBT<br/><br/>
       🚀AVAX-QI 1x<br/>🚀PNG-QI 5x<br/>🚀AVAX-DYP 1x <br/>🚀PNG-DYP 5x<br/>🚀AVAX-WALBT 1x<br/>🚀PNG-WALBT 5x<br/><br/>
       ⏬ <a href='https://app.pangolin.exchange/#/png/1' target='_blank'><u>app.pangolin.exchange</u></a>`,
       },
-    },
+    
     {
       title: "Listing Celebration to @coin98_wallet: Win $2500 in $DYP",
       id: 30,
-      imageSrc:
+      image:
         "https://pbs.twimg.com/media/E9D1hZDXsAAqXGu?format=jpg&name=medium",
       date: "Aug 18, 2021",
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 30).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 30).down : 0,
       link: "https://twitter.com/dypfinance/status/1427912209762603008?s=20",
-      content: {
-        title: "Listing Celebration to @coin98_wallet: Win $2500 in $DYP",
-        imageSrc:
-          "https://pbs.twimg.com/media/E9D1hZDXsAAqXGu?format=jpg&name=medium",
+
         content: `<h3>Listing Celebration to @coin98_wallet: Win $2500 in $DYP</h3><br/><br>
      1️⃣ Follow <a href='https://twitter.com/dypfinance' target='_blank'><u>@dypfinance</u></a> and <a href='https://twitter.com/coin98_wallet' target='_blank'><u>@coin98_wallet</u></a><br/><br/>
      2️⃣ Join <a href='https://t.me/dypfinance' target='_blank'><u>t.me/dypfinance</u></a> & <a href='https://t.me/coin98wallet' target='_blank'><u>t.me/coin98wallet</u></a><br/>
      3️⃣ Retweet, like & tag 3 friends<br/>4️⃣ Comment QR Screenshot Coin98 $DYP address<br/><br/>
      🎁 100 lucky winners will receive $25 each!`,
       },
-    },
+    
     {
       title: "Aircoins is excited to announce newest partner with DYP",
       id: 31,
-      imageSrc:
+      image:
         "https://pbs.twimg.com/media/E8DDO9nWEAcEyxA?format=jpg&name=medium",
       date: "Aug 05, 2021",
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 31).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 31).down : 0,
       link: "https://twitter.com/AIRCOINS_App/status/1423352145697546241",
-      content: {
-        title: "Aircoins is excited to announce newest partner with DYP",
-        imageSrc:
-          "https://pbs.twimg.com/media/E8DDO9nWEAcEyxA?format=jpg&name=medium",
+
         content: `Aircoins is excited to announce our newest partner @dypfinance!<br/><br>
       To Celebrate: $1000 in DYP up for grabs!<br/> $750 in $DYP for the best DYP AR photos<br/>$250 in $DYP drawing for following both <br/>
       @AIRCOINS_App and @dypfinance and retweeting this.<br/>Contest ends August 12th<br/>`,
-      },
+     
     },
     {
       title: "Pangolin hosting a giveaway with Defi Yield Protocol",
       id: 32,
-      imageSrc:
+      image:
         "https://pbs.twimg.com/media/E74VgYqUcAEnsON?format=jpg&name=large",
       date: "Jul 12, 2021",
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 32).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 32).down : 0,
       link: "https://twitter.com/pangolindex/status/1422604691251163142",
-      content: {
-        title: "Pangolin hosting a giveaway with Defi Yield Protocol",
-        imageSrc:
-          "https://pbs.twimg.com/media/E74VgYqUcAEnsON?format=jpg&name=large",
+
         content: `<h3>💸✨$1,000 Giveaway✨💸</h3><br/><br>
       💰We are hosting a giveaway with @dypfinance - 5 lucky winners will get $200!💰<br/> To Enter:<br/>
       ⚡️Follow <a href='https://twitter.com/pangolindex' target='_blank'><u>@pangolindex</u></a> and <a href='https://twitter.com/dypfinance' target='_blank'><u>@dypfinance</u></a><br/>
       ✈️Join the Pangolin and DYP #telegram<br/>💻Join the Pangolin and DYP #discord<br/>👪Tag 3 friends + ♻️retweet`,
-      },
+      
     },
     {
       title: "DeFi Yield Protocol NFT Creative Competition is LIVE!",
       id: 33,
-      imageSrc:
+      image:
         "https://miro.medium.com/max/1400/1*h95JYnco1tuL3IGB0TAjsg.jpeg",
       date: "Jul 12, 2021",
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 33).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 33).down : 0,
       link: "https://dypfinance.medium.com/defi-yield-protocol-nft-creative-competition-is-live-9d28528fef08",
-      content: {
-        title: "DeFi Yield Protocol NFT Creative Competition is LIVE!",
-        imageSrc:
-          "https://miro.medium.com/max/1400/1*h95JYnco1tuL3IGB0TAjsg.jpeg",
+
         content: `To celebrate the launch of NFT Marketplace, the creative competition will officially begin! We invite global NFT creators to use their imagination, compete in terms of creativity, and participate in the creative contest to share DYP tokens worth US $50,000.<br/><br/>
       The contest will begin today, and it will end when at least 1000 NFTs have been created.<br/><br/>
       <b>Rules:</b><br/>
@@ -3304,8 +1007,8 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       Anti-manipulation targets to keep stability, fair access to liquidity, and supply a secure and simplified DeFi platform for users of all sizes.<br/><br/>
       The central feature of the DYP is the decentralized tool dashboard. It provides advanced features, including Decentralized Score, Unique Community Trust Vote System, DYP Locker, Yield Farm Data, and Launch Pad, allowing users to make informed decisions.<br/><br/>
       <b><a href='https://dyp.finance/' target='_blank'><u>Website</u></a> | <a href='https://t.me/dypannouncements' target='_blank'><u>Announcements</u></a> | <a href='https://discord.com/invite/kYDT6pc' target='_blank'><u>Discord</u> </a> | <a href='https://twitter.com/dypfinance' target='_blank'> <u>Twitter</u> </a>|<a href='https://t.me/dypfinance' target='_blank'> <u>Telegram</u> </a>|<a href='https://github.com/dypfinance' target='_blank'> <u>GitHub</u> </a>|<a href='https://www.youtube.com/channel/UC6Wrn8A-pq79srb9OC-ufXw' target='_blank'> <u>YouTube</u> </a></b><br/><br/>
-      `,
-      },
+      `
+     
     },
     {
       title: "Yield farming platform announces it’s expanding to Avalanche",
@@ -3315,13 +1018,9 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 34).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 34).down : 0,
-      imageSrc:
+      image:
         "https://images.cointelegraph.com/images/717_aHR0cHM6Ly9zMy5jb2ludGVsZWdyYXBoLmNvbS91cGxvYWRzLzIwMjEtMDcvMDczNDU5ZWMtYjUwYi00MmRjLWJjNWMtZmJkZDc3NDdlZjg0LmpwZWc=.jpg",
-      content: {
-        title: "Yield farming platform announces it’s expanding to Avalanche",
-        imageSrc:
-          "https://images.cointelegraph.com/images/717_aHR0cHM6Ly9zMy5jb2ludGVsZWdyYXBoLmNvbS91cGxvYWRzLzIwMjEtMDcvMDczNDU5ZWMtYjUwYi00MmRjLWJjNWMtZmJkZDc3NDdlZjg0LmpwZWc=.jpg",
-        content: `A yield farming platform has announced that it is expanding to Avalanche.<br/><br/>
+     content: `A yield farming platform has announced that it is expanding to Avalanche.<br/><br/>
         <a href='https://dyp.finance/' target='_blank'><u>DeFi Yield Protocol </u><a> — known as DYP for short — says the move will mean that its advanced trading tools are available to a greater cross-section of users.<br/><br/>
         Three of its products are initially going to be available: DYP Farming, DYP Tools and DYP NFTs.<br/><br/>
         Flexible staking terms are offered through DYP — and this means that tokens can be locked up for three days, 30 days, 60 days or 90 days.<br/><br/>
@@ -3340,7 +1039,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         Chainlink, which already works with a number of other DeFi protocols, sources data from a variety of premium data aggregators — weighting figures by volume and cleaning them of outliers and wash trading.<br/><br/>
         Looking ahead, DYP plans to work on its app, and roll out its products to a greater number of blockchains. A lending service will launch, and built-in insurance will be offered to all DYP liquidity providers. And, as the DeFi space continues to evolve and grow, the project says it will expand in a number of different areas too.<br/><br/>
         The first version of DYP’s NFT DApp launched last month. In the run up to going live, the project collaborated with the renowned fashion illustrator and designer Nidia Toska to create the first collection to be listed on the marketplace. In the past, she’s worked with the likes of Kim Kardashian, GQ magazine and Paris Hilton — another NFT aficionado.<br/>`,
-      },
+     
     },
     {
       title: "DeFi Yield Protocol (DYP) Continues to Expand Its Ecosystem",
@@ -3350,13 +1049,9 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 35).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 35).down : 0,
-      imageSrc:
+      image:
         "https://static.news.bitcoin.com/wp-content/uploads/2021/06/dyp.jpg",
-      content: {
-        title: "DeFi Yield Protocol (DYP) Continues to Expand Its Ecosystem",
-        imageSrc:
-          "https://static.news.bitcoin.com/wp-content/uploads/2021/06/dyp.jpg",
-        content: `DeFi Yield Protocol has emerged as one of the fastest-growing crypto projects with an expanding ecosystem. DYP allows DeFi users to leverage advanced trading tools to earn yield on their assets while taking advantage of the unique DYP Tools decentralized application.<br/><br/>
+      content: `DeFi Yield Protocol has emerged as one of the fastest-growing crypto projects with an expanding ecosystem. DYP allows DeFi users to leverage advanced trading tools to earn yield on their assets while taking advantage of the unique DYP Tools decentralized application.<br/><br/>
         DYP has attracted the attention of many within the crypto space due to its features that include its unique Anti-manipulation system. The anti-manipulation feature ensures the stability of DYP tokens by automatically converting DYP rewards to Ether (ETH) or BNB by 00:00 UTC daily and distributing rewards to liquidity providers.<br/><br/>
         <h4>Key Developments in DYP Ecosystem</h4><br/><br/>
         The DYP team continues to develop the ecosystem with major partnerships and integrations into its infrastructure. Some of the high profile developments include:<br/><br/>
@@ -3379,7 +1074,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
 
         
         `,
-      },
+     
     },
     {
       title:
@@ -3390,14 +1085,9 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 36).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 36).down : 0,
-      imageSrc:
+      image:
         "https://crypto.news/app/uploads/2021/04/DeFi-Yield-Protocol-Community-Update%E2%80%8A%E2%80%94%E2%80%8AStaking-Pools-Tutorial-on-Binance-Smart-Chain.jpg",
-      content: {
-        title:
-          "DYP Staking dApp Launches on BNB Chain, LPs to earn Passive Income in ETH, DYP, or BNB",
-        imageSrc:
-          "https://crypto.news/app/uploads/2021/04/DeFi-Yield-Protocol-Community-Update%E2%80%8A%E2%80%94%E2%80%8AStaking-Pools-Tutorial-on-Binance-Smart-Chain.jpg",
-        content: `<h3><b>DYP Staking Service on the Binance Smart Chain (BSC)</b></h3><br/><br/>
+      content: `<h3><b>DYP Staking Service on the Binance Smart Chain (BSC)</b></h3><br/><br/>
         The DYP staking service launch on the low-fee, high throughput BSC platform is a step in the right direction. It comes after a code audit by Blockchain Consilium. <br/><br/>
         DYP Staking services were launched in early Q1 2021 and have grown in stature over time, attracting yield farmers who have cumulatively earned over $14.8 million since activation.<br/><br/>
         There will be four staking options for each pool in the BSC with monthly rewards ranging from 30k to 100k DYP depending on the lock-up period ranging from three days to three months chosen by liquidity providers staking their liquidity tokens. <br/><br/>
@@ -3426,7 +1116,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         At the same time, the DYP Earn Vault is ready to launch, just awaiting audit results. <br/><br/>
         Other products set for release include DYP NFT dApp, which is still in development, and a planned overhaul of DYP Protocol’s user interface.<br/>
         `,
-      },
+     
     },
     {
       title: "DeFi Yield Protocol Takes Yield Farming to the Next Level",
@@ -3436,13 +1126,9 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 37).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 37).down : 0,
-      imageSrc:
+      image:
         "https://www.newsbtc.com/wp-content/uploads/2020/10/dyp-img.png",
-      content: {
-        title: "DeFi Yield Protocol Takes Yield Farming to the Next Level",
-        imageSrc:
-          "https://www.newsbtc.com/wp-content/uploads/2020/10/dyp-img.png",
-        content: `DeFi, short for Decentralized Finance is the new fad in cryptocurrency industry, thanks to the development of blockchain technology and its applications. As new DeFi products hit the market, people are finding attractive investment opportunities with significant profit-making potential. Yield farming is one such example where crypto investors can lock their assets over a certain period of time to earn returns, and doing so in the cryptocurrency space theoretically means, the whole mechanism is democratic and everyone has an equal opportunity to reap profits.<br/><br/>
+      content: `DeFi, short for Decentralized Finance is the new fad in cryptocurrency industry, thanks to the development of blockchain technology and its applications. As new DeFi products hit the market, people are finding attractive investment opportunities with significant profit-making potential. Yield farming is one such example where crypto investors can lock their assets over a certain period of time to earn returns, and doing so in the cryptocurrency space theoretically means, the whole mechanism is democratic and everyone has an equal opportunity to reap profits.<br/><br/>
         The introduction of Bitcoin back in 2008 was hailed as a landmark moment as it signified a shift in the financial power centers, allowing individuals to stay in complete control of their funds without having to rely on banking and financial institutions. However, in reality, the changes envisioned haven’t completely materialized even after a decade. Similarly, most of the existing DeFi applications are skewed, favoring the ones with fortune, proven recently by Sushi dump brought about SushiSwap’s anonymous founder Chef Nomi swapping his SUSHI token for ETH.<br/><br/>
         However, that is not going to be the case anymore as DeFi Yield Protocol (DYP) helps prevent the whale advantage in DeFi. Further, the anti-manipulation feature implemented by the protocol ensures all pool rewards viz., DYP/ETH, DYP/USDC. DYP/USDT and DYP/WBTC are converted from DYP to ETH and distributed among liquidity providers at 00:00 UTC every day. By doing so, it prevents manipulation of DYP price by whales for their benefit.<br/><br/>
         The conversion of pool rewards from DYP to ETH is handled by a smart contract. With each pool generating around 69,120 tokens in rewards, the total number of tokens converted to ETH each day stands at around 276,480. However, in the event of DYP price fluctuating beyond 2.5% in value, the smart contract swaps only as many tokens to ETH as possible without affecting the token’s price and distribute them. Any DYP leftover will be distributed as part of the next day’s rewards. The protocol continues the rollover process for a maximum duration of one week, by the end of which, if there are still undistributed DYP left, will either be distributed among token holders or burnt based on the outcome of a governance vote. All smart contracts implemented within DYP protocol are thoroughly audited and secured to deny access to those planning to take advantage of the system.<br/><br/>
@@ -3453,7 +1139,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         Crypto investors and enthusiasts can be part of the revolutionary DeFi protocol by joining the Crowdsale whitelist and acquiring DYP tokens. The minimum and maximum contributions to participate in DYP is set at 0.5 ETH and 100 ETH respectively.<br/><br/>
         Access the DYP Crowdsale Whitelist Application at – <a href='https://crowdsale.dyp.finance/' target='_blank'><u>https://crowdsale.dyp.finance/</u></a><br/>
         `,
-      },
+     
     },
     {
       title:
@@ -3464,11 +1150,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 38).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 38).down : 0,
-      imageSrc: "https://www.cryptocompare.com/media/37459245/graph.jpg",
-      content: {
-        title:
-          "DeFi Yield Protocol Could Be a Massive Boost for Yield Farmers and the DeFi Space",
-        imageSrc: "https://www.cryptocompare.com/media/37459245/graph.jpg",
+      image: "https://www.cryptocompare.com/media/37459245/graph.jpg",
         content: `Since February 2020, we have seen a steady growth of the blockchain space and, most significantly, decentralized finance. While DeFi isn't entirely new, the network's growth has been more aggressive this year than it has ever been. The distribution of COMP governance token and the introduction of yield farming protocols around June this year has made DeFi the most engaging conversation in the blockchain space, no doubt.<br/><br/>
       Decentralized finance has only grown this much because of the control and ease it offers users. By allowing users to utilize traditional banking and financing services like lending, borrowing, and saving, an overwhelming sense of trust has been birthed over the past few months. Even more captivating is that many users now earn more than 100% of their capital, mostly by offering liquidity through yield farming protocols.<br/><br/>
       <h3><b>DeFi Yield Protocol (DYP)</b></h3><br/><br/>
@@ -3485,7 +1167,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       <h3><b>DYP Crowdsale</b></h3><br/><br/>
       When the decentralized finance ecosystem seeks a balance while setting a precedent for its mainstream adoption, DYP is actively laying a foundation from its public crowdsale. During the whitelisting and presale round, 570,000 DYP tokens worth 2,821.71 ETH have been sold. For a chance to participate in this unique protocol, join the public crowdsale at <a href='https://crowdsale.dyp.finance/' target='_blank'><u>https://crowdsale.dyp.finance/</u></a> <br/>
       `,
-      },
+     
     },
     {
       title:
@@ -3496,14 +1178,9 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 39).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 39).down : 0,
-      imageSrc:
+      image:
         "https://coindoo.com/wp-content/uploads/2020/11/DeFi-Yield-Protocol-DYP.jpg",
-      content: {
-        title:
-          "DeFi Yield Protocol (DYP) Eliminates the Risks of Whale Interference",
-        imageSrc:
-          "https://coindoo.com/wp-content/uploads/2020/11/DeFi-Yield-Protocol-DYP.jpg",
-        content: `DeFi Yield Protocol (DYP) is a new type of DeFi platform that seeks to change the way you earn through liquidity on Ethereum smart contracts. Keenly, the developers behind this next-gen platform <a href='https://www.newsbtc.com/news/company/dyp-finance-a-unique-yield-farming-platform/' target='_blank'><u>introduce</u></a> several anti-manipulation features to eliminate the risk of whales hijacking the network. These systems help ensure that the rewards earned from the network’s liquidity are fairly distributed to all participants.<br/><br/>
+  content: `DeFi Yield Protocol (DYP) is a new type of DeFi platform that seeks to change the way you earn through liquidity on Ethereum smart contracts. Keenly, the developers behind this next-gen platform <a href='https://www.newsbtc.com/news/company/dyp-finance-a-unique-yield-farming-platform/' target='_blank'><u>introduce</u></a> several anti-manipulation features to eliminate the risk of whales hijacking the network. These systems help ensure that the rewards earned from the network’s liquidity are fairly distributed to all participants.<br/><br/>
         <h3><b>Benefits of DeFi Yield Protocol (DYP)</b></h3><br/><br/>
         DYP introduces a number of crucial benefits to the sector that help new and experienced investors secure higher ROIs. Here are the most notable features that are sure to attract investors.<br/><br/>
         <b>Anti Manipulation</b><br/><br/>
@@ -3536,7 +1213,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         <h3><b>DeFi Yield Protocol (DYP) – Keeping to the Principles of DeFi</b></h3><br/><br/>
         DYP’s introduction of anti-manipulation protocols helps to further the overall goal of DeFi, to remove centralized powers from finance and instead, share the profits amongst users. DYP accomplishes this goal with its innovative pool reward distribution and token stability system. For these reasons, DYP is sure to see more adoption in the coming months.<br/>
         `,
-      },
+      
     },
     {
       title:
@@ -3547,14 +1224,9 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 40).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 40).down : 0,
-      imageSrc:
+      image:
         "https://techbullion.com/wp-content/uploads/2021/04/DYP-cast-your-vote-1.jpg",
-      content: {
-        title:
-          "DeFi Yield Protocol: The First Manipulation Free DeFi platform in BSC and ETH",
-        imageSrc:
-          "https://techbullion.com/wp-content/uploads/2021/04/DYP-cast-your-vote-1.jpg",
-        content: `SHARE TWEET SHARE EMAIL 
+      content: `SHARE TWEET SHARE EMAIL 
         What do we call a Defi platform providing its users’ rewards in ETH and BNB? Defi yield protocol. DYP is a one-of-a-kind Defi platform instituted in 2020 to create more opportunities for its users. It’s probably the first platform to pay its users’ pool rewards in ETH.<br/><br/>
         DYP helps users earn rewards from providing liquidity, staking and mining Ethereum. In a recent release on their Medium page, DYP announced the further steps taken to increase the platform’s reach. <br/><br/>
         According to the release, DYP will launch its new DYP earn vault, DYP tools, DYP NFT DApp, and the new user interface. The first two, i.e, the tools and earn vault will be released shortly. <br/><br/>
@@ -3576,7 +1248,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         Other features for the community include excellent liquidity data, a locker, a trust score, and complete decentralization. All these features instituted in the platform will attract many investors, boost DYP token price and demand.<br/><br/>
         It’s time for investors to use DYP, which is  available both in the Ethereum blockchain and BSC chain via PancakeSwap. <br/>
         `,
-      },
+      
     },
     {
       title: "DYP.Finance: A Unique Yield Farming Platform",
@@ -3586,11 +1258,8 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 41).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 41).down : 0,
-      imageSrc: "https://www.cryptocompare.com/media/37459277/img_0834.jpg",
-      content: {
-        title: "DYP.Finance: A Unique Yield Farming Platform",
-        imageSrc: "https://www.cryptocompare.com/media/37459277/img_0834.jpg",
-        content: `The cryptocurrency industry has experienced rapid growth in the past decade since the advent of Bitcoin. The first cryptocurrency opened the financial world to a world of possibilities using decentralized ledger technology (blockchain).<br/><br/>
+      image: "https://www.cryptocompare.com/media/37459277/img_0834.jpg",
+       content: `The cryptocurrency industry has experienced rapid growth in the past decade since the advent of Bitcoin. The first cryptocurrency opened the financial world to a world of possibilities using decentralized ledger technology (blockchain).<br/><br/>
       This development has given rise to a new sector of finance that has experienced a massive boom in 2020 named decentralized finance (DeFi). As of 2019, there was only $275 million worth of total locked-in value of crypto assets in the DeFi economy.  2020 gave rise to massive adoption of DeFi with the total locked-in value rising multiple folds to its current value of $11 billion+.<br/><br/>
       However, it is important that you understand the core values of DeFi as several platforms have sprung up in recent months.  Decentralized finance platforms operate decentralized governance based on blockchain technology and decentralized information feeds which determine interest rates and currency values.<br/><br/>
       Since there are tons of DeFi projects in the market, it is easy to get lost looking for the right protocol with potential. DYP.Finance is one of the few that operates based on the right ideals and follows excellent financial protocols to govern its platform.<br/><br/>
@@ -3615,7 +1284,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       It's not too late to join DYP finance as the DeFi platform is currently offering a Public Crowdsale offering. You can visit the sales page at <a href='https://crowdsale.dyp.finance' target='_blank'><u>https://crowdsale.dyp.finance</u></a> and make an application to purchase DYP tokens. The minimum amount to participate in DYP is 0.5 ETH and the maximum contribution is 100 ETH.
       DYP tokens can be withdrawn to supported wallets which includes MetaMask and TrustWallet.<br/>
       `,
-      },
+      
     },
     {
       title:
@@ -3626,14 +1295,9 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 42).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 42).down : 0,
-      imageSrc:
+      image:
         "https://u.today/sites/default/files/styles/736x/public/2021-04/7180.jpg",
-      content: {
-        title:
-          "DeFi Yield Protocol (DYP) Launches Staking Pools on Binance Smart Chain",
-        imageSrc:
-          "https://u.today/sites/default/files/styles/736x/public/2021-04/7180.jpg",
-        content: `While initially launched on Ethereum (ETH) blockchain, a new-gen staking and yield farming framework, DeFi Yield Protocol (DYP), is now present on Binance's smart contract environment, Binance Smart Chain (BSC).<br/><br/>
+     content: `While initially launched on Ethereum (ETH) blockchain, a new-gen staking and yield farming framework, DeFi Yield Protocol (DYP), is now present on Binance's smart contract environment, Binance Smart Chain (BSC).<br/><br/>
         <h3><b>Yield farming, reconsidered: DeFi Yield Protocol introduces DYP Tools</b></h3><br/><br/>
         Within the DeFi Yield Protocol, all instruments for the farming of multiple assets are integrated into the decentralized tools dashboard (DYP Tools). Besides an advanced user experience, it catalyzes interest in DYP, a native core asset of the  DeFi Yield Protocol (DYP).<br/><br/>
         <img src='https://u.today/sites/default/files/styles/736/public/inline-images/7180_1.png' alt=''/><br/>
@@ -3649,7 +1313,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
 
 
         `,
-      },
+     
     },
     {
       title: "DYP Launches Staking DApp on Binance Smart Chain (BSC)",
@@ -3659,13 +1323,9 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 43).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 43).down : 0,
-      imageSrc:
+      image:
         "https://blockonomi-9fcd.kxcdn.com/wp-content/uploads/2021/02/defi-yield-770x515.jpg",
-      content: {
-        title: "DYP Launches Staking DApp on Binance Smart Chain (BSC)",
-        imageSrc:
-          "https://blockonomi-9fcd.kxcdn.com/wp-content/uploads/2021/02/defi-yield-770x515.jpg",
-        content: `The DeFi Yield Protocol (DYP) is a unique blockchain-based on DeFi project. By using the platform, crypto users are offered the ability to provide liquidity and earn rewards in ETH. The platform also uses an anti-manipulation feature to convert DYP rewards into ETH and send them directly to holders’ wallets.<br/><br/>
+       content: `The DeFi Yield Protocol (DYP) is a unique blockchain-based on DeFi project. By using the platform, crypto users are offered the ability to provide liquidity and earn rewards in ETH. The platform also uses an anti-manipulation feature to convert DYP rewards into ETH and send them directly to holders’ wallets.<br/><br/>
         The goal is to make the liquidity protocol sustainable and ensure rewards are generated without excessively affecting the token price. Therefore, users can earn rewards with minimal risks. DYP is different from other DeFi user interfaces, the DYP interface is quite simple which accommodates new and expert yield users.<br/><br/>
         <h3><b>DYP is Expanding Quickly</b></h3><br/><br/>
         The main feature of DeFi Yield Protocol is the dashboard of the platform, which is DYP Tools. It provides a decentralized trust score for all the DeFi projects to increase the use case for DYP tokens, and provide a liquidity locker for any DeFi project, which helps to protect the DeFi community.<br/><br/>
@@ -3713,7 +1373,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         In addition, there are other products under development including DYP NFT dApp v1.0 and a new user interface design DYP New UI Design that will allow to create and develop NFTs on its platform.<br/><br/>
 
         `,
-      },
+      
     },
     {
       title:
@@ -3724,14 +1384,9 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 44).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 44).down : 0,
-      imageSrc:
+      image:
         "https://static.news.bitcoin.com/wp-content/uploads/2021/04/RuCUQmM6-dyp-7-prill-1-1280x720.jpg",
-      content: {
-        title:
-          "DeFi Yield Protocol (DYP) Witnesses Massive Growth Following Binance Smart Chain Integration",
-        imageSrc:
-          "https://static.news.bitcoin.com/wp-content/uploads/2021/04/RuCUQmM6-dyp-7-prill-1-1280x720.jpg",
-        content: `<b>DeFi Yield Protocol (DYP) continues to attain popularity within the decentralized finance sector. Since the launch of the staking dAPP three months ago, DYP Protocol has experienced massive growth in its community.</b><br/><br/>
+     content: `<b>DeFi Yield Protocol (DYP) continues to attain popularity within the decentralized finance sector. Since the launch of the staking dAPP three months ago, DYP Protocol has experienced massive growth in its community.</b><br/><br/>
         <h3><b>DeFi Yield Protocol</b></h3><br/><br/>
         The yield farming platform has over $39 million locked in its ETH staking contract and has paid 7,064 ETH worth over $14 million to liquidity providers. DYP has also experienced a 20x increase in liquidity on popular decentralized exchange Uniswap. At the moment, more than $21,000,000 in liquidity on Uniswap on the DYP/ETH. DYP has also expanded its ecosystem with the integration of Binance Smart Chain (BSC) in February.<br/><br/>
         DeFi Yield Protocol (DYP) allows users that provide liquidity to earn decent returns. It also utilizes an anti-manipulation feature that prevents whales from manipulating the price of its native token, DYP.<br/><br/>
@@ -3751,7 +1406,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         DYP tools, a decentralized tools dashboard that provides information about DeFi projects, will also be launched in the second quarter of the year. Other products under development include a new user interface design and a DYP NFT dApp that will enable the creation and development of NFTs on its platform.<br/>
 
         `,
-      },
+     
     },
     {
       title: "DeFi Yield Protocol (DYP): All in One Platform Yielding Benefits",
@@ -3761,14 +1416,9 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 45).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 45).down : 0,
-      imageSrc:
+      image:
         "https://cryptopotato.com/wp-content/uploads/2020/11/defiyieldprotocol_cover.jpg",
-      content: {
-        title:
-          "DeFi Yield Protocol (DYP): All in One Platform Yielding Benefits",
-        imageSrc:
-          "https://cryptopotato.com/wp-content/uploads/2020/11/defiyieldprotocol_cover.jpg",
-        content: `Yield farming is undoubtedly taking over the DeFi space since more crypto users have finally realized its merits. DeFi projects are in development as time provides users with diverse income earning services ranging from holding to exchanging or lending digital assets.<br/><br/>
+      content: `Yield farming is undoubtedly taking over the DeFi space since more crypto users have finally realized its merits. DeFi projects are in development as time provides users with diverse income earning services ranging from holding to exchanging or lending digital assets.<br/><br/>
         On that note, Ethereum plays an essential part in establishing and growing most of these tokens with top-notch features like smart contract advancements. The DeFi Yield Protocol (DYP) joins the community facilitating numerous functionalities under one roof. As it launches on December 15th, DYP plans to revolutionize the yielding investment sector and bring in as many investors as possible.<br/><br/>
         <h3><b>Anti-Manipulation Capabilities</b></h3><br/><br/>
         Whale manipulation has been a hand-in-hand concern of the growing DeFi space. A popular example came with SushiSwap – the DEX that was supposed to replace Uniswap. Its <a href='https://cryptopotato.com/sushi-crashing-over-50-as-sushiswaps-lead-developer-sells-his-tokens/' target='_blank'><u>creator</u></a> withdrew millions worth of tokens, essentially crashing the price of SUSHI to the ground.<br/><br/>
@@ -3792,7 +1442,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         The platform also committed an amount exceeding $1 million on its mining farm to clearly observe the trader’s needs. Additionally, DYP operates with prominent programming languages, including Bootstrap, HTML5, and Ethereum Solidity Protocol. 
         Furthermore, the protocol is designed to protect investors from dumps as it applies the anti-manipulation feature to eliminate crafty whales.<br/>
         `,
-      },
+     
     },
     {
       title:
@@ -3803,14 +1453,9 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 46).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 46).down : 0,
-      imageSrc:
+      image:
         "https://coincodex.com/en/resources/images//admin/news/earn-compound-yields/image1.jpg:resizeboxcropjpg?1050x590",
-      content: {
-        title:
-          "Earn compound yields on Binance Smart Chain using DeFi Yield Protocol (DYP)",
-        imageSrc:
-          "https://coincodex.com/en/resources/images//admin/news/earn-compound-yields/image1.jpg:resizeboxcropjpg?1050x590",
-        content: `The blockchain space continues to grow as more products and smart contract protocols are created to ensure seamless scalability and faster transactions. The Binance Smart Chain, or BSC as it is known, has emerged as a blockchain platform that has soared in popularity in recent months.<br/><br/>
+       content: `The blockchain space continues to grow as more products and smart contract protocols are created to ensure seamless scalability and faster transactions. The Binance Smart Chain, or BSC as it is known, has emerged as a blockchain platform that has soared in popularity in recent months.<br/><br/>
         BSC was launched in late 2020 and came when the leading smart contract network Ethereum was facing multiple problems. The DeFi boom had led to congestion in the Ethereum blockchain leading to high transaction fees and slower confirmation times, and BSC offered a viable alternative.<br/><br/>
         Built on similar architecture like the Ethereum Virtual Machine, BSC has quickly established itself as an alternative protocol for DeFi products and dApps. It offers low transaction fees, faster confirmation times and supports cross-chain migration of tokens and protocols from Ethereum.<br/><br/>
         DeFi Yield Protocol (DYP), a novel farming protocol, has made significant developments in recent months and is now available on the BSC ecosystem.<br/><br/>
@@ -3828,7 +1473,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         The recently launched BSC staking dApp has also been well received, with $10 million already staked in supported pools. The fundamentals of DYP have seen it popular within the DeFi sector, and the lure of earning a high yield means that the protocol will only continue to grow in the coming weeks. 
         DYP has some products in store for the second quarter of the year as it seeks to expand its ecosystem. The DYP tools an extensive analytical dashboard that will offer traders multiple tools and data is expected to be launched soon. Also, an NFT dApp where users can create and launch NFT characters is coming soon.<br/>
         `,
-      },
+     
     },
     {
       title: "DYP.Finance – Stake DeFi Tokens and Get Paid in ETH",
@@ -3838,13 +1483,9 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 47).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 47).down : 0,
-      imageSrc:
+      image:
         "https://techbullion.com/wp-content/uploads/2020/12/Defi-Yield-Protocol.jpg",
-      content: {
-        title: "DYP.Finance – Stake DeFi Tokens and Get Paid in ETH",
-        imageSrc:
-          "https://techbullion.com/wp-content/uploads/2020/12/Defi-Yield-Protocol.jpg",
-        content: `As the DeFi sector heats up, developers continue to get more creative in their approaches to the industry’s problems. DYP is one such platform that seeks to combat inflation and centralization. The network integrates various new systems to provide users the ability to stake DeFi tokens and receive rewards directly in Ethereum.<br/><br/>
+      content: `As the DeFi sector heats up, developers continue to get more creative in their approaches to the industry’s problems. DYP is one such platform that seeks to combat inflation and centralization. The network integrates various new systems to provide users the ability to stake DeFi tokens and receive rewards directly in Ethereum.<br/><br/>
         This feature is a big plus to investors who often need to go through an additional step to complete their investment strategy. Ethereum is more stable than most DeFi tokens. However, converting tokens to ETH reduces your ROI due to fees and losses incurred due to volatility. For these reasons, it’s common for DeFi investors to convert their rewards into ETH. <br/><br/>
         <h4><b>DeFi Staking is Now Live</b></h4><br/><br/>
         DYP recently announced the start of its DeFi staking protocol this week. This feature allows anyone to stake their DeFi tokens and earn a passive income. Many investors see staking as a better alternative to trading cryptocurrencies. For one, you don’t need to do a ton of research to earn when you stake your crypto. You simply agree to lock up your crypto for a predetermined period. For your efforts, you receive rewards. <br/><br/>
@@ -3872,7 +1513,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         DYP’s selection of premium DeFi features is enough to continue to attract more investors to the platform moving forward. The system’s unique deflationary governance mechanism is sure to interest both users and other platforms seeking alternative methods to combat inflation. If successful, DYP could spark a series of copy cat platforms in the coming weeks. For now, DeFi users seeking ETH rewards can participate in this network and start earning today.<br/><br/>
         
         `,
-      },
+      
     },
     {
       title: "DeFi Yield Protocol (DYP) Staking and Governance is Now Live",
@@ -3882,12 +1523,8 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 48).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 48).down : 0,
-      imageSrc: "https://miro.medium.com/max/1400/1*5KQd_ryoVCcom5cXTnEfmg.png",
-      content: {
-        title: "DeFi Yield Protocol (DYP) Staking and Governance is Now Live",
-        imageSrc:
-          "https://miro.medium.com/max/1400/1*5KQd_ryoVCcom5cXTnEfmg.png",
-        content: `This week, DeFi Yield Protocol (DYP) <a href='https://twitter.com/dypfinance/status/1340047093591883776?s=21' target='_blank'><u>announced</u></a> the official launch of its staking and governance protocols. DYP is a next-gen DeFi platform that seeks to level the playing field between regular investors and whales. To this extent, the platform introduces some new strategies to push ROIs to the max while reducing investor’s exposure to risks. As such, the launch of the platform’s staking and governance Dapp is a critical step on its path to success.<br/><br/>
+      image: "https://miro.medium.com/max/1400/1*5KQd_ryoVCcom5cXTnEfmg.png",
+       content: `This week, DeFi Yield Protocol (DYP) <a href='https://twitter.com/dypfinance/status/1340047093591883776?s=21' target='_blank'><u>announced</u></a> the official launch of its staking and governance protocols. DYP is a next-gen DeFi platform that seeks to level the playing field between regular investors and whales. To this extent, the platform introduces some new strategies to push ROIs to the max while reducing investor’s exposure to risks. As such, the launch of the platform’s staking and governance Dapp is a critical step on its path to success.<br/><br/>
       <b>DYP Staking Pools</b><br/><br/>
       <a href='https://dyp.finance/earn' target='_blank'><u>DYP staking pools</u></a> allow anyone to provide liquidity to pools and earn rewards. DYP differs from the completion in that all rewards are paid out in Ethereum directly. This feature is an industry first that helps alleviate inflationary concerns while building additional value in the Ethereum network.<br/><br/>
       Additionally, all DYP staking pools feature integrated anti-manipulation protocols and 2.5% slippage. These systems reduce inflation and encourage token price stability in the market. Specifically, the protocol attempts to convert DYP rewards to ETH every day at 00:00 UTC. When the price of DYP is affected by more than -2.5%, the maximum DYP amount that does not affect the price will be swapped to ETH.<br/><br/>
@@ -3906,7 +1543,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       <b>DYP — Stake DeFi Tokens and Get Paid in Ethereum</b><br/><br/>
       DYP raises the bar with its new strategy. Paying out DeFi token stakers in Ethereum is sure to spur some interest in the market. Now, anyone can earn some free Ethereum by staking their tokens on DYP.<br/>
       `,
-      },
+     
     },
     {
       title: "DeFi Projects That Offer Top Staking Rewards in 2021",
@@ -3916,13 +1553,9 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 49).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 49).down : 0,
-      imageSrc:
+      image:
         "https://hackernoon.imgix.net/images/7LrDe0NwaTW40HBSsVuBSPeo2yd2-1p2p31oo.jpeg?auto=format&fit=max&w=1200",
-      content: {
-        title: "DeFi Projects That Offer Top Staking Rewards in 2021",
-        imageSrc:
-          "https://hackernoon.imgix.net/images/7LrDe0NwaTW40HBSsVuBSPeo2yd2-1p2p31oo.jpeg?auto=format&fit=max&w=1200",
-        content: `The DeFi sector provides investors with exciting opportunities that were previously not possible. Every week, new products, features, and networks enter the market. Each platform promises better returns and a more comprehensive UX. However, not every DeFi platform pays out high staking rewards.<br/><br/>
+      content: `The DeFi sector provides investors with exciting opportunities that were previously not possible. Every week, new products, features, and networks enter the market. Each platform promises better returns and a more comprehensive UX. However, not every DeFi platform pays out high staking rewards.<br/><br/>
         Rather than spending days combing through every new platform to determine the most profitable ones, professionals recommend you stick to reputable networks with proven results. These platforms have earned their reputations in the market through optimal ROIs and top-notch security. Here are the DeFi projects with top staking rewards in 2021.<br/><br/>
         <h3><b>MakerDAO</b></h3><br/><br/>
         <a href='https://makerdao.com/en/' target='_blank'><u>MakerDAO</u></a> made a name for itself by introducing blockchain technologies that allow borrowers to use volatile cryptocurrency as collateral for loans of stablecoins. Since its introduction, the network has grown to become one of the world’s largest Ethereum Dapps.<br/><br/>
@@ -3949,7 +1582,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         When it comes to determining the best staking rewards, a lot comes down to your strategy. DeFi is diverse, and you can earn profits in many different ways nowadays. These platforms excel in their efforts to provide new and exciting ways to increase your staking rewards.<br/>
 
         `,
-      },
+      
     },
     {
       title:
@@ -3960,11 +1593,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 50).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 50).down : 0,
-      imageSrc: "https://crypto.news/app/uploads/2020/12/DYP-staking.jpg",
-      content: {
-        title:
-          "The DeFi Yield Protocol (DYP) Looks Poised to take DeFi to Next Level",
-        imageSrc: "https://crypto.news/app/uploads/2020/12/DYP-staking.jpg",
+      image: "https://crypto.news/app/uploads/2020/12/DYP-staking.jpg",
         content: `<h3><b>What Is the DeFi Yield Protocol?</b></h3><br/><br/>
       The DeFi Yield Protocol (DYP) is developing a cutting-edge unique platform that enables anyone to provide liquidity and be rewarded for the first time in Ethereum (ETH). Simultaneously, the platform maintains both token price stability and secure and easy-to-use DeFi for end users by integrating DYP anti-manipulation feature.<br/><br/>
       DYP is unique in that it brings a solution to the risks associated with Yield Farming. The protocol does this by permanently changing the way an investor earns by providing liquidity on Ethereum smart contract. <br/><br/>
@@ -3980,7 +1609,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
 
       
       `,
-      },
+      
     },
     {
       title:
@@ -3991,14 +1620,9 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 51).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 51).down : 0,
-      imageSrc:
+      image:
         "https://www.bitcoininsider.org/sites/default/files/styles/scale_900px/public/field/image/defi_yield_protocol.webp?itok=2ehPm3JM",
-      content: {
-        title:
-          "DeFi Yield Protocol (DYP) Provides a New Level of Transparency to the Market",
-        imageSrc:
-          "https://www.bitcoininsider.org/sites/default/files/styles/scale_900px/public/field/image/defi_yield_protocol.webp?itok=2ehPm3JM",
-        content: `The DeFi sector continues to provide new opportunities to investors ready to venture into this new market. DeFi (decentralized finance) replaces centralized financial systems with regular users. In this way, it creates a scenario in which your average user can earn interest and rewards for participation in the network.<br/><br/>
+       content: `The DeFi sector continues to provide new opportunities to investors ready to venture into this new market. DeFi (decentralized finance) replaces centralized financial systems with regular users. In this way, it creates a scenario in which your average user can earn interest and rewards for participation in the network.<br/><br/>
         Lately, the DeFi sector has seen a rapid increase in networks entering the space. These new platforms introduce new protocols to simplify the UX and streamline DeFi activities. While most of these platforms promise healthy ROIs it’s crucial to understand that not every platform is a wise option to pursue.<br/><br/>
         There are some problems that the DeFi sector desperately needs to correct before it can reach its true potential. One of these problems that poses a significant risk is Whale manipulation. Whales are the majority token holders of a project. Since these investors have the highest level of participation in a project, they have extraordinary sway within the network's future decisions.<br/><br/>
         <h3><b>Whale Protections</b></h3><br/><br/>
@@ -4031,7 +1655,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
 
 
         `,
-      },
+     
     },
     {
       title:
@@ -4042,14 +1666,9 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 52).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 52).down : 0,
-      imageSrc:
+      image:
         "https://www.bitcoininsider.org/sites/default/files/styles/scale_900px/public/field/image/defi_yield_protocol.webp?itok=2ehPm3JM",
-      content: {
-        title:
-          "Tackling Volatility Issues for Liquidity Providers with DeFi Yield Protocol (DYP)",
-        imageSrc:
-          "https://www.bitcoininsider.org/sites/default/files/styles/scale_900px/public/field/image/defi_yield_protocol.webp?itok=2ehPm3JM",
-        content: `The field of decentralized finance (DeFi) continues to expand, dismissing a lot of speculative notions that last year’s advance was a bubble-like move.<br/><br/>
+     content: `The field of decentralized finance (DeFi) continues to expand, dismissing a lot of speculative notions that last year’s advance was a bubble-like move.<br/><br/>
         According to <a href='https://www.defipulse.com/' target='_blank'><u>data</u></a> from DeFi Pulse, the total value locked in various DeFi protocols exceeds $17.8 billion – an increase that continues in the new year of 2021. Leading the way are some established authorities in the field, though newcomers are also starting to play an important role.<br/><br/>
         However, over the past few months, the cryptocurrency market has entered a state of parabolic advance, causing severe volatility across the board. While the changes so far have been mostly positive, this volatility exposes certain risks to liquidity providers (LPs), perhaps the biggest of which is impermanent loss. <br/><br/>
         That said, DeFi Yield Protocol (DYP) brings forward an interesting concept that tries to tackle the challenges of substantial volatility and lower the risks for LPs as they play an integral role in the future development of the entire field.<br/><br/>
@@ -4071,13 +1690,8 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         The challenges of whale manipulation and impermanent loss are among the most serious in the nascent DeFi space. 
         Solutions such as DeFi Yield Protocol are aimed at handling those problems and making the space more accessible to a larger pool of users. At the same time, its solutions are also intended to automate the yield farming process, providing optimal returns for liquidity providers, which are the cornerstone of the industry.<br/><br/>
 
-
-
-
-
-
         `,
-      },
+
     },
     {
       title: "5 DeFi Projects You Should Know About in 2021",
@@ -4087,13 +1701,9 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 53).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 53).down : 0,
-      imageSrc:
+      image:
         "https://hackernoon.imgix.net/images/7LrDe0NwaTW40HBSsVuBSPeo2yd2-1p2p31oo.jpeg?auto=format&fit=max&w=1200",
-      content: {
-        title: "5 DeFi Projects You Should Know About in 2021",
-        imageSrc:
-          "https://hackernoon.imgix.net/images/7LrDe0NwaTW40HBSsVuBSPeo2yd2-1p2p31oo.jpeg?auto=format&fit=max&w=1200",
-        content: `The growth of Defi is remarkable, with the industry making great strides in the past few years. It's quite right to conclude that this industry is probably the next big thing in the financial world, primarily owing to the many use cases of the upcoming projects. <br/><br/>
+       content: `The growth of Defi is remarkable, with the industry making great strides in the past few years. It's quite right to conclude that this industry is probably the next big thing in the financial world, primarily owing to the many use cases of the upcoming projects. <br/><br/>
         Decentralization of finance was the main idea in Defi's creation, and many of the platforms have lived up to that promise. However, with the strong surge in Defi, it's quite challenging for any investor to make conclusions about which project is worth their money. <br/><br/>
         You probably are that investor and wonder what Defi projects show unique features and maybe a potential to grow? Here are some of the most unique Defi projects you should check out for in 2021. <br/><br/>
         <h3><b>Kava</b></h3><br/><br/>
@@ -4153,30 +1763,45 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         Ox protocol offers top solutions to the Ethereum blockchain, including scalability. Kava is an excellent USDX stablecoin lending platform, opening a world of opportunities for users. Defi yield protocol, a feature-rich platform that guarantees users top stability with features like resistance to manipulation, and the earn feature to help users maximize income.<br/>
 
         `,
-      },
+     
     },
   ];
+
+  useEffect(() => {
+    fetchNewsdata().then();
+  },[]);
+
+  useEffect(() => {
+    if (newsData.length > 0 && votes.length > 0) {
+      const finalNews = [newsData.length + newsArray.length];
+      for (let i = 0; i < newsArray.length; i++) {
+        newsArray[i].end = votes[i];
+        finalNews.push(newsArray[i]);
+      }
+      for (let i = 0; i < newsData.length; i++) {
+        newsData[i].end = votes[57 + i];
+        finalNews.push(newsData[i]);
+        setFinalNewsData(finalNews);
+      }
+    }
+  }, [newsData.length]);
 
   const otherNews = [
     {
       title: "Gate.io $DYP Lock-up ＆ Earn #3",
       id: 4,
-      imageSrc:
+      image:
         "https://pbs.twimg.com/media/FTG42MYWQAImetj?format=jpg&name=large",
       date: "May 19, 2022",
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 4).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 4)?.down : 0,
       link: "https://twitter.com/gate_io/status/1527204993052426241",
-      content: {
-        imageSrc:
-          "https://pbs.twimg.com/media/FTG42MYWQAImetj?format=jpg&name=large",
-        title: "Gate.io $DYP Lock-up ＆ Earn #3",
-        content: `🔒#Gateio $DYP Lock-up ＆ Earn #3 @dypfinance <br/><br/> 
+      content: `🔒#Gateio $DYP Lock-up ＆ Earn #3 @dypfinance <br/><br/> 
       🔷Token: $DYP <br/> 🔶Term: 7 days<br/> ⚡️Annual Interest Rate:150%<br/> 🕘Start: May 21, 8:00:00 UTC<br/>
       ➡️Try out: <a href='https://www.gate.io/zh/hodl/1263?ch=hodl_twi0516' target='_blank'><u>gate.io</u></a><br/>
       ➡️Check more: <a href='https://www.gate.io/zh/article/26591?ch=en_sm_0522' target='_blank'><u>gate.io</u></a>`,
-      },
+     
     },
     {
       date: "22",
@@ -4187,17 +1812,14 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         votes.length !== 0 ? votes.find((obj) => obj.id === 5)?.down : 0,
       title: "V.R. is the next step for #DYP.",
       link: "https://twitter.com/dypfinance/status/1496072467814756353",
-      imageSrc:
+      image:
         "https://pbs.twimg.com/media/FMMd6vBXoAMb_je?format=jpg&name=4096x4096",
 
       year: "2022",
-      content: {
-        imageSrc:
-          "https://pbs.twimg.com/media/FMMd6vBXoAMb_je?format=jpg&name=4096x4096",
-        title: "V.R. is the next step for #DYP.",
+
         content:
           "🔜 V.R. is the next step for #DYP. <br/><br> 🔥 ⚡️ Find out more about the #Metaverse play-to-earn game that we are developing. <br/><br/> 👉<a href='https://dypfinance.medium.com/how-defi-yield-protocol-is-changing-the-future-in-crypto-earnings-59d7774f570d' target='_blank'><u>How DeFi Yield Protocol is changing the future in the crypto world.</u></a>",
-      },
+   
     },
     {
       date: "11",
@@ -4208,15 +1830,13 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         votes.length !== 0 ? votes.find((obj) => obj.id === 6)?.down : 0,
       title: "Cats and Watches Society Whitelist!",
       link: "https://twitter.com/dypfinance/status/1480623073208549380",
-      imageSrc: "https://dyp.finance/img/nft/roadmap_caws.jpg",
+      image: "https://dyp.finance/img/nft/roadmap_caws.jpg",
 
       year: "2022",
-      content: {
-        imageSrc: "https://dyp.finance/img/nft/roadmap_caws.jpg",
-        title: "Cats and Watches Society Whitelist!",
+
         content:
           "🔥Join Cats and Watches Society #NFTs Whitelist 🎉One Brand New Rolex Daytona Ceramic 116500LN worth $40k Giveaway <br/><br> 🔥 To win the watch: <br/><br/> <ul><li>✅Join <a href='http://dyp.finance/whitelist' target='_blank'><u>dyp.finance/whitelist</u></a></li><li>✅Mint one #NFT once available</li><li>✅Like & Retweet this post</li><li>✅Join <a href='http://discord.gg/dypcaws' target='_blank'><u>discord.gg/dypcaws</u></li><li>✅Tag 3 friends</li></ul>",
-      },
+     
     },
     {
       date: "11",
@@ -4227,15 +1847,12 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         votes.length !== 0 ? votes.find((obj) => obj.id === 7)?.down : 0,
       title: "It's raining $KNC on KyberSwap for $DYP!",
       link: "https://twitter.com/KyberNetwork/status/1480850588980051969",
-      imageSrc: "https://miro.medium.com/max/1400/1*gmCDk8UdGNrpI4USFHYyJA.png",
+      image: "https://miro.medium.com/max/1400/1*gmCDk8UdGNrpI4USFHYyJA.png",
       year: "2022",
-      content: {
-        imageSrc:
-          "https://miro.medium.com/max/1400/1*gmCDk8UdGNrpI4USFHYyJA.png",
-        title: "It's raining $KNC on KyberSwap for $DYP!",
+
         content:
           "🌧It's raining $KNC on KyberSwap for @dypfinance $DYP! <br/><br> 💰Phase 2: $100K for DYP-WAVAX liquidity providers <br/><br/> 👉🏽Tue 11 Jan, 9.30pm GMT+8 <br/> <br/> ➡️Details: <a href ='https://bit.ly/3fikKjr' target ='_blank'><u>bit.ly/3fikKjr</u></a> <br/><br/>",
-      },
+   
     },
     {
       date: "10",
@@ -4246,16 +1863,13 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         votes.length !== 0 ? votes.find((obj) => obj.id === 8)?.down : 0,
       title: "New smart contract for DYP staking!",
       link: "https://twitter.com/dypfinance/status/1524075021379022848",
-      imageSrc:
+      image:
         "https://pbs.twimg.com/media/FSKsEt2XMAA-ZUX?format=jpg&name=medium",
       year: "2022",
-      content: {
-        imageSrc:
-          "https://pbs.twimg.com/media/FSKsEt2XMAA-ZUX?format=jpg&name=medium",
-        title: "New smart contract for DYP staking!",
+
         content:
           'The game has changed! ⤵️ <br/><br> 💰 Stake your #DYP and earn 25% APR in #ETH, #AVAX or #BNB. <br/><br/>This new smart contract is available on all blockchains: ETH, BSC & C-CHAIN 👉🏽 no impermanent loss. <br/><br/>It all starts today! ⚡️<br/><br/>🔛<a href="https://dyp.finance/stakev2" target="_blank"><u>dyp.finance/stakev2</u></a>',
-      },
+    
     },
     {
       date: "14",
@@ -4266,17 +1880,14 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         votes.length !== 0 ? votes.find((obj) => obj.id === 9)?.down : 0,
       title: "Gate.io support for DYP on BNB Chain and C-CHAIN!",
       link: "https://twitter.com/dypfinance/status/1514627082025852936",
-      imageSrc:
+      image:
         "https://pbs.twimg.com/media/FQUJHzJXEA0kQ7h?format=jpg&name=medium",
 
       year: "2022",
-      content: {
-        imageSrc:
-          "https://pbs.twimg.com/media/FQUJHzJXEA0kQ7h?format=jpg&name=medium",
-        title: "Gate.io support for DYP on BNB Chain and C-CHAIN!",
+
         content:
           "Now check this out! 🔊 <br/><br> Starting from today you can trade $DYP on Gate.io also on #BSC/BEP20 and #AVAX/C-CHAIN - no bridge required. 💥 <br/><br/>And this is only the beginning! 🚀",
-      },
+     
     },
     {
       date: "4",
@@ -4287,17 +1898,14 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         votes.length !== 0 ? votes.find((obj) => obj.id === 10)?.down : 0,
       title: "March - DYP Vault is ready for action!",
       link: "https://twitter.com/dypfinance/status/1499761913001136136",
-      imageSrc:
+      image:
         "https://pbs.twimg.com/media/FNA4t82WUAUfX9z?format=jpg&name=medium",
 
       year: "2022",
-      content: {
-        imageSrc:
-          "https://pbs.twimg.com/media/FNA4t82WUAUfX9z?format=jpg&name=medium",
-        title: "March - DYP Vault is ready for action!",
+
         content:
           "📢 It's official! ⚡️ #DYP Vault is ready for action. <br/><br> 🔥 Check out our contracts with no lock time, deposit your #crypto and let us do the rest. 🚀 <br/><br/> 👉<a href='https://dyp.finance/vault-new' target='_blank'><u>dyp.finance/vault-new</u><a/><br/><br/>👏 Doing #crypto is easy with $DYP!",
-      },
+    
     },
     {
       date: "15",
@@ -4308,16 +1916,13 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         votes.length !== 0 ? votes.find((obj) => obj.id === 11).down : 0,
       title: "Staking, Farming, and Buyback V2 ETH",
       link: "https://twitter.com/dypfinance/status/1471162808041713665",
-      imageSrc:
+      image:
         "https://miro.medium.com/max/1400/1*uQCbsnPYwQdlQ8Wdtrgojg.jpeg",
       year: "2021",
-      content: {
-        imageSrc:
-          "https://miro.medium.com/max/1400/1*uQCbsnPYwQdlQ8Wdtrgojg.jpeg",
-        title: "Staking, Farming, and Buyback V2 ETH",
+
         content:
           "We are excited to announce that the new pools for staking, buyback, and farming have been launched on #Ethereum <br/><br> Join staking if you are holding #DYP or buyback & farming if you are holding WETH, WBTC, USDC, USDT, LINK or #iDYP and earn #ETH as rewards👇<br/><br/>  <a href ='https://dyp.finance/earnv2' target ='_blank'><u>dyp.finance/earnv2</u></a>",
-      },
+      
     },
     {
       date: "08",
@@ -4328,16 +1933,13 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         votes.length !== 0 ? votes.find((obj) => obj.id === 12)?.down : 0,
       title: "Staking, Farming, and Buyback V2 AVAX",
       link: "https://twitter.com/dypfinance/status/1468652091799482378",
-      imageSrc:
+      image:
         "https://miro.medium.com/max/1400/1*edJgopIexXunb7eiy4KTvA.jpeg",
       year: "2021",
-      content: {
-        imageSrc:
-          "https://miro.medium.com/max/1400/1*edJgopIexXunb7eiy4KTvA.jpeg",
-        title: "Staking, Farming, and Buyback V2 AVAX",
+
         content:
           "We are excited to announce that the new pools for staking, buyback, and farming have been launched on #Avalanche <br/><br> Join staking if you are holding #DYP or buyback & farming if you are holding #AVAX, USDC, WETH, #PNG, or WBTC, and earn #AVAX as rewards👇 <br/><br/>  <a href ='https://dyp.finance/earnv2' target ='_blank'><u>dyp.finance/earnv2</u></a>",
-      },
+      
     },
     {
       date: "20",
@@ -4348,16 +1950,13 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         votes.length !== 0 ? votes.find((obj) => obj.id === 13)?.down : 0,
       title: "Staking, Farming, and Buyback V2 BSC",
       link: "https://twitter.com/dypfinance/status/1462032099708391428",
-      imageSrc:
+      image:
         "https://miro.medium.com/max/1400/1*5hnErea6YNBD8id8I5cm2A.jpeg",
       year: "2021",
-      content: {
-        imageSrc:
-          "https://miro.medium.com/max/1400/1*5hnErea6YNBD8id8I5cm2A.jpeg",
-        title: "Staking, Farming, and Buyback V2 BSC",
+
         content:
           "We are excited to announce that the new pools for staking, buyback, and farming have been launched on #BinanceSmartChain <br/><br> Join staking if you are holding #DYP or buyback & farming if you are holding WBNB, BTCB, ETH, BUSD, CAKE and earn #BNB as rewards👇 <br/><br/>  <a href ='https://dyp.finance/earnv2' target ='_blank'><u>dyp.finance/earnv2</u></a>",
-      },
+      
     },
     {
       date: "5",
@@ -4368,15 +1967,12 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         votes.length !== 0 ? votes.find((obj) => obj.id === 14)?.down : 0,
       title: "It's raining $DYP + $KNC!",
       link: "https://twitter.com/KyberNetwork/status/1445210348944912388",
-      imageSrc: "https://miro.medium.com/max/1400/1*iM7ctAGi7pD0k_MmMuUWjg.png",
+      image: "https://miro.medium.com/max/1400/1*iM7ctAGi7pD0k_MmMuUWjg.png",
       year: "2021",
-      content: {
-        imageSrc:
-          "https://miro.medium.com/max/1400/1*iM7ctAGi7pD0k_MmMuUWjg.png",
-        title: "It's raining $DYP + $KNC!",
+
         content:
           "🌧It's raining $DYP + $KNC! <br/><br> @dypfinance and Kyber are enhancing $DYP liquidity on KyberDMM DEX - the best venue for LPs to deposit and earn! <br/><br/>  💰$300K for DYP-WAVAX liquidity providers! <br/><br/> Details: <a href='' target='_blank'><u>DeFi Yield Protocol Enhances DYP Token Liquidity on Avalanche with KyberSwap!</u></a> <br/><br/> Visit: <a href='https://dmm.exchange/#/about' target='_blank'><u>dmm.exchange/#/about</u></a>",
-      },
+     
     },
     {
       date: "21",
@@ -4387,12 +1983,9 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         votes.length !== 0 ? votes.find((obj) => obj.id === 15)?.down : 0,
       title: "DeFi Yield Protocol $DYP is coming to @0xPolygon!",
       link: "https://twitter.com/dypfinance/status/1440337326077472771",
-      imageSrc: "https://miro.medium.com/max/1400/1*nYEM2TrjWAzBTxc-sNATUg.png",
+      image: "https://miro.medium.com/max/1400/1*nYEM2TrjWAzBTxc-sNATUg.png",
       year: "2021",
-      content: {
-        imageSrc:
-          "https://miro.medium.com/max/1400/1*nYEM2TrjWAzBTxc-sNATUg.png",
-        title: "DeFi Yield Protocol $DYP is coming to @0xPolygon!",
+
         content: `<i>This integration enables DeFi users to benefit from DeFi Yield Protocol’s unique products while taking advantage of Polygon’s full-stack scaling solution, and application performance.</i><br/><br/>
       The team at DeFi Yield Protocol is continuing to explore ways of making the ecosystem bigger and better through adding more promising blockchain networks. DeFi Yield Protocol currently supports the Ethereum, Binance Smart Chain, and Avalanche networks. <br/><br/>
       Today marks yet another level of expansion for our DeFi ecosystem, as we’re expanding to Polygon to implement its network and technology on the DeFi Yield Protocol.<br/><br/>
@@ -4418,7 +2011,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       The central feature of the DYP is the decentralized tool dashboard. It provides advanced features, including Decentralized Score, Unique Community Trust Vote System, DYP Locker, Yield Farm Data, and Launch Pad, allowing users to make informed decisions.<br/><br/>
       <b><a href='https://dyp.finance/' target='_blank'><u>Website</u></a>|<a href='https://t.me/dypannouncements' target='_blank'><u>Announcements</u></a>|<a href='https://discord.com/invite/kYDT6pc' target='_blank'><u>Discord</u> </a>|<a href='https://twitter.com/dypfinance' target='_blank'> <u>Twitter</u> </a>|<a href='https://t.me/dypfinance' target='_blank'> <u>Telegram</u> </a>|<a href='https://github.com/dypfinance' target='_blank'> <u>GitHub</u> </a>|<a href='https://www.youtube.com/channel/UC6Wrn8A-pq79srb9OC-ufXw' target='_blank'> <u>YouTube</u> </a>|<a href='https://www.instagram.com/dyp.finance/' target='_blank'> <u>Instagram</u> </a></b><br/><br/>
       `,
-      },
+     
     },
     {
       date: "10",
@@ -4429,14 +2022,12 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         votes.length !== 0 ? votes.find((obj) => obj.id === 16)?.down : 0,
       title: "DeFi Yield Protocol (DYP) is on DeFi Pulse!",
       link: "https://twitter.com/defipulse/status/1436388557896159235",
-      imageSrc: "https://dyp.finance/img/defipulse.png",
+      image: "https://dyp.finance/img/defipulse.png",
       year: "2021",
-      content: {
-        imageSrc: "https://dyp.finance/img/defipulse.png",
-        title: "DeFi Yield Protocol (DYP) is on DeFi Pulse!",
+
         content:
           "🎊🎊NEW LISTING 🎊🎊<br/><br> @dypfinance anis now listed in our #DeFi rankings at #120 with $198k Total Value Locked <a href='https://www.defipulse.com/address-tag/defi-yield-protocol' target='_blank'><u>DeFi Pulse</u></a> <br/><br/>  DeFi Yield Protocol (DYP) is a platform that offers solutions for yield farming, staking, NFTs, and trading tools.",
-      },
+      
     },
     {
       date: "11",
@@ -4447,14 +2038,10 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         votes.length !== 0 ? votes.find((obj) => obj.id === 17)?.down : 0,
       title: "DeFi Yield Protocol will be integrated with Coin98 Wallet!",
       link: "https://twitter.com/dypfinance/status/1425400583012425730?s=20",
-      imageSrc:
+      image:
         "https://miro.medium.com/max/1400/1*gimouGn5M4Mp6t8opTsNLw.jpeg",
       year: "2021",
-      content: {
-        imageSrc:
-          "https://miro.medium.com/max/1400/1*gimouGn5M4Mp6t8opTsNLw.jpeg",
-        title: "DeFi Yield Protocol will be integrated with Coin98 Wallet!",
-        content: `We’re excited to announce that <a href='https://dyp.finance/' target='_blank'><u>DeFi Yield Protocol</u></a> will be integrated with <a href='https://coin98.com/' target='_blank'><u>Coin98 Wallet</u></a>, a non-custodial wallet used to store, manage, trade, swap multi-chain, multi-source digital assets.<br/><br/>
+ content: `We’re excited to announce that <a href='https://dyp.finance/' target='_blank'><u>DeFi Yield Protocol</u></a> will be integrated with <a href='https://coin98.com/' target='_blank'><u>Coin98 Wallet</u></a>, a non-custodial wallet used to store, manage, trade, swap multi-chain, multi-source digital assets.<br/><br/>
       <a href='https://coin98.com/' target='_blank'><u>Coin98 Wallet</u></a> is now one of the supported wallets on <a href='https://dyp.finance/' target='_blank'><u>DeFi Yield Protocol</u></a>, enabling users to add liquidity to DeFi Yield Protocol’s <a href='https://dyp.finance/earn' target='_blank'><u>farming pools</u></a> as well as easily trade with the high speed, low fee advantages of the Avalanche, Binance Smart Chain or Ethereum Network. The <a href='https://dyp.finance/earn' target='_blank'><u>Stake</u></a>, <a href='https://dyp.finance/earn' target='_blank'><u>Buyback</u></a> and <a href='https://dyp.finance/earn' target='_blank'><u>Vault</u></a> products on DeFi Yield Protocol
        are also available for all <a href='https://coin98.com/' target='_blank'><u>Coin98 Wallet</u></a> users to access. Also, <a href='https://tools.dyp.finance/' target='_blank'><u>DYP Tools</u></a> (a decentralized tool dashboard that provides advanced features, such as Decentralized Score, Unique Community Trust Vote System, DYP Locker, Yield Farm Data, and LaunchPad, allowing users to make informed decisions) and <a href='https://nft.dyp.finance/' target='_blank'><u>NFT dApp</u></a> (the NFT dApp by Defi Yield Protocol acts as a marketplace and a gallery where users can mint, buy, sell and trade NFTs for a fixed price) are available for all <a href='https://coin98.com/' target='_blank'><u>Coin98 Wallet</u></a> users. <br/><br/>
       We believe that this integration will drive more users to explore various opportunities and offerings of the <a href='https://dyp.finance/' target='_blank'><u>DeFi Yield Protocol</u></a> Ecosystem.<br/><br/>
@@ -4469,7 +2056,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       Coin98 Wallet is a non-custodial wallet used to store, manage, trade, swap multi-chain, multi-source digital assets. It supports the most popular chains, including Ethereum, Binance Smart Chain, Solana, Polkadot, Kusama, HECO Chain, Near, Avalanche X-Chain & C-Chain, Celo, BandChain, Kava, Terra, Cosmos, ThorChain, Fantom, Polygon, Persistence, XDai, Kardiachain, Ronin. Coin98 Wallet has both the Mobile App and the Extension version that act as a gateway, connecting users to the DeFi world.<br/><br/>
       <b><a href='https://apps.apple.com/us/app/coin98-wallet/id1561969966' target='_blank'><u>iOS</u></a>|<a href='https://play.google.com/store/apps/details?id=coin98.crypto.finance.media' target='_blank'><u>Android</u></a>|<a href='https://chrome.google.com/webstore/detail/coin98-wallet/aeachknmefphepccionboohckonoeemg' target='_blank'><u>Extension</u> </a>|<a href='https://twitter.com/coin98_wallet' target='_blank'> <u>Twitter</u> </a>|<a href='https://coin98.com/wallet' target='_blank'> <u>Website</u> </a>|<a href='https://docs.coin98.com/' target='_blank'> <u>Docs</u> </a>|<a href='https://t.me/coin98_wallet' target='_blank'> <u>Telegram</u> </a>|<a href='https://www.facebook.com/groups/676418929362725' target='_blank'> <u>Facebook</u> </a></b><br/><br/>
       `,
-      },
+     
     },
     {
       date: "22",
@@ -4480,14 +2067,10 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         votes.length !== 0 ? votes.find((obj) => obj.id === 18)?.down : 0,
       title: "DeFi Yield Protocol strategic integration with Aircoins.io",
       link: "https://dypfinance.medium.com/defi-yield-protocol-strategic-integration-with-aircoins-io-augmented-reality-app-666209ce08e",
-      imageSrc:
+      image:
         "https://miro.medium.com/max/1400/1*h95JYnco1tuL3IGB0TAjsg.jpeg",
       year: "2021",
-      content: {
-        imageSrc:
-          "https://miro.medium.com/max/1400/1*h95JYnco1tuL3IGB0TAjsg.jpeg",
-        title: "DeFi Yield Protocol strategic integration with Aircoins.io",
-        content: `<a href='https://dyp.finance/' target='_blank'><u>DeFi Yield Protocol</u></a> has entered the metaverse! With the vision to get DYP out to more people we have successfully integrated DYP token to Aircoins.io Augmented Reality App. Players will be able to earn DYP tokens in Augmented Reality (AR) around the world. A global treasure hunt with DYP in AR, bringing adoption to blockchain and decentralized finance through mobile gaming.<br/><br/>
+       content: `<a href='https://dyp.finance/' target='_blank'><u>DeFi Yield Protocol</u></a> has entered the metaverse! With the vision to get DYP out to more people we have successfully integrated DYP token to Aircoins.io Augmented Reality App. Players will be able to earn DYP tokens in Augmented Reality (AR) around the world. A global treasure hunt with DYP in AR, bringing adoption to blockchain and decentralized finance through mobile gaming.<br/><br/>
       More than 2 Billion people around the world play mobile games. It is estimated that by the end of 2022 app gaming revenues will reach $125B. In the chart see top world revenue generating game apps. Popular AR mobile game Pokémon Go alone has generated $5B in sales.<br/><br/>
       Aircoins.io is currently the largest coin Augmented Reality AR App in the world with +30 Million digital AR experiences since launch in 2017. Customizable geo-based treasure hunts allowing DYP benefits to be distributed in AR all round the world!<br/><br/>
       Aircoins is targeting the mobile gaming market as it is estimated to reach $180 billion by 2022 and digital advertising to reach $244 Billion by 2022. According to Infoholic Research, the “AR Gaming Market” is expected to reach $284.93 billion by 2023, growing at a CAGR of 152.7% during the forecast period 2017–2023.<br/><br/>
@@ -4507,7 +2090,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       We have a very enthusiastic community that genuinely enjoys finding & collecting coins on our platform. What’s even more encouraging is the amazing photos and testimonials we receive from users all around the world.
       <b><a href='https://www.aircoins.io/' target='_blank'><u>Website</u></a>|<a href='https://play.google.com/store/apps/details?id=com.aircoinscorp.aircoins' target='_blank'><u>Download Android App </u></a>|<a href='https://apps.apple.com/us/app/aircoins-treasure-hunt-in-ar/id1411209889?ls=1' target='_blank'><u>Download Apple iOS App </u> </a>|<a href='https://twitter.com/Aircoins_App' target='_blank'> <u>Twitter</u> </a>|<a href='https://t.me/aircoins' target='_blank'> <u>Telegram</u> </b><br/><br/>
       `,
-      },
+      
     },
     {
       date: "14",
@@ -4518,14 +2101,10 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         votes.length !== 0 ? votes.find((obj) => obj.id === 19).down : 0,
       title: "Pangolin partners with DeFi Yield Protocol (DYP)",
       link: "https://dypfinance.medium.com/pangolin-partners-with-defi-yield-protocol-dyp-a-unique-cross-chain-platform-b52b7e93e0a9",
-      imageSrc:
+      image:
         "https://miro.medium.com/max/1400/1*e2gdKr1KM3QlpGPewZu-gw.jpeg",
       year: "2021",
-      content: {
-        imageSrc:
-          "https://miro.medium.com/max/1400/1*e2gdKr1KM3QlpGPewZu-gw.jpeg",
-        title: "Pangolin partners with DeFi Yield Protocol (DYP)",
-        content: `As a premier DEX on Avalanche Network, Pangolin strives to build partnerships with platforms across all blockchain networks. Therefore we are excited to announce our partnership with DeFi Yield Protocol (DYP), a cross-chain yield farming and DeFi platform. <br/><br/>
+      content: `As a premier DEX on Avalanche Network, Pangolin strives to build partnerships with platforms across all blockchain networks. Therefore we are excited to announce our partnership with DeFi Yield Protocol (DYP), a cross-chain yield farming and DeFi platform. <br/><br/>
       The DeFi Yield Protocol (DYP) is a unique platform that offers solutions for yield farming, staking, and enabling users to leverage the advanced trading tools of the DYP. DeFi Yield Protocol offers Farming, Staking, NFT Marketplace, and a custom bridge. DYP originated on Ethereum, expanded to Binance Smart Chain, and is now looking to build on Avalanche Network. <br/><br/>
       With our partnership with DeFi Yield Protocol, Pangolin is excited to work together to bring users and liquidity from other networks onto Avalanche and into Pangolin. The AVAX/DYP pair in Pangolin already has over $500k in liquidity just one week after DYP launched their app on Avalanche. Also, by launching DYP Tools that provide advanced features, such as Decentralized Score, Unique Community Trust Vote System, DYP Locker, Yield Farm Data, and LaunchPad, we allow users to make informed decisions.<br/><br/>
       In the near future, Pangolin will partner with more projects and platforms that are making an impact in the DeFi space.<br/><br/>
@@ -4537,7 +2116,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       Pangolin Exchange is a community-driven decentralized exchange (DEX) with fast-settlement, low fees, and a democratic process. Built on the Avalanche Network. Pangolin brings you the best trading opportunities.
       <b><a href='https://pangolin.exchange/' target='_blank'><u>Website</u></a> | <a href='https://twitter.com/pangolindex' target='_blank'><u>Twitter</u></a> | <a href='https://discord.com/invite/PARrDYYbfw' target='_blank'><u>Discord</u></a> | <a href='https://github.com/pangolindex' target='_blank'><u>GitHub</u></a> | <a href='https://pangolin.exchange/litepaper/' target='_blank'><u>Documentation</u></a> | <a href='https://t.me/pangolindex' target='_blank'><u>Telegram</u></a> | <a href='https://www.linkedin.com/company/74288656/admin/' target='_blank'><u>LinkedIn</u></a> | <a href='https://www.reddit.com/r/PangolinExchange/' target='_blank'><u>Reddit</u></a> | <a href='https://www.youtube.com/channel/UClJJTG4FRL4z3AOf-ZWXZLw' target='_blank'><u>YouTube</u></a></b>
       `,
-      },
+      
     },
     {
       date: "08",
@@ -4548,11 +2127,8 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         votes.length !== 0 ? votes.find((obj) => obj.id === 20)?.down : 0,
       title: "DeFi Yield Protocol Avalanche Bridge Tutorial",
       link: "https://dypfinance.medium.com/defi-yield-protocol-avalanche-bridge-tutorial-9404d827a4a",
-      imageSrc: "https://dyp.finance/img/avalanche.jpg",
+      image: "https://dyp.finance/img/avalanche.jpg",
       year: "2021",
-      content: {
-        imageSrc: "https://dyp.finance/img/avalanche.jpg",
-        title: "DeFi Yield Protocol Avalanche Bridge Tutorial",
         content: `The Bridge will help you swap DYP tokens between Ethereum Network and Avalanche Network. In this tutorial I will show you the exact steps for swapping DYP tokens from Ethereum Network to Avalanche Network.<br/><br/>
       1. You need to visit <a href='https://avax-bridge.dyp.finance/' target='_blank'><u>https://avax-bridge.dyp.finance/</u></a><br/>
       2. Now, you should click ‘’CONNECT WALLET’’ and log into your MetaMask wallet.<br/>
@@ -4584,7 +2160,6 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       <b><a href='https://dyp.finance/' target='_blank'><u>Website</u></a>|<a href='https://t.me/dypannouncements' target='_blank'><u>Announcements</u></a>|<a href='https://discord.com/invite/kYDT6pc' target='_blank'><u>Discord</u> </a>|<a href='https://twitter.com/dypfinance' target='_blank'> <u>Twitter</u> </a>|<a href='https://t.me/dypfinance' target='_blank'> <u>Telegram</u> </a>|<a href='https://github.com/dypfinance' target='_blank'> <u>GitHub</u> </a>|<a href='https://www.youtube.com/channel/UC6Wrn8A-pq79srb9OC-ufXw' target='_blank'> <u>YouTube</u> </a></b><br/><br/>
      
       `,
-      },
     },
     {
       date: "05",
@@ -4595,14 +2170,10 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         votes.length !== 0 ? votes.find((obj) => obj.id === 21)?.down : 0,
       title: "Getting Started with the DeFi Yield Protocol NFT Marketplace",
       link: "https://dypfinance.medium.com/getting-started-with-the-defi-yield-protocol-nft-marketplace-a518356f47f",
-      imageSrc:
+      image:
         "https://miro.medium.com/max/1400/1*qnQkO4ajXw33Ox7PLSV77w.jpeg",
       year: "2021",
-      content: {
-        imageSrc:
-          "https://miro.medium.com/max/1400/1*qnQkO4ajXw33Ox7PLSV77w.jpeg",
-        title: "Getting Started with the DeFi Yield Protocol NFT Marketplace",
-        content: `<a href='https://nft.dyp.finance/'><u>DeFi Yield Protocol’s NFT Marketplace</u></a> is a new platform for creators and collectors to mint and trade NFTs. Everyone can now create non-fungible tokens and experience the benefits of unique, digital ownership rights on the Ethereum network. All it takes is a few minutes of your time, a small fee, and something you feel is worth transforming it into an NFT.<br/><br/>
+         content: `<a href='https://nft.dyp.finance/'><u>DeFi Yield Protocol’s NFT Marketplace</u></a> is a new platform for creators and collectors to mint and trade NFTs. Everyone can now create non-fungible tokens and experience the benefits of unique, digital ownership rights on the Ethereum network. All it takes is a few minutes of your time, a small fee, and something you feel is worth transforming it into an NFT.<br/><br/>
       NFTs are the collectible cards of today’s world. Instead, they are unique and exist on the blockchain. With the rise in the popularity of NFTs, every blockchain project wants to add an NFT marketplace to its platform. However, creating a thriving NFT marketplace requires robust integration with an underlying protocol.<br/><br/>
       DeFi Yield Protocol has launched its new NFT Marketplace to help any user (artist or not) mint and sell their works of art.<br/><br/>
       <b>What is the DeFi Yield Protocol NFT Marketplace?</b><br/><br/>
@@ -4649,7 +2220,6 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
      
       
       `,
-      },
     },
     {
       date: "22",
@@ -4660,14 +2230,10 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         votes.length !== 0 ? votes.find((obj) => obj.id === 22)?.down : 0,
       title: "DeFi Yield Protocol launches NFT dApp V1",
       link: "https://dypfinance.medium.com/defi-yield-protocol-launches-nft-dapp-v1-a796b19aaabb",
-      imageSrc:
+      image:
         "https://miro.medium.com/max/1400/1*lkIkivLimWQL_eT2pfd64A.jpeg",
       year: "2021",
-      content: {
-        imageSrc:
-          "https://miro.medium.com/max/1400/1*lkIkivLimWQL_eT2pfd64A.jpeg",
-        title: "DeFi Yield Protocol launches NFT dApp V1",
-        content: `NFTs are the collectible cards of today’s world. Instead, they are unique and exist on the blockchain. With the rise in the popularity of NFTs, every blockchain project wants to add an NFT marketplace to its platform. However, creating a thriving NFT marketplace requires robust integration with an underlying protocol.<br/><br/>
+      content: `NFTs are the collectible cards of today’s world. Instead, they are unique and exist on the blockchain. With the rise in the popularity of NFTs, every blockchain project wants to add an NFT marketplace to its platform. However, creating a thriving NFT marketplace requires robust integration with an underlying protocol.<br/><br/>
       DeFi Yield Protocol, a decentralized platform with an aim to create a transparent, unbiased, and reliable network, is launching its <a href='https://nft.dyp.finance/' target='_blank'><u>NFT dApp V1</u></a>.<br/><br/>
       <b>About the NFT dApp</b><br/><br/>
       <a href='https://dyp.finance/' target='_blank'><u>DeFi Yield Protocol</u></a> is a Yield Farming protocol that aims to mitigate the whale manipulation found on other platforms. The latest addition of the NFT dApp will add value to the already invaluable ecosystem and provide new use cases for the community.<br/><br/>
@@ -4701,7 +2267,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       • <a href='https://t.me/dypannouncements' target='_blank'><u>Telegram Announcements</u></a><br/>
       • <a href='https://discord.com/invite/kYDT6pc' target='_blank'><u>Discord</u></a><br/>
       `,
-      },
+    
     },
     {
       date: "22",
@@ -4712,14 +2278,10 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         votes.length !== 0 ? votes.find((obj) => obj.id === 23)?.down : 0,
       title: "DeFi Yield Protocol Integrates Chainlink",
       link: "https://dypfinance.medium.com/defi-yield-protocol-integrates-chainlink-price-feeds-to-secure-yield-farming-data-on-ethereum-and-3fe85062a0e5",
-      imageSrc:
+      image:
         "https://miro.medium.com/max/1400/1*lut5I2B3ZEnaIULOfGnDVw.jpeg",
       year: "2021",
-      content: {
-        imageSrc:
-          "https://miro.medium.com/max/1400/1*lut5I2B3ZEnaIULOfGnDVw.jpeg",
-        title: "DeFi Yield Protocol Integrates Chainlink",
-        content: `We’re excited to announce that DeFi Yield Protocol, a unique platform that allows any user to provide liquidity has integrated <a href='https://data.chain.link/' target='_blank'><u>Chainlink Price Feeds</u></a> on the Ethereum and Binance Smart Chain mainnet. By integrating Chainlink’s industry-leading decentralized oracle network, DeFi Yield Protocol has access to high-quality, tamper-proof price feeds needed to provide the exact value in USD. This will provide our users with strong assurances that all the values are provided in a fully decentralized manner and cannot be manipulated.<br/><br>
+     content: `We’re excited to announce that DeFi Yield Protocol, a unique platform that allows any user to provide liquidity has integrated <a href='https://data.chain.link/' target='_blank'><u>Chainlink Price Feeds</u></a> on the Ethereum and Binance Smart Chain mainnet. By integrating Chainlink’s industry-leading decentralized oracle network, DeFi Yield Protocol has access to high-quality, tamper-proof price feeds needed to provide the exact value in USD. This will provide our users with strong assurances that all the values are provided in a fully decentralized manner and cannot be manipulated.<br/><br>
       Our initial integration involves the use of the following Chainlink Price Feeds: ETH-USD and BNB-USD. We chose Chainlink as our go-to oracle solution because its infrastructure is seamless to integrate and time-tested in production. Chainlink already secures leading DeFi protocols responsible for billions of dollars in smart contract value, maintaining robust security and high availability even amidst unexpected events, such as exchange downtime, flash crashes, and <a href='https://blog.chain.link/flash-loans/' target='_blank'><u>data manipulation attacks via flash loans.</u></a><br/><br/>
       DeFi Yield Protocol is a unique platform that allows any user to provide liquidity and uses an anti-manipulation feature.<br/><br/>
       The core feature of DeFi Yield Protocol is the decentralized tools dashboard (DYP Tools). DYP Tools provide a liquidity locker for any DeFi project, a unique voting system, and at the same time protect the DeFi community by providing a decentralized trust score for all the DeFi projects.<br/><br/>
@@ -4742,45 +2304,35 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       The central feature of the DYP is the decentralized tool dashboard. It provides advanced features, including Decentralized Score, Unique Community Trust Vote System, DYP Locker, Yield Farm Data, and Launch Pad, allowing users to make informed decisions.<br/><br/>
       <b><a href='https://dyp.finance/' target='_blank'><u>Website</u></a> | <a href='https://t.me/dypannouncements' target='_blank'><u>Announcements</u></a> | <a href='https://discord.com/invite/kYDT6pc' target='_blank'><u>Discord</u> </a> | <a href='https://twitter.com/dypfinance' target='_blank'> <u>Twitter</u> </a>|<a href='https://t.me/dypfinance' target='_blank'> <u>Telegram</u> </a>|<a href='https://github.com/dypfinance' target='_blank'> <u>GitHub</u> </a>|<a href='https://www.youtube.com/channel/UC6Wrn8A-pq79srb9OC-ufXw' target='_blank'> <u>YouTube</u> </a></b><br/><br/>
       `,
-      },
     },
     {
       title: "Gate.io $DYP Lock-up ＆ Earn #2",
       id: 24,
-      imageSrc:
+      image:
         "https://pbs.twimg.com/media/FRVwHCUXwAMuR2r?format=jpg&name=large",
       date: "Apr 27, 2022",
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 24).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 24)?.down : 0,
       link: "https://twitter.com/gate_io/status/1519243718141874177",
-      content: {
-        imageSrc:
-          "https://pbs.twimg.com/media/FRVwHCUXwAMuR2r?format=jpg&name=large",
-        title: "Gate.io $DYP Lock-up ＆ Earn #2",
-        content: `🔒#Gate.io $DYP Lock-up ＆ Earn #2 @dypfinance <br/><br/> 
+       content: `🔒#Gate.io $DYP Lock-up ＆ Earn #2 @dypfinance <br/><br/> 
       🕘Launch Time: May 1, 8:00:00 UTC<br/><br/>Win an estimated reward of 100% P.A.!<br/><br/>
       ➡️Purchase: <a href='https://www.gate.io/zh/hodl/1231?ch=en_sm_0422' target='_blank'><u>gate.io</u></a><br/>
       ➡️Details: <a href='https://www.gate.io/zh/article/26346?ch=en_sm_0422' target='_blank'><u>gate.io</u></a><br/>
       ➡️Telegram: <a href='https://t.me/gateio_hodl_en' target='_blank'><u>gate.io</u></a><br/>
       `,
-      },
     },
     {
       title: "10 #ETH Giveaway",
       id: 25,
-      imageSrc:
+      image:
         "https://pbs.twimg.com/media/FQpLyBBXMAE8AsS?format=jpg&name=large",
       date: "Apr 18, 2022",
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 25).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 25)?.down : 0,
       link: "https://twitter.com/dypfinance/status/1516108338685165569",
-      content: {
-        imageSrc:
-          "https://pbs.twimg.com/media/FQpLyBBXMAE8AsS?format=jpg&name=large",
-        title: "10 #ETH Giveaway",
-        content: `🚨 Attention #CAWS holders! <br/><br/> 
+       content: `🚨 Attention #CAWS holders! <br/><br/> 
       We would like to announce a raffle of 10 #ETH to our community!<br/><br/>To enter:<br/><br/>
       ✅ Hold at least one CAWS at the time token id #2500 is minted! <br/>
       ✅ The more CAWS held, the more chances to win!<br/>
@@ -4789,23 +2341,18 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       2 x 1.5 ETH<br/>
       9 x 0.5 ETH<br/>
       `,
-      },
     },
     {
       title: "Gate.io $DYP Lock-up ＆ Earn #1",
       id: 26,
-      imageSrc:
+      image:
         "https://pbs.twimg.com/media/FQXlDOEWQAErq1G?format=jpg&name=large",
       date: "Apr 15, 2022",
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 26).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 26)?.down : 0,
       link: "https://twitter.com/gate_io/status/1514868696069595139",
-      content: {
-        imageSrc:
-          "https://pbs.twimg.com/media/FQXlDOEWQAErq1G?format=jpg&name=large",
-        title: "Gate.io $DYP Lock-up ＆ Earn #1",
-        content: `🔒#Gate.io $DYP Lock-up ＆ Earn #1  @dypfinance<br/><br/> 
+     content: `🔒#Gate.io $DYP Lock-up ＆ Earn #1  @dypfinance<br/><br/> 
       🕘Launch Time: Apr 18, 8:00:00 UTC<br/><br/>
       🔶Term: 14 days <br/>
       🔶Handling Fee: $0<br/>
@@ -4814,22 +2361,17 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       ➡️Details:<a href='https://www.gate.io/zh/article/26195?ch=en_sm_0422' target='_blank'><u>gate.io</u></a><br/>
       ➡️Telegram:<a href='https://t.me/gateio_hodl_en' target='_blank'><u>gate.io</u></a><br/>
       `,
-      },
     },
     {
       title: "KyberDMM Joint Liquidity Mining on Avalanche.",
       id: 27,
-      imageSrc: "https://miro.medium.com/max/1400/1*GRqMiBZbPRrxqWcshIwU8A.png",
+      image: "https://miro.medium.com/max/1400/1*GRqMiBZbPRrxqWcshIwU8A.png",
       date: "Sep 19, 2021",
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 27).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 27).down : 0,
       link: "https://twitter.com/dypfinance/status/1439562983663968262?s=20",
-      content: {
-        imageSrc:
-          "https://miro.medium.com/max/1400/1*GRqMiBZbPRrxqWcshIwU8A.png",
-        title: "KyberDMM Joint Liquidity Mining on Avalanche.",
-        content: `<h3>We've submitted a proposal to launch one of the first joint liquidity mining programs for the @KyberNetwork #KyberDMM on @avalancheavax featuring $DYP and $KNC rewards!</h3><br/><br/>
+       content: `<h3>We've submitted a proposal to launch one of the first joint liquidity mining programs for the @KyberNetwork #KyberDMM on @avalancheavax featuring $DYP and $KNC rewards!</h3><br/><br/>
       <b>1. Project Introduction</b><br/>
       The DeFi Yield Protocol (DYP) is a unique platform that offers solutions for yield farming, staking, NFTs, and enabling users to leverage the advanced trading tools of the DYP. What makes the DYP a unique yield farming aggregator? The DYP made history in the DeFi space by becoming the first and only protocol to reward users in Ethereum.<br/>
       The protocol employs an anti-manipulation feature that aims to limit the market impact on users’ converting rewards into ETH and other native platform tokens. Anti-manipulation aims to maintain stability, fair access to liquidity, and provide a secure and simplified DeFi platform for users of all sizes.
@@ -4881,23 +2423,18 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       CoinMarketCap: <a href="https://coinmarketcap.com/currencies/defi-yield-protocol/" target='_blank'><u>DeFi Yield Protocol price today, DYP to USD live, marketcap and chart | CoinMarketCap</u></a><br/>
       CoinGecko: <a href="https://www.coingecko.com/en/coins/defi-yield-protocol" target='_blank'><u>DeFi Yield Protocol price, DYP chart, market cap, and info | CoinGecko</u></a><br/>
       `,
-      },
     },
     {
       title: "@dypfinance is extending its liquidity mining campaign.",
       id: 28,
-      imageSrc:
+      image:
         "https://pbs.twimg.com/media/E_bHfp3UYAEHsbt?format=jpg&name=4096x4096",
       date: "Sep 16, 2021",
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 28).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 28)?.down : 0,
       link: "https://twitter.com/hummingbot_io/status/1438559792927178755?s=20",
-      content: {
-        imageSrc:
-          "https://pbs.twimg.com/media/E_bHfp3UYAEHsbt?format=jpg&name=4096x4096",
-        title: "12-week extension for DYP Liquidity Mining Campaign!",
-        content: `
+       content: `
       DYP is extending its campaign on <b>KuCoin</b> for another <b>12-weeks</b>. We will continue payouts in the <b>DYP</b> token from <b>September 14, 2021 to September 20, 2021</b> but for the remaining weeks, payouts will be in <b>USDT</b> beginning on <b>September 21, 2021</b>.<br/><br/>
       <h3>Campaign Terms</h3><br/><br/>
       • Start Date: September 21, 2021 00:00 UTC<br/>
@@ -4922,102 +2459,81 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       1. <b>Eligibility requirements:</b> participation in liquidity mining is subject to eligibility requirements as specified in the <a href='https://hummingbot.io/en/liquidity-mining-policy/' target='_blank'><u>liquidity mining policy</u></a>.<br/>
       2. <b>Campaign terms subject to change:</b> terms may be modified over the course of the campaign. We will announce any changes, if any, on our <a href='https://discord.com/invite/hummingbot' target='_blank'><u>discord</u></a> and <a href='https://www.reddit.com/r/Hummingbot/' target='_blank'><u>reddit</u></a>; the most up to date terms will also be posted on the <a href='https://support.hummingbot.io/hc/en-us/sections/900002130663-Campaigns' target='_blank'><u>liquidity mining campaign terms</u></a> and the <a href='https://miner.hummingbot.io/' target='_blank'><u>miners app</u></a>.<br/>
       `,
-      },
     },
     {
       title: "New $PNG reward pools are ready for pre-deposits!",
       id: 29,
-      imageSrc:
+      image:
         "https://pbs.twimg.com/media/E9NFwuPVoAQMtdw?format=png&name=900x900",
       date: "Aug 20, 2021",
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 29).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 29)?.down : 0,
       link: "https://twitter.com/pangolindex/status/1428563006481260547?s=20",
-      content: {
-        title: "New $PNG reward pools are ready for pre-deposits!",
-        imageSrc:
-          "https://pbs.twimg.com/media/E9NFwuPVoAQMtdw?format=png&name=900x900",
-        content: `<h3>💰New $PNG reward pools are ready for pre-deposits!</h3><br/><br>
+     content: `<h3>💰New $PNG reward pools are ready for pre-deposits!</h3><br/><br>
       ⏰Rewards start Friday at 1pm UTC<br/><br/>$QI $DYP $WALBT<br/><br/>
       🚀AVAX-QI 1x<br/>🚀PNG-QI 5x<br/>🚀AVAX-DYP 1x <br/>🚀PNG-DYP 5x<br/>🚀AVAX-WALBT 1x<br/>🚀PNG-WALBT 5x<br/><br/>
       ⏬ <a href='https://app.pangolin.exchange/#/png/1' target='_blank'><u>app.pangolin.exchange</u></a>`,
-      },
+     
     },
     {
       title: "Listing Celebration to @coin98_wallet: Win $2500 in $DYP",
       id: 30,
-      imageSrc:
+      image:
         "https://pbs.twimg.com/media/E9D1hZDXsAAqXGu?format=jpg&name=medium",
       date: "Aug 18, 2021",
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 30).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 30)?.down : 0,
       link: "https://twitter.com/dypfinance/status/1427912209762603008?s=20",
-      content: {
-        title: "Listing Celebration to @coin98_wallet: Win $2500 in $DYP",
-        imageSrc:
-          "https://pbs.twimg.com/media/E9D1hZDXsAAqXGu?format=jpg&name=medium",
-        content: `<h3>Listing Celebration to @coin98_wallet: Win $2500 in $DYP</h3><br/><br>
+      content: `<h3>Listing Celebration to @coin98_wallet: Win $2500 in $DYP</h3><br/><br>
      1️⃣ Follow <a href='https://twitter.com/dypfinance' target='_blank'><u>@dypfinance</u></a> and <a href='https://twitter.com/coin98_wallet' target='_blank'><u>@coin98_wallet</u></a><br/><br/>
      2️⃣ Join <a href='https://t.me/dypfinance' target='_blank'><u>t.me/dypfinance</u></a> & <a href='https://t.me/coin98wallet' target='_blank'><u>t.me/coin98wallet</u></a><br/>
      3️⃣ Retweet, like & tag 3 friends<br/>4️⃣ Comment QR Screenshot Coin98 $DYP address<br/><br/>
      🎁 100 lucky winners will receive $25 each!`,
-      },
+     
     },
     {
       title: "Aircoins is excited to announce newest partner with DYP",
       id: 31,
-      imageSrc:
+      image:
         "https://pbs.twimg.com/media/E8DDO9nWEAcEyxA?format=jpg&name=medium",
       date: "Aug 05, 2021",
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 31).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 31)?.down : 0,
       link: "https://twitter.com/AIRCOINS_App/status/1423352145697546241",
-      content: {
-        title: "Aircoins is excited to announce newest partner with DYP",
-        imageSrc:
-          "https://pbs.twimg.com/media/E8DDO9nWEAcEyxA?format=jpg&name=medium",
-        content: `Aircoins is excited to announce our newest partner @dypfinance!<br/><br>
+     content: `Aircoins is excited to announce our newest partner @dypfinance!<br/><br>
       To Celebrate: $1000 in DYP up for grabs!<br/> $750 in $DYP for the best DYP AR photos<br/>$250 in $DYP drawing for following both <br/>
       @AIRCOINS_App and @dypfinance and retweeting this.<br/>Contest ends August 12th<br/>`,
-      },
+     
     },
     {
       title: "Pangolin hosting a giveaway with Defi Yield Protocol",
       id: 32,
-      imageSrc:
+      image:
         "https://pbs.twimg.com/media/E74VgYqUcAEnsON?format=jpg&name=large",
       date: "Jul 12, 2021",
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 32).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 32)?.down : 0,
       link: "https://twitter.com/pangolindex/status/1422604691251163142",
-      content: {
-        title: "Pangolin hosting a giveaway with Defi Yield Protocol",
-        imageSrc:
-          "https://pbs.twimg.com/media/E74VgYqUcAEnsON?format=jpg&name=large",
         content: `<h3>💸✨$1,000 Giveaway✨💸</h3><br/><br>
       💰We are hosting a giveaway with @dypfinance - 5 lucky winners will get $200!💰<br/> To Enter:<br/>
       ⚡️Follow <a href='https://twitter.com/pangolindex' target='_blank'><u>@pangolindex</u></a> and <a href='https://twitter.com/dypfinance' target='_blank'><u>@dypfinance</u></a><br/>
       ✈️Join the Pangolin and DYP #telegram<br/>💻Join the Pangolin and DYP #discord<br/>👪Tag 3 friends + ♻️retweet`,
-      },
+      
     },
     {
       title: "DeFi Yield Protocol NFT Creative Competition is LIVE!",
       id: 33,
-      imageSrc:
+      image:
         "https://miro.medium.com/max/1400/1*h95JYnco1tuL3IGB0TAjsg.jpeg",
       date: "Jul 12, 2021",
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 33).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 33)?.down : 0,
       link: "https://dypfinance.medium.com/defi-yield-protocol-nft-creative-competition-is-live-9d28528fef08",
-      content: {
-        title: "DeFi Yield Protocol NFT Creative Competition is LIVE!",
-        imageSrc:
-          "https://miro.medium.com/max/1400/1*h95JYnco1tuL3IGB0TAjsg.jpeg",
         content: `To celebrate the launch of NFT Marketplace, the creative competition will officially begin! We invite global NFT creators to use their imagination, compete in terms of creativity, and participate in the creative contest to share DYP tokens worth US $50,000.<br/><br/>
       The contest will begin today, and it will end when at least 1000 NFTs have been created.<br/><br/>
       <b>Rules:</b><br/>
@@ -5043,7 +2559,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       The central feature of the DYP is the decentralized tool dashboard. It provides advanced features, including Decentralized Score, Unique Community Trust Vote System, DYP Locker, Yield Farm Data, and Launch Pad, allowing users to make informed decisions.<br/><br/>
       <b><a href='https://dyp.finance/' target='_blank'><u>Website</u></a> | <a href='https://t.me/dypannouncements' target='_blank'><u>Announcements</u></a> | <a href='https://discord.com/invite/kYDT6pc' target='_blank'><u>Discord</u> </a> | <a href='https://twitter.com/dypfinance' target='_blank'> <u>Twitter</u> </a>|<a href='https://t.me/dypfinance' target='_blank'> <u>Telegram</u> </a>|<a href='https://github.com/dypfinance' target='_blank'> <u>GitHub</u> </a>|<a href='https://www.youtube.com/channel/UC6Wrn8A-pq79srb9OC-ufXw' target='_blank'> <u>YouTube</u> </a></b><br/><br/>
       `,
-      },
+     
     },
   ];
 
@@ -5056,13 +2572,9 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 34).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 34).down : 0,
-      imageSrc:
+      image:
         "https://images.cointelegraph.com/images/717_aHR0cHM6Ly9zMy5jb2ludGVsZWdyYXBoLmNvbS91cGxvYWRzLzIwMjEtMDcvMDczNDU5ZWMtYjUwYi00MmRjLWJjNWMtZmJkZDc3NDdlZjg0LmpwZWc=.jpg",
-      content: {
-        title: "Yield farming platform announces it’s expanding to Avalanche",
-        imageSrc:
-          "https://images.cointelegraph.com/images/717_aHR0cHM6Ly9zMy5jb2ludGVsZWdyYXBoLmNvbS91cGxvYWRzLzIwMjEtMDcvMDczNDU5ZWMtYjUwYi00MmRjLWJjNWMtZmJkZDc3NDdlZjg0LmpwZWc=.jpg",
-        content: `A yield farming platform has announced that it is expanding to Avalanche.<br/><br/>
+     content: `A yield farming platform has announced that it is expanding to Avalanche.<br/><br/>
         <a href='https://dyp.finance/' target='_blank'><u>DeFi Yield Protocol </u><a> — known as DYP for short — says the move will mean that its advanced trading tools are available to a greater cross-section of users.<br/><br/>
         Three of its products are initially going to be available: DYP Farming, DYP Tools and DYP NFTs.<br/><br/>
         Flexible staking terms are offered through DYP — and this means that tokens can be locked up for three days, 30 days, 60 days or 90 days.<br/><br/>
@@ -5081,7 +2593,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         Chainlink, which already works with a number of other DeFi protocols, sources data from a variety of premium data aggregators — weighting figures by volume and cleaning them of outliers and wash trading.<br/><br/>
         Looking ahead, DYP plans to work on its app, and roll out its products to a greater number of blockchains. A lending service will launch, and built-in insurance will be offered to all DYP liquidity providers. And, as the DeFi space continues to evolve and grow, the project says it will expand in a number of different areas too.<br/><br/>
         The first version of DYP’s NFT DApp launched last month. In the run up to going live, the project collaborated with the renowned fashion illustrator and designer Nidia Toska to create the first collection to be listed on the marketplace. In the past, she’s worked with the likes of Kim Kardashian, GQ magazine and Paris Hilton — another NFT aficionado.<br/>`,
-      },
+      
     },
     {
       title: "DeFi Yield Protocol (DYP) Continues to Expand Its Ecosystem",
@@ -5091,13 +2603,9 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 35).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 35).down : 0,
-      imageSrc:
+      image:
         "https://static.news.bitcoin.com/wp-content/uploads/2021/06/dyp.jpg",
-      content: {
-        title: "DeFi Yield Protocol (DYP) Continues to Expand Its Ecosystem",
-        imageSrc:
-          "https://static.news.bitcoin.com/wp-content/uploads/2021/06/dyp.jpg",
-        content: `DeFi Yield Protocol has emerged as one of the fastest-growing crypto projects with an expanding ecosystem. DYP allows DeFi users to leverage advanced trading tools to earn yield on their assets while taking advantage of the unique DYP Tools decentralized application.<br/><br/>
+       content: `DeFi Yield Protocol has emerged as one of the fastest-growing crypto projects with an expanding ecosystem. DYP allows DeFi users to leverage advanced trading tools to earn yield on their assets while taking advantage of the unique DYP Tools decentralized application.<br/><br/>
         DYP has attracted the attention of many within the crypto space due to its features that include its unique Anti-manipulation system. The anti-manipulation feature ensures the stability of DYP tokens by automatically converting DYP rewards to Ether (ETH) or BNB by 00:00 UTC daily and distributing rewards to liquidity providers.<br/><br/>
         <h4>Key Developments in DYP Ecosystem</h4><br/><br/>
         The DYP team continues to develop the ecosystem with major partnerships and integrations into its infrastructure. Some of the high profile developments include:<br/><br/>
@@ -5120,7 +2628,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
 
         
         `,
-      },
+     
     },
     {
       title:
@@ -5131,14 +2639,9 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 36).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 36).down : 0,
-      imageSrc:
+      image:
         "https://crypto.news/app/uploads/2021/04/DeFi-Yield-Protocol-Community-Update%E2%80%8A%E2%80%94%E2%80%8AStaking-Pools-Tutorial-on-Binance-Smart-Chain.jpg",
-      content: {
-        title:
-          "DYP Staking dApp Launches on BNB Chain, LPs to earn Passive Income in ETH, DYP, or BNB",
-        imageSrc:
-          "https://crypto.news/app/uploads/2021/04/DeFi-Yield-Protocol-Community-Update%E2%80%8A%E2%80%94%E2%80%8AStaking-Pools-Tutorial-on-Binance-Smart-Chain.jpg",
-        content: `<h3><b>DYP Staking Service on the Binance Smart Chain (BSC)</b></h3><br/><br/>
+      content: `<h3><b>DYP Staking Service on the Binance Smart Chain (BSC)</b></h3><br/><br/>
         The DYP staking service launch on the low-fee, high throughput BSC platform is a step in the right direction. It comes after a code audit by Blockchain Consilium. <br/><br/>
         DYP Staking services were launched in early Q1 2021 and have grown in stature over time, attracting yield farmers who have cumulatively earned over $14.8 million since activation.<br/><br/>
         There will be four staking options for each pool in the BSC with monthly rewards ranging from 30k to 100k DYP depending on the lock-up period ranging from three days to three months chosen by liquidity providers staking their liquidity tokens. <br/><br/>
@@ -5167,7 +2670,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         At the same time, the DYP Earn Vault is ready to launch, just awaiting audit results. <br/><br/>
         Other products set for release include DYP NFT dApp, which is still in development, and a planned overhaul of DYP Protocol’s user interface.<br/>
         `,
-      },
+      
     },
     {
       title: "DeFi Yield Protocol Takes Yield Farming to the Next Level",
@@ -5177,13 +2680,9 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 37).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 37).down : 0,
-      imageSrc:
+      image:
         "https://www.newsbtc.com/wp-content/uploads/2020/10/dyp-img.png",
-      content: {
-        title: "DeFi Yield Protocol Takes Yield Farming to the Next Level",
-        imageSrc:
-          "https://www.newsbtc.com/wp-content/uploads/2020/10/dyp-img.png",
-        content: `DeFi, short for Decentralized Finance is the new fad in cryptocurrency industry, thanks to the development of blockchain technology and its applications. As new DeFi products hit the market, people are finding attractive investment opportunities with significant profit-making potential. Yield farming is one such example where crypto investors can lock their assets over a certain period of time to earn returns, and doing so in the cryptocurrency space theoretically means, the whole mechanism is democratic and everyone has an equal opportunity to reap profits.<br/><br/>
+     content: `DeFi, short for Decentralized Finance is the new fad in cryptocurrency industry, thanks to the development of blockchain technology and its applications. As new DeFi products hit the market, people are finding attractive investment opportunities with significant profit-making potential. Yield farming is one such example where crypto investors can lock their assets over a certain period of time to earn returns, and doing so in the cryptocurrency space theoretically means, the whole mechanism is democratic and everyone has an equal opportunity to reap profits.<br/><br/>
         The introduction of Bitcoin back in 2008 was hailed as a landmark moment as it signified a shift in the financial power centers, allowing individuals to stay in complete control of their funds without having to rely on banking and financial institutions. However, in reality, the changes envisioned haven’t completely materialized even after a decade. Similarly, most of the existing DeFi applications are skewed, favoring the ones with fortune, proven recently by Sushi dump brought about SushiSwap’s anonymous founder Chef Nomi swapping his SUSHI token for ETH.<br/><br/>
         However, that is not going to be the case anymore as DeFi Yield Protocol (DYP) helps prevent the whale advantage in DeFi. Further, the anti-manipulation feature implemented by the protocol ensures all pool rewards viz., DYP/ETH, DYP/USDC. DYP/USDT and DYP/WBTC are converted from DYP to ETH and distributed among liquidity providers at 00:00 UTC every day. By doing so, it prevents manipulation of DYP price by whales for their benefit.<br/><br/>
         The conversion of pool rewards from DYP to ETH is handled by a smart contract. With each pool generating around 69,120 tokens in rewards, the total number of tokens converted to ETH each day stands at around 276,480. However, in the event of DYP price fluctuating beyond 2.5% in value, the smart contract swaps only as many tokens to ETH as possible without affecting the token’s price and distribute them. Any DYP leftover will be distributed as part of the next day’s rewards. The protocol continues the rollover process for a maximum duration of one week, by the end of which, if there are still undistributed DYP left, will either be distributed among token holders or burnt based on the outcome of a governance vote. All smart contracts implemented within DYP protocol are thoroughly audited and secured to deny access to those planning to take advantage of the system.<br/><br/>
@@ -5194,7 +2693,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         Crypto investors and enthusiasts can be part of the revolutionary DeFi protocol by joining the Crowdsale whitelist and acquiring DYP tokens. The minimum and maximum contributions to participate in DYP is set at 0.5 ETH and 100 ETH respectively.<br/><br/>
         Access the DYP Crowdsale Whitelist Application at – <a href='https://crowdsale.dyp.finance/' target='_blank'><u>https://crowdsale.dyp.finance/</u></a><br/>
         `,
-      },
+     
     },
     {
       title:
@@ -5205,12 +2704,8 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 38).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 38).down : 0,
-      imageSrc: "https://www.cryptocompare.com/media/37459245/graph.jpg",
-      content: {
-        title:
-          "DeFi Yield Protocol Could Be a Massive Boost for Yield Farmers and the DeFi Space",
-        imageSrc: "https://www.cryptocompare.com/media/37459245/graph.jpg",
-        content: `Since February 2020, we have seen a steady growth of the blockchain space and, most significantly, decentralized finance. While DeFi isn't entirely new, the network's growth has been more aggressive this year than it has ever been. The distribution of COMP governance token and the introduction of yield farming protocols around June this year has made DeFi the most engaging conversation in the blockchain space, no doubt.<br/><br/>
+      image: "https://www.cryptocompare.com/media/37459245/graph.jpg",
+      content: `Since February 2020, we have seen a steady growth of the blockchain space and, most significantly, decentralized finance. While DeFi isn't entirely new, the network's growth has been more aggressive this year than it has ever been. The distribution of COMP governance token and the introduction of yield farming protocols around June this year has made DeFi the most engaging conversation in the blockchain space, no doubt.<br/><br/>
       Decentralized finance has only grown this much because of the control and ease it offers users. By allowing users to utilize traditional banking and financing services like lending, borrowing, and saving, an overwhelming sense of trust has been birthed over the past few months. Even more captivating is that many users now earn more than 100% of their capital, mostly by offering liquidity through yield farming protocols.<br/><br/>
       <h3><b>DeFi Yield Protocol (DYP)</b></h3><br/><br/>
       Over the past couple of months, we have also seen a contrast between different DeFi protocols and what might set a precedent for the DeFi ecosystem's longevity as a whole. The <a href='https://dyp.finance/#/home' target='_blank'><u>DeFi yield protocol (DYP)</u></a> is a unique protocol that allows virtually any user to provide liquidity, earn DYP tokens as yield while maintaining the token price. Unlike some DeFi user interface, the DYP interface is quite simplified, accommodating new and expert yield farmers.<br/><br/>
@@ -5226,7 +2721,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       <h3><b>DYP Crowdsale</b></h3><br/><br/>
       When the decentralized finance ecosystem seeks a balance while setting a precedent for its mainstream adoption, DYP is actively laying a foundation from its public crowdsale. During the whitelisting and presale round, 570,000 DYP tokens worth 2,821.71 ETH have been sold. For a chance to participate in this unique protocol, join the public crowdsale at <a href='https://crowdsale.dyp.finance/' target='_blank'><u>https://crowdsale.dyp.finance/</u></a> <br/>
       `,
-      },
+      
     },
     {
       title:
@@ -5237,14 +2732,9 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 39).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 39).down : 0,
-      imageSrc:
+      image:
         "https://coindoo.com/wp-content/uploads/2020/11/DeFi-Yield-Protocol-DYP.jpg",
-      content: {
-        title:
-          "DeFi Yield Protocol (DYP) Eliminates the Risks of Whale Interference",
-        imageSrc:
-          "https://coindoo.com/wp-content/uploads/2020/11/DeFi-Yield-Protocol-DYP.jpg",
-        content: `DeFi Yield Protocol (DYP) is a new type of DeFi platform that seeks to change the way you earn through liquidity on Ethereum smart contracts. Keenly, the developers behind this next-gen platform <a href='https://www.newsbtc.com/news/company/dyp-finance-a-unique-yield-farming-platform/' target='_blank'><u>introduce</u></a> several anti-manipulation features to eliminate the risk of whales hijacking the network. These systems help ensure that the rewards earned from the network’s liquidity are fairly distributed to all participants.<br/><br/>
+      content: `DeFi Yield Protocol (DYP) is a new type of DeFi platform that seeks to change the way you earn through liquidity on Ethereum smart contracts. Keenly, the developers behind this next-gen platform <a href='https://www.newsbtc.com/news/company/dyp-finance-a-unique-yield-farming-platform/' target='_blank'><u>introduce</u></a> several anti-manipulation features to eliminate the risk of whales hijacking the network. These systems help ensure that the rewards earned from the network’s liquidity are fairly distributed to all participants.<br/><br/>
         <h3><b>Benefits of DeFi Yield Protocol (DYP)</b></h3><br/><br/>
         DYP introduces a number of crucial benefits to the sector that help new and experienced investors secure higher ROIs. Here are the most notable features that are sure to attract investors.<br/><br/>
         <b>Anti Manipulation</b><br/><br/>
@@ -5277,7 +2767,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         <h3><b>DeFi Yield Protocol (DYP) – Keeping to the Principles of DeFi</b></h3><br/><br/>
         DYP’s introduction of anti-manipulation protocols helps to further the overall goal of DeFi, to remove centralized powers from finance and instead, share the profits amongst users. DYP accomplishes this goal with its innovative pool reward distribution and token stability system. For these reasons, DYP is sure to see more adoption in the coming months.<br/>
         `,
-      },
+      
     },
     {
       title:
@@ -5288,14 +2778,9 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 40).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 40).down : 0,
-      imageSrc:
+      image:
         "https://techbullion.com/wp-content/uploads/2021/04/DYP-cast-your-vote-1.jpg",
-      content: {
-        title:
-          "DeFi Yield Protocol: The First Manipulation Free DeFi platform in BSC and ETH",
-        imageSrc:
-          "https://techbullion.com/wp-content/uploads/2021/04/DYP-cast-your-vote-1.jpg",
-        content: `SHARE TWEET SHARE EMAIL 
+      content: `SHARE TWEET SHARE EMAIL 
         What do we call a Defi platform providing its users’ rewards in ETH and BNB? Defi yield protocol. DYP is a one-of-a-kind Defi platform instituted in 2020 to create more opportunities for its users. It’s probably the first platform to pay its users’ pool rewards in ETH.<br/><br/>
         DYP helps users earn rewards from providing liquidity, staking and mining Ethereum. In a recent release on their Medium page, DYP announced the further steps taken to increase the platform’s reach. <br/><br/>
         According to the release, DYP will launch its new DYP earn vault, DYP tools, DYP NFT DApp, and the new user interface. The first two, i.e, the tools and earn vault will be released shortly. <br/><br/>
@@ -5317,7 +2802,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         Other features for the community include excellent liquidity data, a locker, a trust score, and complete decentralization. All these features instituted in the platform will attract many investors, boost DYP token price and demand.<br/><br/>
         It’s time for investors to use DYP, which is  available both in the Ethereum blockchain and BSC chain via PancakeSwap. <br/>
         `,
-      },
+      
     },
     {
       title: "DYP.Finance: A Unique Yield Farming Platform",
@@ -5327,11 +2812,8 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 41).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 41).down : 0,
-      imageSrc: "https://www.cryptocompare.com/media/37459277/img_0834.jpg",
-      content: {
-        title: "DYP.Finance: A Unique Yield Farming Platform",
-        imageSrc: "https://www.cryptocompare.com/media/37459277/img_0834.jpg",
-        content: `The cryptocurrency industry has experienced rapid growth in the past decade since the advent of Bitcoin. The first cryptocurrency opened the financial world to a world of possibilities using decentralized ledger technology (blockchain).<br/><br/>
+      image: "https://www.cryptocompare.com/media/37459277/img_0834.jpg",
+      content: `The cryptocurrency industry has experienced rapid growth in the past decade since the advent of Bitcoin. The first cryptocurrency opened the financial world to a world of possibilities using decentralized ledger technology (blockchain).<br/><br/>
       This development has given rise to a new sector of finance that has experienced a massive boom in 2020 named decentralized finance (DeFi). As of 2019, there was only $275 million worth of total locked-in value of crypto assets in the DeFi economy.  2020 gave rise to massive adoption of DeFi with the total locked-in value rising multiple folds to its current value of $11 billion+.<br/><br/>
       However, it is important that you understand the core values of DeFi as several platforms have sprung up in recent months.  Decentralized finance platforms operate decentralized governance based on blockchain technology and decentralized information feeds which determine interest rates and currency values.<br/><br/>
       Since there are tons of DeFi projects in the market, it is easy to get lost looking for the right protocol with potential. DYP.Finance is one of the few that operates based on the right ideals and follows excellent financial protocols to govern its platform.<br/><br/>
@@ -5356,7 +2838,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       It's not too late to join DYP finance as the DeFi platform is currently offering a Public Crowdsale offering. You can visit the sales page at <a href='https://crowdsale.dyp.finance' target='_blank'><u>https://crowdsale.dyp.finance</u></a> and make an application to purchase DYP tokens. The minimum amount to participate in DYP is 0.5 ETH and the maximum contribution is 100 ETH.
       DYP tokens can be withdrawn to supported wallets which includes MetaMask and TrustWallet.<br/>
       `,
-      },
+      
     },
     {
       title:
@@ -5367,14 +2849,9 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 42).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 42).down : 0,
-      imageSrc:
+      image:
         "https://u.today/sites/default/files/styles/736x/public/2021-04/7180.jpg",
-      content: {
-        title:
-          "DeFi Yield Protocol (DYP) Launches Staking Pools on Binance Smart Chain",
-        imageSrc:
-          "https://u.today/sites/default/files/styles/736x/public/2021-04/7180.jpg",
-        content: `While initially launched on Ethereum (ETH) blockchain, a new-gen staking and yield farming framework, DeFi Yield Protocol (DYP), is now present on Binance's smart contract environment, Binance Smart Chain (BSC).<br/><br/>
+     content: `While initially launched on Ethereum (ETH) blockchain, a new-gen staking and yield farming framework, DeFi Yield Protocol (DYP), is now present on Binance's smart contract environment, Binance Smart Chain (BSC).<br/><br/>
         <h3><b>Yield farming, reconsidered: DeFi Yield Protocol introduces DYP Tools</b></h3><br/><br/>
         Within the DeFi Yield Protocol, all instruments for the farming of multiple assets are integrated into the decentralized tools dashboard (DYP Tools). Besides an advanced user experience, it catalyzes interest in DYP, a native core asset of the  DeFi Yield Protocol (DYP).<br/><br/>
         <img src='https://u.today/sites/default/files/styles/736/public/inline-images/7180_1.png' alt=''/><br/>
@@ -5390,7 +2867,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
 
 
         `,
-      },
+      
     },
     {
       title: "DYP Launches Staking DApp on Binance Smart Chain (BSC)",
@@ -5400,13 +2877,9 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 43).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 43).down : 0,
-      imageSrc:
+      image:
         "https://blockonomi-9fcd.kxcdn.com/wp-content/uploads/2021/02/defi-yield-770x515.jpg",
-      content: {
-        title: "DYP Launches Staking DApp on Binance Smart Chain (BSC)",
-        imageSrc:
-          "https://blockonomi-9fcd.kxcdn.com/wp-content/uploads/2021/02/defi-yield-770x515.jpg",
-        content: `The DeFi Yield Protocol (DYP) is a unique blockchain-based on DeFi project. By using the platform, crypto users are offered the ability to provide liquidity and earn rewards in ETH. The platform also uses an anti-manipulation feature to convert DYP rewards into ETH and send them directly to holders’ wallets.<br/><br/>
+       content: `The DeFi Yield Protocol (DYP) is a unique blockchain-based on DeFi project. By using the platform, crypto users are offered the ability to provide liquidity and earn rewards in ETH. The platform also uses an anti-manipulation feature to convert DYP rewards into ETH and send them directly to holders’ wallets.<br/><br/>
         The goal is to make the liquidity protocol sustainable and ensure rewards are generated without excessively affecting the token price. Therefore, users can earn rewards with minimal risks. DYP is different from other DeFi user interfaces, the DYP interface is quite simple which accommodates new and expert yield users.<br/><br/>
         <h3><b>DYP is Expanding Quickly</b></h3><br/><br/>
         The main feature of DeFi Yield Protocol is the dashboard of the platform, which is DYP Tools. It provides a decentralized trust score for all the DeFi projects to increase the use case for DYP tokens, and provide a liquidity locker for any DeFi project, which helps to protect the DeFi community.<br/><br/>
@@ -5454,7 +2927,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         In addition, there are other products under development including DYP NFT dApp v1.0 and a new user interface design DYP New UI Design that will allow to create and develop NFTs on its platform.<br/><br/>
 
         `,
-      },
+      
     },
     {
       title:
@@ -5465,14 +2938,9 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 44).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 44).down : 0,
-      imageSrc:
+      image:
         "https://static.news.bitcoin.com/wp-content/uploads/2021/04/RuCUQmM6-dyp-7-prill-1-1280x720.jpg",
-      content: {
-        title:
-          "DeFi Yield Protocol (DYP) Witnesses Massive Growth Following Binance Smart Chain Integration",
-        imageSrc:
-          "https://static.news.bitcoin.com/wp-content/uploads/2021/04/RuCUQmM6-dyp-7-prill-1-1280x720.jpg",
-        content: `<b>DeFi Yield Protocol (DYP) continues to attain popularity within the decentralized finance sector. Since the launch of the staking dAPP three months ago, DYP Protocol has experienced massive growth in its community.</b><br/><br/>
+      content: `<b>DeFi Yield Protocol (DYP) continues to attain popularity within the decentralized finance sector. Since the launch of the staking dAPP three months ago, DYP Protocol has experienced massive growth in its community.</b><br/><br/>
         <h3><b>DeFi Yield Protocol</b></h3><br/><br/>
         The yield farming platform has over $39 million locked in its ETH staking contract and has paid 7,064 ETH worth over $14 million to liquidity providers. DYP has also experienced a 20x increase in liquidity on popular decentralized exchange Uniswap. At the moment, more than $21,000,000 in liquidity on Uniswap on the DYP/ETH. DYP has also expanded its ecosystem with the integration of Binance Smart Chain (BSC) in February.<br/><br/>
         DeFi Yield Protocol (DYP) allows users that provide liquidity to earn decent returns. It also utilizes an anti-manipulation feature that prevents whales from manipulating the price of its native token, DYP.<br/><br/>
@@ -5492,7 +2960,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         DYP tools, a decentralized tools dashboard that provides information about DeFi projects, will also be launched in the second quarter of the year. Other products under development include a new user interface design and a DYP NFT dApp that will enable the creation and development of NFTs on its platform.<br/>
 
         `,
-      },
+      
     },
     {
       title: "DeFi Yield Protocol (DYP): All in One Platform Yielding Benefits",
@@ -5502,14 +2970,9 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 45).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 45).down : 0,
-      imageSrc:
+      image:
         "https://cryptopotato.com/wp-content/uploads/2020/11/defiyieldprotocol_cover.jpg",
-      content: {
-        title:
-          "DeFi Yield Protocol (DYP): All in One Platform Yielding Benefits",
-        imageSrc:
-          "https://cryptopotato.com/wp-content/uploads/2020/11/defiyieldprotocol_cover.jpg",
-        content: `Yield farming is undoubtedly taking over the DeFi space since more crypto users have finally realized its merits. DeFi projects are in development as time provides users with diverse income earning services ranging from holding to exchanging or lending digital assets.<br/><br/>
+      content: `Yield farming is undoubtedly taking over the DeFi space since more crypto users have finally realized its merits. DeFi projects are in development as time provides users with diverse income earning services ranging from holding to exchanging or lending digital assets.<br/><br/>
         On that note, Ethereum plays an essential part in establishing and growing most of these tokens with top-notch features like smart contract advancements. The DeFi Yield Protocol (DYP) joins the community facilitating numerous functionalities under one roof. As it launches on December 15th, DYP plans to revolutionize the yielding investment sector and bring in as many investors as possible.<br/><br/>
         <h3><b>Anti-Manipulation Capabilities</b></h3><br/><br/>
         Whale manipulation has been a hand-in-hand concern of the growing DeFi space. A popular example came with SushiSwap – the DEX that was supposed to replace Uniswap. Its <a href='https://cryptopotato.com/sushi-crashing-over-50-as-sushiswaps-lead-developer-sells-his-tokens/' target='_blank'><u>creator</u></a> withdrew millions worth of tokens, essentially crashing the price of SUSHI to the ground.<br/><br/>
@@ -5533,7 +2996,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         The platform also committed an amount exceeding $1 million on its mining farm to clearly observe the trader’s needs. Additionally, DYP operates with prominent programming languages, including Bootstrap, HTML5, and Ethereum Solidity Protocol. 
         Furthermore, the protocol is designed to protect investors from dumps as it applies the anti-manipulation feature to eliminate crafty whales.<br/>
         `,
-      },
+      
     },
     {
       title:
@@ -5544,14 +3007,9 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 46).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 46).down : 0,
-      imageSrc:
+      image:
         "https://coincodex.com/en/resources/images//admin/news/earn-compound-yields/image1.jpg:resizeboxcropjpg?1050x590",
-      content: {
-        title:
-          "Earn compound yields on Binance Smart Chain using DeFi Yield Protocol (DYP)",
-        imageSrc:
-          "https://coincodex.com/en/resources/images//admin/news/earn-compound-yields/image1.jpg:resizeboxcropjpg?1050x590",
-        content: `The blockchain space continues to grow as more products and smart contract protocols are created to ensure seamless scalability and faster transactions. The Binance Smart Chain, or BSC as it is known, has emerged as a blockchain platform that has soared in popularity in recent months.<br/><br/>
+      content: `The blockchain space continues to grow as more products and smart contract protocols are created to ensure seamless scalability and faster transactions. The Binance Smart Chain, or BSC as it is known, has emerged as a blockchain platform that has soared in popularity in recent months.<br/><br/>
         BSC was launched in late 2020 and came when the leading smart contract network Ethereum was facing multiple problems. The DeFi boom had led to congestion in the Ethereum blockchain leading to high transaction fees and slower confirmation times, and BSC offered a viable alternative.<br/><br/>
         Built on similar architecture like the Ethereum Virtual Machine, BSC has quickly established itself as an alternative protocol for DeFi products and dApps. It offers low transaction fees, faster confirmation times and supports cross-chain migration of tokens and protocols from Ethereum.<br/><br/>
         DeFi Yield Protocol (DYP), a novel farming protocol, has made significant developments in recent months and is now available on the BSC ecosystem.<br/><br/>
@@ -5569,7 +3027,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         The recently launched BSC staking dApp has also been well received, with $10 million already staked in supported pools. The fundamentals of DYP have seen it popular within the DeFi sector, and the lure of earning a high yield means that the protocol will only continue to grow in the coming weeks. 
         DYP has some products in store for the second quarter of the year as it seeks to expand its ecosystem. The DYP tools an extensive analytical dashboard that will offer traders multiple tools and data is expected to be launched soon. Also, an NFT dApp where users can create and launch NFT characters is coming soon.<br/>
         `,
-      },
+      
     },
     {
       title: "DYP.Finance – Stake DeFi Tokens and Get Paid in ETH",
@@ -5579,13 +3037,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 47).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 47).down : 0,
-      imageSrc:
-        "https://techbullion.com/wp-content/uploads/2020/12/Defi-Yield-Protocol.jpg",
-      content: {
-        title: "DYP.Finance – Stake DeFi Tokens and Get Paid in ETH",
-        imageSrc:
-          "https://techbullion.com/wp-content/uploads/2020/12/Defi-Yield-Protocol.jpg",
-        content: `As the DeFi sector heats up, developers continue to get more creative in their approaches to the industry’s problems. DYP is one such platform that seeks to combat inflation and centralization. The network integrates various new systems to provide users the ability to stake DeFi tokens and receive rewards directly in Ethereum.<br/><br/>
+      content: `As the DeFi sector heats up, developers continue to get more creative in their approaches to the industry’s problems. DYP is one such platform that seeks to combat inflation and centralization. The network integrates various new systems to provide users the ability to stake DeFi tokens and receive rewards directly in Ethereum.<br/><br/>
         This feature is a big plus to investors who often need to go through an additional step to complete their investment strategy. Ethereum is more stable than most DeFi tokens. However, converting tokens to ETH reduces your ROI due to fees and losses incurred due to volatility. For these reasons, it’s common for DeFi investors to convert their rewards into ETH. <br/><br/>
         <h4><b>DeFi Staking is Now Live</b></h4><br/><br/>
         DYP recently announced the start of its DeFi staking protocol this week. This feature allows anyone to stake their DeFi tokens and earn a passive income. Many investors see staking as a better alternative to trading cryptocurrencies. For one, you don’t need to do a ton of research to earn when you stake your crypto. You simply agree to lock up your crypto for a predetermined period. For your efforts, you receive rewards. <br/><br/>
@@ -5613,7 +3065,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         DYP’s selection of premium DeFi features is enough to continue to attract more investors to the platform moving forward. The system’s unique deflationary governance mechanism is sure to interest both users and other platforms seeking alternative methods to combat inflation. If successful, DYP could spark a series of copy cat platforms in the coming weeks. For now, DeFi users seeking ETH rewards can participate in this network and start earning today.<br/><br/>
         
         `,
-      },
+      
     },
     {
       title: "DeFi Yield Protocol (DYP) Staking and Governance is Now Live",
@@ -5623,12 +3075,8 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 48).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 48).down : 0,
-      imageSrc: "https://miro.medium.com/max/1400/1*5KQd_ryoVCcom5cXTnEfmg.png",
-      content: {
-        title: "DeFi Yield Protocol (DYP) Staking and Governance is Now Live",
-        imageSrc:
-          "https://miro.medium.com/max/1400/1*5KQd_ryoVCcom5cXTnEfmg.png",
-        content: `This week, DeFi Yield Protocol (DYP) <a href='https://twitter.com/dypfinance/status/1340047093591883776?s=21' target='_blank'><u>announced</u></a> the official launch of its staking and governance protocols. DYP is a next-gen DeFi platform that seeks to level the playing field between regular investors and whales. To this extent, the platform introduces some new strategies to push ROIs to the max while reducing investor’s exposure to risks. As such, the launch of the platform’s staking and governance Dapp is a critical step on its path to success.<br/><br/>
+      image: "https://miro.medium.com/max/1400/1*5KQd_ryoVCcom5cXTnEfmg.png",
+  content: `This week, DeFi Yield Protocol (DYP) <a href='https://twitter.com/dypfinance/status/1340047093591883776?s=21' target='_blank'><u>announced</u></a> the official launch of its staking and governance protocols. DYP is a next-gen DeFi platform that seeks to level the playing field between regular investors and whales. To this extent, the platform introduces some new strategies to push ROIs to the max while reducing investor’s exposure to risks. As such, the launch of the platform’s staking and governance Dapp is a critical step on its path to success.<br/><br/>
       <b>DYP Staking Pools</b><br/><br/>
       <a href='https://dyp.finance/earn' target='_blank'><u>DYP staking pools</u></a> allow anyone to provide liquidity to pools and earn rewards. DYP differs from the completion in that all rewards are paid out in Ethereum directly. This feature is an industry first that helps alleviate inflationary concerns while building additional value in the Ethereum network.<br/><br/>
       Additionally, all DYP staking pools feature integrated anti-manipulation protocols and 2.5% slippage. These systems reduce inflation and encourage token price stability in the market. Specifically, the protocol attempts to convert DYP rewards to ETH every day at 00:00 UTC. When the price of DYP is affected by more than -2.5%, the maximum DYP amount that does not affect the price will be swapped to ETH.<br/><br/>
@@ -5647,7 +3095,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       <b>DYP — Stake DeFi Tokens and Get Paid in Ethereum</b><br/><br/>
       DYP raises the bar with its new strategy. Paying out DeFi token stakers in Ethereum is sure to spur some interest in the market. Now, anyone can earn some free Ethereum by staking their tokens on DYP.<br/>
       `,
-      },
+      
     },
     {
       title: "DeFi Projects That Offer Top Staking Rewards in 2021",
@@ -5657,13 +3105,9 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 49).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 49).down : 0,
-      imageSrc:
+      image:
         "https://hackernoon.imgix.net/images/7LrDe0NwaTW40HBSsVuBSPeo2yd2-1p2p31oo.jpeg?auto=format&fit=max&w=1200",
-      content: {
-        title: "DeFi Projects That Offer Top Staking Rewards in 2021",
-        imageSrc:
-          "https://hackernoon.imgix.net/images/7LrDe0NwaTW40HBSsVuBSPeo2yd2-1p2p31oo.jpeg?auto=format&fit=max&w=1200",
-        content: `The DeFi sector provides investors with exciting opportunities that were previously not possible. Every week, new products, features, and networks enter the market. Each platform promises better returns and a more comprehensive UX. However, not every DeFi platform pays out high staking rewards.<br/><br/>
+       content: `The DeFi sector provides investors with exciting opportunities that were previously not possible. Every week, new products, features, and networks enter the market. Each platform promises better returns and a more comprehensive UX. However, not every DeFi platform pays out high staking rewards.<br/><br/>
         Rather than spending days combing through every new platform to determine the most profitable ones, professionals recommend you stick to reputable networks with proven results. These platforms have earned their reputations in the market through optimal ROIs and top-notch security. Here are the DeFi projects with top staking rewards in 2021.<br/><br/>
         <h3><b>MakerDAO</b></h3><br/><br/>
         <a href='https://makerdao.com/en/' target='_blank'><u>MakerDAO</u></a> made a name for itself by introducing blockchain technologies that allow borrowers to use volatile cryptocurrency as collateral for loans of stablecoins. Since its introduction, the network has grown to become one of the world’s largest Ethereum Dapps.<br/><br/>
@@ -5690,7 +3134,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         When it comes to determining the best staking rewards, a lot comes down to your strategy. DeFi is diverse, and you can earn profits in many different ways nowadays. These platforms excel in their efforts to provide new and exciting ways to increase your staking rewards.<br/>
 
         `,
-      },
+      
     },
     {
       title:
@@ -5701,12 +3145,8 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 50).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 50).down : 0,
-      imageSrc: "https://crypto.news/app/uploads/2020/12/DYP-staking.jpg",
-      content: {
-        title:
-          "The DeFi Yield Protocol (DYP) Looks Poised to take DeFi to Next Level",
-        imageSrc: "https://crypto.news/app/uploads/2020/12/DYP-staking.jpg",
-        content: `<h3><b>What Is the DeFi Yield Protocol?</b></h3><br/><br/>
+      image: "https://crypto.news/app/uploads/2020/12/DYP-staking.jpg",
+       content: `<h3><b>What Is the DeFi Yield Protocol?</b></h3><br/><br/>
       The DeFi Yield Protocol (DYP) is developing a cutting-edge unique platform that enables anyone to provide liquidity and be rewarded for the first time in Ethereum (ETH). Simultaneously, the platform maintains both token price stability and secure and easy-to-use DeFi for end users by integrating DYP anti-manipulation feature.<br/><br/>
       DYP is unique in that it brings a solution to the risks associated with Yield Farming. The protocol does this by permanently changing the way an investor earns by providing liquidity on Ethereum smart contract. <br/><br/>
       There is an argument against DeFi which states that it gives whales the power to control the underlying network. To get an idea, look no further than the recent infamous Sushiswap dump where the anonymous founder, chef Nomi swapped his SUSHI tokens for Ethereum, resulting in a flash crash for the token. DYP fixes this. <br/><br/>
@@ -5721,7 +3161,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
 
       
       `,
-      },
+      
     },
     {
       title:
@@ -5732,13 +3172,8 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 51).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 51).down : 0,
-      imageSrc:
+      image:
         "https://www.bitcoininsider.org/sites/default/files/styles/scale_900px/public/field/image/defi_yield_protocol.webp?itok=2ehPm3JM",
-      content: {
-        title:
-          "DeFi Yield Protocol (DYP) Provides a New Level of Transparency to the Market",
-        imageSrc:
-          "https://www.bitcoininsider.org/sites/default/files/styles/scale_900px/public/field/image/defi_yield_protocol.webp?itok=2ehPm3JM",
         content: `The DeFi sector continues to provide new opportunities to investors ready to venture into this new market. DeFi (decentralized finance) replaces centralized financial systems with regular users. In this way, it creates a scenario in which your average user can earn interest and rewards for participation in the network.<br/><br/>
         Lately, the DeFi sector has seen a rapid increase in networks entering the space. These new platforms introduce new protocols to simplify the UX and streamline DeFi activities. While most of these platforms promise healthy ROIs it’s crucial to understand that not every platform is a wise option to pursue.<br/><br/>
         There are some problems that the DeFi sector desperately needs to correct before it can reach its true potential. One of these problems that poses a significant risk is Whale manipulation. Whales are the majority token holders of a project. Since these investors have the highest level of participation in a project, they have extraordinary sway within the network's future decisions.<br/><br/>
@@ -5772,7 +3207,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
 
 
         `,
-      },
+      
     },
     {
       title:
@@ -5783,14 +3218,9 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 52).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 52).down : 0,
-      imageSrc:
+      image:
         "https://www.bitcoininsider.org/sites/default/files/styles/scale_900px/public/field/image/defi_yield_protocol.webp?itok=2ehPm3JM",
-      content: {
-        title:
-          "Tackling Volatility Issues for Liquidity Providers with DeFi Yield Protocol (DYP)",
-        imageSrc:
-          "https://www.bitcoininsider.org/sites/default/files/styles/scale_900px/public/field/image/defi_yield_protocol.webp?itok=2ehPm3JM",
-        content: `The field of decentralized finance (DeFi) continues to expand, dismissing a lot of speculative notions that last year’s advance was a bubble-like move.<br/><br/>
+       content: `The field of decentralized finance (DeFi) continues to expand, dismissing a lot of speculative notions that last year’s advance was a bubble-like move.<br/><br/>
         According to <a href='https://www.defipulse.com/' target='_blank'><u>data</u></a> from DeFi Pulse, the total value locked in various DeFi protocols exceeds $17.8 billion – an increase that continues in the new year of 2021. Leading the way are some established authorities in the field, though newcomers are also starting to play an important role.<br/><br/>
         However, over the past few months, the cryptocurrency market has entered a state of parabolic advance, causing severe volatility across the board. While the changes so far have been mostly positive, this volatility exposes certain risks to liquidity providers (LPs), perhaps the biggest of which is impermanent loss. <br/><br/>
         That said, DeFi Yield Protocol (DYP) brings forward an interesting concept that tries to tackle the challenges of substantial volatility and lower the risks for LPs as they play an integral role in the future development of the entire field.<br/><br/>
@@ -5818,7 +3248,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
 
 
         `,
-      },
+      
     },
     {
       title: "5 DeFi Projects You Should Know About in 2021",
@@ -5828,13 +3258,9 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 53).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 53).down : 0,
-      imageSrc:
+      image:
         "https://hackernoon.imgix.net/images/7LrDe0NwaTW40HBSsVuBSPeo2yd2-1p2p31oo.jpeg?auto=format&fit=max&w=1200",
-      content: {
-        title: "5 DeFi Projects You Should Know About in 2021",
-        imageSrc:
-          "https://hackernoon.imgix.net/images/7LrDe0NwaTW40HBSsVuBSPeo2yd2-1p2p31oo.jpeg?auto=format&fit=max&w=1200",
-        content: `The growth of Defi is remarkable, with the industry making great strides in the past few years. It's quite right to conclude that this industry is probably the next big thing in the financial world, primarily owing to the many use cases of the upcoming projects. <br/><br/>
+    content: `The growth of Defi is remarkable, with the industry making great strides in the past few years. It's quite right to conclude that this industry is probably the next big thing in the financial world, primarily owing to the many use cases of the upcoming projects. <br/><br/>
         Decentralization of finance was the main idea in Defi's creation, and many of the platforms have lived up to that promise. However, with the strong surge in Defi, it's quite challenging for any investor to make conclusions about which project is worth their money. <br/><br/>
         You probably are that investor and wonder what Defi projects show unique features and maybe a potential to grow? Here are some of the most unique Defi projects you should check out for in 2021. <br/><br/>
         <h3><b>Kava</b></h3><br/><br/>
@@ -5894,7 +3320,6 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         Ox protocol offers top solutions to the Ethereum blockchain, including scalability. Kava is an excellent USDX stablecoin lending platform, opening a world of opportunities for users. Defi yield protocol, a feature-rich platform that guarantees users top stability with features like resistance to manipulation, and the earn feature to help users maximize income.<br/>
 
         `,
-      },
     },
   ];
 
@@ -5956,7 +3381,6 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         .catch(console.error);
     }
   };
-
   const handleShowTopvoted = () => {
     const cloneArray = _.cloneDeep(newsArray);
     var sortedArrayOfNews = cloneArray.map((obj) => {
@@ -5964,6 +3388,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       payload.diff = Number(obj.upvote) - Number(obj.downvote);
       return payload;
     });
+
 
     const descarray = [...sortedArrayOfNews].sort((a, b) => b.diff - a.diff);
 
@@ -5996,6 +3421,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
     }
   };
 
+// console.log(activeNews)
   return (
     <div onScroll={onScroll} ref={listInnerRef} id="header">
       <div className="news-wrapper">
@@ -6008,27 +3434,22 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                 window.scrollTo(0, 0);
                 handleSelectOtherNews(key);
                 setIsParam(false);
+                console.log(key)
               }}
-              title={activeNews.content.title}
+              title={activeNews.title}
               link={activeNews.link}
-              image={activeNews.content.imageSrc}
-              content={activeNews.content.content}
+              image={ activeNews.image}
+              content={ activeNews.content}
               theme={theme}
               upvotes={
-                votes.length !== 0
-                  ? votes.find((obj) => obj.id === activeNews.id).up
-                  : activeNews.upvote
+                activeNews.end?.up !== undefined ? activeNews.end?.up : activeNews.upvote
               }
-              downvotes={
-                votes.length !== 0
-                  ? votes.find((obj) => obj.id === activeNews.id).down
-                  : activeNews.downvote
-              }
-              day={activeNews.date}
+              downvotes={ activeNews.end?.down !== undefined ? activeNews.end?.down : activeNews.downvote}
+              day={activeNews.date.slice(0,10)}
               month={activeNews.month}
               year={activeNews.year}
-              latestNewsData={[...newsArray]}
-              newsId={activeNews.id}
+              latestNewsData={ finalNewsData.slice(54, finalNewsData.length)}
+              newsId={activeNews.end.id !== undefined ? activeNews.end.id : activeNews.id}
               pressData={press_highlight}
               onHandleUpvote={(id) => {
                 handleUpVoting(id);
@@ -6059,31 +3480,29 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                   showDots={true}
                   autoplay={4000}
                 >
-                  {newsArray.length > 0 &&
-                    newsArray.slice(0, 5).map((item, key) => {
+                  {finalNewsData.length > 0 &&
+                    finalNewsData.slice(55, 60).map((item, key) => {
                       return (
                         <Carousel.Item key={key}>
                           <div className="">
                             <MainNews
-                              image={item.imageSrc}
+                              image={item.image }
                               title={item.title}
                               link={item.link}
-                              year={item.year}
-                              month={item.month}
-                              day={item.date}
+                              day={item.date.slice(0,10)}
                               theme={theme}
-                              upvotes={item.upvote}
-                              downvotes={item.downvote}
+                              upvotes={item.end.up}
+                              downvotes={item.end.down}
                               newsId={item.id}
                               onShowModalClick={() => {
                                 setShowModal(true);
-                                setActiveNews(newsArray[key]);
+                                setActiveNews(finalNewsData[key + 55]);
                               }}
                               onUpVoteClick={() => {
-                                handleUpVoting(item.id);
+                                handleUpVoting(item.end.id);
                               }}
                               onDownVoteClick={() => {
-                                handleDownVoting(item.id);
+                                handleDownVoting(item.end.id);
                               }}
                               isConnected={isConnected}
                               isPremium={isPremium}
@@ -6147,32 +3566,28 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                     Top voted
                   </h6>
                 </div>
-                {newsArray.length > 0 &&
+                {finalNewsData.length > 0 &&
                   activeClass === "latestnews" &&
-                  newsArray.slice(0, 5).map((item, key) => {
+                  finalNewsData.slice(61, 66).map((item, key) => {
                     return (
                       <div className="banner-item pl-0" key={key}>
                         <SingleNews
-                          image={item.imageSrc}
+                          image={item.image}
                           title={item.title}
                           link={item.link}
                           year={item.year}
                           month={item.month}
-                          day={item.date}
+                          day={item.date.slice(0,10)}
                           theme={theme}
-                          upvotes={item.upvote}
-                          downvotes={item.downvote}
-                          onNewsHover={(e) => {
-                            handleNewsClick(key);
-                            e.stopPropagation();
-                          }}
+                          upvotes={item.end.up}
+                          downvotes={item.end.down}
                           onSingleUpVoteClick={() => {
                             handleSingleUpVoting(item.id);
                           }}
                           onDownVoteClick={() => {
                             handleSingleDownVoting(item.id);
                           }}
-                          onNewsClick={() => handleSingleNewsUpdate(item.id)}
+                          onNewsClick={() => handleSingleNewsUpdate(key + 61)}
                           isConnected={isConnected}
                           isPremium={isPremium}
                         />
@@ -6189,26 +3604,22 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                       return (
                         <div className="banner-item pl-0" key={key}>
                           <SingleNews
-                            image={item.imageSrc}
+                            image={item.image}
                             title={item.title}
                             link={item.link}
                             year={item.year}
                             month={item.month}
-                            day={item.date}
+                            day={item.date.slice(0,10)}
                             theme={theme}
-                            upvotes={item.upvote}
-                            downvotes={item.downvote}
-                            onNewsHover={(e) => {
-                              handleNewsClick(item.id);
-                              e.stopPropagation();
-                            }}
+                            upvotes={item.end.up}
+                            downvotes={item.end.down}
                             onSingleUpVoteClick={() => {
                               handleSingleUpVoting(item.id);
                             }}
                             onDownVoteClick={() => {
                               handleSingleDownVoting(item.id);
                             }}
-                            onNewsClick={() => handleSingleNewsUpdate(item.id)}
+                            onNewsClick={() => handleSingleNewsUpdate(key + 61)}
                             isConnected={isConnected}
                             isPremium={isPremium}
                           />
@@ -6254,7 +3665,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                   <Carousel.Item key={key}>
                     <div className="banner-item" style={{ background: "none" }}>
                       <PressRealease
-                        image={item.imageSrc}
+                        image={item.image}
                         title={item.title}
                         link={item.link}
                         date={item.date}
@@ -6279,8 +3690,9 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
           Other News
         </h1>
         <div className="row m-0 othernews-row-wrapper" style={{ gap: 10 }}>
-          {otherNews.length > 0 &&
-            otherNews?.slice(0, next)?.map((item, key) => {
+          {finalNewsData.length > 0 &&
+            finalNewsData?.slice(5, next)?.map((item, key) => {
+              // console.log(item)
               return (
                 <div
                   className="banner-item"
@@ -6288,26 +3700,28 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                   style={{ background: "none" }}
                 >
                   <OtherNews
-                    image={item.imageSrc}
+                    image={item.image}
                     title={item.title}
                     link={item.link}
-                    date={item.date}
+                    date={item.date.slice(0,10)}
                     month={item.month}
                     year={item.year}
                     theme={theme}
-                    newsId={item.id}
-                    upvotes={item.upvote}
-                    downvotes={item.downvote}
+                    upvotes={
+                      item.end.up !== undefined ? item.end.up : item.upvote
+                    }
+                    newsId={item.end.id !== undefined ? item.end.id : item.id}
+                    downvotes={ item.end.down !== undefined ? item.end.down : item.downvote}
                     onOtherNewsClick={() => {
-                      setActiveNews(otherNews[item.id]);
+                      setActiveNews(otherNews[key]);
                       setShowModal(true);
                       window.scrollTo(0, 0);
                     }}
                     onUpVoteClick={() => {
-                      handleSingleUpVoting(item.id);
+                      handleSingleUpVoting(item.end.id !== undefined ? item.end.id : item.id);
                     }}
                     onDownVoteClick={() => {
-                      handleDownVoting(item.id);
+                      handleDownVoting(item.end.id !== undefined ? item.end.id : item.id);
                     }}
                     isConnected={isConnected}
                     isPremium={isPremium}
@@ -6317,7 +3731,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
             })}
         </div>
         <div className="d-flex justify-content-center">
-          {next < otherNews?.length && (
+          {next < finalNewsData?.length /4 && (
             <button onClick={() => loadMore()} className="load-more-btn">
               Load more
             </button>

@@ -2,7 +2,6 @@ import Modal from "../general/Modal";
 import React, { useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import RelatedNews from "./RelatedNews";
-import OtherNews from "./OtherNews";
 import OutsideClickHandler from "react-outside-click-handler";
 import VotePassive from "./assets/votepassive.svg";
 import Upvote from "./assets/upvote.svg";
@@ -36,7 +35,7 @@ const NewsModal = ({
   isPremium
 }) => {
   const getItemsWithoutCurrentItem = (currentItemId, arrayOfItems) => {
-    return arrayOfItems.filter((item) => item.id !== currentItemId);
+    return arrayOfItems.filter((item) => item.end?.id !== currentItemId);
   };
   const elementRef = useRef();
   const [height, setHeight] = useState(0);
@@ -85,6 +84,8 @@ const NewsModal = ({
       }
     }
   };
+  
+  // console.log(latestNewsData)
   return (
     <div  className="newmodal">
       <div>
@@ -94,7 +95,7 @@ const NewsModal = ({
               <div className="backbtn" onClick={onModalClose}>
                 <i className="fas fa-arrow-left" style={{color: 'white'}}></i>
               </div>
-              <h2 className="left-col-title" style={{fontSize: 20}}>{title}</h2>
+              <h2 className="left-col-title" style={{fontSize: 20}}>{title} {newsId}</h2>
               <div
                 className="social-share-parent"
                 style={{
@@ -204,7 +205,7 @@ const NewsModal = ({
                   className="like-indicator"
                   onClick={(e) => {
                     handleLikeStates();
-                    // e.stopPropagation();
+                    e.stopPropagation();
                   }}
                 />
                 {showTooltip === true ? (
@@ -269,8 +270,9 @@ const NewsModal = ({
             <div className="related-news-wrapper">
               {latestNewsData.length > 0 ? (
                 getItemsWithoutCurrentItem(newsId, latestNewsData)
-                  .slice(0, parseInt(height / 100))
+                  .slice(1, parseInt(height / 100))
                   .map((item, key) => {
+                    console.log(item)
                     return (
                       <div
                         key={key}
@@ -279,16 +281,16 @@ const NewsModal = ({
                         }}
                       >
                         <RelatedNews
-                          newsId={item.id}
+                          newsId={item.end.id !== undefined ? item.end.id : item.id}
                           theme={theme}
                           title={item.title}
-                          date={item.date}
+                          date={item.date.slice(0,10)}
                           month={item.month}
                           year={item.year}
                           link={item.link}
-                          upvotes={item.upvote}
-                          downvotes={item.downvote}
-                          image={item.imageSrc}
+                          upvotes={item.end?.up !== undefined ? item.end.up : item.upvote}
+                          downvotes={item.end?.down !== undefined ? item.end.down : item.downvote}
+                          image={item.image}
                           onSelectOtherNews={onSelectOtherNews}
                           onHandleDownvote={onHandleDownvote}
                           onHandleUpvote={onHandleUpvote}

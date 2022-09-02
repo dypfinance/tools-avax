@@ -13,7 +13,6 @@ const SingleNews = ({
   month,
   day,
   year,
-  onNewsHover,
   onNewsClick,
   theme,
   upvotes,

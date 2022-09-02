@@ -67,7 +67,7 @@ const RelatedNews = ({
       }
     }
   };
-
+// console.log(title)
   if (title === undefined) {
     return (
       <div
@@ -93,7 +93,7 @@ const RelatedNews = ({
                 setDislikeIndicator(false);
               }}
             >
-              {title}
+              {title} {newsId}
             </h6>
             <div className="news-bottom-wrapper">
               <div className="like-wrapper">
