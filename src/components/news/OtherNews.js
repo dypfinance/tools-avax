@@ -58,6 +58,7 @@ const OtherNews = ({
         onUpVoteClick(newsId);
       } else if (dislikeIndicator === false) {
         onDownVoteClick(newsId);
+        setLikeIndicator(false);
         setDislikeIndicator(true);
       }
     }

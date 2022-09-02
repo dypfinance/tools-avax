@@ -1604,11 +1604,15 @@ font-size: 15px !important;
   justify-content: center;
   align-items: center;
   gap: 10px;
-  width: 30%;
+  width: 17%;
+}
+
+#tv_chart_container {
+  height: 100% !important;
 }
 
 .CircularProgressbar {
-  width: 50% !important;
+  width: 70% !important;
   border-radius: 50%;
 }
 
@@ -3576,14 +3580,14 @@ color: #999999 !important;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  width: 29%;
+  width: 40%;
 }
 
 .rightside {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  width: 68%;
+  width: 58%;
 }
 
 .tradebtn {
@@ -3604,7 +3608,7 @@ color: #999999 !important;
     margin: auto;
 }
 
-@media only screen and (max-width: 1324px) {
+@media only screen and (max-width: 1532px) {
   .secondbox-wrapper {
     max-width: 100% !important;
   }
@@ -3615,7 +3619,7 @@ color: #999999 !important;
 }
 
 
-@media only screen and (max-width: 1177px) {
+@media only screen and (max-width: 1348px) {
   .graph-wrap {
     flex-direction: column !important;
   }
@@ -3630,6 +3634,10 @@ color: #999999 !important;
 
   .rightside {
     width: 100% !important;
+  }
+
+  #tv_chart_container {
+    height: 480px !important;
   }
 }
 

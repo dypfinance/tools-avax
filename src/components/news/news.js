@@ -48,11 +48,6 @@ const News = ({ theme, isPremium, key }) => {
     setNext(next + newsPerRow);
   };
 
-  const handleNewsClick = (id) => {
-    carousel.current.to(id, 500);
-    updateCarouselPosition(id);
-  };
-
   const handleSingleNewsUpdate = (id) => {
     setActiveNews(finalNewsData[id]);
     setShowModal(true);
@@ -104,11 +99,24 @@ const News = ({ theme, isPremium, key }) => {
     // setIsParam(false)
   };
 
+  const handleSelectPressNews = (key) => {
+    
+    if(finalNewsData.length > 0) {
+      const search = (obj) => obj.id == key;
+    const index = finalNewsData.findIndex(search);
+    
+    setActiveNews(finalNewsData[index]);
+    }
+    
+    // setIsParam(false)
+  };
+
   const handleDisplayNewsFromParam = () => {
     if (news_id != undefined && isParam === true) {
+      console.log('yes')
       window.scrollTo(0, 0);
       setShowModal(true);
-      handleSelectOtherNews(parseInt(news_id));
+      handleSelectPressNews(parseInt(news_id));
     }
   };
 
@@ -116,7 +124,8 @@ const News = ({ theme, isPremium, key }) => {
     if (activeNews.date !== undefined) {
       setIsParam(false);
     } else {
-      handleDisplayNewsFromParam();
+      if(finalNewsData.length > 0)
+     { handleDisplayNewsFromParam();}
     }
   });
 
@@ -1769,11 +1778,11 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
 
   useEffect(() => {
     fetchNewsdata().then();
-  },[]);
+  },[newsData.length]);
 
   useEffect(() => {
     if (newsData.length > 0 && votes.length > 0) {
-      const finalNews = [newsData.length + newsArray.length];
+      const finalNews = [];
       for (let i = 0; i < newsArray.length; i++) {
         newsArray[i].end = votes[i];
         finalNews.push(newsArray[i]);
@@ -1783,8 +1792,9 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         finalNews.push(newsData[i]);
         setFinalNewsData(finalNews);
       }
+      
     }
-  }, [newsData.length]);
+  }, [newsData.length, news_id]);
 
   const otherNews = [
     {
@@ -3382,10 +3392,17 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
     }
   };
   const handleShowTopvoted = () => {
-    const cloneArray = _.cloneDeep(newsArray);
+    const cloneArray = _.cloneDeep(finalNewsData);
     var sortedArrayOfNews = cloneArray.map((obj) => {
       var payload = obj;
-      payload.diff = Number(obj.upvote) - Number(obj.downvote);
+      if(obj.upvote !== undefined && obj.downvote !== undefined) {
+        payload.diff = Number(obj.upvote) - Number(obj.downvote);
+      }
+
+      else {
+        payload.diff = Number(obj.end?.up) - Number(obj.end?.down);
+      }
+      
       return payload;
     });
 
@@ -3410,7 +3427,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
   });
 
   const isBottom = (el) => {
-    return el.getBoundingClientRect().bottom <= window.innerHeight;
+    return el.getBoundingClientRect()?.bottom <= window.innerHeight;
   };
 
   const onScroll = () => {
@@ -3421,7 +3438,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
     }
   };
 
-// console.log(activeNews)
+  
   return (
     <div onScroll={onScroll} ref={listInnerRef} id="header">
       <div className="news-wrapper">
@@ -3434,17 +3451,25 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                 window.scrollTo(0, 0);
                 handleSelectOtherNews(key);
                 setIsParam(false);
-                console.log(key)
               }}
               title={activeNews.title}
               link={activeNews.link}
               image={ activeNews.image}
               content={ activeNews.content}
               theme={theme}
+              
               upvotes={
-                activeNews.end?.up !== undefined ? activeNews.end?.up : activeNews.upvote
+                votes.length !== 0
+                  ? activeNews.end?.up !== undefined ? votes.find((obj) => obj.id === activeNews.end.id).up : activeNews.upvote
+                  : activeNews.upvote
               }
-              downvotes={ activeNews.end?.down !== undefined ? activeNews.end?.down : activeNews.downvote}
+
+              downvotes={
+                votes.length !== 0
+                  ? activeNews.end?.down !== undefined ? votes.find((obj) => obj.id === activeNews.end.id).down : activeNews.downvote
+                  : activeNews.downvote
+              }
+             
               day={activeNews.date.slice(0,10)}
               month={activeNews.month}
               year={activeNews.year}
@@ -3481,7 +3506,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                   autoplay={4000}
                 >
                   {finalNewsData.length > 0 &&
-                    finalNewsData.slice(55, 60).map((item, key) => {
+                    finalNewsData.slice(54, 60).map((item, key) => {
                       return (
                         <Carousel.Item key={key}>
                           <div className="">
@@ -3491,12 +3516,20 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                               link={item.link}
                               day={item.date.slice(0,10)}
                               theme={theme}
-                              upvotes={item.end.up}
-                              downvotes={item.end.down}
-                              newsId={item.id}
+                              upvotes={
+                                votes.length !== 0
+                                  ? votes.find((obj) => obj.id === item.end.id).up
+                                  : item.end.up
+                              }
+                              downvotes={
+                                votes.length !== 0
+                                  ? votes.find((obj) => obj.id === item.end.id).down
+                                  : item.end.down
+                              }
+                              newsId={item.end.id}
                               onShowModalClick={() => {
                                 setShowModal(true);
-                                setActiveNews(finalNewsData[key + 55]);
+                                setActiveNews(finalNewsData[key + 54]);
                               }}
                               onUpVoteClick={() => {
                                 handleUpVoting(item.end.id);
@@ -3579,13 +3612,21 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                           month={item.month}
                           day={item.date.slice(0,10)}
                           theme={theme}
-                          upvotes={item.end.up}
-                          downvotes={item.end.down}
+                          upvotes={
+                            votes.length !== 0
+                              ? votes.find((obj) => obj.id === item.end.id).up
+                              : item.end.up
+                          }
+                          downvotes={
+                            votes.length !== 0
+                              ? votes.find((obj) => obj.id === item.end.id).down
+                              : item.end.down
+                          }
                           onSingleUpVoteClick={() => {
-                            handleSingleUpVoting(item.id);
+                            handleSingleUpVoting(item.end.id);
                           }}
-                          onDownVoteClick={() => {
-                            handleSingleDownVoting(item.id);
+                          onSingleDownVoteClick={() => {
+                            handleSingleDownVoting(item.end.id);
                           }}
                           onNewsClick={() => handleSingleNewsUpdate(key + 61)}
                           isConnected={isConnected}
@@ -3611,15 +3652,29 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                             month={item.month}
                             day={item.date.slice(0,10)}
                             theme={theme}
-                            upvotes={item.end.up}
-                            downvotes={item.end.down}
+                            // upvotes={item.end.up}
+                            // downvotes={item.end.down}
+                            upvotes={
+                              votes.length !== 0
+                                ? votes.find((obj) => obj.id === item.end.id).up
+                                : item.end.up
+                            }
+                            downvotes={
+                              votes.length !== 0
+                                ? votes.find((obj) => obj.id === item.end.id).down
+                                : item.end.down
+                            }
+
                             onSingleUpVoteClick={() => {
-                              handleSingleUpVoting(item.id);
+                              handleSingleUpVoting(item.end.id);
                             }}
-                            onDownVoteClick={() => {
-                              handleSingleDownVoting(item.id);
+                            onSingleDownVoteClick={() => {
+                              handleSingleDownVoting(item.end.id);
                             }}
-                            onNewsClick={() => handleSingleNewsUpdate(key + 61)}
+                            onNewsClick={() => 
+                           handleSingleNewsUpdate(item.end.id -4)
+                              // console.log(item)
+                            }
                             isConnected={isConnected}
                             isPremium={isPremium}
                           />
@@ -3657,7 +3712,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
             showDots={true}
             loop
             responsiveLayout={responsive1}
-            autoplay={true}
+            autoplay={4000}
           >
             {press_highlight.length > 0 &&
               press_highlight.map((item, key) => {
@@ -3670,7 +3725,8 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                         link={item.link}
                         date={item.date}
                         onSinglePressHighlightClick={() => {
-                          setActiveNews(press_highlight[key]);
+                          // setActiveNews(finalNewsData[key]);
+                          handleSelectPressNews(item.id === undefined ? item.end.id : item.id)
                           setShowModal(true);
                           window.scrollTo(0, 0);
                         }}
@@ -3691,8 +3747,8 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         </h1>
         <div className="row m-0 othernews-row-wrapper" style={{ gap: 10 }}>
           {finalNewsData.length > 0 &&
-            finalNewsData?.slice(5, next)?.map((item, key) => {
-              // console.log(item)
+            finalNewsData?.slice(4, next)?.map((item, key) => {
+             
               return (
                 <div
                   className="banner-item"
@@ -3708,12 +3764,21 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                     year={item.year}
                     theme={theme}
                     upvotes={
-                      item.end.up !== undefined ? item.end.up : item.upvote
+                      votes.length !== 0
+                        ? item.end?.up !== undefined ? votes.find((obj) => obj.id === item.end.id).up : item.upvote
+                        : item.upvote
                     }
                     newsId={item.end.id !== undefined ? item.end.id : item.id}
-                    downvotes={ item.end.down !== undefined ? item.end.down : item.downvote}
+                    // downvotes={ item.end.down !== undefined ? item.end.down : item.downvote}
+                    downvotes={
+                      votes.length !== 0
+                        ? item.end?.down !== undefined ? votes.find((obj) => obj.id === item.end.id).down : item.downvote
+                        : item.downvote
+                    }
                     onOtherNewsClick={() => {
-                      setActiveNews(otherNews[key]);
+                      item.end.id !== undefined ? handleSelectOtherNews(item.end.id) :
+                      handleSelectPressNews(item.id + 1)
+                      // console.log(finalNewsData[item.end.id -4])
                       setShowModal(true);
                       window.scrollTo(0, 0);
                     }}

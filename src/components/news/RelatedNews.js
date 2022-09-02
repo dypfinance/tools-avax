@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import VotePassive from "./assets/votepassive.svg";
 import Upvote from "./assets/upvote.svg";
 import Downvote from "./assets/downvote.svg";
@@ -63,11 +63,15 @@ const RelatedNews = ({
         onHandleUpvote(newsId);
       } else if (dislikeIndicator === false) {
         onHandleDownvote(newsId);
+        setLikeIndicator(false);
         setDislikeIndicator(true);
       }
     }
   };
-// console.log(title)
+
+
+
+
   if (title === undefined) {
     return (
       <div
@@ -93,7 +97,7 @@ const RelatedNews = ({
                 setDislikeIndicator(false);
               }}
             >
-              {title} {newsId}
+              {title}
             </h6>
             <div className="news-bottom-wrapper">
               <div className="like-wrapper">

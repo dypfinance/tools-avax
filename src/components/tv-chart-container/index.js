@@ -37,7 +37,7 @@ export class TVChartContainer extends React.PureComponent {
 		const datafeed = getDataFeed({symbol, pairId, registerBarSubscription, onBarsRequest, mainToken})
 		const widgetOptions = {
 			symbol: this.props.symbol,
-			height: 480,
+			height: '100%',
 			width: '100%',
 			// autosize: true,
 			// BEWARE: no trailing slash is expected in feed URL

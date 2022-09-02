@@ -55,17 +55,18 @@ const SingleNews = ({
         onSingleUpVoteClick();
       } else if (dislikeIndicator === false) {
         onSingleDownVoteClick();
+        setLikeIndicator(false);
         setDislikeIndicator(true);
       }
     }
   };
 
   return (
-    <div className="singlenews-body" onClick={onNewsClick}>
+    <div className="singlenews-body">
       <div className="row m-0 justify-content-between" style={{ gap: 20 }}>
         <div className="singlenews-wrapper">
           {/* <a href={link} target={"_blank"}> */}
-          <h4 className="singlenews-title">{title}</h4>
+          <h4 className="singlenews-title" onClick={onNewsClick}>{title}</h4>
           {/* </a> */}
 
           <div className="news-bottom-wrapper">

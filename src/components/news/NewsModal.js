@@ -42,6 +42,7 @@ const NewsModal = ({
   const [likeIndicator, setLikeIndicator] = useState(false);
   const [dislikeIndicator, setDislikeIndicator] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
+  const [votes, setVotes] = useState([])
   
   useEffect(() => {
     if (elementRef.current?.clientHeight !== 0) {
@@ -80,12 +81,30 @@ const NewsModal = ({
         onHandlePressUpvote(newsId);
       } else if (dislikeIndicator === false) {
         onHandlePressDownvote(newsId);
+        setLikeIndicator(false);
         setDislikeIndicator(true);
       }
     }
   };
   
-  // console.log(latestNewsData)
+  
+  const fetchVotingdata = async () => {
+    const result = await fetch(`https://news-manage.dyp.finance/api/v1/votes/all`)
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        setVotes(data.Data);
+      })
+      .catch(console.error);
+
+    return result;
+  };
+
+  useEffect(()=>{
+    fetchVotingdata().then()
+  }, [onHandleDownvote, onHandleUpvote])
+
   return (
     <div  className="newmodal">
       <div>
@@ -95,7 +114,7 @@ const NewsModal = ({
               <div className="backbtn" onClick={onModalClose}>
                 <i className="fas fa-arrow-left" style={{color: 'white'}}></i>
               </div>
-              <h2 className="left-col-title" style={{fontSize: 20}}>{title} {newsId}</h2>
+              <h2 className="left-col-title" style={{fontSize: 20}}>{title}</h2>
               <div
                 className="social-share-parent"
                 style={{
@@ -272,7 +291,6 @@ const NewsModal = ({
                 getItemsWithoutCurrentItem(newsId, latestNewsData)
                   .slice(1, parseInt(height / 100))
                   .map((item, key) => {
-                    console.log(item)
                     return (
                       <div
                         key={key}
@@ -288,8 +306,18 @@ const NewsModal = ({
                           month={item.month}
                           year={item.year}
                           link={item.link}
-                          upvotes={item.end?.up !== undefined ? item.end.up : item.upvote}
-                          downvotes={item.end?.down !== undefined ? item.end.down : item.downvote}
+                          // upvotes={item.end?.up !== undefined ? item.end.up : item.upvote}
+                          upvotes={
+                            votes.length !== 0
+                              ? votes.find((obj) => obj.id === item.end.id).up
+                              : item.end.up
+                          }
+                          downvotes={
+                            votes.length !== 0
+                              ? votes.find((obj) => obj.id === item.end.id).down
+                              : item.end.down
+                          }
+                          // downvotes={item.end?.down !== undefined ? item.end.down : item.downvote}
                           image={item.image}
                           onSelectOtherNews={onSelectOtherNews}
                           onHandleDownvote={onHandleDownvote}

@@ -902,6 +902,7 @@ export default class PairExplorer extends React.Component {
 
     return (
       <div className="l-pair-explorer">
+        <div>
         <div className="graph-wrap">
           <div className="leftside">
             <div className="firstbox-wrapper">
@@ -1095,7 +1096,7 @@ export default class PairExplorer extends React.Component {
                   </div>
                 ) : (
                   <div className="graph-progress">
-                    <div className="progress-title">
+                    <div className="progress-title m-auto pb-4" style={{width: '35%'}}>
                       <p style={{fontSize: 18}}>DYP Score</p>
                       <GearProgress
                         values={[0, getFormattedNumber(avg_weighted, 2)]}
@@ -1116,7 +1117,7 @@ export default class PairExplorer extends React.Component {
                     </div>
                     <div
                       className="row m-0 justify-content-center"
-                      style={{ gap: 10 }}
+                      style={{ gap: 13 }}
                     >
                       {scores.map((score, i) => (
                         <div className="score-wrapper" key={i}>
@@ -1130,6 +1131,7 @@ export default class PairExplorer extends React.Component {
                                     ? 100
                                     : getFormattedNumber(score.score, 2)
                                 }%`}
+                               
                                 circleRatio={0.75}
                                 styles={buildStyles({
                                   rotation: 1 / 2 + 1 / 8,
@@ -1147,7 +1149,7 @@ export default class PairExplorer extends React.Component {
                   </div>
                 )}
               </div>
-              <div className="graph-progress mt-30">
+              <div className="graph-progress mt-2">
                 <div
                   className="progress-title"
                   style={{
@@ -1218,7 +1220,6 @@ export default class PairExplorer extends React.Component {
             <div> <h5 className="mb-2 latestnews-title">Latest news</h5>
             <LatestNews/></div>
           </div>
-
           <div className="rightside">
             <div className="row m-0 w-100" style={{ gap: 20 }}>
               <div className="secondbox-wrapper">
@@ -1660,7 +1661,7 @@ export default class PairExplorer extends React.Component {
               </div>
             </div>
 
-            <div className="graph-right">
+            <div className="graph-right" style={{height: '100%'}}>
               <div className="search-box">
                 <form id="searchform">
                   <input
@@ -1714,11 +1715,11 @@ export default class PairExplorer extends React.Component {
                   </button>
                 </form>
               </div>
-              <div className="chart-wrap">
+              <div className="chart-wrap" style={{height: '90%', marginTop: 15}}>
                 {/* <div className='mb-3'>
                                 <p>Price chart for {this.state.pair?.token0.symbol || '...'}/USD</p>
                             </div> */}
-                <div>
+                <div  style={{height: '100%'}}>
                   {this.state.mainToken && this.state.pair && (
                     <TVChartContainer
                       mainToken={this.state.mainToken}
@@ -1744,15 +1745,16 @@ export default class PairExplorer extends React.Component {
               </div>
             </div>
 
-            <div className="table-box">
+
+          </div>
+        </div>
+        <div className="table-box"  style={{padding: '20px 40px'}}>
               <div className="table-title">
                 <h4>Trade history</h4>
               </div>
               <div className="l-table-wrapper-div">{this.GetDataTable()}</div>
             </div>
-          </div>
-        </div>
-
+</div>
         <Modal show={this.state.show} onHide={this.toggleModal}>
           <Modal.Header closeButton>
             <Modal.Title>More Info</Modal.Title>
