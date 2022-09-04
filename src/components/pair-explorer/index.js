@@ -887,6 +887,7 @@ export default class PairExplorer extends React.Component {
 
     let { avg, avg_weighted, scores } = this.getAutoTrustScores();
     // console.log({ avg, avg_weighted, scores })
+    let colors = ['orange', 'violet', 'salmon', '#3e98c7', 'green']
 
     let { title, link } = this.getShareInfo();
 
@@ -1110,6 +1111,7 @@ export default class PairExplorer extends React.Component {
                               rotation: 1 / 2 + 1 / 8,
                               strokeLinecap: "butt",
                               trailColor: "#D6D8E7",
+                              pathColor: '#E30613'
                             })}
                           />
                         )}
@@ -1137,6 +1139,7 @@ export default class PairExplorer extends React.Component {
                                   rotation: 1 / 2 + 1 / 8,
                                   strokeLinecap: "butt",
                                   trailColor: "#D6D8E7",
+                                  pathColor: colors[i]
                                 })}
                               />
                             )}

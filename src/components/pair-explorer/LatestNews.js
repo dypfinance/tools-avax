@@ -36,7 +36,7 @@ const LatestNews = ({ theme }) => {
   useEffect(() => {
     fetchNewsdata().then();
     fetchVotingdata().then();
-  });
+  },[]);
   const newsArray = [
     {
       title: "DeFi Yield Protocol (DYP) Continues to Expand Its Ecosystem",

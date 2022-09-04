@@ -1617,8 +1617,8 @@ font-size: 15px !important;
 }
 
 .CircularProgressbar .CircularProgressbar-path {
-  stroke: #E30613 !important;
-  filter: drop-shadow(0px 4px 10px rgba(248, 69, 49, 0.6)) !important;
+  /* stroke: #E30613 !important; */
+  /* filter: drop-shadow(0px 4px 10px rgba(248, 69, 49, 0.6)) !important; */
 }
 
 .CircularProgressbar .CircularProgressbar-text {
@@ -2052,7 +2052,7 @@ color: #303134 !important;
   height: 500px;
   border-radius: 8px;
   cursor: pointer;
-  width: -webkit-fill-available;
+  width: 100%;
 }
 
 .tooltip-wrapper {
@@ -3608,7 +3608,7 @@ color: #999999 !important;
     margin: auto;
 }
 
-@media only screen and (max-width: 1532px) {
+@media only screen and (max-width: 1533px) {
   .secondbox-wrapper {
     max-width: 100% !important;
   }

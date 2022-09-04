@@ -89,7 +89,7 @@ const News = ({ theme, isPremium, key }) => {
     fetchVotingdata().then();
    
   }, [showModal, newsItemId]);
-//  console.log(finalNewsData)
+  
   const { news_id } = useParams();
 
   const handleSelectOtherNews = (key) => {
@@ -1776,9 +1776,6 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
     },
   ];
 
-  useEffect(() => {
-    fetchNewsdata().then();
-  },[newsData.length]);
 
   useEffect(() => {
     if (newsData.length > 0 && votes.length > 0) {
@@ -1795,6 +1792,11 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       
     }
   }, [newsData.length, news_id]);
+
+  useEffect(() => {
+    fetchNewsdata().then();
+  },[finalNewsData.length]);
+  
 
   const otherNews = [
     {
@@ -3412,13 +3414,6 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
     return descarray;
   };
 
-  const updateCarouselPosition = (object) => {
-    if (typeof object === "number") {
-      setStartPosition(object);
-    } else if (object.item.index != startPosition) {
-      setStartPosition(object.item.index - 2);
-    }
-  };
 
   const listInnerRef = useRef();
 
