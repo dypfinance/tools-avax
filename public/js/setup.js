@@ -121,8 +121,8 @@ window.config = {
     ],
     display_names: {
       information: "Information",
-      liquidity_usd: "Liquidity (Pool)",
-      daily_volume_usd: "Daily Volume USD",
+      liquidity_usd: "Liquidity",
+      daily_volume_usd: "Daily Volume",
       lp_holder_no: "LP Holders",
       tx_no: "Transactions",
     },

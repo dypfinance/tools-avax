@@ -674,8 +674,8 @@ export default class Locker extends React.Component {
                     <b>Locking Liquidity</b>
                   </h6>
                   <p
-                    className="text-muted"
-                    style={{  width: "85%" }}
+                    className="text-muted lockliqtext"
+                    
                   >
                     This makes the funds immovable until they are unlocked.
                     Every owner of the project can encrypt a portion of the
@@ -784,8 +784,8 @@ export default class Locker extends React.Component {
                     <b>Locking Liquidity</b>
                   </h6>
                   <p
-                    className="text-muted"
-                    style={{  width: "85%" }}
+                    className="text-muted lockliqtext"
+                    
                   >
                     This makes the funds immovable until they are unlocked.
                     Every owner of the project can encrypt a portion of the

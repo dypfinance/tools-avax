@@ -1796,7 +1796,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
   useEffect(() => {
     fetchNewsdata().then();
   },[finalNewsData.length]);
-  
+
 
   const otherNews = [
     {
@@ -3049,6 +3049,8 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
       upvote: votes.length !== 0 ? votes.find((obj) => obj.id === 47).up : 0,
       downvote:
         votes.length !== 0 ? votes.find((obj) => obj.id === 47).down : 0,
+        image:
+        "https://techbullion.com/wp-content/uploads/2020/12/Defi-Yield-Protocol.jpg",
       content: `As the DeFi sector heats up, developers continue to get more creative in their approaches to the industry’s problems. DYP is one such platform that seeks to combat inflation and centralization. The network integrates various new systems to provide users the ability to stake DeFi tokens and receive rewards directly in Ethereum.<br/><br/>
         This feature is a big plus to investors who often need to go through an additional step to complete their investment strategy. Ethereum is more stable than most DeFi tokens. However, converting tokens to ETH reduces your ROI due to fees and losses incurred due to volatility. For these reasons, it’s common for DeFi investors to convert their rewards into ETH. <br/><br/>
         <h4><b>DeFi Staking is Now Live</b></h4><br/><br/>
@@ -3565,7 +3567,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                 className="singlenews-side"
                 style={{
                   width: showModal ? "20%" : "33%",
-                  display: !showModal ? "block" : "none",
+                  display: !showModal ? "flex" : "none",
                 }}
               >
                 <div className="button-wrapper">
@@ -3634,7 +3636,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                 {handleShowTopvoted().length > 0 &&
                 activeClass === "toprated" ? (
                   handleShowTopvoted()
-                    .slice(0, 7)
+                    .slice(0, 5)
                     .map((item, key) => {
                       //to do sorting
                       return (
@@ -3719,12 +3721,23 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                         title={item.title}
                         link={item.link}
                         date={item.date}
+                        isPremium={isPremium}
+                        isConnected={isConnected}
                         onSinglePressHighlightClick={() => {
                           // setActiveNews(finalNewsData[key]);
                           handleSelectPressNews(item.id === undefined ? item.end.id : item.id)
                           setShowModal(true);
                           window.scrollTo(0, 0);
                         }}
+                        onDownVoteClick={() => {
+                          handleDownVoting(item.id);
+                        }}
+                        onUpVoteClick={() => {
+                          handleUpVoting(item.id);
+                        }}
+                        upvotes={item.upvote}
+                        downvotes={item.downvote}
+
                       />
                     </div>
                   </Carousel.Item>

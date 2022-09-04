@@ -116,7 +116,7 @@ const NewsModal = ({
               </div>
               <h2 className="left-col-title" style={{fontSize: 20}}>{title}</h2>
               <div
-                className="social-share-parent"
+                className="social-share-parent2"
                 style={{
                   display: "inline-block",
                   position: "relative",
@@ -138,7 +138,7 @@ const NewsModal = ({
                 <div className="social-share-wrapper-div">
                   <a
                     className="resp-sharing-button__link"
-                    href={`https://twitter.com/intent/tweet/?text=${title}&url=${link}`}
+                    href={`https://twitter.com/intent/tweet/?text=${title}&url=${`https://tools.dyp.finance/news/${newsId}`}`}
                     target="_blank"
                     rel="noopener"
                     aria-label=""
@@ -160,7 +160,7 @@ const NewsModal = ({
 
                   <a
                     className="resp-sharing-button__link"
-                    href={`https://reddit.com/submit/?url=${link}&resubmit=true&title=${title}`}
+                    href={`https://reddit.com/submit/?&url=${`https://tools.dyp.finance/news/${newsId}`}&resubmit=true&title=${title}`}
                     target="_blank"
                     rel="noopener"
                     aria-label=""
@@ -182,7 +182,7 @@ const NewsModal = ({
 
                   <a
                     className="resp-sharing-button__link"
-                    href={`https://telegram.me/share/url?text=${title}&url=${link}`}
+                    href={`https://telegram.me/share/url?text=${title}&url=${`https://tools.dyp.finance/news/${newsId}`}`}
                     target="_blank"
                     rel="noopener"
                     aria-label=""
@@ -210,7 +210,7 @@ const NewsModal = ({
               className="left-col-image"
               style={{ padding: "20px 0" }}
             />
-            <div className="news-bottom-wrapper mb-3">
+            <div className="news-bottom-wrapper mb-3 justify-content-between">
               <div className="like-wrapper">
                 <img
                   src={

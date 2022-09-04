@@ -1326,7 +1326,7 @@ export default class PairExplorer extends React.Component {
                     </p>
                   </div>
                 </div>
-                <div className="graph-header">
+                <div className="graph-header" style={{gap: 5}}>
                   <div className="graph-header-left">
                     <ul
                       className="l-social-icons-list d-flex"

@@ -89,7 +89,7 @@ const MainNews = ({
 
         {/* </a> */}
 
-        <div className="news-bottom-wrapper mt-3">
+        <div className="news-bottom-wrapper mt-3 justify-content-between">
           <div className="like-wrapper">
             <img
               src={

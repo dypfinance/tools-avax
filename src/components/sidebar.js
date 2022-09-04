@@ -513,7 +513,7 @@ const Sidebar = (props) => {
           </div>
         </ul>
       </div>
-      </div>
+      </div><NavLink className="upgrade-text" to="/account">
        <div className="premium-wrapper">
         <div style={{ padding: 15 }}>
           <div className="row m-0 pb-2 upper-wrapper">
@@ -527,11 +527,11 @@ const Sidebar = (props) => {
               <img src={Crown} alt="" className="crown" />
             </div>
           </div>
-          <NavLink className="upgrade-text" to="/account">
+          
             Upgrade today <img src={RightArrow} alt="" />
-          </NavLink>
+          
         </div>
-      </div>
+      </div></NavLink>
     </div>
   );
 };

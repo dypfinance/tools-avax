@@ -91,7 +91,7 @@ window.ethereum.request({ method: "net_version" })
 
   return (
     
-    <header className="header-wrap" style={{ paddingLeft: "2rem", zIndex: 777 }}>
+    <header className="header-wrap" style={{zIndex: 777 }}>
       <div className="header-left">
         <div>
           <img

@@ -243,7 +243,7 @@ const LatestNews = ({ theme }) => {
         gap={10}
         loop
         showDots={true}
-        autoplay={4000}
+        // autoplay={4000}
         hideArrow={true}
       >
         {newsArray.length > 0 &&
@@ -259,7 +259,7 @@ const LatestNews = ({ theme }) => {
                 >
                   <div className="single-related-news-wrapper">
                     <div
-                      className="d-flex align-items-center justify-content-between"
+                      className="latestnews-item"
                       style={{ gap: 5 }}
                     >
                       <div className="d-flex flex-column" style={{ gap: 15 }}>
@@ -269,7 +269,7 @@ const LatestNews = ({ theme }) => {
                         >
                           {item.title}
                         </h6>
-                        <div className="news-bottom-wrapper">
+                        <div className="news-bottom-wrapper justify-content-between">
                           <div className="like-wrapper">
                             <svg
                               width="15"
@@ -303,7 +303,7 @@ const LatestNews = ({ theme }) => {
                       <img
                         src={item.imageSrc}
                         alt=""
-                        className="singlenews-image"
+                        className="latestnews-image"
                       />
                     </div>
                   </div>
