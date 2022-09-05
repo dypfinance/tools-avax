@@ -494,7 +494,7 @@ padding: 20px;
 }
 
 .favorites {
-  width: 47%;
+  width: 46%;
 }
 
 .dZkckO::before {
@@ -1689,6 +1689,11 @@ color: #303134 !important;
   }
 }
 
+.latestnews-image {
+  border-radius: 6px;
+  width: 155px;
+  height: 125px;}
+
 @media screen and (max-width: 500px) {
 
   .social-share-parent2 {
@@ -1777,7 +1782,7 @@ color: #303134 !important;
     border-radius: 6px;
 }
 .single-press-wrapper {
-  height: 360px !important;
+  height: 370px !important;
 }
 
 .poolexp-wrapper {
@@ -1882,6 +1887,11 @@ color: #303134 !important;
   .claim-btn {
     left: 67% !important;
   }
+
+  .date-wrapper-press {
+    height: 30%;
+  }
+  
 }
 
 .subscr-title {
@@ -2054,7 +2064,6 @@ color: #303134 !important;
   justify-content: space-between;
   gap: 5px;
   flex-direction: column;
-  height: 30%;
 }
 
 .date-content {
@@ -2416,7 +2425,7 @@ color: #303134 !important;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  max-width: 333px;
+  width: 355px;
   gap: 8px;
 }
 
@@ -2427,10 +2436,10 @@ color: #303134 !important;
 
 .singlenews-title {
   font-style: normal;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 16px;
   line-height: 20px;
-  color: #3a3a3a;
+  color: #27282d !important;
 }
 
 .singlenews-body {
@@ -2516,7 +2525,7 @@ color: #303134 !important;
   box-shadow: 12px 16px 44px rgba(0, 0, 0, 0.12);
   border-radius: 8px;
   width: 300px;
-  height: 300px;
+  height: 100%;
 }
 
 .other-news-image {

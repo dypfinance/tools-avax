@@ -260,7 +260,7 @@ const LatestNews = ({ theme }) => {
                   <div className="single-related-news-wrapper">
                     <div
                       className="latestnews-item"
-                      style={{ gap: 5 }}
+                      style={{ gap: 10 }}
                     >
                       <div className="d-flex flex-column" style={{ gap: 15 }}>
                         <h6

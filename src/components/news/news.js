@@ -22,6 +22,7 @@ const News = ({ theme, isPremium, key }) => {
       loop: true,
       autoplay: 4000,
       showDots: true,
+      
     },
   ];
 
@@ -3701,7 +3702,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         <h1 className="news-title" style={{ paddingLeft: 20 }}>
           Press Release
         </h1>
-        <div className="brand-wrapper banner-wrapper">
+        <div className="brand-wrapper banner-wrapper" style={{width: '98%', margin: 'auto'}}>
           <Carousel
             cols={2}
             rows={1}

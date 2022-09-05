@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import VotePassive from "./assets/votepassive.svg";
+import VotePassive from "./assets/votepassive-white.svg";
 import Upvote from "./assets/upvote.svg";
 import Downvote from "./assets/downvote.svg";
 import ToolTip from "./ToolTip";

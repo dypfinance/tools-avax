@@ -69,7 +69,7 @@ const SingleNews = ({
           <h4 className="singlenews-title" onClick={onNewsClick}>{title}</h4>
           {/* </a> */}
 
-          <div className="news-bottom-wrapper">
+          <div className="news-bottom-wrapper justify-content-between">
             <div className="like-wrapper">
               <img
                 src={
@@ -133,11 +133,7 @@ const SingleNews = ({
             </div>
           </div>
         </div>
-        <a href={link} target={"_blank"}>
-          <div>
-            <img src={image} alt="" className="singlenews-image d-none" />
-          </div>
-        </a>
+       
       </div>
     </div>
   );
