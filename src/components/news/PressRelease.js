@@ -48,7 +48,7 @@ const PressRealease = ({ title, image, date, link, onSinglePressHighlightClick, 
 
   return (
     <div className="single-press-wrapper" onClick={onSinglePressHighlightClick}>
-      <div className="row m-0" style={{ gap: 20, height: '100%' }}>
+      <div className="row m-0 singlepress-inner" style={{ gap: 20, height: '100%', width: '100%' }}>
         <img src={image} alt="" className="press-image" />
         <div className="date-wrapper-press">
           {/* <a href={link} target="_blank"> */}

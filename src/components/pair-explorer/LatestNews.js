@@ -243,14 +243,14 @@ const LatestNews = ({ theme }) => {
         gap={10}
         loop
         showDots={true}
-        // autoplay={4000}
+        autoplay={4000}
         hideArrow={true}
       >
         {newsArray.length > 0 &&
           newsArray.slice(0, 5).map((item, key) => {
             return (
               <Carousel.Item key={key}>
-                <NavLink to={`/news/${item.id}`}>
+                <NavLink to={`/news/${item.id}`} onClick={()=>{window.location.assign(`/news/${item.id}`)}}>
                 <div
                   style={{
                     display: item.title?.includes("http") ? "none" : "block",

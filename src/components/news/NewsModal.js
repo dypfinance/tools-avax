@@ -116,7 +116,7 @@ const NewsModal = ({
               </div>
               <h2 className="left-col-title" style={{fontSize: 20}}>{title}</h2>
               <div
-                className="social-share-parent2"
+                className="social-share-parent"
                 style={{
                   display: "inline-block",
                   position: "relative",

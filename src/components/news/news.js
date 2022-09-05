@@ -12,7 +12,7 @@ import { useWeb3React } from "@web3-react/core";
 import Carousel from "better-react-carousel";
 import { useParams } from "react-router-dom";
 import CircularProgress from "@material-ui/core/CircularProgress";
-const News = ({ theme, isPremium, key }) => {
+const News = ({ theme, isPremium }) => {
   const responsive1 = [
     {
       breakpoint: 1220,
@@ -114,7 +114,7 @@ const News = ({ theme, isPremium, key }) => {
 
   const handleDisplayNewsFromParam = () => {
     if (news_id != undefined && isParam === true) {
-      console.log('yes')
+      
       window.scrollTo(0, 0);
       setShowModal(true);
       handleSelectPressNews(parseInt(news_id));
@@ -126,9 +126,10 @@ const News = ({ theme, isPremium, key }) => {
       setIsParam(false);
     } else {
       if(finalNewsData.length > 0)
-     { handleDisplayNewsFromParam();}
+     { fetchNewsdata();
+       handleDisplayNewsFromParam();}
     }
-  });
+  },[finalNewsData.length, newsData.length, news_id]);
 
   const newsArray = [
     {
@@ -3488,6 +3489,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
               }}
               isConnected={isConnected}
               onModalClose={() => {
+                window.location.replace('/news')
                 setShowModal(false);
               }}
               isPremium={isPremium}
@@ -3650,8 +3652,6 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                             month={item.month}
                             day={item.date.slice(0,10)}
                             theme={theme}
-                            // upvotes={item.end.up}
-                            // downvotes={item.end.down}
                             upvotes={
                               votes.length !== 0
                                 ? votes.find((obj) => obj.id === item.end.id).up

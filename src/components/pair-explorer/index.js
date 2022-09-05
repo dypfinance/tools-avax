@@ -1718,7 +1718,7 @@ export default class PairExplorer extends React.Component {
                   </button>
                 </form>
               </div>
-              <div className="chart-wrap" style={{height: '90%', marginTop: 15}}>
+              <div className="chart-wrap" style={{height: '90%', marginTop: 20}}>
                 {/* <div className='mb-3'>
                                 <p>Price chart for {this.state.pair?.token0.symbol || '...'}/USD</p>
                             </div> */}
