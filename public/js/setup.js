@@ -1,4 +1,5 @@
 const BigNumber = window.BigNumber;
+window.WALLET_TYPE = ''
 // ALL THE ADDRESSES IN CONFIG MUST BE LOWERCASE
 window.config = {
   weth_address: "0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7", // LOWERCASE! avax
@@ -2625,6 +2626,10 @@ async function connectWallet() {
     try {
       await window.ethereum?.enable();
       console.log("Connected!");
+      if ( window.ethereum.isCoin98 )
+				{window.WALLET_TYPE = 'coin98'}
+			if ( window.ethereum.isMetaMask )
+			{	window.WALLET_TYPE = 'metamask'}
       let coinbase_address = await window.ethereum?.request({
         method: "eth_accounts",
       });
@@ -2653,7 +2658,12 @@ function param(name) {
 window.cached_contracts = Object.create(null);
 
 function getCoinbase() {
-  return window.web3.eth?.getCoinbase();
+  if ( window.WALLET_TYPE == 'coin98' ) {
+		return window.coinbase_address.toLowerCase()
+	}
+	else{
+		return window.web3.eth?.getCoinbase()
+	}
 }
 
 async function getContract({ key, address = null, ABI = null }) {

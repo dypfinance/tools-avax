@@ -14,10 +14,16 @@ import Crown from "../assets/crown.png";
 import RightArrow from "../assets/rightarrow.svg";
 import { useEagerConnect, useInactiveListener } from "../functions/hooks";
 import axios from "axios";
+import WalletModal from "./WalletModal";
+
+
 
 const activateLasers = () => {
   window.$.alert("Coming Soon!");
 };
+
+
+
 const Sidebar = (props) => {
   const [activeBtn, setActiveBtn] = useState("avax");
   const [activeLink, setActiveLink] = useState("news");
@@ -54,6 +60,8 @@ const Sidebar = (props) => {
     const fetchInterval = setInterval(() => setlocation(window.location.pathname), 1000)
   })
  
+
+  
   return (
    
     <div
@@ -83,6 +91,7 @@ const Sidebar = (props) => {
                 : "rgba(255, 255, 255, 0.3)",
             }}
           >
+              <WalletModal show={props.show} handleClose={props.hideModal} handleConnection={props.handleConnection}  />
             <div className="home-menu">
               <a href="#" id="wallet">
                 <img src={!active ? NotConnected : Connected} alt="Image" />
@@ -113,7 +122,8 @@ const Sidebar = (props) => {
                   onClick={(e) => {
                     e.preventDefault();
                     // injected.activate(injected, undefined, true);
-                    props.handleConnection();
+                    props.showModal();
+                    
                   }}
                 >
                   Connect

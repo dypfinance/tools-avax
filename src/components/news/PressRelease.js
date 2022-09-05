@@ -82,7 +82,7 @@ const PressRealease = ({ title, image, date, link, onSinglePressHighlightClick, 
                     isConnected
                       ? "You need to be holding DYP to vote"
                       : "Please connect your wallet"
-                  }/>
+                  } style={{width: 195}}/>
               </OutsideClickHandler>
             ) : (
               <></>

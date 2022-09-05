@@ -2266,6 +2266,24 @@ color: #303134 !important;
   display: flex;
   justify-content: end;
   cursor: pointer;
+  position: absolute;
+  right: 0;
+}
+
+.walletbutton {
+  background: var(--box-bg);
+  outline: currentcolor none medium;
+  border: 1px solid rgb(237, 238, 242);
+  border-radius: 12px;
+  width: 100% !important;
+  display: flex;
+  flex-direction: row;
+  -moz-box-align: center;
+  align-items: center;
+  -moz-box-pack: justify;
+  padding: 1rem;
+  margin-top: 0px;
+  opacity: 1;
 }
 
 .close-icon {
@@ -2386,6 +2404,45 @@ color: #303134 !important;
     ortant;
 } */
 
+.walletmodal-wrapper {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.modal-main {
+  position: fixed;
+  background: var(--box-bg);
+  width: 80%;
+  height: auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0px 0px 2rem;
+  box-shadow: rgba(47, 128, 237, 0.05) 0px 4px 8px 0px;
+  padding: 0px;
+  width: 50vw;
+  overflow: hidden;
+  align-self: center;
+  max-width: 420px;
+  max-height: 90vh;
+  display: flex;
+  border-radius: 20px;
+}
+
+@media all and (max-width: 576px) {
+  .modal-main {
+    max-width: 100%;
+    width: 90%;
+  }
+
+  .ljXtWJ[data-reach-dialog-content] {
+    max-width: 100%;
+    width: 100%;
+  }
+}
+
 .latestnews-item {
   display: flex;
  align-items: center;
@@ -2393,7 +2450,7 @@ color: #303134 !important;
 }
 
 .tag-wrapper {
-  background: linear-gradient(to right, #ff512f, #dd2476);
+  background: linear-gradient(to right, rgba(35, 37, 38, 0.8), rgba(65, 67, 69, 0.5));
   /* opacity: 0.8; */
   width: 100%;
   border-radius: 0px 0px 8px 8px;
@@ -2615,9 +2672,11 @@ color: #303134 !important;
 
   .details-modal-content {
     justify-content: center;
-    /* padding: 37px 0; */
+    padding: 37px 0;
   }
-
+.news-wrapper {
+  padding: 20px;
+}
   .left-col-content {
     max-width: 100% !important;
     text-align: justify;
@@ -3622,7 +3681,7 @@ color: #999999 !important;
   display: flex;
   justify-content: center;
   /* text-align: center; */
-  width: 90%;
+  width: 93%;
   font-weight: 400;
   font-size: 10px;
   line-height: 12px;

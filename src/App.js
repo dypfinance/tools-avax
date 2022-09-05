@@ -39,8 +39,19 @@ class App extends React.Component {
       subscribedPlatformTokenAmount: "...",
       isPremium: false,
       hotPairs: [],
-      networkId: '1'
+      networkId: '1',
+      show: false,
     };
+    this.showModal = this.showModal.bind(this)
+    this.hideModal = this.hideModal.bind(this)
+  }
+
+  showModal = () => {
+    this.setState({ show: true })
+  }
+
+  hideModal = () => {
+    this.setState({ show: false })
   }
 
   checkNetworkId() {
@@ -90,18 +101,6 @@ class App extends React.Component {
       let isPremium = Number(subscribedPlatformTokenAmount) > 0;
       this.setState({ subscribedPlatformTokenAmount, isPremium });
     }
-  };
-
-  handleConnection = async () => {
-    let coinbase = this.state.coinbase;
-
-    this.setState({
-      coinbase: await window.getCoinbase()?.then((data) => {
-        return data;
-      }),
-      // : undefined,
-    });
-    return coinbase;
   };
 
   getAddress = async () => {
@@ -235,6 +234,9 @@ class App extends React.Component {
             handleConnection={this.getAddress}
             toggleMobileSidebar={this.toggleMobileSidebar}
             isOpenInMobile={this.state.isOpenInMobile}
+            showModal={this.showModal}
+            hideModal={this.hideModal}
+            show={this.state.show}
           />
           <div className="right-content">
             <Switch>
