@@ -188,8 +188,23 @@ export default class PairExplorer extends React.Component {
     }
   }
 
+  handleChainChanged() {
+    if(window.ethereum) {
+     if(window.ethereum.chainId === '0x1') {
+        window.location.assign('/pair-explorer/0x76911e11fddb742d75b83c9e1f611f48f19234e4')
+      }
+      else {
+        window.location.assign("/pair-explorer/0x497070e8b6c55fd283d8b259a6971261e2021c01")
+      }
+    }
+    else {
+      window.location.assign('/pair-explorer/0x76911e11fddb742d75b83c9e1f611f48f19234e4')
+    }
+  }
+
   
   componentDidMount() {
+    window.ethereum?.on("chainChanged", this.handleChainChanged)
     this.oldTitle = document.querySelector("title").innerText;
     let pair_id = this.props.match.params.pair_id;
     if (!pair_id) return;
@@ -1224,7 +1239,7 @@ export default class PairExplorer extends React.Component {
             <LatestNews/></div>
           </div>
           <div className="rightside">
-            <div className="row m-0 w-100" style={{ gap: 20 }}>
+            <div className="row m-0 w-100 justify-content-between" style={{ gap: 20 }}>
               <div className="secondbox-wrapper">
                 <div className="content-title">
                   <div className="content-title-top">

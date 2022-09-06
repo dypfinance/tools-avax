@@ -31,8 +31,11 @@ const SingleNews = ({
   const bal2 = Number(localStorage.getItem("balance2"));
 
   const handleLikeStates = () => {
-    if ((bal1 === 0 && bal2 === 0 && isPremium === false) || isConnected === false) {
+    const logout = localStorage.getItem("logout");
+
+    if ((bal1 === 0 && bal2 === 0 && isPremium === false) || logout === 'true') {
       setLikeIndicator(false);
+      setDislikeIndicator(false);
       setShowTooltip(true);
     } else {
       if (likeIndicator === true) {
@@ -46,8 +49,12 @@ const SingleNews = ({
   };
 
   const handleDisLikeStates = () => {
-    if ((bal1 === 0 && bal2 === 0 && isPremium === false) || isConnected === false) {
+    const logout = localStorage.getItem("logout");
+
+    if ((bal1 === 0 && bal2 === 0 && isPremium === false) || logout === 'true') {
       setLikeIndicator(false);
+      setDislikeIndicator(false);
+
       setShowTooltip(true);
     } else {
       if (dislikeIndicator === true) {

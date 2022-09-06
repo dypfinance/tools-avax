@@ -164,10 +164,7 @@ class App extends React.Component {
     // this.subscriptionInterval = setInterval(this.refreshSubscription, 5e3);
   }
 
-   logout = () => {
-    localStorage.setItem('logout', 'true')
-    this.checkConnection()
-  }
+
 
   checkConnection() {
     const logout = localStorage.getItem('logout')
@@ -188,7 +185,10 @@ class App extends React.Component {
       }
   }
 
-
+   logout = () => {
+    localStorage.setItem('logout', 'true')
+    this.checkConnection()
+  }
   componentWillUnmount() {
     // clearInterval(this.subscriptionInterval);
   }

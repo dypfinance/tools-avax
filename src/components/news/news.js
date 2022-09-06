@@ -1547,20 +1547,20 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         finalNews.push(newsArray[i]);
       }
       for (let i = 0; i < newsData.length; i++) {
-        newsData[i].end = votes[57 + i];
+        newsData[i].end = votes[57 + i] !== undefined ? votes[57 + i] : {up:0, down: 0, id: 180};
         finalNews.push(newsData[i]);
         setFinalNewsData(finalNews);
       }
       
     }
   }, [newsData.length, news_id]);
-
+// console.log(finalNewsData)
   useEffect(() => {
     fetchNewsdata().then();
   },[finalNewsData.length]);
 
 
-// console.log(finalNewsData)
+// console.log(newsData)
   const press_highlight = [
 
     {
@@ -2093,11 +2093,11 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
 
   const bal1 = Number(localStorage.getItem("balance1"));
   const bal2 = Number(localStorage.getItem("balance2"));
-
+  const logout = localStorage.getItem("logout");
   const handleUpVoting = async (itemId) => {
     if (
       (bal1 === 0 && bal2 === 0 && isPremium === false) ||
-      isConnected === false
+      logout === 'true'
     ) {
       setShowTooltip(true);
     } else {
@@ -2137,7 +2137,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
   const handleDownVoting = async (itemId) => {
     if (
       (bal1 === 0 && bal2 === 0 && isPremium === false) ||
-      isConnected === false
+      logout === 'true'
     ) {
       setShowTooltip(true);
     } else {
@@ -2190,7 +2190,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
     }
   };
 
-  
+  // console.log(finalNewsData)
   return (
     <div onScroll={onScroll} ref={listInnerRef} id="header">
       <div className="news-wrapper">
@@ -2308,7 +2308,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                       bottom={0}
                       left={0}
                       status={
-                        isConnected
+                        logout === 'false'
                           ? "You need to be holding DYP to vote"
                           : "Please connect your wallet"
                       }

@@ -25,6 +25,8 @@ const Sidebar = (props) => {
   const [activeBtn, setActiveBtn] = useState("avax");
   const [activeLink, setActiveLink] = useState("news");
   const [location, setlocation] = useState("news");
+  const [networkId, setNetworkId] = useState(1);
+
 
   const [avatar, setAvatar] = useState("/assets/img/person.svg");
 

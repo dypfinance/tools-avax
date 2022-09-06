@@ -54,9 +54,12 @@ const NewsModal = ({
 
   const bal1 = Number(localStorage.getItem("balance1"));
   const bal2 = Number(localStorage.getItem("balance2"));
+  const logout = localStorage.getItem("logout");
 
   const handleLikeStates = () => {
-    if ((bal1 === 0 && bal2 === 0 && isPremium === false) || isConnected === false) {
+  const logout = localStorage.getItem("logout");
+
+    if ((bal1 === 0 && bal2 === 0 && isPremium === false) || logout === 'true') {
       setLikeIndicator(false);
       setShowTooltip(true);
     } else {
@@ -72,7 +75,9 @@ const NewsModal = ({
   };
 
   const handleDisLikeStates = () => {
-    if ((bal1 === 0 && bal2 === 0 && isPremium === false) || isConnected === false) {
+  const logout = localStorage.getItem("logout");
+
+    if ((bal1 === 0 && bal2 === 0 && isPremium === false) || logout === 'true') {
       setLikeIndicator(false);
       setShowTooltip(true);
     } else {
@@ -170,7 +175,7 @@ const NewsModal = ({
                   >
                     <ToolTip
                       status={
-                        isConnected
+                        logout==='false'
                           ? "You need to be holding DYP to vote"
                           : "Please connect your wallet"
                       }

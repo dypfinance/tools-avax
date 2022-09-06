@@ -31,11 +31,13 @@ const RelatedNews = ({
 
   const bal1 = Number(localStorage.getItem("balance1"));
   const bal2 = Number(localStorage.getItem("balance2"));
-
+  const logout = localStorage.getItem("logout");
   const handleLikeStates = () => {
+
+
     if (
       (bal1 === 0 && bal2 === 0 && isPremium === false) ||
-      isConnected === false
+      logout === 'true'
     ) {
       setLikeIndicator(false);
       setShowTooltip(true);
@@ -51,9 +53,10 @@ const RelatedNews = ({
   };
 
   const handleDisLikeStates = () => {
+
     if (
       (bal1 === 0 && bal2 === 0 && isPremium === false) ||
-      isConnected === false
+      logout === 'true'
     ) {
       setLikeIndicator(false);
       setShowTooltip(true);
@@ -124,7 +127,7 @@ const RelatedNews = ({
                   >
                     <ToolTip
                       status={
-                        isConnected
+                        logout === 'false'
                           ? "You need to be holding DYP to vote"
                           : "Please connect your wallet"
                       }

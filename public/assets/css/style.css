@@ -1612,6 +1612,10 @@ font-size: 15px !important;
   height: 100% !important;
 }
 
+#tv_chart_container iframe {
+  pointer-events: all;
+}
+
 .CircularProgressbar {
   width: 70% !important;
   border-radius: 50%;

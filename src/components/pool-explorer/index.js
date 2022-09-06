@@ -446,8 +446,8 @@ export default class PoolExplorer extends React.Component {
                 </h2>
                 <p className="d-block">
                   {this.state.networkId === "1"
-                    ? "Showing List of Uniswap Top Tokens"
-                    : "Showing List of Pangolin Top Tokens"}
+                    ? "List of Uniswap Top Tokens"
+                    : "List of Pangolin Top Tokens"}
                 </p>
               </>
             ) : (

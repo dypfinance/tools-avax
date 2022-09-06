@@ -24,6 +24,7 @@ export class TVChartContainer extends React.PureComponent {
 		fullscreen: false,
 		autosize: true,
 		studiesOverrides: {},
+		
 	};
 
 	tvWidget = null;

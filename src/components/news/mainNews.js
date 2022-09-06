@@ -27,11 +27,13 @@ const MainNews = ({
 
   const bal1 = Number(localStorage.getItem("balance1"));
   const bal2 = Number(localStorage.getItem("balance2"));
-
+    const logout = localStorage.getItem("logout");
   const handleLikeStates = () => {
-    if ((bal1 === 0 && bal2 === 0 && isPremium === false) || isConnected === false) {
+
+    if ((bal1 === 0 && bal2 === 0 && isPremium === false) || logout === 'false') {
       setLikeIndicator(false);
-      onUpVoteClick();
+      setDislikeIndicator(false);
+      // onUpVoteClick();
     } else {
       if (likeIndicator === true) {
         setLikeIndicator(false);
@@ -44,8 +46,10 @@ const MainNews = ({
   };
 
   const handleDisLikeStates = () => {
-    if ((bal1 === 0 && bal2 === 0 && isPremium === false) || isConnected === false) {
+    const logout = localStorage.getItem("logout");
+    if ((bal1 === 0 && bal2 === 0 && isPremium === false) || logout === 'false') {
       setLikeIndicator(false);
+      setDislikeIndicator(false);
       onDownVoteClick();
     } else {
       if (dislikeIndicator === true) {
