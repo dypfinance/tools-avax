@@ -1335,7 +1335,7 @@ padding: 20px;
   position: absolute !important;
   width: 24px;
   height: 24px;
-  top: 15px;
+  top: 10px;
 }
 
 .nicescroll-cursors {
@@ -1713,8 +1713,12 @@ color: #303134 !important;
 
   }
   .backbtn {
-    left: 1.5rem !important;
-    top: 24px !important;
+    left: 0 !important;
+    top: 0 !important;
+    position: relative !important;
+    margin-right: 10px;
+    width: 70px !important;
+
   }
 
   .latestnews-image {

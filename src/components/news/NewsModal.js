@@ -115,7 +115,7 @@ const NewsModal = ({
                 <i className="fas fa-arrow-left" style={{color: 'white'}}></i>
               </div>
               <h2 className="left-col-title" style={{fontSize: 20}}>{title}</h2>
-              <div
+              {/* <div
                 className="social-share-parent"
                 style={{
                   display: "inline-block",
@@ -133,9 +133,79 @@ const NewsModal = ({
                 >
                   <i className="fas fa-share-alt"></i>
                 </button>
-                
+                 */}
 
-                <div className="social-share-wrapper-div">
+                
+              {/* </div> */}
+            </div>
+            <img
+              src={image}
+              alt=""
+              className="left-col-image"
+              style={{ padding: "20px 0" }}
+            />
+            <div className="news-bottom-wrapper mb-3 justify-content-between">
+              <div className="d-flex w-100 align-items-center" style={{gap: 20}}>
+              <div className="like-wrapper">
+                <img
+                  src={
+                    likeIndicator === false && dislikeIndicator === false
+                      ? VotePassive
+                      : likeIndicator === true
+                      ? Upvote
+                      : Downvote
+                  }
+                  alt=""
+                  className="like-indicator"
+                  onClick={(e) => {
+                    handleLikeStates();
+                    e.stopPropagation();
+                  }}
+                />
+                {showTooltip === true ? (
+                  <OutsideClickHandler
+                    onOutsideClick={() => {
+                      setShowTooltip(false);
+                    }}
+                  >
+                    <ToolTip
+                      status={
+                        isConnected
+                          ? "You need to be holding DYP to vote"
+                          : "Please connect your wallet"
+                      }
+                    />
+                  </OutsideClickHandler>
+                ) : (
+                  <></>
+                )}
+                <span>{Number(upvotes) - Number(downvotes)}</span>
+
+                <img
+                  src={
+                    likeIndicator === false && dislikeIndicator === false
+                      ? VotePassive
+                      : likeIndicator === true
+                      ? Upvote
+                      : Downvote
+                  }
+                  alt=""
+                  className="like-indicator"
+                  id="dislike"
+                  onClick={() => {
+                    handleDisLikeStates();
+                  }}
+                />
+              </div>
+
+              <div className="date-wrapper">
+                <img src={Clock} alt="" style={{ width: "auto" }} />
+                <h6 className="date-content">
+                  {month} {day} {year}
+                </h6>
+              </div>
+              </div>
+              <div className="d-flex">
                   <a
                     className="resp-sharing-button__link"
                     href={`https://twitter.com/intent/tweet/?text=${title}&url=${`https://tools.dyp.finance/news/${newsId}`}`}
@@ -202,73 +272,6 @@ const NewsModal = ({
                     </div>
                   </a>
                 </div>
-              </div>
-            </div>
-            <img
-              src={image}
-              alt=""
-              className="left-col-image"
-              style={{ padding: "20px 0" }}
-            />
-            <div className="news-bottom-wrapper mb-3 justify-content-between">
-              <div className="like-wrapper">
-                <img
-                  src={
-                    likeIndicator === false && dislikeIndicator === false
-                      ? VotePassive
-                      : likeIndicator === true
-                      ? Upvote
-                      : Downvote
-                  }
-                  alt=""
-                  className="like-indicator"
-                  onClick={(e) => {
-                    handleLikeStates();
-                    e.stopPropagation();
-                  }}
-                />
-                {showTooltip === true ? (
-                  <OutsideClickHandler
-                    onOutsideClick={() => {
-                      setShowTooltip(false);
-                    }}
-                  >
-                    <ToolTip
-                      status={
-                        isConnected
-                          ? "You need to be holding DYP to vote"
-                          : "Please connect your wallet"
-                      }
-                    />
-                  </OutsideClickHandler>
-                ) : (
-                  <></>
-                )}
-                <span>{Number(upvotes) - Number(downvotes)}</span>
-
-                <img
-                  src={
-                    likeIndicator === false && dislikeIndicator === false
-                      ? VotePassive
-                      : likeIndicator === true
-                      ? Upvote
-                      : Downvote
-                  }
-                  alt=""
-                  className="like-indicator"
-                  id="dislike"
-                  onClick={() => {
-                    handleDisLikeStates();
-                  }}
-                />
-              </div>
-
-              <div className="date-wrapper">
-                <img src={Clock} alt="" style={{ width: "auto" }} />
-                <h6 className="date-content">
-                  {month} {day} {year}
-                </h6>
-              </div>
             </div>
 
             <p

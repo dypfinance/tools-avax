@@ -122,7 +122,7 @@ export default class Subscription extends React.Component {
     this.handleSubscriptionTokenChange(this.state.selectedSubscriptionToken);
     this.checkNetworkId();
 
-    // this.fetchAvatar().then();
+    this.fetchAvatar().then();
     // this.checkConnection()
   };
 
@@ -236,6 +236,7 @@ export default class Subscription extends React.Component {
     this.setState({ showSavebtn: true, showRemovebtn: true });
 
     if (fileTypes.includes(event.target.files[0].type)) {
+      
       if (event.target.files && event.target.files[0]) {
         this.setState({ selectedFile: event.target.files[0] });
         let reader = new FileReader();
@@ -244,7 +245,8 @@ export default class Subscription extends React.Component {
         };
         reader.readAsDataURL(event.target.files[0]);
       }
-    } else {
+    }
+     else {
       window.alertify.error("Image type not supported");
     }
   };
@@ -252,14 +254,11 @@ export default class Subscription extends React.Component {
   handleSubmission = async () => {
     const formData = new FormData();
     formData.append("image", this.state.selectedFile);
-
     let coinbase = await window.getCoinbase();
     this.setState({ loadspinnerSave: true });
-
     if (!coinbase) {
       await window.connectWallet();
     }
-
     let signature;
 
     try {
@@ -296,8 +295,9 @@ export default class Subscription extends React.Component {
         console.error("Error:", error);
       });
 
-    window.alertify.message("Avatar has been uploaded successfully!");
+    window.alertify.message("Avatar has been uploaded successfully!")
     this.setState({ loadspinnerSave: false, showSavebtn: false });
+    this.fetchAvatar().then()
   };
 
   fetchAvatar = async () => {
@@ -308,7 +308,7 @@ export default class Subscription extends React.Component {
         return res.json();
       })
       .then((data) => {
-        this.setState({ image: data.avatar });
+        this.setState({ image: data.status === 0 ? Placeholder : data.avatar });
       })
       .catch(console.error);
 

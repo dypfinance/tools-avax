@@ -103,7 +103,7 @@ class App extends React.Component {
     }
   };
 
-  getAddress = async () => {
+  handleConnection = async () => {
     let isConnected = this.state.isConnected;
     try {
       isConnected = await window.connectWallet();
@@ -131,7 +131,7 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-    // this.handleConnection();
+    
     // console.log(this.state.networkId);
     // getSyncStats()
     // .then((syncStatus) => {
@@ -231,7 +231,7 @@ class App extends React.Component {
             appState={this.state}
             theme={this.state.theme}
             isConnected={this.state.isConnected}
-            handleConnection={this.getAddress}
+            handleConnection={this.handleConnection}
             toggleMobileSidebar={this.toggleMobileSidebar}
             isOpenInMobile={this.state.isOpenInMobile}
             showModal={this.showModal}
@@ -247,7 +247,7 @@ class App extends React.Component {
                   <PoolExplorer
                     theme={this.state.theme}
                     network={this.state.network}
-                    handleConnection={this.getAddress}
+                    handleConnection={this.handleConnection}
                     isConnected={this.state.isConnected}
                     appState={this.state}
                   />
@@ -313,7 +313,7 @@ class App extends React.Component {
                 path="/locker/:pair_id?"
                 render={(props) => (
                   <Locker
-                    handleConnection={this.getAddress}
+                    handleConnection={this.handleConnection}
                     isConnected={this.state.isConnected}
                     key={props.match.params.pair_id}
                     theme={this.state.theme}
@@ -326,7 +326,7 @@ class App extends React.Component {
                 path="/admin"
                 render={(props) => (
                   <Admin
-                    handleConnection={this.getAddress}
+                    handleConnection={this.handleConnection}
                     isConnected={this.state.isConnected}
                     appState={this.state}
                     {...props}
@@ -338,7 +338,7 @@ class App extends React.Component {
                 path="/farms"
                 render={(props) => (
                   <Farms
-                    handleConnection={this.getAddress}
+                    handleConnection={this.handleConnection}
                     isConnected={this.state.isConnected}
                     appState={this.state}
                     {...props}

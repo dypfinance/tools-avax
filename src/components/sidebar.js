@@ -84,8 +84,9 @@ const Sidebar = (props) => {
           <div
             className="top-right-header"
             style={{
-              background: account
-                ? chainId === 1
+              background: props.isConnected
+                ? 
+                chainId === 1
                   ? "linear-gradient(87.56deg, #1D91D0 9.37%, #32B1F7 93.57%)"
                   : "linear-gradient(87.56deg, #FC4F36 9.37%, #E30613 93.57%)"
                 : "rgba(255, 255, 255, 0.3)",
@@ -94,9 +95,9 @@ const Sidebar = (props) => {
               <WalletModal show={props.show} handleClose={props.hideModal} handleConnection={props.handleConnection}  />
             <div className="home-menu">
               <a href="#" id="wallet">
-                <img src={!active ? NotConnected : Connected} alt="Image" />
+                <img src={!props.isConnected ? NotConnected : Connected} alt="Image" />
                 {/* <i style={{color: '#fff'}} className='fas fa-wallet'></i> */}
-                {!active ? (
+                {!props.isConnected ? (
                   <span
                     style={{
                       color: "#6B7A99",
@@ -116,7 +117,7 @@ const Sidebar = (props) => {
                   </span>
                 )}
               </a>
-              {!active && (
+              {!props.isConnected && (
                 <button
                   className="connectwalletbtn"
                   onClick={(e) => {
@@ -134,13 +135,13 @@ const Sidebar = (props) => {
           <h6
             className="networks row m-0"
             style={{
-              border: chainId === 1 ? "1px solid #1486C3" : "1px solid #E84142",
+              border: props.isConnected ? chainId === 1 ? "1px solid #1486C3" : "1px solid #E84142" : 'none',
             }}
           >
             <a
               href="javascript:void(0)"
               className="hoverNetwork"
-              style={{ background: chainId === 1 ? "#1D91D0" : "transparent" }}
+              style={{ background:props.isConnected ? chainId === 1 ? "#1D91D0" : "transparent" : "transparent"}}
               onClick={() => {
                 setActiveBtn("eth");
                 handleSwitchNetwork('0x1');
@@ -148,7 +149,7 @@ const Sidebar = (props) => {
             >
               <img src={Ethereum} alt="Image not found" />
               <span
-                style={{ color: chainId === 1 ? "#fff" : "#6B7A99" }}
+                style={{ color:props.isConnected ? chainId === 1 ? "#fff" : "#6B7A99" : "#6B7A99" }}
                 className="network-text"
               >
                 Ethereum
@@ -159,7 +160,7 @@ const Sidebar = (props) => {
               className="hoverNetwork"
               style={{
                 padding: "4px 11px 0",
-                background: chainId === 43114 ? "#E84142" : "transparent",
+                background: props.isConnected ? chainId === 43114 ? "#E84142" : "transparent" : "transparent",
               }}
               onClick={() => {
                 setActiveBtn("avax");
@@ -167,7 +168,7 @@ const Sidebar = (props) => {
               }}
             >
               <img src={Avax} alt="Image not found" />
-              <span style={{ color: chainId === 43114 ? "#fff" : "#6B7A99" }}>
+              <span style={{ color:props.isConnected ? chainId === 43114 ? "#fff" : "#6B7A99" : "#6B7A99" }}>
                 Avalanche
               </span>
             </a>

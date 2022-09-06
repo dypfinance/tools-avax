@@ -30,7 +30,7 @@ const News = ({ theme, isPremium }) => {
 
   const carousel = useRef();
 
-  const newsPerRow = 8;
+  const newsPerRow = 4;
   const [activeClass, setActiveClass] = useState("latestnews");
   const [showModal, setShowModal] = useState(false);
   const [newsItemId, setnewsItemId] = useState(-1);
@@ -2187,7 +2187,8 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
   const onScroll = () => {
     const wrappedElement = document.getElementById("header");
     if (isBottom(wrappedElement)) {
-      loadMore();
+      if(next < finalNewsData.length)
+      {loadMore()}
       document.removeEventListener("scroll", onScroll);
     }
   };
@@ -2244,8 +2245,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
               }}
               isConnected={isConnected}
               onModalClose={() => {
-                window.location.replace('/news')
-                setShowModal(false);
+                news_id !== undefined ? window.location.replace('/news') : setShowModal(false);
               }}
               isPremium={isPremium}
             />
@@ -2511,7 +2511,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
         </h1>
         <div className="row m-0 othernews-row-wrapper" style={{ gap: 10 }}>
           {finalNewsData.length > 0 &&
-            finalNewsData?.slice(44, next)?.map((item, key) => {
+            finalNewsData?.slice(44, 44+ next)?.map((item, key) => {
              
               return (
                 <div
@@ -2532,7 +2532,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                         ? item.end?.up !== undefined ? votes.find((obj) => obj.id === item.end.id).up : item.upvote
                         : item.upvote
                     }
-                    newsId={item.end.id !== undefined ? item.end.id : item.id !== undefined ? item.id : key}
+                    // newsId={item.end.id !== undefined ? item.end.id : item.id !== undefined ? item.id : key}
                     // downvotes={ item.end.down !== undefined ? item.end.down : item.downvote}
                     downvotes={
                       votes.length !== 0
