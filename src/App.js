@@ -106,14 +106,17 @@ class App extends React.Component {
   handleConnection = async () => {
     let isConnected = this.state.isConnected;
     try {
+      localStorage.setItem('logout', 'false')
       isConnected = await window.connectWallet();
     } catch (e) {
       window.alertify.error(String(e) || "Cannot connect wallet!");
       return;
     }
     this.setState({ isConnected, coinbase: await window.getCoinbase() });
+    this.setState({show: false})
     return isConnected;
   };
+
 
   refreshHotPairs = async () => {
     window.$.get(
@@ -161,15 +164,28 @@ class App extends React.Component {
     // this.subscriptionInterval = setInterval(this.refreshSubscription, 5e3);
   }
 
+   logout = () => {
+    localStorage.setItem('logout', 'true')
+    this.checkConnection()
+  }
+
   checkConnection() {
-    window.ethereum?.request({ method: "eth_accounts" })
+    const logout = localStorage.getItem('logout')
+    if(logout !== 'true')
+    {window.ethereum?.request({ method: "eth_accounts" })
       .then((data) => {
         this.setState({
           isConnected: data.length === 0 ? false : true,
           coinbase: data.length === 0 ? undefined : data[0],
         });
       })
-      .catch(console.error);
+      .catch(console.error);}
+      else {
+        this.setState({
+          isConnected: false,
+         
+        });
+      }
   }
 
 
@@ -206,9 +222,11 @@ class App extends React.Component {
   };
 
   render() {
+   
 
     document.addEventListener("touchstart", { passive: true });
     return (
+     
       <div
         className={`page_wrapper ${this.state.isMinimized ? "minimize" : ""}`}
       >
@@ -237,6 +255,8 @@ class App extends React.Component {
             showModal={this.showModal}
             hideModal={this.hideModal}
             show={this.state.show}
+            checkConnection = {this.checkConnection}
+            logout = {this.logout}
           />
           <div className="right-content">
             <Switch>

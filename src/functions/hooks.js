@@ -2,6 +2,8 @@ import { Web3Provider } from "@ethersproject/providers";
 import { useEffect, useState } from "react";
 import { useWeb3React as useWeb3ReactCore } from "@web3-react/core";
 import { injected } from "./connectors";
+
+
 import Web3 from "web3";
 
 export default function getLibrary(provider) {
@@ -153,7 +155,6 @@ export const handleSwitchNetwork = async (chainID) => {
     // This error code indicates that the chain has not been added to MetaMask.
     console.log(switchError, 'switch')
     if (switchError.code === 4902) {
-      console.log('yes')
       try {
         await ethereum.request({
           method: "wallet_addEthereumChain",
@@ -201,3 +202,5 @@ export const checkFunds = async (account) => {
     localStorage.setItem("balance2", bal2);
   }
 };
+
+

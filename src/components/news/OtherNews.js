@@ -72,9 +72,9 @@ const OtherNews = ({
       setDislikeIndicator(true);
       }}
     >
-      <div>
+      <div style={{height: '100%'}}>
         <img src={image} alt="" className="other-news-image"/>
-        <div style={{ padding: 12, gap: 10 }} className="d-flex flex-column">
+        <div style={{ padding: 12, gap: 10, height: '40%' }} className="d-flex flex-column justify-content-between">
           {/* <a href={link} target={"_blank"}> */}
           <h4 className="singlenews-title">{title}</h4>
           {/* </a> */}

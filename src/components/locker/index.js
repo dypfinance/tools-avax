@@ -121,6 +121,8 @@ export default class Locker extends React.Component {
 
 
   checkConnection() {
+    const logout = localStorage.getItem('logout')
+    if (logout !== "true") {
     if(window.ethereum)
     {
       window.ethereum.request({ method: "eth_accounts" })
@@ -133,6 +135,12 @@ export default class Locker extends React.Component {
       })
       .catch(console.error);
     }
+  }
+  else {
+    this.setState({
+      coinbase: undefined ,
+    });
+  }
     
     
   }

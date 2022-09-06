@@ -87,20 +87,28 @@ export default class Subscription extends React.Component {
   }
 
   checkConnection() {
-    if (window.ethereum) {
-      window.ethereum
-        .request({ method: "eth_accounts" })
-        .then((data) => {
-          this.setState({
-            coinbase: data.length === 0 ? undefined : data[0],
-          });
-          this.fetchAvatar().then();
-        })
-        .catch(console.error);
+    const logout = localStorage.getItem("logout");
+    if (logout !== "true") {
+      if (window.ethereum) {
+        window.ethereum
+          .request({ method: "eth_accounts" })
+          .then((data) => {
+            this.setState({
+              coinbase: data.length === 0 ? undefined : data[0],
+            });
+            this.fetchAvatar().then();
+          })
+          .catch(console.error);
+      } else {
+        this.setState({
+          networkId: "1",
+        });
+      }
     } else {
       this.setState({
-        networkId: "1",
+        coinbase: undefined,
       });
+      this.setState({ image: Placeholder });
     }
   }
 
@@ -122,8 +130,8 @@ export default class Subscription extends React.Component {
     this.handleSubscriptionTokenChange(this.state.selectedSubscriptionToken);
     this.checkNetworkId();
 
-    this.fetchAvatar().then();
-    // this.checkConnection()
+    // this.fetchAvatar().then();
+    this.checkConnection();
   };
 
   handleSubscriptionTokenChange = async (tokenAddress) => {
@@ -236,7 +244,6 @@ export default class Subscription extends React.Component {
     this.setState({ showSavebtn: true, showRemovebtn: true });
 
     if (fileTypes.includes(event.target.files[0].type)) {
-      
       if (event.target.files && event.target.files[0]) {
         this.setState({ selectedFile: event.target.files[0] });
         let reader = new FileReader();
@@ -245,8 +252,7 @@ export default class Subscription extends React.Component {
         };
         reader.readAsDataURL(event.target.files[0]);
       }
-    }
-     else {
+    } else {
       window.alertify.error("Image type not supported");
     }
   };
@@ -295,9 +301,9 @@ export default class Subscription extends React.Component {
         console.error("Error:", error);
       });
 
-    window.alertify.message("Avatar has been uploaded successfully!")
+    window.alertify.message("Avatar has been uploaded successfully!");
     this.setState({ loadspinnerSave: false, showSavebtn: false });
-    this.fetchAvatar().then()
+    this.fetchAvatar().then();
   };
 
   fetchAvatar = async () => {
@@ -330,8 +336,6 @@ export default class Subscription extends React.Component {
     return response;
   };
 
-  
-
   GetSubscriptionForm = () => {
     let tokenDecimals =
       this.state.networkId === "1"
@@ -344,9 +348,7 @@ export default class Subscription extends React.Component {
 
     return (
       <div>
-        <h4 className="d-block mb-3">
-          Subscribe to DYP Tools Premium
-        </h4>
+        <h4 className="d-block mb-3">Subscribe to DYP Tools Premium</h4>
         <form onSubmit={this.handleSubscribe}>
           <div>
             {!this.props.appState.isPremium ? (
@@ -708,9 +710,8 @@ export default class Subscription extends React.Component {
             </>
           )}
           <div className={this.state.coinbase ? "mt-3 mb-3" : "d-none"}>
+            <h4 className="d-block mb-3 mt-5"> Avatar profile</h4>
 
-              <h4 className="d-block mb-3 mt-5"> Avatar profile</h4>
-             
             <div className={this.state.coinbase ? "inputfile-wrapper" : ""}>
               <img
                 src={this.state.image}
@@ -748,11 +749,7 @@ export default class Subscription extends React.Component {
                 <></>
               )}
               {this.state.showRemovebtn === true ? (
-                <div
-                  className="removebtn"
-                  type=""
-                  onClick={this.deleteAvatar}
-                >
+                <div className="removebtn" type="" onClick={this.deleteAvatar}>
                   {this.state.loadspinnerRemove === true ? (
                     <div
                       className="spinner-border "
@@ -769,10 +766,10 @@ export default class Subscription extends React.Component {
             </div>
           </div>
         </form>
-        
+
         <h4 className="d-block mb-3 mt-5" id="my-fav">
-         My favorites
-      </h4>
+          My favorites
+        </h4>
         <div className="row m-0" style={{ gap: 30 }}>
           {this.state.favorites.map((lock, index) => {
             return (
