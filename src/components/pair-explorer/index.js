@@ -152,7 +152,7 @@ export default class PairExplorer extends React.Component {
 
           window
             .isFavorite(pair_id.toLowerCase())
-            .then((isFavorite) => this.setState({ isFavorite }))
+            .then((isFavorite) => {this.setState({ isFavorite }); this.setState({starColor: 'rgb(227, 6, 19)'})})
             .catch(console.error);
 
           this.fetchSwaps(pair_id);
@@ -188,23 +188,9 @@ export default class PairExplorer extends React.Component {
     }
   }
 
-  handleChainChanged() {
-    if(window.ethereum) {
-     if(window.ethereum.chainId === '0x1') {
-        window.location.assign('/pair-explorer/0x76911e11fddb742d75b83c9e1f611f48f19234e4')
-      }
-      else {
-        window.location.assign("/pair-explorer/0x497070e8b6c55fd283d8b259a6971261e2021c01")
-      }
-    }
-    else {
-      window.location.assign('/pair-explorer/0x76911e11fddb742d75b83c9e1f611f48f19234e4')
-    }
-  }
-
   
   componentDidMount() {
-    window.ethereum?.on("chainChanged", this.handleChainChanged)
+    window.scrollTo(0,0)
     this.oldTitle = document.querySelector("title").innerText;
     let pair_id = this.props.match.params.pair_id;
     if (!pair_id) return;

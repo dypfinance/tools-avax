@@ -13,7 +13,7 @@ import Farms from "./components/farms";
 import News from "./components/news/news";
 import Sidebar from "./components/sidebar";
 import Header from "./components/header";
-import Footer from "./components/footer";
+import Footer from "./components/Footer/footer";
 import { Route } from "react-router-dom";
 import SubmitInfo from "./components/submit-info/SubmitInfo";
 import { Switch } from "react-router-dom";
@@ -109,6 +109,7 @@ class App extends React.Component {
       localStorage.setItem('logout', 'false')
       isConnected = await window.connectWallet();
     } catch (e) {
+      this.setState({show: false})
       window.alertify.error(String(e) || "Cannot connect wallet!");
       return;
     }

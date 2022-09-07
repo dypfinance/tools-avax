@@ -19,7 +19,7 @@ export default class Subscription extends React.Component {
     super(props);
     this.state = {
       coinbase: "",
-      selectedSubscriptionToken: Object.keys(
+      selectedSubscriptionToken:  Object.keys(
         window.config.subscription_tokens
       )[0],
       tokenBalance: "",
@@ -68,6 +68,12 @@ export default class Subscription extends React.Component {
         .getFavoritesETH()
         .then((favorites) => this.setState({ favorites }))
         .catch(console.error);
+
+        this.setState({
+          selectedSubscriptionToken: Object.keys(
+           window.config.subscriptioneth_tokens
+          )[0],
+        });
     }
 
     if (this.state.networkId === "43114") {
@@ -75,15 +81,15 @@ export default class Subscription extends React.Component {
         .getFavorites()
         .then((favorites) => this.setState({ favorites }))
         .catch(console.error);
+
+        this.setState({
+          selectedSubscriptionToken: Object.keys(
+           window.config.subscription_tokens
+          )[0],
+        });
     }
 
-    this.setState({
-      selectedSubscriptionToken: Object.keys(
-        this.state.networkId === "1"
-          ? window.config.subscriptioneth_tokens
-          : window.config.subscription_tokens
-      )[0],
-    });
+   
   }
 
   checkConnection() {
@@ -113,6 +119,7 @@ export default class Subscription extends React.Component {
   }
 
   componentDidMount() {
+    window.scrollTo(0,0)
     this.checkConnection();
     this.checkNetworkId();
     if (window.isConnectedOneTime) {
@@ -345,7 +352,7 @@ export default class Subscription extends React.Component {
         : window.config.subscription_tokens[
             this.state.selectedSubscriptionToken
           ]?.decimals;
-
+          
     return (
       <div>
         <h4 className="d-block mb-3">Subscribe to DYP Tools Premium</h4>
@@ -530,14 +537,13 @@ export default class Subscription extends React.Component {
                       <p>Select Subscription Token</p>
                       <div className="row m-0" style={{ gap: 10 }}>
                         {Object.keys(
-                          this.state.networkId === "0x1"
+                          this.state.networkId === "1"
                             ? window.config.subscriptioneth_tokens
                             : window.config.subscription_tokens
                         ).map((t, i) => (
-                          <span className="radio-wrapper">
+                          <span className="radio-wrapper" key={t}>
                             <input
                               type="radio"
-                              key={t}
                               value={t}
                               name={"tokensymbol"}
                               checked={
@@ -552,7 +558,7 @@ export default class Subscription extends React.Component {
                                 // console.log(e.target)
                               }
                             />
-                            {this.state.networkId === "0x1"
+                            {this.state.networkId === "1"
                               ? window.config.subscriptioneth_tokens[t]?.symbol
                               : window.config.subscription_tokens[t]?.symbol}
                           </span>
@@ -773,7 +779,7 @@ export default class Subscription extends React.Component {
         <div className="row m-0" style={{ gap: 30 }}>
           {this.state.favorites.map((lock, index) => {
             return (
-              <NavLink
+              <NavLink key={index} 
                 className="l-clr-purple"
                 to={`/pair-explorer/${lock.id}`}
               >
@@ -785,7 +791,7 @@ export default class Subscription extends React.Component {
                         "linear-gradient(30.97deg, #E30613 18.87%, #FC4F36 90.15%)",
                     }}
                   >
-                    <div key={index} className="pair-locks-wrapper">
+                    <div className="pair-locks-wrapper">
                       <div className="row-wrapper">
                         <span className="left-info-text">ID</span>
                         <span className="right-info-text">{index + 1}</span>

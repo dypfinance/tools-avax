@@ -1,9 +1,12 @@
 import React from 'react'
 import Placeholder from './placeholder.svg'
+import PlaceholderBlack from './placeholder-black.svg'
 
-const Skeleton = ()=>{
+
+const Skeleton = (theme)=>{
+    console.log(theme.theme)
     return(<div>
-        <img src={Placeholder} alt=''/>
+        <img src={theme.theme === 'theme-dark' ? PlaceholderBlack : Placeholder} alt=''/>
     </div>)
 }
 

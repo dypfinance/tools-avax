@@ -146,6 +146,7 @@ export default class Locker extends React.Component {
   }
 
   componentDidMount() {
+    window.scrollTo(0,0)
    this.checkNetworkId()
    this.checkConnection()
   }
@@ -1573,9 +1574,9 @@ export default class Locker extends React.Component {
             My locks
           </strong>
           <div className="row justify-content-between p-0 ml-0">
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
+            <Skeleton theme={this.props.theme}/>
+            <Skeleton theme={this.props.theme}/>
+            <Skeleton theme={this.props.theme}/>
           </div>
         </div>
       );
@@ -1920,9 +1921,9 @@ export default class Locker extends React.Component {
 
           {this.state.tokenLocks.length == 0 && (
             <div className="row justify-content-between p-0 ml-0">
-              <Skeleton />
-              <Skeleton />
-              <Skeleton />
+              <Skeleton theme={this.props.theme}/>
+              <Skeleton theme={this.props.theme}/>
+              <Skeleton theme={this.props.theme}/>
             </div>
           )}
         </div>

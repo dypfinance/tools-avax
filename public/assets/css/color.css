@@ -18,6 +18,8 @@
 
 body.theme-dark h4,
 body.theme-dark h2,
+body.theme-dark .footer-container h3,
+body.theme-dark .footer-container .footer-group li.footer-item a,
 body.theme-dark p,
 body.theme-dark a,
 body.theme-dark span,
@@ -48,8 +50,10 @@ body.theme-dark .sidebar,
 body.theme-dark .graph-wrap,
 body.theme-dark .content-footer,
 body.theme-dark .table-title,
+body.theme-dark .footer-container,
 body.theme-dark .news-wrapper,
 body.theme-dark .banner-item,
+body.theme-dark .gqgCys,
 body.theme-dark .other-news-singlewrapper {
   background-color: var(--black);
 }

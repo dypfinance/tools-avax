@@ -1476,7 +1476,7 @@ padding: 20px;
 
 #submit {
   position: absolute;
-  top: 19px;
+  top: 10px;
   right: 14px;
   background: transparent;
   border: none;
@@ -1792,7 +1792,7 @@ color: #303134 !important;
     border-radius: 6px;
 }
 .single-press-wrapper {
-  height: 370px !important;
+  height: 404px !important;
 }
 
 .poolexp-wrapper {
@@ -1898,9 +1898,9 @@ color: #303134 !important;
     left: 67% !important;
   }
 
-  .date-wrapper-press {
+  /* .date-wrapper-press {
     height: 30%;
-  }
+  } */
   
 }
 
@@ -3146,7 +3146,7 @@ form p {
   border: 1px solid var(--black) !important;
 }
 .theme-dark #search-bar.l-border-black {
-  background: var(--black) !important;
+  /* background: var(--black) !important; */
 }
 
 /* Hide scrollbar */

@@ -77,7 +77,20 @@ window.ethereum.request({ method: "net_version" })
 
   function handleChainChanged() {
     // We recommend reloading the page, unless you must do otherwise
-    window.location.reload()
+    // window.location.reload()
+    if(window.location.href.includes('pair-explorer')) {
+      if(chainId === 1) {
+        window.location.assign('/pair-explorer/0x497070e8b6c55fd283d8b259a6971261e2021c01')
+
+
+      }
+      else {
+        window.location.assign("/pair-explorer/0x76911e11fddb742d75b83c9e1f611f48f19234e4")
+  
+
+      }
+    }
+    console.log(window.location.href)
   }
 
   useEffect(()=>{

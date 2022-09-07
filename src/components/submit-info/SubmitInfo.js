@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import validateInfo from "./validateinfo";
 import axios from "axios";
 
@@ -19,6 +19,10 @@ const SubmitInfo = () => {
     telegram: "",
     coingecko: "",
   };
+
+  useEffect(()=>{
+    window.scrollTo(0,0)
+  })
 
   const [values, setValues] = useState(initialState);
   const [errors, setErrors] = useState({});

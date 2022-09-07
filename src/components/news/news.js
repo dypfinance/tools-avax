@@ -107,7 +107,6 @@ const News = ({ theme, isPremium }) => {
     if(finalNewsData.length > 0) {
       const search = (obj) => obj.id == key;
     const index = finalNewsData.findIndex(search);
-    
     setActiveNews(finalNewsData[index]);
     }
     
@@ -115,12 +114,24 @@ const News = ({ theme, isPremium }) => {
 
   const handleDisplayNewsFromParam = () => {
     if (news_id != undefined && isParam === true) {
-      
       window.scrollTo(0, 0);
       setShowModal(true);
-      handleSelectPressNews(parseInt(news_id));
+      handleSelectPressNews(news_id)
+      
     }
   };
+
+const checkVotingData = async() => {
+  if(finalNewsData.length > 0) {
+    for(let i = 0; i <= finalNewsData.length; i++) {
+      axios.get(`https://news-manage.dyp.finance/api/v1/votes/${i}`)
+      
+     .then((data) => {
+       setVotes(...data.data)
+     })
+    }
+  }
+}
 
   useEffect(() => {
     if (activeNews.date !== undefined) {
@@ -128,7 +139,10 @@ const News = ({ theme, isPremium }) => {
     } else {
       if(finalNewsData.length > 0)
      { fetchNewsdata();
-       handleDisplayNewsFromParam();}
+       handleDisplayNewsFromParam();
+       checkVotingData().then()
+      
+      }
     }
   },[finalNewsData.length, newsData.length, news_id]);
 

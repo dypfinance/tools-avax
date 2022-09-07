@@ -95,6 +95,8 @@ export default class PoolExplorer extends React.Component {
 
   componentDidMount() {
     this.checkNetworkId();
+    window.scrollTo(0,0)
+
   }
 
   //   componentDidUpdate() {
