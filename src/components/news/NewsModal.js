@@ -35,7 +35,7 @@ const NewsModal = ({
   isPremium
 }) => {
   const getItemsWithoutCurrentItem = (currentItemId, arrayOfItems) => {
-    return arrayOfItems.filter((item) => item.id !== currentItemId);
+    return arrayOfItems.filter((item) => item?.id !== currentItemId);
   };
   const elementRef = useRef();
   const [height, setHeight] = useState(0);
@@ -108,6 +108,7 @@ const NewsModal = ({
     fetchVotingdata().then()
   }, [onHandleDownvote, onHandleUpvote])
 
+  
   return (
     <div  className="newmodal">
       <div>
@@ -291,13 +292,14 @@ const NewsModal = ({
           </div>
 
           <div className="right-col">
-            <h3 className="related-news-side-title">Related news</h3>
+            <h3 className="related-news-side-title">Top voted news</h3>
             <div className="related-news-wrapper">
               {latestNewsData.length > 0 && (
                 getItemsWithoutCurrentItem(newsId, latestNewsData)
                   .slice(0, parseInt(height / 100))
                   .map((item, key) => {
-                    return (
+                    if(item !== undefined)
+                    {return (
                       <div
                         key={key}
                         onClick={() => {
@@ -329,7 +331,7 @@ const NewsModal = ({
                           isConnected={isConnected}
                         />
                       </div>
-                    );
+                    );}
                   })
               ) }
             </div>

@@ -176,6 +176,9 @@ class App extends React.Component {
           isConnected: data.length === 0 ? false : true,
           coinbase: data.length === 0 ? undefined : data[0],
         });
+        if(data.length === 0) {
+      localStorage.setItem('logout', 'true')
+        }
       })
       .catch(console.error);}
       else {

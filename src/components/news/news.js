@@ -186,11 +186,20 @@ const News = ({ theme, isPremium }) => {
   }, [showModal, newsItemId]);
 
   const { news_id } = useParams();
-console.log(otherNewsData)
+// console.log(otherNewsData)
   const handleSelectOtherNews = (key) => {
     const search = (obj) => obj.id == key;
     const index = newsData.findIndex(search);
     setActiveNews(newsData[index]);
+    
+  };
+
+  const handleSelecTopNews = (key) => {
+    
+    const topnews = [...otherNewsData, ...popularNewsData, ...newsData, ...pressNewsData]
+    const search = (obj) => obj.id == key;
+    const index = topnews.findIndex(search);
+    setActiveNews(topnews[index]);
     
   };
 
@@ -220,6 +229,7 @@ console.log(otherNewsData)
 
     return result;
     }
+
 
     if(dataType === 'press') {
       const result = await fetch(`https://news-manage.dyp.finance/api/press/${itemId}`)
@@ -295,7 +305,18 @@ console.log(otherNewsData)
     }
   };
 
+    const sortTopVoted = (arrayOfVotes) => {
+    return arrayOfVotes.sort((a, b) => (a.up-a.down < b.up-b.down) ? 1 : -1)
+      }
 
+      const topVotes = (votes)=>{
+        const arrayOfVotes = sortTopVoted(votes)
+        const cloneArray = [...otherNewsData, ...popularNewsData, ...pressNewsData, ...newsData];
+        return arrayOfVotes.map((i) => cloneArray.find((j) => j.id === i.id));
+      }
+
+
+      
   useEffect(() => {
     if (activeNews.date !== undefined) {
       setIsParam(false);
@@ -342,8 +363,8 @@ console.log(otherNewsData)
         response = await axios.get(
           `https://news-manage.dyp.finance/api/v1/vote/${itemId}/up`
         );
-
-        fetchVotingdata().then();
+        
+        fetchVotingdata().then(votes=>topVotes(votes));
         setnewsItemId(itemId);
       } catch (e) {
         console.log(e);
@@ -385,25 +406,8 @@ console.log(otherNewsData)
         .catch(console.error);
     }
   };
-  const handleShowTopvoted = () => {
-    const cloneArray = _.cloneDeep(newsData);
-    var sortedArrayOfNews = cloneArray.map((obj) => {
-      var payload = obj;
-      if(obj.upvote !== undefined && obj.downvote !== undefined) {
-        payload.diff = Number(obj.upvote) - Number(obj.downvote);
-      }
 
-      else {
-        payload.diff = Number(obj.end?.up) - Number(obj.end?.down);
-      }
-      
-      return payload;
-    });
-
-
-    const descarray = [...sortedArrayOfNews].sort((a, b) => b.diff - a.diff);
-    return descarray;
-  };
+  
 
   const listInnerRef = useRef();
 
@@ -415,17 +419,19 @@ console.log(otherNewsData)
     return el.getBoundingClientRect()?.bottom <= window.innerHeight;
   };
 
+
+const bigNews = [...otherNewsData, ...newsData]
+
+
   const onScroll = () => {
     const wrappedElement = document.getElementById("header");
     if (isBottom(wrappedElement)) {
-      if(next < otherNewsData.length)
+      if(next < bigNews.length)
       {loadMore()}
       document.removeEventListener("scroll", onScroll);
     }
   };
-
-
-
+  
 
   return (
     <div onScroll={onScroll} ref={listInnerRef} id="header">
@@ -437,7 +443,7 @@ console.log(otherNewsData)
               style={{ width: "fit-content" }}
               onSelectOtherNews={(key) => {
                 window.scrollTo(0, 0);
-                handleSelectOtherNews(key);
+                handleSelecTopNews(key);
                 setIsParam(false);
               }}
               title={activeNews.title}
@@ -456,7 +462,7 @@ console.log(otherNewsData)
               day={activeNews.date.slice(0,10)}
               month={activeNews.month}
               year={activeNews.year}
-              latestNewsData={newsData}
+              latestNewsData={topVotes(votes)}
               newsId={activeNews.id}
               pressData={pressNewsData}
               onHandleUpvote={(id) => {
@@ -621,9 +627,9 @@ console.log(otherNewsData)
                     );
                   })}
 
-                {handleShowTopvoted().length > 0 &&  //todo
+                {topVotes(votes).length > 0 &&  //todo
                 activeClass === "toprated" ? (
-                  handleShowTopvoted()
+                  topVotes(votes)
                     .slice(0, 5)
                     .map((item, key) => {
                       return (
@@ -737,8 +743,8 @@ console.log(otherNewsData)
           Other News
         </h1>
         <div className="row m-0 othernews-row-wrapper" style={{ gap: 10 }}>
-          {otherNewsData.length > 0 &&
-            otherNewsData?.slice(0,next)?.map((item, key) => {
+          {bigNews.length > 0 &&
+            bigNews?.slice(0,next)?.map((item, key) => {
              
               return (
                 <div
@@ -765,8 +771,8 @@ console.log(otherNewsData)
                     }
                     onOtherNewsClick={() => {
                       // handleSelectOtherNews(item.id) 
-                      setActiveNews(otherNewsData[key])
-                      handleFetchNewsContent('other', item.id)
+                      setActiveNews(bigNews[key])
+                      handleFetchNewsContent('special', item.id)
                       setShowModal(true);
                       window.scrollTo(0, 0);
                     }}
@@ -784,7 +790,7 @@ console.log(otherNewsData)
             })}
         </div>
         <div className="d-flex justify-content-center">
-          {next < otherNewsData?.length && (
+          {next < (otherNewsData?.length + newsData.length) && (
             <button onClick={() => loadMore()} className="load-more-btn">
               Load more
             </button>
