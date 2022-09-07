@@ -35,7 +35,7 @@ const NewsModal = ({
   isPremium
 }) => {
   const getItemsWithoutCurrentItem = (currentItemId, arrayOfItems) => {
-    return arrayOfItems.filter((item) => item.end?.id !== currentItemId);
+    return arrayOfItems.filter((item) => item.id !== currentItemId);
   };
   const elementRef = useRef();
   const [height, setHeight] = useState(0);
@@ -45,19 +45,18 @@ const NewsModal = ({
   const [votes, setVotes] = useState([])
   
   useEffect(() => {
-    if (elementRef.current?.clientHeight !== 0) {
-      setHeight(elementRef.current?.clientHeight);
+    if (elementRef.current.clientHeight !== 0) {
+      setHeight(elementRef.current.clientHeight);
       setDislikeIndicator(false);
       setLikeIndicator(false);
     }
-  }, [newsId, title]);
+  }, [newsId, title, content]);
 
   const bal1 = Number(localStorage.getItem("balance1"));
   const bal2 = Number(localStorage.getItem("balance2"));
   const logout = localStorage.getItem("logout");
 
   const handleLikeStates = () => {
-  const logout = localStorage.getItem("logout");
 
     if ((bal1 === 0 && bal2 === 0 && isPremium === false) || logout === 'true') {
       setLikeIndicator(false);
@@ -75,7 +74,6 @@ const NewsModal = ({
   };
 
   const handleDisLikeStates = () => {
-  const logout = localStorage.getItem("logout");
 
     if ((bal1 === 0 && bal2 === 0 && isPremium === false) || logout === 'true') {
       setLikeIndicator(false);
@@ -295,9 +293,9 @@ const NewsModal = ({
           <div className="right-col">
             <h3 className="related-news-side-title">Related news</h3>
             <div className="related-news-wrapper">
-              {latestNewsData.length > 0 ? (
+              {latestNewsData.length > 0 && (
                 getItemsWithoutCurrentItem(newsId, latestNewsData)
-                  .slice(1, parseInt(height / 100))
+                  .slice(0, parseInt(height / 100))
                   .map((item, key) => {
                     return (
                       <div
@@ -307,25 +305,23 @@ const NewsModal = ({
                         }}
                       >
                         <RelatedNews
-                          newsId={item.end.id !== undefined ? item.end.id : item.id}
+                          newsId={item.id}
                           theme={theme}
                           title={item.title}
                           date={item.date.slice(0,10)}
                           month={item.month}
                           year={item.year}
                           link={item.link}
-                          // upvotes={item.end?.up !== undefined ? item.end.up : item.upvote}
                           upvotes={
                             votes.length !== 0
-                              ? votes.find((obj) => obj.id === item.end.id).up
-                              : item.end.up
+                              ? votes.find((obj) => obj.id === item.id)?.up
+                              : item.up
                           }
                           downvotes={
                             votes.length !== 0
-                              ? votes.find((obj) => obj.id === item.end.id).down
-                              : item.end.down
+                              ? votes.find((obj) => obj.id === item.id)?.down
+                              : item.down
                           }
-                          // downvotes={item.end?.down !== undefined ? item.end.down : item.downvote}
                           image={item.image}
                           onSelectOtherNews={onSelectOtherNews}
                           onHandleDownvote={onHandleDownvote}
@@ -335,46 +331,11 @@ const NewsModal = ({
                       </div>
                     );
                   })
-              ) : (
-                <></>
-              )}
+              ) }
             </div>
           </div>
         </div>
-        {/* <div className="modal-bottom-wrapper d-none">
-          <h3>Press Realese</h3>
-          <div className="row justify-content-center mt-4" style={{ gap: 15 }}>
-            {pressData.length > 0 &&
-              getItemsWithoutCurrentItem(newsId, pressData)
-                .slice(0, 6)
-                .map((item, key) => {
-                  return (
-                    <div
-                      className="banner-item"
-                      key={key}
-                      style={{ background: "none" }}
-                      onClick={() => {
-                        window.scrollTo(0, 0);
-                      }}
-                    >
-                      <OtherNews
-                        newsId={item.id}
-                        image={item.imageSrc}
-                        title={item.title}
-                        link={item.link}
-                        date={item.date}
-                        theme={theme}
-                        upvotes={item.upvote}
-                        downvotes={item.downvote}
-                        onOtherNewsClick={onSelectOtherNews}
-                        onHandlePressUpvote={onHandlePressUpvote}
-                        onHandlePressDownvote={onHandlePressDownvote}
-                      />
-                    </div>
-                  );
-                })}
-          </div>
-        </div> */}
+       
       </div>
     </div>
   );

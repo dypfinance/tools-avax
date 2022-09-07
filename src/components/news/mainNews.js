@@ -29,16 +29,17 @@ const MainNews = ({
   const bal2 = Number(localStorage.getItem("balance2"));
     const logout = localStorage.getItem("logout");
   const handleLikeStates = () => {
-
-    if ((bal1 === 0 && bal2 === 0 && isPremium === false) || logout === 'false') {
+    
+    if ((bal1 === 0 && bal2 === 0 && isPremium === false) || logout === 'true') {
       setLikeIndicator(false);
       setDislikeIndicator(false);
-      // onUpVoteClick();
+      onUpVoteClick();
     } else {
       if (likeIndicator === true) {
         setLikeIndicator(false);
         onDownVoteClick();
-      } else if (likeIndicator === false) {
+      } if (likeIndicator === false) {
+        
         setLikeIndicator(true);
         onUpVoteClick();
       }
@@ -47,7 +48,7 @@ const MainNews = ({
 
   const handleDisLikeStates = () => {
     const logout = localStorage.getItem("logout");
-    if ((bal1 === 0 && bal2 === 0 && isPremium === false) || logout === 'false') {
+    if ((bal1 === 0 && bal2 === 0 && isPremium === false) || logout === 'true') {
       setLikeIndicator(false);
       setDislikeIndicator(false);
       onDownVoteClick();
