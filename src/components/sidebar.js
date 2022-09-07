@@ -174,7 +174,7 @@ const Sidebar = (props) => {
                 }}
                 onClick={() => {
                   setActiveBtn("eth");
-                  handleSwitchNetwork("0x1");
+                  !props.isConnected ? props.showModal() :  handleSwitchNetwork("0x1");
                 }}
               >
                 <img src={Ethereum} alt="Image not found" />
@@ -204,7 +204,7 @@ const Sidebar = (props) => {
                 }}
                 onClick={() => {
                   setActiveBtn("avax");
-                  handleSwitchNetwork("0xa86a");
+                  !props.isConnected ? props.showModal() : handleSwitchNetwork("0xa86a");
                 }}
               >
                 <img src={Avax} alt="Image not found" />
