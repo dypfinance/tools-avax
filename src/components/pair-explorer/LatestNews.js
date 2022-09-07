@@ -185,6 +185,7 @@ const LatestNews = ({ theme }) => {
         showDots={true}
         autoplay={4000}
         hideArrow={true}
+        scrollSnap={true}
       >
         {newsArray.length > 0 &&
           newsArray.slice(0, 5).map((item, key) => {
@@ -235,7 +236,7 @@ const LatestNews = ({ theme }) => {
                           <div className="date-wrapper">
                             <img src={Clock} alt="" style={{ width: "auto" }} />
                             <h6 className="date-content">
-                              {item.month} {item.date}, {item.year}
+                              {item.date}
                             </h6>
                           </div>
                         </div>

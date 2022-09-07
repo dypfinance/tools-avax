@@ -2270,6 +2270,7 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
                   loop
                   showDots={true}
                   autoplay={4000}
+                  scrollSnap={true}
                 >
                   {finalNewsData.length > 0 &&
                     finalNewsData.slice(54, 59).map((item, key) => {
@@ -2475,8 +2476,9 @@ Now that DeFi Yield Protocol offers its own NFT Marketplace, is a monumental ach
             gap={1}
             showDots={true}
             loop
-            // responsiveLayout={responsive1}
-            // autoplay={4000}
+            scrollSnap={true}
+            responsiveLayout={responsive1}
+            autoplay={4000}
           >
             {press_highlight.length > 0 &&
               press_highlight.map((item, key) => {

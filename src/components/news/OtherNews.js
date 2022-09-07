@@ -76,7 +76,7 @@ const OtherNews = ({
       setDislikeIndicator(true);
       }}
     >
-      <div style={{height: '100%'}}>
+      <div style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
         <img src={image} alt="" className="other-news-image"/>
         <div style={{ padding: 12, gap: 10, height: '40%' }} className="d-flex flex-column justify-content-between">
           {/* <a href={link} target={"_blank"}> */}

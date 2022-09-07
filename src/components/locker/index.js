@@ -1179,7 +1179,9 @@ export default class Locker extends React.Component {
                 </div>
                 {this.state.recipientLocks.length > 0 ? (
                   <div style={{ maxWidth: "400px", width: "100%" }}>
+                    
                     <div className="row m-0">
+                      
                       <div className="badge-wraper">
                         <img
                           src={
@@ -1198,6 +1200,7 @@ export default class Locker extends React.Component {
                                 : "#C4C4C4",
                           }}
                         >
+                          
                           {this.state.lockActive === true ? (
                             <span className="counter-text">
                               Liquidity not locked
@@ -1303,6 +1306,16 @@ export default class Locker extends React.Component {
                   </div>
                 ) : (
                   <div className="badge-wraper">
+                    <div
+                          className="moreinfo-wrapper"
+                          onClick={() => {
+                            this.setState({ showModal: true });
+                          }}
+                        >
+                          <span className="moreinfo-text">
+                            More info<i className="fas fa-info-circle"></i>
+                          </span>
+                        </div>
                     <img src={BadgeGrayLight} alt="" />
                     <div
                       className="counter-wrapper"

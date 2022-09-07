@@ -386,6 +386,8 @@ export default class Subscription extends React.Component {
                             <img
                               src={item.free === "yes" ? Check : Cross}
                               alt=""
+                              height={'24px'}
+                              width={'55px'}
                             />{" "}
                           </td>
                           <td className="tabledata">
@@ -471,12 +473,14 @@ export default class Subscription extends React.Component {
                                 <img
                                   src={item.free === "yes" ? Check : Cross}
                                   alt=""
-                                />{" "}
+                                 
+                                />
                               </td>
                               <td className="tabledata">
                                 <img
                                   src={item.premium === "yes" ? Check : Cross}
                                   alt=""
+
                                 />
                               </td>
                             </tr>

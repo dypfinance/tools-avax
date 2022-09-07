@@ -1730,6 +1730,14 @@ color: #303134 !important;
     height: 175px;
 }
 
+.left-col-content iframe {
+  width: 318px !important;
+}
+
+.navlinks, .activenavlink  {
+  width: 119px !important;
+}
+
   .yUUVS {
     grid-column-gap: calc(2% + 1px) !important;
     margin-bottom: 10px !important;
