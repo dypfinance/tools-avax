@@ -195,7 +195,6 @@ const News = ({ theme, isPremium }) => {
   };
 
   const handleSelecTopNews = (key) => {
-    
     const topnews = [...otherNewsData, ...popularNewsData, ...newsData, ...pressNewsData]
     const search = (obj) => obj.id == key;
     const index = topnews.findIndex(search);
@@ -258,7 +257,7 @@ const News = ({ theme, isPremium }) => {
     }
 
     if(dataType === 'special') {
-      handleSelectOtherNews(itemId)
+      // handleSelectOtherNews(itemId)
       for(let i = 0; i < newsData.length; i ++) {
         if(itemId === newsData[i].id) {
           handleFetchNewsContent('news', itemId)
@@ -770,7 +769,6 @@ const bigNews = [...otherNewsData, ...newsData]
                       votes.length !== 0 ? votes.find((obj) => obj.id === item.id)?.down : 0
                     }
                     onOtherNewsClick={() => {
-                      // handleSelectOtherNews(item.id) 
                       setActiveNews(bigNews[key])
                       handleFetchNewsContent('special', item.id)
                       setShowModal(true);

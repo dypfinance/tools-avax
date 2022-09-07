@@ -50,7 +50,7 @@ const NewsModal = ({
       setDislikeIndicator(false);
       setLikeIndicator(false);
     }
-  }, [newsId, title, content]);
+  }, [newsId, content]);
 
   const bal1 = Number(localStorage.getItem("balance1"));
   const bal2 = Number(localStorage.getItem("balance2"));
