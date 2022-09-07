@@ -1702,6 +1702,10 @@ color: #303134 !important;
   .singlepress-inner {
     flex-wrap: wrap !important;
   }
+
+  .popup-btn {
+    width: 88% !important;
+  }
   .itemdataimg {
     width: 55px;
     height: 24px;

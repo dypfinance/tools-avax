@@ -14,7 +14,7 @@ const InfoModal = ({ modalId, visible, onModalClose }) => {
         }}
       >
         <div>
-          <div style={{padding: '0 30px 30px'}}>
+          <div style={{padding: '30px'}}>
             <h2 style={{ maxWidth: 550 }} className="left-col-title">
               DYP Locker
             </h2>
