@@ -1702,6 +1702,10 @@ color: #303134 !important;
   .singlepress-inner {
     flex-wrap: wrap !important;
   }
+  .itemdataimg {
+    width: 55px;
+    height: 24px;
+  }
   .social-share-parent2 {
     position: absolute !important;
     top: 24px;
