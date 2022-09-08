@@ -36,7 +36,7 @@ const RelatedNews = ({
 
 
     if (
-      (bal1 === 0 && bal2 === 0 && isPremium === undefined) ||
+      (bal1 === 0 && bal2 === 0 && isPremium === false) ||
       logout === 'true'
     ) {
       setLikeIndicator(false);

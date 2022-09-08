@@ -329,6 +329,7 @@ const NewsModal = ({
                           onHandleDownvote={onHandleDownvote}
                           onHandleUpvote={onHandleUpvote}
                           isConnected={isConnected}
+                          isPremium={isPremium}
                         />
                       </div>
                     );}
