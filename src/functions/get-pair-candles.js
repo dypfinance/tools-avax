@@ -1,13 +1,14 @@
 import axios from "axios";
 
 async function getPairCandles(pair) {
+  const chain = localStorage.getItem('network')
     
   let candles = await axios.get(
-    window.ethereum ?
-    window.ethereum.chainId === "0x1"
+   
+   chain === "1"
       ? `${window.config.apieth_baseurl}/api/candles/minutes/${pair}`
       : `${window.config.api_baseurl}/api/candles/minutes/${pair}`
-      : `${window.config.apieth_baseurl}/api/candles/minutes/${pair}`
+     
   );
   candles = candles.data;
   

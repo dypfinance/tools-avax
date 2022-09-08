@@ -8,21 +8,18 @@ const Header = ({toggleMobileSidebar, toggleTheme, theme}) => {
   const [gasPrice, setGasprice] = useState()
   const [ethPrice, setEthprice] = useState()
   const [chainId, setChainId] = useState(1)
-
+ const chain = localStorage.getItem('network');
   const checkNetworkId = () => {
-    if(window.ethereum) {
-window.ethereum.request({ method: "net_version" })
-      .then((data) => {
-        setChainId(Number(data))
-        fetchData()
-      })
-      .catch(console.error);
-    }
-    else {
+    
+    if(chain === '1') {
       setChainId(1)
-    }
-  }
+     }
+     if(chain === '43114') {
+      console.log('yes')
+      setChainId(43114)
+     }
 
+  }
 
   const [hotpairs, setHotpairs] = useState([])
 
@@ -75,33 +72,30 @@ window.ethereum.request({ method: "net_version" })
 
   const ethereum = window.ethereum
 
-  function handleChainChanged() {
+  function handleChainChanged() {  //todo
     // We recommend reloading the page, unless you must do otherwise
     // window.location.reload()
     if(window.location.href.includes('pair-explorer')) {
       if(chainId === 1) {
         window.location.assign('/pair-explorer/0x497070e8b6c55fd283d8b259a6971261e2021c01')
-
-
       }
       else {
         window.location.assign("/pair-explorer/0x76911e11fddb742d75b83c9e1f611f48f19234e4")
-  
-
       }
     }
-    console.log(window.location.href)
+    
   }
 
   useEffect(()=>{
     fetchData().then()
     refreshHotPairs().then()
     checkNetworkId()
-  ethereum?.on('chainChanged', handleChainChanged)
-  ethereum?.on('accountChanged', handleChainChanged)
-  
-  }, [chainId])
 
+  }, [chainId, chain])
+
+
+
+ 
   return (
     
     <header className="header-wrap" style={{zIndex: 777 }}>

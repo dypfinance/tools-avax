@@ -661,7 +661,7 @@ const News = ({ theme, isPremium }) => {
                     );
                   })}
 
-                {topVotes(votes).length > 0 && //todo
+                {topVotes(votes).length > 0 && 
                 activeClass === "toprated" ? (
                   topVotes(votes)
                     .slice(0, 5)

@@ -71,23 +71,24 @@ export default class TopTokens extends React.Component {
   }
 
   checkNetworkId() {
-    if (window.ethereum) {
-      window.ethereum
-        .request({ method: "net_version" })
-        .then((data) => {
-          this.setState({
-            networkId: data,
-          });
-          this.fetchTopTokens().then();
-        })
-        .catch(console.error);
-    } else {
-    this.fetchTopTokens().then();  
+
+    
+
+    const chain = localStorage.getItem('network')
+    if(chain === '1') {
       this.setState({
-        networkId: "1",
+        networkId: '1',
       });
+       this.fetchTopTokens().then();
+     }
+     if(chain === '43114') {
+      this.setState({
+        networkId: '43114',
+      });
+       this.fetchTopTokens().then();
       
-    }
+     }
+
   }
 
   componentDidMount() {
@@ -127,6 +128,8 @@ export default class TopTokens extends React.Component {
   };
 
   GetDataTable = () => {
+    const chain = localStorage.getItem('network')
+
     const columns = [
       {
         name: "Name",
@@ -137,7 +140,7 @@ export default class TopTokens extends React.Component {
           <a
             target="_blank"
             className="l-clr-purple"
-            href={ window.ethereum ? window.ethereum.chainId === '0x1' ? `https://v2.info.uniswap.org/token/${txn.id}` : `https://cchain.explorer.avax.network/address/${txn.id}` : `https://v2.info.uniswap.org/token/${txn.id}`}
+            href={ chain === '1' ? `https://v2.info.uniswap.org/token/${txn.id}` : `https://cchain.explorer.avax.network/address/${txn.id}`}
             style={{
               whiteSpace: "nowrap",
               overflow: "hidden",

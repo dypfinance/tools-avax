@@ -39,36 +39,51 @@ class App extends React.Component {
       subscribedPlatformTokenAmount: "...",
       isPremium: false,
       hotPairs: [],
-      networkId: '1',
+      networkId: "1",
+      chain: "1",
       show: false,
     };
-    this.showModal = this.showModal.bind(this)
-    this.hideModal = this.hideModal.bind(this)
+    this.showModal = this.showModal.bind(this);
+    this.hideModal = this.hideModal.bind(this);
   }
 
   showModal = () => {
-    this.setState({ show: true })
-  }
+    this.setState({ show: true });
+  };
 
   hideModal = () => {
-    this.setState({ show: false })
-  }
+    this.setState({ show: false });
+  };
 
   checkNetworkId() {
-    if(window.ethereum) {
-      window.ethereum.request({ method: "net_version" })
-      .then((data) => {
-        this.setState({
-          networkId: data
-        });
-        this.refreshSubscription().then()
-      })
-      .catch(console.error);
-    }
-    else {
+   let chain = localStorage.getItem('network')
+   if(chain === '1') {
+    this.setState({
+      networkId: '1'
+    })
+   }
+   if(chain === '43114') {
+    this.setState({
+      networkId: '43114'
+    })
+   }
+  }
+
+  switchNetwork = (networkData)=> {
+    if (networkData === "1") {
+      localStorage.setItem("network", "1");
       this.setState({
         networkId: '1'
-      });
+      })
+      window.location.reload()
+    }
+
+    if (networkData === "43114") {
+      localStorage.setItem("network", "43114");
+      this.setState({
+        networkId: '43114'
+      })
+      window.location.reload()
     }
   }
 
@@ -87,7 +102,7 @@ class App extends React.Component {
     //   }
     // }.bind(this))
 
-    let coinbase = this.state.coinbase
+    let coinbase = this.state.coinbase;
 
     let subscribedPlatformTokenAmount;
     if (this.state.networkId === "1") {
@@ -106,18 +121,17 @@ class App extends React.Component {
   handleConnection = async () => {
     let isConnected = this.state.isConnected;
     try {
-      localStorage.setItem('logout', 'false')
+      localStorage.setItem("logout", "false");
       isConnected = await window.connectWallet();
     } catch (e) {
-      this.setState({show: false})
+      this.setState({ show: false });
       window.alertify.error(String(e) || "Cannot connect wallet!");
       return;
     }
     this.setState({ isConnected, coinbase: await window.getCoinbase() });
-    this.setState({show: false})
+    this.setState({ show: false });
     return isConnected;
   };
-
 
   refreshHotPairs = async () => {
     window.$.get(
@@ -135,7 +149,6 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-    
     // console.log(this.state.networkId);
     // getSyncStats()
     // .then((syncStatus) => {
@@ -165,34 +178,32 @@ class App extends React.Component {
     // this.subscriptionInterval = setInterval(this.refreshSubscription, 5e3);
   }
 
-
-
   checkConnection() {
-    const logout = localStorage.getItem('logout')
-    if(logout !== 'true')
-    {window.ethereum?.request({ method: "eth_accounts" })
-      .then((data) => {
-        this.setState({
-          isConnected: data.length === 0 ? false : true,
-          coinbase: data.length === 0 ? undefined : data[0],
-        });
-        if(data.length === 0) {
-      localStorage.setItem('logout', 'true')
-        }
-      })
-      .catch(console.error);}
-      else {
-        this.setState({
-          isConnected: false,
-         
-        });
-      }
+    const logout = localStorage.getItem("logout");
+    if (logout !== "true") {
+      window.ethereum
+        ?.request({ method: "eth_accounts" })
+        .then((data) => {
+          this.setState({
+            isConnected: data.length === 0 ? false : true,
+            coinbase: data.length === 0 ? undefined : data[0],
+          });
+          if (data.length === 0) {
+            localStorage.setItem("logout", "true");
+          }
+        })
+        .catch(console.error);
+    } else {
+      this.setState({
+        isConnected: false,
+      });
+    }
   }
 
-   logout = () => {
-    localStorage.setItem('logout', 'true')
-    this.checkConnection()
-  }
+  logout = () => {
+    localStorage.setItem("logout", "true");
+    this.checkConnection();
+  };
   componentWillUnmount() {
     // clearInterval(this.subscriptionInterval);
   }
@@ -226,11 +237,8 @@ class App extends React.Component {
   };
 
   render() {
-   
-
     document.addEventListener("touchstart", { passive: true });
     return (
-     
       <div
         className={`page_wrapper ${this.state.isMinimized ? "minimize" : ""}`}
       >
@@ -259,8 +267,10 @@ class App extends React.Component {
             showModal={this.showModal}
             hideModal={this.hideModal}
             show={this.state.show}
-            checkConnection = {this.checkConnection}
-            logout = {this.logout}
+            checkConnection={this.checkConnection}
+            logout={this.logout}
+            switchNetwork={this.switchNetwork}
+           
           />
           <div className="right-content">
             <Switch>

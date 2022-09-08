@@ -74,23 +74,21 @@ export default class BigSwapExplorer extends React.Component {
   }
 
   checkNetworkId() {
-    if (window.ethereum) {
-      window.ethereum
-        .request({ method: "net_version" })
-        .then((data) => {
-          this.setState({
-            networkId: data,
-          });
-          this.fetchSwaps().then();
-        })
-        .catch(console.error);
-    } else {
-    this.fetchSwaps().then();  
-      this.setState({
-        networkId: "1",
-      });
-      
+   const chain = localStorage.getItem('network')
+
+   if(chain === '1') {
+     this.setState({
+       networkId: '1',
+     });
+     
     }
+    if(chain === '43114') {
+     this.setState({
+       networkId: '43114',
+     });
+     
+    }
+    
   }
 
 

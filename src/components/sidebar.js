@@ -25,12 +25,12 @@ const Sidebar = (props) => {
   const [activeBtn, setActiveBtn] = useState("avax");
   const [activeLink, setActiveLink] = useState("news");
   const [location, setlocation] = useState("news");
-  const [networkId, setNetworkId] = useState(1);
 
+const chain = localStorage.getItem('network')
 
   const [avatar, setAvatar] = useState("/assets/img/person.svg");
 
-  const { chainId, active, account } = useWeb3React();
+  const { active, account } = useWeb3React();
   const triedEager = useEagerConnect();
   useInactiveListener(!triedEager);
 
@@ -86,7 +86,7 @@ const Sidebar = (props) => {
               className="top-right-header"
               style={{
                 background: props.isConnected
-                  ? chainId === 1
+                  ? chain === '1'
                     ? "linear-gradient(87.56deg, #1D91D0 9.37%, #32B1F7 93.57%)"
                     : "linear-gradient(87.56deg, #FC4F36 9.37%, #E30613 93.57%)"
                   : "rgba(255, 255, 255, 0.3)",
@@ -155,36 +155,33 @@ const Sidebar = (props) => {
             <h6
               className="networks row m-0"
               style={{
-                border: props.isConnected
-                  ? chainId === 1
+                border: chain === '1'
                     ? "1px solid #1486C3"
                     : "1px solid #E84142"
-                  : "none",
+                  
               }}
             >
               <a
                 href="javascript:void(0)"
                 className="hoverNetwork"
                 style={{
-                  background: props.isConnected
-                    ? chainId === 1
+                  background:chain === '1'
                       ? "#1D91D0"
                       : "transparent"
-                    : "transparent",
+                    
                 }}
                 onClick={() => {
                   setActiveBtn("eth");
-                  !props.isConnected ? props.showModal() :  handleSwitchNetwork("0x1");
+                  props.switchNetwork('1')
                 }}
               >
                 <img src={Ethereum} alt="Image not found" />
                 <span
                   style={{
-                    color: props.isConnected
-                      ? chainId === 1
+                    color: chain === '1'
                         ? "#fff"
                         : "#6B7A99"
-                      : "#6B7A99",
+                      
                   }}
                   className="network-text"
                 >
@@ -196,25 +193,22 @@ const Sidebar = (props) => {
                 className="hoverNetwork"
                 style={{
                   padding: "4px 11px 0",
-                  background: props.isConnected
-                    ? chainId === 43114
+                  background: chain === '43114'
                       ? "#E84142"
                       : "transparent"
-                    : "transparent",
+                    
                 }}
                 onClick={() => {
                   setActiveBtn("avax");
-                  !props.isConnected ? props.showModal() : handleSwitchNetwork("0xa86a");
+                   props.switchNetwork('43114') ;
                 }}
               >
                 <img src={Avax} alt="Image not found" />
                 <span
                   style={{
-                    color: props.isConnected
-                      ? chainId === 43114
+                    color: chain === '43114'
                         ? "#fff"
                         : "#6B7A99"
-                      : "#6B7A99",
                   }}
                 >
                   Avalanche
@@ -482,7 +476,7 @@ const Sidebar = (props) => {
                   target="_blank"
                   rel="noopener noreferrer"
                   href={
-                    chainId === 1
+                   chain === 1
                       ? "https://app.uniswap.org/#/swap?outputCurrency=0x961c8c0b1aad0c0b10a51fef6a867e3091bcef17"
                       : "https://app.pangolin.exchange/#/swap?outputCurrency=0x961c8c0b1aad0c0b10a51fef6a867e3091bcef17"
                   }

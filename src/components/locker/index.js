@@ -63,45 +63,50 @@ export default class Locker extends React.Component {
     };
   }
 
-  checkNetworkId = async ()=> {
-    if (window.ethereum) {
-      window.ethereum
-        .request({ method: "net_version" })
-        .then((data) => {
-          this.setState({
-            networkId: data,
-          });
-         
-           this.selectBaseToken().then();
-           this.refreshMyLocks().then()
-           this.loadPairInfo().then();
-           let pair_id = this.props.match.params.pair_id;
-           if (window.web3.utils.isAddress(pair_id)) {
-            this.refreshTokenLocks(pair_id);
-          this.checkTotalLpLocked().then()
-          }
+
+  checkNetworkId() {
+    const chain = localStorage.getItem('network')
+    if(chain === '1') {
+      this.setState({
+        networkId: '1',
+      });
+
+      this.selectBaseToken().then();
+      this.refreshMyLocks().then()
+      this.loadPairInfo().then();
+      let pair_id = this.props.match.params.pair_id;
+      if (window.web3.utils.isAddress(pair_id)) {
+       this.refreshTokenLocks(pair_id);
+     this.checkTotalLpLocked().then()
+     }
+      
+     }
+     if(chain === '43114') {
+      this.setState({
+        networkId: '43114',
+      });
+
+      this.selectBaseToken().then();
+      this.refreshMyLocks().then()
+      this.loadPairInfo().then();
+      let pair_id = this.props.match.params.pair_id;
+      if (window.web3.utils.isAddress(pair_id)) {
+       this.refreshTokenLocks(pair_id);
+     this.checkTotalLpLocked().then()
+     }
+      
+     }
+
+
             
     if (window.isConnectedOneTime) {
       this.onComponentMount();
     } else {
       window.addOneTimeWalletConnectionListener(this.onComponentMount);
     }
-        })
-        .catch(console.error);
-    } else {
      
-     this.selectBaseToken().then();
-    if (window.isConnectedOneTime) {
-      this.onComponentMount();
-    } else {
-      window.addOneTimeWalletConnectionListener(this.onComponentMount);
-    }
-      this.setState({
-        networkId: "1",
-      });
-      
-    }
-  }
+   }
+   
 
   checkTotalLpLocked = async () => {
     let baseTokens =
@@ -141,7 +146,7 @@ export default class Locker extends React.Component {
       coinbase: undefined ,
     });
   }
-    
+  
     
   }
 
@@ -198,7 +203,6 @@ export default class Locker extends React.Component {
     this.refreshMyLocks().then();
     this.selectBaseToken().then();
    this.checkNetworkId()
-
 
     this.setState({ coinbase: await window.getCoinbase() });
     let pair_id = this.props.match.params.pair_id;
@@ -291,7 +295,7 @@ export default class Locker extends React.Component {
   };
 
   handlePairChange = async (e, pair_address = null) => {
-    let newPairAddress = pair_address || e.target.value;
+    let newPairAddress = pair_address || e.target?.value;
 
     this.setState({ pair_address: newPairAddress }, () => {
       this.refreshTokenLocks(newPairAddress);
@@ -357,6 +361,7 @@ export default class Locker extends React.Component {
     this.setState({ status: "" });
 
     if (pair) {
+ 
       let balance = await window.getTokenHolderBalance(
         this.state.pair_address,
         this.state.coinbase
@@ -372,7 +377,7 @@ export default class Locker extends React.Component {
         this.state.networkId === "1"
           ? await window.getBaseTokensETH()
           : await window.getBaseTokens()
-         
+          
       if (baseTokens.includes(token0)) {
         this.setState({ selectedBaseToken: "0" });
         this.setState({ selectedBaseTokenTicker: pair["token0"].symbol });
@@ -389,17 +394,15 @@ export default class Locker extends React.Component {
   };
 
   handleApprove = async (e) => {
+  const chain = localStorage.getItem('network')
+
     let selectedBaseTokenAddress = this.state.pair
       ? this.state.pair[
           this.state.selectedBaseToken == "0" ? "token0" : "token1"
         ].address
       : "";
-    let baseTokens =
-    window.ethereum ?
-      window.ethereum.chainId === "0x1"
-        ? await window.getBaseTokensETH()
-        : await window.getBaseTokens()
-        :await window.getBaseTokensETH();
+    let baseTokens = chain === "1" ? await window.getBaseTokensETH()  : await window.getBaseTokens()
+       
     if (
       !baseTokens.includes(selectedBaseTokenAddress) &&
       this.state.amount != 0
@@ -437,11 +440,11 @@ export default class Locker extends React.Component {
     });
     await tokenContract.methods
       .approve(
-        window.ethereum ?
-        window.ethereum.chainId === "0x1"
+        
+        chain === "1"
           ? window.config.lockereth_address
-          : window.config.locker_address
-          :window.config.lockereth_address,
+          : window.config.locker_address,
+        
         amountWei.times(1e18).toFixed(0).toString()
       )
       .send()
@@ -463,8 +466,11 @@ export default class Locker extends React.Component {
           this.state.selectedBaseToken == "0" ? "token0" : "token1"
         ].address
       : "";
-      if(window.ethereum) {
- if (window.ethereum.chainId === "0x1") {
+   const chain = localStorage.getItem('network')
+    
+      
+   
+ if (chain === '1') {
       let lockerContract = await window.getContract({ key: "LOCKERETH" });
 
       let estimatedValue = await window.getMinLockCreationFeeInWei(
@@ -496,7 +502,7 @@ export default class Locker extends React.Component {
         });
     }
 
-    if (window.ethereum.chainId === "0xa86a") {
+    if ( chain === "43114") {
       let lockerContract = await window.getContract({ key: "LOCKER" });
 
       let estimatedValue = await window.getMinLockCreationFeeInWei(
@@ -526,41 +532,7 @@ export default class Locker extends React.Component {
           this.setState({ status: "An error occurred, please try again" });
         });
     }
-      }
-      else {
-        
-          let lockerContract = await window.getContract({ key: "LOCKERETH" });
-    
-          let estimatedValue = await window.getMinLockCreationFeeInWei(
-            this.state.pair_address,
-            selectedBaseTokenAddress,
-            this.state.amount
-          );
-          estimatedValue = new window.BigNumber(estimatedValue)
-            .times(1.1)
-            .toFixed(0);
-          this.setState({ loadspinnerLock: true });
-    
-          await lockerContract.methods
-            .createLock(
-              this.state.pair_address,
-              selectedBaseTokenAddress,
-              this.state.amount,
-              Math.floor(this.state.unlockDate.getTime() / 1e3)
-            )
-            .send({ value: estimatedValue, from: await window.getCoinbase() })
-            .then(() => {
-              this.setState({ loadspinnerLock: false });
-              this.setState({ lockActive: false });
-            })
-            .catch((e) => {
-              console.error(e);
-              this.setState({ loadspinnerLock: false });
-              this.setState({ status: "An error occurred, please try again" });
-            });
-        
-      }
-   
+     
   };
 
   handleAmountPercentInput = (percent) => (e) => {
@@ -571,16 +543,17 @@ export default class Locker extends React.Component {
   };
 
   handleClaim = (id) => (e) => {
+   const chain = localStorage.getItem('network')
+
     e.preventDefault();
-    if(window.ethereum) {
-      if (window.ethereum.chainId === "0x1") {
+   
+      if (chain === "1") {
       window.claimUnlockedETH(id);
     }
-    if (window.ethereum.chainId === "0xa86a") {
+    if (chain === "43114") {
       window.claimUnlocked(id);
     }
-    }
-    else window.claimUnlockedETH(id);
+    
     
   };
 
@@ -596,6 +569,7 @@ export default class Locker extends React.Component {
     iFrame.setAttribute("id", "locker-iframe");
     // navigator.clipboard.writeText(this.state.textToCopy)
   };
+
   GetPairLockInfo = () => {
     return (
       <div className="mb-4">
@@ -1943,7 +1917,10 @@ export default class Locker extends React.Component {
       </div>
     );
   };
+  
   render() {
+  const chain = localStorage.getItem('network')
+
     return (
       <div className="locker">
         <div className="table-title">
@@ -1952,7 +1929,7 @@ export default class Locker extends React.Component {
           </h2>
 
           <p>
-            Lock {window.ethereum ? window.ethereum.chainId === "0x1" ? "Uniswap" : "Pangolin" : 'Uniswap'}
+            Lock {chain === "1" ? "Uniswap" : "Pangolin" }
             {" "}liquidity and check status of liquidity locks.
           </p>
         </div>

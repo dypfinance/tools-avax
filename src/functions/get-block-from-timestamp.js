@@ -65,8 +65,10 @@ const TIMESTAMP_QUERY = `query ($number: BigInt!) {
 
 async function getBlockFromTimestamp(timestamp) {
   let variables = { gte: timestamp * 1, lt: timestamp * 1 + 600 };
-  if (window.ethereum) {
-    if (window.ethereum.chainId === "0x1") {
+  const chain = localStorage.getItem('network')
+
+ 
+    if (chain === "1") {
       let response = await fetchGql(
         BLOCK_QUERY,
         variables,
@@ -75,7 +77,7 @@ async function getBlockFromTimestamp(timestamp) {
       // alert(JSON.stringify(response))
       return response.data.blocks[0].number;
     }
-    if (window.ethereum.chainId === "0xa86a") {
+    if (chain === "43114") {
       let response = await fetchGql(
         BLOCK_QUERY,
         variables,
@@ -84,22 +86,15 @@ async function getBlockFromTimestamp(timestamp) {
       // alert(JSON.stringify(response))
       return response.data.blocks[0].number;
     }
-  } else {
-    let response = await fetchGql(
-      BLOCK_QUERY,
-      variables,
-      ETHEREUM_BLOCKS_SUBGRAPH_ETH
-    );
-    // alert(JSON.stringify(response))
-    return response.data.blocks[0].number;
-  }
+  
 }
 
 async function getTimestampFromBlock(number) {
   let variables = { number };
   let response = 0;
-  if (window.ethereum) {
-    if (window.ethereum.chainId === "0x1") {
+  const chain = localStorage.getItem('network')
+
+    if (chain === "1") {
       while (1) {
         response = await fetchGql(
           TIMESTAMP_QUERY,
@@ -117,7 +112,7 @@ async function getTimestampFromBlock(number) {
       }
       return response.data.blocks[0].timestamp;
     }
-    if (window.ethereum.chainId === "0xa86a") {
+    if (chain === "43114") {
       while (1) {
         response = await fetchGql(
           TIMESTAMP_QUERY,
@@ -135,29 +130,14 @@ async function getTimestampFromBlock(number) {
       }
       return response.data.blocks[0].timestamp;
     }
-  } else {
-    while (1) {
-      response = await fetchGql(
-        TIMESTAMP_QUERY,
-        variables,
-        ETHEREUM_BLOCKS_SUBGRAPH_ETH
-      );
-      if (
-        response.data.blocks != undefined &&
-        response.data != 0 &&
-        response.data.blocks[0] != undefined
-      ) {
-        console.log(response);
-        break;
-      }
-    }
-    return response.data.blocks[0].timestamp;
-  }
+  
 }
 
 async function getLatestBlock() {
-  if (window.ethereum) {
-    if (window.ethereum.chainId === "0x1") {
+  const chain = localStorage.getItem('network')
+
+ 
+    if (chain === "1") {
       let response = await fetchGql(
         INDEXING_STATUS_QUERY_ETH,
         null,
@@ -168,7 +148,7 @@ async function getLatestBlock() {
         .number;
     }
 
-    if (window.ethereum.chainId === "0xa86a") {
+    if (chain === "43114") {
       let response = await fetchGql(
         INDEXING_STATUS_QUERY,
         null,
@@ -177,16 +157,7 @@ async function getLatestBlock() {
       return response.data.indexingStatusForCurrentVersion.chains[0].latestBlock
         .number;
     }
-  } else {
-    let response = await fetchGql(
-      INDEXING_STATUS_QUERY_ETH,
-      null,
-      INDEXING_STATUS_ENDPOINTETH
-    );
-
-    return response.data.indexingStatusForCurrentVersion.chains[0].latestBlock
-      .number;
-  }
+  
 }
 
 async function get24hEarlierBlock() {

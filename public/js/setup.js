@@ -2776,14 +2776,14 @@ async function getMinLockCreationFeeInWei(pair, baseToken, amount) {
     .call();
 }
 async function getPairTokensInfo(pair) {
+  const chain = localStorage.getItem('network')
+
   let pairContract = await getContract({
     key: "PAIR",
     address: pair,
-    ABI: window.ethereum
-      ? window.ethereum.chainId === "0x1"
+    ABI: chain === "1"
         ? UNISWAP_PAIRETH_ABI
         : UNISWAP_PAIR_ABI
-      : UNISWAP_PAIRETH_ABI,
   });
   let [token0_address, token1_address] = await Promise.all([
     pairContract.methods.token0().call(),
@@ -3049,9 +3049,10 @@ async function toggleFavoriteETH(pair) {
 // -----------------
 async function getMainToken(pair) {
   let mainToken = pair.token0 || {};
+  const chain = localStorage.getItem('network')
 
-  if (window.ethereum) {
-    if (window.ethereum.chainId === "0x1") {
+
+    if (chain === "1") {
       for (let token of window.config.baseEth_tokens) {
         if (mainToken.id == token) {
           mainToken = pair.token1;
@@ -3068,7 +3069,7 @@ async function getMainToken(pair) {
       return mainToken;
     }
 
-    if (window.ethereum.chainId === "0xa86a") {
+    if (chain === "43114") {
       for (let token of window.config.base_tokens) {
         if (mainToken.id == token) {
           mainToken = pair.token1;
@@ -3084,23 +3085,9 @@ async function getMainToken(pair) {
       }
       return mainToken;
     }
-  } else {
-    for (let token of window.config.baseEth_tokens) {
-      if (mainToken.id == token) {
-        mainToken = pair.token1;
-        mainToken.__number = 1;
-        mainToken.__base_number = 0;
-        break;
-      } else if (pair.token1.id == token) {
-        mainToken = pair.token0;
-        mainToken.__number = 0;
-        mainToken.__base_number = 1;
-        break;
-      }
-    }
-    return mainToken;
-  }
+
 }
+
 // ------------------
 
 // helper functions for csv json and file reading

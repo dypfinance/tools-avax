@@ -88,13 +88,15 @@ export default class Farms extends React.Component {
   // }
 
   fetchFarms = async () => {
+  const chain = localStorage.getItem('network')
+
     try {
       let farms = await window.$.get(
-        window.ethereum ?
-        window.ethereum.chainId === "0x1"
+       
+        chain === "1"
           ? `${window.config.farm_api}/api/farm-info/eth/`
           : `${window.config.farm_api}/api/farm-info-avax/`
-          :`${window.config.farm_api}/api/farm-info/eth/`
+         
       );
       farms = farms.farmInfo;
       //console.log({ farms })

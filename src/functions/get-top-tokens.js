@@ -47,8 +47,10 @@ const TOKEN_HISTORY_QUERY = `query ($token: ID!, $block: Int!) {
 }`;
 
 async function getOldTokenResponse(tokenIdList, _24hEarlierBlock) {
-  if(window.ethereum) {
-  if(window.ethereum.chainId === '0xa86a') {
+  const chain = localStorage.getItem('network')
+
+
+  if(chain === '43114') {
   
   let bundleResponse = await fetchGql(ETH_PRICE_HISTORY_QUERY, {
     block: _24hEarlierBlock,
@@ -64,7 +66,7 @@ async function getOldTokenResponse(tokenIdList, _24hEarlierBlock) {
 
   return { data: { bundle, tokens: oldTokenResponses } };
   }
-  if(window.ethereum.chainId === '0x1') {
+  if(chain === '1') {
 
     let bundleResponse = await fetchGql(ETH_PRICE_HISTORY_QUERY, {
       block: _24hEarlierBlock,
@@ -87,36 +89,14 @@ async function getOldTokenResponse(tokenIdList, _24hEarlierBlock) {
     return { data: { bundle, tokens: oldTokenResponses } };
 
   }
-  }
-  else {
-      let bundleResponse = await fetchGql(ETH_PRICE_HISTORY_QUERY, {
-        block: _24hEarlierBlock,
-      });
-      let bundle = bundleResponse.data.bundle;
-      // let oldTokenResponses = await Promise.all(tokenIdList.map(token => fetchGql(TOKEN_HISTORY_QUERY, {token, block: _24hEarlierBlock})))
-      let oldTokenResponses = await Promise.all(
-        tokenIdList.map((token) =>
-          fetchGql(
-            TOKEN_HISTORY_QUERY,
-            { token, block: _24hEarlierBlock },
-            "https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2"
-          )
-        )
-      );
-  
-  
-      oldTokenResponses = oldTokenResponses.map((r) => r.data.token);
-    
-      return { data: { bundle, tokens: oldTokenResponses } };
-  
-    
-  }
+
 
 }
 
 export default async function getTopTokens() {
-  if(window.ethereum) {
-    if(window.ethereum.chainId === '0xa86a') {
+  const chain = localStorage.getItem('network')
+
+    if(chain === '43114') {
   
       let _24hEarlierBlock = await get24hEarlierBlock();
       // alert(_24hEarlierBlock)
@@ -176,7 +156,7 @@ export default async function getTopTokens() {
       return { tokens, ethPrice };
         }
     
-      if(window.ethereum.chainId === '0x1') {
+      if(chain === '1') {
     
         let _24hEarlierBlock = await get24hEarlierBlock();
         // alert(_24hEarlierBlock)
@@ -241,74 +221,7 @@ export default async function getTopTokens() {
         return { tokens, ethPrice };
     
       }
-  }
-
-  else {
-    
-      let _24hEarlierBlock = await get24hEarlierBlock();
-      // alert(_24hEarlierBlock)
-      // let response = await fetchGql(TOKENS_QUERY )
-      let response = await fetchGql(
-        TOKENS_QUERY,
-        null,
-        "https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2"
-      );
-      console.log('response', response);
-      let { tokens, bundle } = response.data;
-      let tokenIdList = tokens.map((t) => t.id);
-      console.time("oldResponse()");
-      // let oldResponse = await fetchGql(TOKENS_HISTORY_QUERY, {tokens: tokenIdList, block: _24hEarlierBlock})
-      let oldResponse = await getOldTokenResponse(tokenIdList, _24hEarlierBlock);
-      console.timeEnd("oldResponse()");
-      let { tokens: oldTokens, bundle: oldBundle } = oldResponse.data;
-      let oldEthPrice = oldBundle.ethPrice;
-      let ethPrice = bundle.ethPrice;
-    
-      // console.log('tokens, oldtokens',{  tokens, oldTokens });
-    
-      let oldVolumeByTokenId = {};
-      let oldDerivedEthByTokenId = {};
-    
-      for (let oldToken of oldTokens) {
-        // console.log({ })
-        oldVolumeByTokenId[oldToken.id] = oldToken.untrackedVolumeUSD;
-        oldDerivedEthByTokenId[oldToken.id] = oldToken.derivedETH;
-      }
-    
-      tokens = tokens
-        .map((t) => {
-          let oldVolume = oldVolumeByTokenId[t.id] || 0;
-          let oldDerivedEth = oldDerivedEthByTokenId[t.id] || 0;
-    
-          let oldPriceUsd = oldDerivedEth * oldEthPrice;
-          let priceUSD = t.derivedETH * ethPrice;
-    
-          let priceChange =
-            (((priceUSD - oldPriceUsd) / oldPriceUsd) * 100).toFixed(2) * 1;
-          let dailyVolume = t.untrackedVolumeUSD - oldVolume;
-    
-          t.priceChange = priceChange;
-          t.priceUSD = priceUSD;
-          t.dailyVolume = dailyVolume;
-          t.liquidity = t.priceUSD * t.totalLiquidity;
-    
-          return t;
-        })
-        .filter(
-          (t) =>
-            !isNaN(t.priceChange) &&
-            t.priceChange < Infinity &&
-            t.priceChange > -Infinity &&
-            t.dailyVolume > 0
-        )
-        .sort((a, b) => b.liquidity - a.liquidity);
-  
-        // console.log('tokens, ethprice', tokens, ethPrice)
-    
-      return { tokens, ethPrice };
-  
-    
-  }
+ 
 
 
 }

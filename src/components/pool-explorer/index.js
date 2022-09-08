@@ -74,23 +74,24 @@ export default class PoolExplorer extends React.Component {
   }
 
   checkNetworkId() {
-    if (window.ethereum) {
-      window.ethereum
-        .request({ method: "net_version" })
-        .then((data) => {
-          this.setState({
-            networkId: data,
-          });
-          this.fetchTransactions().then();
-        })
-        .catch(console.error);
-    } else {
-    this.fetchTransactions().then();  
+
+    const chain = localStorage.getItem('network')
+    if(chain === '1') {
       this.setState({
-        networkId: "1",
+        networkId: '1',
       });
+      this.fetchTransactions().then();
+     }
+     if(chain === '43114') {
+      this.setState({
+        networkId: '43114',
+      });
+      this.fetchTransactions().then();
       
-    }
+     }
+
+   
+      
   }
 
   componentDidMount() {
