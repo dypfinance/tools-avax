@@ -1069,18 +1069,18 @@ padding: 20px;
     width: 90px !important;
   }
 
-  .crown {
+  /* .crown {
     width: 60px !important;
-  }
+  } */
 
-  .premium-wrapper {
+  /* .premium-wrapper {
     max-width: 184px !important;
-  }
+  } */
 
-  .networks {
+  /* .networks {
     width: 184px;
     padding: 5px !important;
-  }
+  } */
 
   .navlinks {
     width: 90px !important;
@@ -2357,7 +2357,7 @@ color: #303134 !important;
 }
 
 .othernews-row-wrapper {
-  justify-content: space-between;
+  justify-content: center;
 }
 
 @media only screen and (max-width: 770px) {
