@@ -28,7 +28,7 @@ const News = ({ theme, isPremium }) => {
 
   const carousel = useRef();
 
-  const newsPerRow = 4;
+  const newsPerRow = 8;
   const [activeClass, setActiveClass] = useState("latestnews");
   const [showModal, setShowModal] = useState(false);
   const [newsItemId, setnewsItemId] = useState(-1);

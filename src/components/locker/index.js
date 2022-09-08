@@ -311,7 +311,7 @@ export default class Locker extends React.Component {
   };
 
   loadPairInfo = async () => {
-    let isConnected = this.props.isConnected;
+    let isConnected = this.state.coinbase !== undefined ? true : false;
     
     if (!isConnected) {
       this.setState({

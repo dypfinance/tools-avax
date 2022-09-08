@@ -9,7 +9,7 @@ const WalletModal = ({ handleClose, show, handleConnection }) => {
         <OutsideClickHandler onOutsideClick={handleClose}>
       <div className="walletmodal-wrapper">
         <div className="sc-jwKygS bFQpTL">
-          <h3>Connect to a wallet</h3>
+          <h3 style={{fontSize: 20}}>Connect to a wallet</h3>
         </div>
         <div>
           <div className="row flex-column" style={{gap: 20}}>

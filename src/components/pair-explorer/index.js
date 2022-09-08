@@ -1004,7 +1004,9 @@ export default class PairExplorer extends React.Component {
                       </span>
                     </div>
                     <br />
-                    <a
+               
+                  </div>    
+                </div> <a
                       onClick={this.toggleModal}
                       style={{ fontSize: ".7rem" }}
                       className="popup-btn "
@@ -1012,8 +1014,6 @@ export default class PairExplorer extends React.Component {
                     >
                       <i className="fas fa-info-circle"></i> View More Info
                     </a>
-                  </div>
-                </div>
               </div>
 
               <div className="firstbox-wrapper">
@@ -1619,7 +1619,9 @@ export default class PairExplorer extends React.Component {
                       >
                         View pair locker
                       </NavLink>
-                      <img src={PairLocker} alt="" style={{ marginLeft: 10 }} />
+                      <NavLink to={`/locker/${this.props.match.params.pair_id}`}>
+                      <img src={PairLocker} alt="" style={{ marginLeft: 10, cursor: 'pointer' }}/>
+                      </NavLink>
                     </div>
                   </div>
                 </div>

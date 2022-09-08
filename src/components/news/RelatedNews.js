@@ -36,10 +36,11 @@ const RelatedNews = ({
 
 
     if (
-      (bal1 === 0 && bal2 === 0 && isPremium === false) ||
+      (bal1 === 0 && bal2 === 0 && isPremium === undefined) ||
       logout === 'true'
     ) {
       setLikeIndicator(false);
+      setDislikeIndicator(false);
       setShowTooltip(true);
     } else {
       if (likeIndicator === true) {
@@ -73,7 +74,7 @@ const RelatedNews = ({
   };
 
 
-
+// console.log(showTooltip)
 
   if (title === undefined) {
     return (
@@ -87,6 +88,7 @@ const RelatedNews = ({
   return (
     <div style={{ display: title?.includes("http") ? "none" : "block" }}>
       <div className="single-related-news-wrapper">
+    
         <div
           className="d-flex align-items-center justify-content-between"
           style={{ gap: 5 }}
@@ -119,7 +121,7 @@ const RelatedNews = ({
                     e.stopPropagation();
                   }}
                 />
-                {showTooltip === true ? (
+                 {showTooltip === true ? (
                   <OutsideClickHandler
                     onOutsideClick={() => {
                       setShowTooltip(false);

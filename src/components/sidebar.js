@@ -432,7 +432,7 @@ const Sidebar = (props) => {
                     }
                     alt="Image"
                   />
-                  <span className="sidebar-link">Submit Info</span>
+                  <span className="sidebar-link">Submit form</span>
                 </NavLink>
               </li>
               <li

@@ -5,7 +5,6 @@ import axios from "axios";
 const SubmitInfo = () => {
   const initialState = {
     project_name: "",
-    nft_number: "",
     email: "",
     ticker: "",
     contract_address: "",
@@ -14,7 +13,7 @@ const SubmitInfo = () => {
     audit_link: "",
     website_link: "",
     twitter: "",
-    logoimg: "",
+    logo_link: "",
     coinmarket: "",
     telegram: "",
     coingecko: "",
@@ -43,7 +42,8 @@ const SubmitInfo = () => {
     if (Object.keys(errors).length === 0) {
       const data = {
         project_name: values.project_name,
-        nft_number: values.nft_number,
+        email: values.email,
+        logo_link: values.logo_link,
         ticker: values.ticker,
         contract_address: values.contract_address,
         about: values.about,
@@ -270,14 +270,14 @@ const SubmitInfo = () => {
                   <input
                     type="text"
                     className="inputfield"
-                    name="logoimg"
-                    id="logoimg"
-                    value={values.logoimg}
+                    name="logo_link"
+                    id="logo_link"
+                    value={values.logo_link}
                     onChange={handleChange}
                     placeholder="URL"
                   />
-                  {errors.logoimg && (
-                    <span className="errormessage">{errors.logoimg}</span>
+                  {errors.logo_link && (
+                    <span className="errormessage">{errors.logo_link}</span>
                   )}
                 </div>
               </div>
