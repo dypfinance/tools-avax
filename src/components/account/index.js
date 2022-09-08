@@ -310,7 +310,7 @@ export default class Subscription extends React.Component {
 
     window.alertify.message("Avatar has been uploaded successfully!");
     this.setState({ loadspinnerSave: false, showSavebtn: false });
-    this.fetchAvatar().then();
+    // this.fetchAvatar().then();
   };
 
   fetchAvatar = async () => {
