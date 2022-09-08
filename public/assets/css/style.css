@@ -1626,8 +1626,10 @@ font-size: 15px !important;
   height: 100% !important;
 }
 
-#tv_chart_container iframe {
+#tv_chart_container iframe 
+{
   pointer-events: all;
+  border-radius: 8px;
 }
 
 .CircularProgressbar {
@@ -1715,6 +1717,10 @@ color: #303134 !important;
 @media screen and (max-width: 500px) {
   .singlepress-inner {
     flex-wrap: wrap !important;
+  }
+
+  .dXvgTB {
+    grid-column-gap: calc(55% + 2px) !important;
   }
 
   .premiumposition {

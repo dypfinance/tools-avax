@@ -1677,7 +1677,7 @@ export default class PairExplorer extends React.Component {
                               </h2>
 
                               <span className="favliq">
-                                {getFormattedNumber(lock.reserveUSD, 2)}
+                              ...{lock.id.slice(35)}
                               </span>
                             </div>
                           </div>
