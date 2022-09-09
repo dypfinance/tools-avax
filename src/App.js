@@ -159,6 +159,17 @@ class App extends React.Component {
       .catch(console.error);
   };
 
+  handleChainChanged = ()=> {
+    if(window.ethereum) {
+      window.ethereum.request({ method: "net_version" })
+      .then((data) => {
+          localStorage.setItem('network', data)
+          window.location.reload()
+        this.refreshSubscription().then()
+      })
+      .catch(console.error);
+    }
+  }
   componentDidMount() {
     // console.log(this.state.networkId);
     // getSyncStats()
@@ -183,6 +194,11 @@ class App extends React.Component {
     // if(window.ethereum) {
     // console.log(this.state.coinbase)
     // }
+
+
+    const ethereum = window.ethereum
+    ethereum?.on('chainChanged', this.handleChainChanged)
+
     this.checkConnection();
     this.checkNetworkId();
     this.refreshHotPairs();

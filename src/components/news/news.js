@@ -590,7 +590,7 @@ const News = ({ theme, isPremium }) => {
               <div
                 className="singlenews-side"
                 style={{
-                  width: showModal ? "20%" : "33%",
+                  width: showModal ? "20%" : "43%",
                   display: !showModal ? "flex" : "none",
                 }}
               >
