@@ -76,6 +76,12 @@ class App extends React.Component {
         networkId: '1'
       })
       window.location.reload()
+      console.log(window.location.href)
+      if(window.location.href.includes('pair-explorer')) {
+        
+          window.location.assign("/pair-explorer/0x76911e11fddb742d75b83c9e1f611f48f19234e4")
+        
+      }
     }
 
     if (networkData === "43114") {
@@ -84,6 +90,11 @@ class App extends React.Component {
         networkId: '43114'
       })
       window.location.reload()
+      if(window.location.href.includes('pair-explorer')) {
+        
+        window.location.assign('/pair-explorer/0x497070e8b6c55fd283d8b259a6971261e2021c01')      
+    }
+
     }
   }
 
@@ -175,6 +186,14 @@ class App extends React.Component {
     this.checkConnection();
     this.checkNetworkId();
     this.refreshHotPairs();
+    const chain = localStorage.getItem('network')
+    
+    if(chain === null) {
+    localStorage.setItem( 'network',"1");
+
+    }
+    
+    // localStorage.setItem( 'network',"1");
     // this.subscriptionInterval = setInterval(this.refreshSubscription, 5e3);
   }
 

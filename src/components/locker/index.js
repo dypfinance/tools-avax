@@ -19,6 +19,8 @@ import BadgeGrayLight from "../../assets/badge-gray-light.svg";
 import CountDownTimer from "./Countdown";
 import Skeleton from "./Skeleton";
 import Error from "../../assets/error.svg";
+
+
 export default class Locker extends React.Component {
   constructor(props) {
     super(props);
@@ -70,54 +72,34 @@ export default class Locker extends React.Component {
       this.setState({
         networkId: '1',
       });
-
-      this.selectBaseToken().then();
-      this.refreshMyLocks().then()
-      this.loadPairInfo().then();
-      let pair_id = this.props.match.params.pair_id;
-      if (window.web3.utils.isAddress(pair_id)) {
-       this.refreshTokenLocks(pair_id);
-     this.checkTotalLpLocked().then()
-     }
-      
+     
      }
      if(chain === '43114') {
       this.setState({
         networkId: '43114',
       });
-
-      this.selectBaseToken().then();
-      this.refreshMyLocks().then()
-      this.loadPairInfo().then();
-      let pair_id = this.props.match.params.pair_id;
-      if (window.web3.utils.isAddress(pair_id)) {
-       this.refreshTokenLocks(pair_id);
-     this.checkTotalLpLocked().then()
-     }
       
      }
 
 
             
-    if (window.isConnectedOneTime) {
-      this.onComponentMount();
-    } else {
-      window.addOneTimeWalletConnectionListener(this.onComponentMount);
-    }
+    
      
    }
    
 
   checkTotalLpLocked = async () => {
-    let baseTokens =
-   
-    this.state.networkId === "1"
-      ? await window.getBaseTokensETH()
-      : await window.getBaseTokens()
+    const chain = localStorage.getItem('network')
+
+    let baseTokens = chain === "1"
+    ? await window.getBaseTokensETH()
+    : await window.getBaseTokens()
+
+    
 
     let pair_id = this.props.match.params.pair_id;
     let totalLpLocked =
-            this.state.networkId === "1"
+            chain === "1"
               ? await window.getLockedAmountETH(pair_id)
               : await window.getLockedAmount(pair_id) 
             this.refreshUsdValueOfLP(pair_id, totalLpLocked, baseTokens);
@@ -154,19 +136,29 @@ export default class Locker extends React.Component {
     window.scrollTo(0,0)
    this.checkNetworkId()
    this.checkConnection()
+
+   if (window.isConnectedOneTime) {
+    this.onComponentMount();
+  } else {
+    window.addOneTimeWalletConnectionListener(this.onComponentMount);
   }
+  }
+
+
   componentWillUnmount() {
     window.removeOneTimeWalletConnectionListener(this.onComponentMount);
   }
 
   refreshMyLocks = async () => {
+    const chain = localStorage.getItem('network')
+
     if (this.state.isLoadingMoreMyLocks) return;
     this.setState({ isLoadingMoreMyLocks: true });
     try {
       let recipient = this.state.coinbase;
       let recipientLocksLength =
       
-        this.state.networkId === "1"
+        chain === "1"
           ? await window.getActiveLockIdsLengthByRecipientETH(recipient)
           : await window.getActiveLockIdsLengthByRecipient(recipient)
           
@@ -179,7 +171,7 @@ export default class Locker extends React.Component {
         let endIndex = Math.min(recipientLocksLength, startIndex + step);
         let recipientLocks =
       
-          this.state.networkId === "1"
+          chain === "1"
             ? await window.getActiveLocksByRecipientETH(
                 recipient,
                 startIndex,
@@ -203,13 +195,14 @@ export default class Locker extends React.Component {
     this.refreshMyLocks().then();
     this.selectBaseToken().then();
    this.checkNetworkId()
+   const chain = localStorage.getItem('network')
 
     this.setState({ coinbase: await window.getCoinbase() });
     let pair_id = this.props.match.params.pair_id;
 
     let baseTokens =
    
-      this.state.networkId === "1"
+      chain === "1"
         ? await window.getBaseTokensETH()
         : await window.getBaseTokens()
 
@@ -218,7 +211,7 @@ export default class Locker extends React.Component {
       this.refreshTokenLocks(pair_id);
       this.handlePairChange(null, pair_id);
       let totalLpLocked =
-        this.state.networkId === "1"
+        chain === "1"
           ? await window.getLockedAmountETH(pair_id)
           : await window.getLockedAmount(pair_id) 
         this.refreshUsdValueOfLP(pair_id, totalLpLocked, baseTokens);
@@ -258,10 +251,12 @@ export default class Locker extends React.Component {
   refreshTokenLocks = async (token) => {
     if (this.state.isLoadingMoreTokenLocks) return;
     this.setState({ isLoadingMoreTokenLocks: true });
+    const chain = localStorage.getItem('network')
+
     try {
       let tokenLocksLength =
       
-        this.state.networkId === "1"
+        chain === "1"
           ? await window.getActiveLockIdsLengthByTokenETH(token)
           : await window.getActiveLockIdsLengthByToken(token)
           
@@ -272,7 +267,7 @@ export default class Locker extends React.Component {
         let endIndex = Math.min(tokenLocksLength, startIndex + step);
         let tokenLocks =
         
-          this.state.networkId === "1"
+          chain === "1"
             ? await window.getActiveLocksByTokenETH(token, startIndex, endIndex)
             : await window.getActiveLocksByToken(token, startIndex, endIndex)
             
@@ -295,14 +290,15 @@ export default class Locker extends React.Component {
   };
 
   handlePairChange = async (e, pair_address = null) => {
-    let newPairAddress = pair_address || e.target?.value;
+    let newPairAddress = pair_address || e.target.value;
+    const chain = localStorage.getItem('network')
 
     this.setState({ pair_address: newPairAddress }, () => {
       this.refreshTokenLocks(newPairAddress);
     });
 
     let totalLpLocked =
-      this.state.networkId === "1"
+    chain === "1"
         ? await window.getLockedAmountETH(newPairAddress)
         : await window.getLockedAmount(newPairAddress)
     this.setState({ totalLpLocked });
@@ -315,7 +311,9 @@ export default class Locker extends React.Component {
   };
 
   loadPairInfo = async () => {
-    let isConnected = this.state.coinbase !== undefined ? true : false;
+    const logout = localStorage.getItem("logout");
+    
+    let isConnected =  logout === 'true' ? false : true
     
     if (!isConnected) {
       this.setState({
@@ -355,26 +353,30 @@ export default class Locker extends React.Component {
   };
 
   selectBaseToken = async (e) => {
-    let pair = await window.getPairTokensInfo(this.state.pair_address);
+    let pair = await window.getPairTokensInfo(this.props.match.params.pair_id);
+    const chain = localStorage.getItem('network')
 
+console.log('token0 token1', this.props.match.params.pair_id)
     this.setState({ pair });
     this.setState({ status: "" });
-
     if (pair) {
- 
+     
       let balance = await window.getTokenHolderBalance(
-        this.state.pair_address,
+        this.props.match.params.pair_id,
         this.state.coinbase
       );
+
+  console.log('balance', balance)
 
       this.setState({ amount: balance, lpBalance: balance });
 
       let token0 = pair["token0"]?.address;
       let token1 = pair["token1"]?.address;
+      
 
       let baseTokens =
       
-        this.state.networkId === "1"
+      chain === "1"
           ? await window.getBaseTokensETH()
           : await window.getBaseTokens()
           
@@ -626,7 +628,7 @@ export default class Locker extends React.Component {
       }).format(timestamp * 1000);
       return result;
     };
-
+    
     if (this.state.placeholderState === true) {
       return (
         <div className="placeholderdiv">

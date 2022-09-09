@@ -28,8 +28,10 @@ async function getTokenInformation(address) {
      chain === "1"
         ? `https://api.coingecko.com/api/v3/coins/ethereum/contract/${address}`
         : `https://api.coingecko.com/api/v3/coins/avalanche/contract/${address}`
+
      
   );
+  
 
   return res.data;
 }
@@ -135,8 +137,10 @@ export default class PairExplorer extends React.Component {
 
   checkFavData() {
     let pair_id = this.props.match.params.pair_id;
+    const chain = localStorage.getItem('network')
+    
     if (pair_id) {
-      if (this.state.networkId === "1") {
+      if (chain === "1") {
         window
           .isFavoriteETH(pair_id.toLowerCase())
           .then((isFavorite) => {
@@ -145,10 +149,11 @@ export default class PairExplorer extends React.Component {
           })
           .catch(console.error);
       }
-      if (this.state.networkId === "43114") {
+      if (chain === "43114") {
         window
           .isFavorite(pair_id.toLowerCase())
           .then((isFavorite) => {
+            
             this.setState({ isFavorite });
             this.setState({ starColor: "rgb(227, 6, 19)" });
           })
@@ -192,14 +197,17 @@ export default class PairExplorer extends React.Component {
   }
 
   fetchfavData() {
-    if (this.state.networkId === "1") {
+    
+    const chain = localStorage.getItem('network')
+
+    if (chain === "1") {
       window
         .getFavoritesETH()
         .then((favorites) => this.setState({ favorites }))
         .catch(console.error);
     }
 
-    if (this.state.networkId === "43114") {
+    if (chain === "43114") {
       window
         .getFavorites()
         .then((favorites) => this.setState({ favorites }))
@@ -252,8 +260,11 @@ export default class PairExplorer extends React.Component {
   };
 
   refreshPairInfo = async () => {
+    
+    const chain = localStorage.getItem('network')
+    let coinbase;
     let { pairInfo } = await window.$.get(
-      this.state.networkId === "1"
+      chain === "1"
         ? `${window.config.apieth_baseurl}/api/pair-info?pairId=${String(
             this.props.match.params.pair_id
           )
@@ -267,7 +278,7 @@ export default class PairExplorer extends React.Component {
     );
     this.setState({ pairInfo });
 
-    let coinbase;
+
     try {
       coinbase = this.props.appState.coinbase;
     } catch (e) {
@@ -276,6 +287,8 @@ export default class PairExplorer extends React.Component {
     }
     if (this.state.pair) {
       let mainToken = await window.getMainToken(this.state.pair);
+
+      
       this.setState({ mainToken });
       let mainTokenTotalSupply =
         (await window.getTokenTotalSupply(mainToken.id)) /
@@ -286,6 +299,8 @@ export default class PairExplorer extends React.Component {
   };
 
   refreshVoteCount = async () => {
+    
+    const chain = localStorage.getItem('network')
     let coinbase;
     try {
       coinbase = this.props.appState.coinbase;
@@ -294,7 +309,7 @@ export default class PairExplorer extends React.Component {
     }
     let { voteCount, upvoteCount, coinbaseVote } = await window.$.get(
       `${
-        this.state.networkId === "1"
+        chain === "1"
           ? window.config.apieth_baseurl
           : window.config.api_baseurl
       }/api/community-votes?coinbase=${coinbase}&pairId=${
@@ -311,6 +326,8 @@ export default class PairExplorer extends React.Component {
 
 
   registerViewOnce = async (pair) => {
+    const chain = localStorage.getItem('network')
+
     if (this.state.isViewRegistered) return;
     this.setState({ isViewRegistered: true });
     try {
@@ -321,7 +338,7 @@ export default class PairExplorer extends React.Component {
       let pair_name = `${token0Symbol}-${token1Symbol}`;
       window.$.post(
         `${
-          this.state.networkId === "1"
+          chain === "1"
               ? window.config.apieth_baseurl
               : window.config.api_baseurl
             
@@ -336,6 +353,8 @@ export default class PairExplorer extends React.Component {
 
 
   registerVote = async (upvote = true) => {
+    const chain = localStorage.getItem('network')
+
     if (!this.state.pair) {
       window.alertify.message("Wait for pair to load!");
       return;
@@ -372,7 +391,7 @@ export default class PairExplorer extends React.Component {
       let pairId = this.props.match.params.pair_id;
       await window.$.post(
         `${
-         this.state.networkId === "1"
+         chain === "1"
               ? window.config.apieth_baseurl
               : window.config.api_baseurl
            
@@ -422,22 +441,22 @@ export default class PairExplorer extends React.Component {
         let ethPrice = data.bundle.ethPrice;
         let usdPerToken0 = Math.min(
           Number.MAX_VALUE,
-          ethPrice * data.pair.token0.derivedETH
+          ethPrice * data.pair.token0?.derivedETH
         );
         let usdPerToken1 = Math.min(
           Number.MAX_VALUE,
-          ethPrice * data.pair.token1.derivedETH
+          ethPrice * data.pair.token1?.derivedETH
         );
         let volumeUSD = Number(data.pair.untrackedVolumeUSD);
 
         let old_ethPrice = data.asOldBundle.ethPrice;
         let old_usdPerToken0 = Math.min(
           Number.MAX_VALUE,
-          old_ethPrice * data.asOldPair.token0.derivedETH
+          old_ethPrice * data.asOldPair?.token0.derivedETH
         );
         let old_usdPerToken1 = Math.min(
           Number.MAX_VALUE,
-          old_ethPrice * data.asOldPair.token1.derivedETH
+          old_ethPrice * data.asOldPair.token1?.derivedETH
         );
         let old_volumeUSD = Number(data.asOldPair.untrackedVolumeUSD);
 
@@ -525,6 +544,9 @@ export default class PairExplorer extends React.Component {
   };
 
   toggleFavorite = async () => {
+    // const chain = localStorage.getItem('network')
+    
+
     if (!this.state.pair) return;
    
       if (this.state.networkId === "1") {
@@ -782,11 +804,16 @@ export default class PairExplorer extends React.Component {
    const chain = localStorage.getItem('network')
 
     let pair_id = this.props.match.params.pair_id;
+
+
     let baseTokens = chain === "1"
         ? await window.getBaseTokensETH()
-        : await window.getBaseTokens()
-     
+        : await window.getBaseTokens() 
+        
     this.setState({ baseTokens });
+
+  
+
     if (window.web3.utils.isAddress(pair_id)) {
       // this.refreshTokenLocks(pair_id)
       // this.handlePairChange(null, pair_id)
@@ -866,7 +893,7 @@ export default class PairExplorer extends React.Component {
   render() {
     // this.state.newsData[0].slice(0,10)
     const chain = localStorage.getItem('network')
-
+    
     if (!this.props.match.params.pair_id) {
       return (
         <Redirect

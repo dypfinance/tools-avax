@@ -14,6 +14,7 @@ async function getPairCandles(pair, from, to, n = 0) {
       : `${window.config.api_baseurl}/api/candles/minutes/${pair}${query}`
       
   );
+  
   candles = candles.data;
   return processCandles(candles, n);
 }

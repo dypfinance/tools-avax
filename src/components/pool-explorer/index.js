@@ -108,6 +108,7 @@ export default class PoolExplorer extends React.Component {
     
     try {
       let network = this.props.network;
+      
       if (this.state.networkId === "1") {
         let { transactions, ethPrice } = await getProcessedTransactionsETH();
 

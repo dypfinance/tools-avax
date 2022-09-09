@@ -80,12 +80,15 @@ export default class BigSwapExplorer extends React.Component {
      this.setState({
        networkId: '1',
      });
+     this.fetchSwaps()
+
      
     }
     if(chain === '43114') {
      this.setState({
        networkId: '43114',
      });
+     this.fetchSwaps()
      
     }
     

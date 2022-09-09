@@ -163,22 +163,25 @@ burns(first: 250, orderBy: timestamp, orderDirection: desc) {
 
 function handleTheGraphData({ data }) {
   const chain = localStorage.getItem('network')
- 
+  // console.log('network', net)
     if (chain === "43114") {
+      
       let burns = data.burns
         .filter((mintOrBurn) => {
           return [
             mintOrBurn.pair.token0.id,
             mintOrBurn.pair.token1.id,
-          ].includes(eval(window.network + ".weth_address"));
+          ].includes(eval('window.config.weth_address'))
         })
         .map((mintOrBurn) => getFormattedMintOrBurn(mintOrBurn, "burn"));
+      
+      
       let mints = data.mints
         .filter((mintOrBurn) => {
           return [
             mintOrBurn.pair.token0.id,
             mintOrBurn.pair.token1.id,
-          ].includes(eval(window.network + ".weth_address"));
+          ].includes(eval('window.config.weth_address'));
         })
         .map((mintOrBurn) => getFormattedMintOrBurn(mintOrBurn, "mint"));
 
@@ -237,7 +240,7 @@ function getFormattedMintOrBurn(mintOrBurn, type) {
         tokenId,
         tokenSymbol;
       let { token0, token1 } = mintOrBurn.pair;
-      if (token0.id == eval(window.network + ".weth_address")) {
+      if (token0.id == eval('window.config.weth_address')) {
         tokenSymbol = token1.symbol;
         tokenId = token1.id;
         ethAmount = mintOrBurn.amount0;
@@ -255,6 +258,7 @@ function getFormattedMintOrBurn(mintOrBurn, type) {
         tokenPerEth = mintOrBurn.pair.token1Price;
       }
       return {
+        
         key: mintOrBurn.id + "-" + type,
         tokenSymbol,
         tokenPerEth: tokenPerEth * 1,
@@ -270,6 +274,7 @@ function getFormattedMintOrBurn(mintOrBurn, type) {
         timestamp: mintOrBurn.timestamp * 1,
         amountUSD: mintOrBurn.amountUSD * 1,
       };
+      
     }
 
     if (chain === "1") {

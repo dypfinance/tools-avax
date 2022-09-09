@@ -2678,6 +2678,8 @@ async function getContract({ key, address = null, ABI = null }) {
         from: await getCoinbase(),
       });
   }
+  
+
   return window.cached_contracts[key + "-" + address.toLowerCase()];
 }
 
@@ -2831,6 +2833,7 @@ async function getBaseTokens() {
 
 async function getBaseTokensETH() {
   let lockerContract = await getContract({ key: "LOCKERETH" });
+
   let baseTokensLength = await lockerContract.methods
     .getBaseTokensLength()
     .call();

@@ -102,7 +102,7 @@ export default function getProcessedSwaps(pair, bigSwaps = false, network) {
     })
     return new Promise((resolve, reject) => {
         fetch(
-            eval(window.network+'.subgraph_url') ||
+            window.config.subgraph_url ||
             'https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2',
         {
             method: 'POST',
