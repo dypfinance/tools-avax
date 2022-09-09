@@ -269,28 +269,32 @@ const News = ({ theme, isPremium }) => {
     }
 
     if (dataType === "special") {
-      // handleSelectOtherNews(itemId)
-      for (let i = 0; i < newsData.length; i++) {
-        if (itemId === newsData[i].id) {
-          handleFetchNewsContent("news", itemId);
-        }
-      }
+      const bigData = [
+        ...popularNewsData,
+        ...otherNewsData,
+        ...newsData,
+        ...pressNewsData,
+      ];
 
-      for (let i = 0; i < popularNewsData.length; i++) {
+      for (let i = 0; i < bigData.length; i++) {
         if (itemId === popularNewsData[i].id) {
           handleFetchNewsContent("popular", itemId);
         }
-      }
 
-      for (let i = 0; i < otherNewsData.length; i++) {
         if (itemId === otherNewsData[i].id) {
-          handleFetchNewsContent("other", itemId);
+          if (itemId === popularNewsData[i].id) {
+            handleFetchNewsContent("popular", itemId);
+          } else if (itemId === pressNewsData[i].id) {
+            handleFetchNewsContent("press", itemId);
+          } else handleFetchNewsContent("other", itemId);
         }
-      }
 
-      for (let i = 0; i < pressNewsData.length; i++) {
         if (itemId === pressNewsData[i].id) {
           handleFetchNewsContent("press", itemId);
+        }
+
+        if (itemId === newsData[i].id) {
+          handleFetchNewsContent("news", itemId);
         }
       }
     }
@@ -305,9 +309,13 @@ const News = ({ theme, isPremium }) => {
     }
   };
 
-
   const handleSelectTopVotedNews = (key) => {
-    const topVotedArray = [...otherNewsData, ...newsData, ...popularNewsData, ...pressNewsData]
+    const topVotedArray = [
+      ...otherNewsData,
+      ...newsData,
+      ...popularNewsData,
+      ...pressNewsData,
+    ];
     if (topVotedArray.length > 0) {
       const search = (obj) => obj.id == key;
       const index = topVotedArray.findIndex(search);
@@ -355,30 +363,25 @@ const News = ({ theme, isPremium }) => {
   const handleNewsReoderPopular = () => {
     if (popularNewsData.length > 5 && otherNewsData.length > 0) {
       otherNewsData.push(...popularNewsData.slice(6, popularNewsData.length));
-      otherNewsData.reverse()
-      setOtherNewsDataReverse(otherNewsData)
-
+      otherNewsData.reverse();
+      setOtherNewsDataReverse(otherNewsData);
     }
   };
-  
+
   const handleNewsReoderPress = () => {
-    
     if (pressNewsData.length > 8 && otherNewsData.length > 0) {
       otherNewsData.push(...pressNewsData.slice(9, pressNewsData.length));
       otherNewsData.reverse();
-      const result = [...new Set(otherNewsData) ]
-      setOtherNewsDataReverse(result)
-
+      const result = [...new Set(otherNewsData)];
+      setOtherNewsDataReverse(result);
     }
   };
 
   useEffect(() => {
     handleNewsReoderPopular();
     handleNewsReoderPress();
-   
   }, [popularNewsData.length, otherNewsData.length, pressNewsData.length]);
 
-   
   useEffect(() => {
     fetchNewsdata().then();
     fetchPressData().then();
@@ -455,9 +458,6 @@ const News = ({ theme, isPremium }) => {
   const isBottom = (el) => {
     return el.getBoundingClientRect()?.bottom <= window.innerHeight;
   };
-
-
- 
 
   let bigNews = [...otherNewsDataReverse, ...newsData];
 
@@ -707,8 +707,8 @@ const News = ({ theme, isPremium }) => {
                             }}
                             onNewsClick={() => {
                               setShowModal(true);
-                              handleSelectTopVotedNews(item.id)
-                            }} 
+                              handleSelectTopVotedNews(item.id);
+                            }}
                             isConnected={isConnected}
                             isPremium={isPremium}
                           />
@@ -753,7 +753,7 @@ const News = ({ theme, isPremium }) => {
             autoplay={4000}
           >
             {pressNewsData.length > 0 &&
-              pressNewsData.slice(0,8).map((item, key) => {
+              pressNewsData.slice(0, 8).map((item, key) => {
                 return (
                   <Carousel.Item key={key}>
                     <div className="banner-item" style={{ background: "none" }}>
