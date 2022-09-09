@@ -41,7 +41,10 @@ const News = ({ theme, isPremium }) => {
   const { account, chainId, active } = useWeb3React();
   const [pressNewsData, setPressNewsData] = useState([]);
   const [popularNewsData, setPopularNewsData] = useState([]);
+
   const [otherNewsData, setOtherNewsData] = useState([]);
+  const [otherNewsDataReverse, setOtherNewsDataReverse] = useState([]);
+
   const [newsContent, setNewsContent] = useState([]);
 
   const [next, setNext] = useState(newsPerRow);
@@ -352,23 +355,30 @@ const News = ({ theme, isPremium }) => {
   const handleNewsReoderPopular = () => {
     if (popularNewsData.length > 5 && otherNewsData.length > 0) {
       otherNewsData.push(...popularNewsData.slice(6, popularNewsData.length));
-      otherNewsData.reverse();
+      otherNewsData.reverse()
+      setOtherNewsDataReverse(otherNewsData)
+
     }
   };
-
+  
   const handleNewsReoderPress = () => {
-    if (pressNewsData.length > 6 && otherNewsData.length > 0) {
-      otherNewsData.push(...pressNewsData.slice(7, pressNewsData.length));
+    
+    if (pressNewsData.length > 8 && otherNewsData.length > 0) {
+      otherNewsData.push(...pressNewsData.slice(9, pressNewsData.length));
       otherNewsData.reverse();
+      const result = [...new Set(otherNewsData) ]
+      setOtherNewsDataReverse(result)
+
     }
   };
 
   useEffect(() => {
     handleNewsReoderPopular();
     handleNewsReoderPress();
+   
   }, [popularNewsData.length, otherNewsData.length, pressNewsData.length]);
 
-  
+   
   useEffect(() => {
     fetchNewsdata().then();
     fetchPressData().then();
@@ -446,7 +456,10 @@ const News = ({ theme, isPremium }) => {
     return el.getBoundingClientRect()?.bottom <= window.innerHeight;
   };
 
-  let bigNews = [...otherNewsData, ...newsData];
+
+ 
+
+  let bigNews = [...otherNewsDataReverse, ...newsData];
 
   const onScroll = () => {
     const wrappedElement = document.getElementById("header");
@@ -622,7 +635,7 @@ const News = ({ theme, isPremium }) => {
                 </div>
                 {popularNewsData.length > 0 &&
                   activeClass === "latestnews" &&
-                  popularNewsData.map((item, key) => {
+                  popularNewsData.slice(0, 5).map((item, key) => {
                     return (
                       <div className="banner-item pl-0" key={key}>
                         <SingleNews
@@ -740,7 +753,7 @@ const News = ({ theme, isPremium }) => {
             autoplay={4000}
           >
             {pressNewsData.length > 0 &&
-              pressNewsData.map((item, key) => {
+              pressNewsData.slice(0,8).map((item, key) => {
                 return (
                   <Carousel.Item key={key}>
                     <div className="banner-item" style={{ background: "none" }}>
