@@ -1785,7 +1785,7 @@ export default class PairExplorer extends React.Component {
               </div>
             </div>
           </div>
-          <div className="table-box" style={{ padding: "20px 40px" }}>
+          <div className="table-box graphwrapper">
             <div className="table-title">
               <h4>Trade history</h4>
             </div>
