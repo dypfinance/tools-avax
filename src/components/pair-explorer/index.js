@@ -30,7 +30,7 @@ async function getTokenInformation(address) {
       : `https://api.coingecko.com/api/v3/coins/ethereum/contract/${address}`
   );
 
-  return res.data.sort((a, b) => parseFloat(b.pair.reserve) - parseFloat(a.pair.reserve));
+  return res.data;
 }
 
 async function getSearchResultsLocalAPI(query)
@@ -43,7 +43,7 @@ async function getSearchResultsLocalAPI(query)
           : `https://api-explorer.dyp.finance/v1/eth/search/pairs/${query}`
   )
 
-  return res.data
+  return res.data.sort((a, b) => a.pair.reserve - b.pair.reserve).reverse();
 }
 
 const Circular = () => (
@@ -1017,8 +1017,8 @@ export default class PairExplorer extends React.Component {
                       </span>
                     </div>
                     <br />
-               
-                  </div>    
+
+                  </div>
                 </div> <a
                       onClick={this.toggleModal}
                       style={{ fontSize: ".7rem" }}
@@ -1730,7 +1730,7 @@ export default class PairExplorer extends React.Component {
                                     ...{p.pair.token_0.address.toLowerCase().slice(34)} - Pair:
                                     ...{p.pair.address.toLowerCase().slice(34)}</p>
                                   <p>Total liquidity:</p>
-                                  <span>${getFormattedNumber(this.state.pair?.reserveUSD, 2)}</span>
+                                  <span>${getFormattedNumber(p.pair.reserve, 2)}</span>
                                 </div>
                               </li>
                             </NavLink>
@@ -1768,7 +1768,7 @@ export default class PairExplorer extends React.Component {
                       />
                     )}
                   </div>
-                  {/* <Chart 
+                  {/* <Chart
                             darkTheme={this.props.theme == 'theme-dark'} 
                             options={this.state.options} 
                             candlestickSeries={this.state.candlestickSeries} 
