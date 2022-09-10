@@ -30,7 +30,14 @@ async function getTokenInformation(address) {
       : `https://api.coingecko.com/api/v3/coins/ethereum/contract/${address}`
   );
 
-  return res.data;
+  return res.data.sort((a, b) => parseFloat(b.pair.reserve) - parseFloat(a.pair.reserve));
+}
+
+async function getSearchResultsLocalAPI(query)
+{
+  let res = await axios.get(`https://api-explorer.dyp.finance/v1/avax/search/pairs/${query}`)
+
+  return res.data
 }
 
 const Circular = () => (
@@ -463,7 +470,7 @@ export default class PairExplorer extends React.Component {
       return;
     }
     this.setState({ isSearching: true });
-    getSearchResults(this.state.query)
+    getSearchResultsLocalAPI(this.state.query)
       .then((searchResults) => {
         if (!this.state.query) searchResults = [];
         this.setState({ searchResults });
@@ -1697,47 +1704,32 @@ export default class PairExplorer extends React.Component {
                       autoComplete="off"
                       placeholder="Search Pairs"
                     />
-                    <ul
-                      className="output"
-                      style={{
-                        display:
-                          this.state.searchResults.length == 0
-                            ? "none"
-                            : "block",
-                        zIndex: 9,
-                        maxHeight: "300px",
-                        overflowY: "auto",
-                      }}
-                    >
-                      {this.state.searchResults.map((p) => (
-                        <NavLink to={`/pair-explorer/${p.id}`}>
-                          <li key={p.id} className="prediction-item">
-                            <div className="suggest-item">
-                              <h2
-                                style={{ fontSize: "1.2rem", fontWeight: 500 }}
-                              >
-                                <span className="wh_txt">
-                                  {p.token1.symbol}
-                                </span>
-                                /{p.token0.symbol}{" "}
-                                <span className="bar">-</span> ({p.token0.name})
-                              </h2>
-                              <p
-                                style={{ fontSize: ".85rem", fontWeight: 400 }}
-                              >
-                                Token: ...{p.token0.id.slice(34)} - Pair: ...
-                                {p.id.slice(34)}
-                              </p>
-                              <p
-                                style={{ fontSize: ".85rem", fontWeight: 400 }}
-                              >
-                                Total Liquidity: $
-                                {getFormattedNumber(p.reserveUSD, 2)}
-                              </p>
-                            </div>
-                          </li>
-                        </NavLink>
-                      ))}
+                    <ul className="output" style={{
+                      display: this.state.searchResults.length == 0 ? 'none' : 'block',
+                      zIndex: 9,
+                      maxHeight: '300px',
+                      overflowY: 'auto'
+                    }}>
+                      {
+                        this.state.searchResults.map((p) => <NavLink
+                                to={`/pair-explorer/${p.pair.address.toLowerCase()}`}>
+                              <li key={p.id} className="prediction-item">
+                                <div className="suggest-item">
+                                  <h2 style={{fontSize: '1.2rem', fontWeight: 500}}>
+                                                            <span
+                                                                className="wh_txt">{p.pair.token_1.symbol}</span>/{p.pair.token_0.symbol}
+                                    <span className="bar">-</span> ({p.pair.token_0.name})
+                                  </h2>
+                                  <p style={{fontSize: '.85rem', fontWeight: 400}}>Token:
+                                    ...{p.pair.token_0.address.toLowerCase().slice(34)} - Pair:
+                                    ...{p.pair.address.toLowerCase().slice(34)}</p>
+                                  <p>Total liquidity:</p>
+                                  <span>${getFormattedNumber(this.state.pair?.reserveUSD, 2)}</span>
+                                </div>
+                              </li>
+                            </NavLink>
+                        )
+                      }
                     </ul>
                     <button type="submit" id="submit">
                       {/* <img src="/assets/img/search-2.png" alt="Image" /> */}
