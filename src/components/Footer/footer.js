@@ -25,7 +25,7 @@ const Footer = () => (
       </div>
       <div className="line mb-4">
           <div style={{textAlign: 'center'}} className="mt-2 pb-2 copyright">
-              Copyright © DeFi Yield Protocol 2021. All rights reserved.
+              Copyright © DeFi Yield Protocol 2022. All rights reserved.
           </div>
       </div>
   </div>
