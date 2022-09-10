@@ -35,7 +35,13 @@ async function getTokenInformation(address) {
 
 async function getSearchResultsLocalAPI(query)
 {
-  let res = await axios.get(`https://api-explorer.dyp.finance/v1/avax/search/pairs/${query}`)
+  let res = await axios.get(
+      window.ethereum
+          ? window.ethereum.chainId === "0x1"
+           ? `https://api-explorer.dyp.finance/v1/eth/search/pairs/${query}`
+           : `https://api-explorer.dyp.finance/v1/avax/search/pairs/${query}`
+          : `https://api-explorer.dyp.finance/v1/eth/search/pairs/${query}`
+  )
 
   return res.data
 }
