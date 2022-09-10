@@ -1273,8 +1273,7 @@ export default class PairExplorer extends React.Component {
                           <i
                             style={{
                               color: this.state.starColor,
-                              position: "absolute",
-                              top: 3,
+                              marginBottom: '18px'
                             }}
                             className={`fa${
                               this.state.isFavorite ? "s" : "r"
