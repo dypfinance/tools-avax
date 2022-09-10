@@ -162,7 +162,7 @@ class App extends React.Component {
     this.checkConnection();
     this.checkNetworkId();
     this.refreshHotPairs();
-    // this.subscriptionInterval = setInterval(this.refreshSubscription, 5e3);
+    this.subscriptionInterval = setInterval(this.refreshSubscription, 5e3);
   }
 
 
@@ -194,7 +194,7 @@ class App extends React.Component {
     this.checkConnection()
   }
   componentWillUnmount() {
-    // clearInterval(this.subscriptionInterval);
+    clearInterval(this.subscriptionInterval);
   }
 
   toggleTheme = () => {

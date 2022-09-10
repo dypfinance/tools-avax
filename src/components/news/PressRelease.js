@@ -27,6 +27,7 @@ const logout = localStorage.getItem("logout");
         onDownVoteClick(newsId);
       } else if (likeIndicator === false) {
         setLikeIndicator(true);
+        setDislikeIndicator(false);
         onUpVoteClick(newsId);
       }
     }

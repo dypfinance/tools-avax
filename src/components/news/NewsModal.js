@@ -68,6 +68,7 @@ const NewsModal = ({
         
       } else if (likeIndicator === false) {
         setLikeIndicator(true);
+        setDislikeIndicator(false);
         onHandlePressUpvote(newsId);
       }
     }
@@ -84,8 +85,8 @@ const NewsModal = ({
         onHandlePressUpvote(newsId);
       } else if (dislikeIndicator === false) {
         onHandlePressDownvote(newsId);
-        setLikeIndicator(false);
         setDislikeIndicator(true);
+        setLikeIndicator(false);
       }
     }
   };

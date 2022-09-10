@@ -43,6 +43,7 @@ const SingleNews = ({
         onSingleDownVoteClick();
       } else if (likeIndicator === false) {
         setLikeIndicator(true);
+        setDislikeIndicator(false);
         onSingleUpVoteClick();
       }
     }
@@ -62,8 +63,8 @@ const SingleNews = ({
         onSingleUpVoteClick();
       } else if (dislikeIndicator === false) {
         onSingleDownVoteClick();
-        setLikeIndicator(false);
         setDislikeIndicator(true);
+        setLikeIndicator(false);
       }
     }
   };

@@ -45,6 +45,7 @@ const OtherNews = ({
         onDownVoteClick(newsId);
       } else if (likeIndicator === false) {
         setLikeIndicator(true);
+        setDislikeIndicator(false);
         onUpVoteClick(newsId);
       }
     }
@@ -62,8 +63,8 @@ const OtherNews = ({
         onUpVoteClick(newsId);
       } else if (dislikeIndicator === false) {
         onDownVoteClick(newsId);
-        setLikeIndicator(false);
         setDislikeIndicator(true);
+        setLikeIndicator(false);
       }
     }
   };

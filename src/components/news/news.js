@@ -41,7 +41,7 @@ const News = ({ theme, isPremium }) => {
   const { account, chainId, active } = useWeb3React();
   const [pressNewsData, setPressNewsData] = useState([]);
   const [popularNewsData, setPopularNewsData] = useState([]);
-
+  
   const [otherNewsData, setOtherNewsData] = useState([]);
   const [otherNewsDataReverse, setOtherNewsDataReverse] = useState([]);
 
@@ -188,12 +188,6 @@ const News = ({ theme, isPremium }) => {
   }, [showModal, newsItemId]);
 
   const { news_id } = useParams();
-  // console.log(otherNewsData)
-  const handleSelectOtherNews = (key) => {
-    const search = (obj) => obj.id == key;
-    const index = newsData.findIndex(search);
-    setActiveNews(newsData[index]);
-  };
 
   const handleSelecTopNews = (key) => {
     const topnews = [
@@ -389,6 +383,10 @@ const News = ({ theme, isPremium }) => {
     fetchOtherNewsData().then();
   }, [newsData.length, popularNewsData.length]);
 
+  useEffect(() => {
+   fetchVotingdata().then()
+  }, [newsItemId]);
+
   const bal1 = Number(localStorage.getItem("balance1"));
   const bal2 = Number(localStorage.getItem("balance2"));
   const logout = localStorage.getItem("logout");
@@ -407,30 +405,12 @@ const News = ({ theme, isPremium }) => {
         );
 
         fetchVotingdata().then((votes) => topVotes(votes));
-        setnewsItemId(itemId);
+        setnewsItemId(Number(itemId) + 1);
       } catch (e) {
         console.log(e);
       }
       return response;
     }
-  };
-
-  const handleSingleUpVoting = async (itemId) => {
-    return await axios
-      .get(`https://news-manage.dyp.finance/api/v1/vote/${itemId}/up`)
-      .then((data) => {
-        data.status === 200 ? setnewsItemId(itemId) : console.error();
-      })
-      .catch(console.error);
-  };
-
-  const handleSingleDownVoting = async (itemId) => {
-    return await axios
-      .get(`https://news-manage.dyp.finance/api/v1/vote/${itemId}/down`)
-      .then((data) => {
-        data.status === 200 ? setnewsItemId(itemId) : console.error();
-      })
-      .catch(console.error);
   };
 
   const handleDownVoting = async (itemId) => {
@@ -448,6 +428,27 @@ const News = ({ theme, isPremium }) => {
         .catch(console.error);
     }
   };
+
+
+  const handleSingleUpVoting = async (itemId) => {
+    return await axios
+      .get(`https://news-manage.dyp.finance/api/v1/vote/${itemId}/up`)
+      .then((data) => {
+        data.status === 200 ? setnewsItemId(Number(itemId) + 1) : console.error();
+      })
+      .catch(console.error);
+  };
+
+  const handleSingleDownVoting = async (itemId) => {
+    return await axios
+      .get(`https://news-manage.dyp.finance/api/v1/vote/${itemId}/down`)
+      .then((data) => {
+        data.status === 200 ? setnewsItemId(itemId) : console.error();
+      })
+      .catch(console.error);
+  };
+
+
 
   const listInnerRef = useRef();
 
