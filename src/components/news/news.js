@@ -356,7 +356,7 @@ const News = ({ theme, isPremium }) => {
 
   const handleNewsReoderPopular = () => {
     if (popularNewsData.length > 5 && otherNewsData.length > 0) {
-      otherNewsData.push(...popularNewsData.slice(6, popularNewsData.length));
+      otherNewsData.push(...popularNewsData.slice(5, popularNewsData.length));
       otherNewsData.reverse();
       setOtherNewsDataReverse(otherNewsData);
     }
@@ -364,7 +364,7 @@ const News = ({ theme, isPremium }) => {
 
   const handleNewsReoderPress = () => {
     if (pressNewsData.length > 8 && otherNewsData.length > 0) {
-      otherNewsData.push(...pressNewsData.slice(9, pressNewsData.length));
+      otherNewsData.push(...pressNewsData.slice(8, pressNewsData.length));
       otherNewsData.reverse();
       const result = [...new Set(otherNewsData)];
       setOtherNewsDataReverse(result);
@@ -604,7 +604,7 @@ const News = ({ theme, isPremium }) => {
               <div
                 className="singlenews-side"
                 style={{
-                  width: showModal ? "20%" : "33%",
+                  width: showModal ? "20%" : "43%",
                   display: !showModal ? "flex" : "none",
                 }}
               >
