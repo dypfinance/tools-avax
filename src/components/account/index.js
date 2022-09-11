@@ -276,7 +276,7 @@ export default class Subscription extends React.Component {
 
     try {
       signature = await window.sign(
-        window.config.metamask_message,
+        window.config.metamask_message2,
         await window.getCoinbase()
       );
     } catch (e) {

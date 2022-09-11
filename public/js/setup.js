@@ -27,6 +27,7 @@ window.config = {
   farm_api: "https://farm-info.dyp.finance",
 
   metamask_message: "I want to login, let me in!",
+  metamask_message2: "I want to login to DYP TOOLS, let me in!",
   metamask_admin_account: "0x471ad9812b2537ffc66eba4d474cc55c32dec4f8",
 
   submission_form_link: "https://forms.gle/SFX1DyUh8TcNeysz6",

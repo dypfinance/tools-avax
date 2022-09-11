@@ -56,7 +56,7 @@ const Sidebar = (props) => {
     if (logout !== "true") {
       fetchAvatar().then();
     }
-  });
+  }, [account]);
 
   useEffect(() => {
     const fetchInterval = setInterval(

@@ -44,6 +44,8 @@ const News = ({ theme, isPremium }) => {
   
   const [otherNewsData, setOtherNewsData] = useState([]);
   const [otherNewsDataReverse, setOtherNewsDataReverse] = useState([]);
+  const [otherPressReverse, setotherPressReverse] = useState([]);
+
 
   const [newsContent, setNewsContent] = useState([]);
 
@@ -269,18 +271,23 @@ const News = ({ theme, isPremium }) => {
         ...newsData,
         ...pressNewsData,
       ];
-
+      
       for (let i = 0; i < bigData.length; i++) {
         if (itemId === popularNewsData[i].id) {
           handleFetchNewsContent("popular", itemId);
         }
 
-        if (itemId === otherNewsData[i].id) {
+        else if (itemId === otherNewsData[i].id) {
           if (itemId === popularNewsData[i].id) {
             handleFetchNewsContent("popular", itemId);
-          } else if (itemId === pressNewsData[i].id) {
+          } 
+          else if (itemId === pressNewsData[i].id) {
             handleFetchNewsContent("press", itemId);
-          } else handleFetchNewsContent("other", itemId);
+          }
+          else if (itemId === newsData[i].id) {
+            handleFetchNewsContent("news", itemId);
+          }
+           else handleFetchNewsContent("other", itemId);
         }
 
         if (itemId === pressNewsData[i].id) {
@@ -361,20 +368,20 @@ const News = ({ theme, isPremium }) => {
       setOtherNewsDataReverse(otherNewsData);
     }
   };
+  
 
   const handleNewsReoderPress = () => {
     if (pressNewsData.length > 8 && otherNewsData.length > 0) {
-      otherNewsData.push(...pressNewsData.slice(8, pressNewsData.length));
-      otherNewsData.reverse();
-      const result = [...new Set(otherNewsData)];
-      setOtherNewsDataReverse(result);
+      otherPressReverse.push(...pressNewsData.slice(8, pressNewsData.length));
+      otherPressReverse.reverse();
+      setotherPressReverse(otherNewsData);
     }
   };
-
   useEffect(() => {
     handleNewsReoderPopular();
     handleNewsReoderPress();
   }, [popularNewsData.length, otherNewsData.length, pressNewsData.length]);
+
 
   useEffect(() => {
     fetchNewsdata().then();
@@ -390,6 +397,8 @@ const News = ({ theme, isPremium }) => {
   const bal1 = Number(localStorage.getItem("balance1"));
   const bal2 = Number(localStorage.getItem("balance2"));
   const logout = localStorage.getItem("logout");
+
+  
 
   const handleUpVoting = async (itemId) => {
     if (
@@ -460,7 +469,8 @@ const News = ({ theme, isPremium }) => {
     return el.getBoundingClientRect()?.bottom <= window.innerHeight;
   };
 
-  let bigNews = [...otherNewsDataReverse, ...newsData];
+  let result = [...otherNewsDataReverse,...otherPressReverse, ...newsData];
+  const bigNews = [...new Set(result)];
 
   const onScroll = () => {
     const wrappedElement = document.getElementById("header");
@@ -471,6 +481,9 @@ const News = ({ theme, isPremium }) => {
       document.removeEventListener("scroll", onScroll);
     }
   };
+  
+  
+
 
   return (
     <div onScroll={onScroll} ref={listInnerRef} id="header">

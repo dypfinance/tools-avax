@@ -72,12 +72,12 @@ const SubmitInfo = () => {
 
         if (send.status === 1) {
           alert("Your information has been submitted.");
+      setValues({ ...initialState });
         } else {
           alert("Something goes to wrong.");
         }
       }
 
-      setValues({ ...initialState });
     }
   };
 

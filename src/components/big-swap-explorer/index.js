@@ -220,7 +220,7 @@ export default class BigSwapExplorer extends React.Component {
         name: "Amount USD",
         selector: "amountUSD",
         sortable: true,
-        format: (txn) => `$${getFormattedNumber(txn.amountUSD, 4)}`,
+        format: (txn) => `$${getFormattedNumber(txn.amountUSD, 2)}`,
       },
       // {
       //     name: `Price ${this.state.pair?.token1.symbol || 'token1'}`,

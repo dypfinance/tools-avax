@@ -1643,7 +1643,7 @@ export default class PairExplorer extends React.Component {
                     style={{ borderBottom: "none" }}
                   >
                     <div className="content-title-top">
-                      <h2>FAVOURITES</h2>
+                      <h2>FAVORITES</h2>
                       <button
                         className="tradebtn m-0 w-auto"
                         style={{ gap: 5 }}

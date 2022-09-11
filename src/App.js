@@ -88,17 +88,16 @@ class App extends React.Component {
     // }.bind(this))
 
     let coinbase = this.state.coinbase
-    const logout = localStorage.getItem('logout')
 
 
     let subscribedPlatformTokenAmount;
-    if (logout === "1") {
+    if (this.state.networkId === "1") {
       await window.subscriptionPlatformTokenAmountETH(coinbase);
       let isPremium = Number(subscribedPlatformTokenAmount) > 0;
       this.setState({ subscribedPlatformTokenAmount, isPremium });
     }
 
-    if (logout === "43114") {
+    if (this.state.networkId === "43114") {
       await window.subscriptionPlatformTokenAmount(coinbase);
       let isPremium = Number(subscribedPlatformTokenAmount) > 0;
       this.setState({ subscribedPlatformTokenAmount, isPremium });

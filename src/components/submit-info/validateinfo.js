@@ -5,12 +5,17 @@ export default function validateInfo(values) {
   } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
     errors.email = "Email Address is Invalid";
   }
-  if (!values.project_name.trim()) {
+  
+  if (!values.project_name) {
     errors.project_name = "This field is required";
+  } else if (!/^[A-Za-z][A-Za-z0-9_]{7,29}$/i.test(values.project_name)) {
+    errors.project_name = "Project Name is Invalid";
   }
 
-  if (!values.logo_link.trim()) {
+  if(!values.logo_link) {
     errors.logo_link = "This field is required";
+  } else if(!/^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/i.test(values.logo_link)) {
+    errors.logo_link = "URL is invalid";
   }
 
   if (!values.ticker.trim()) {
@@ -19,7 +24,11 @@ export default function validateInfo(values) {
 
   if (!values.contract_address.trim()) {
     errors.contract_address = "This field is required";
+  } else if(!/^0x[a-fA-F0-9]{40}$/i.test(values.contract_address)) {
+    errors.contract_address = "Contract address is invalid"
   }
+
+
   if (!values.about.trim()) {
     errors.about = "This field is required";
   }
@@ -29,23 +38,38 @@ export default function validateInfo(values) {
   }
   if (!values.audit_link.trim()) {
     errors.audit_link = "This field is required";
+  } else if(!/^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/i.test(values.audit_link)) {
+    errors.audit_link = "URL is invalid";
   }
 
   if (!values.website_link.trim()) {
     errors.website_link = "This field is required";
+  } else if(!/^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/i.test(values.website_link)) {
+    errors.website_link = "URL is invalid";
   }
   if (!values.twitter.trim()) {
     errors.twitter = "This field is required";
+  } else if(!/^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/i.test(values.twitter)) {
+    errors.twitter = "URL is invalid";
   }
+
+
+
   if (!values.coinmarket.trim()) {
     errors.coinmarket = "This field is required";
+  } else if(!/^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/i.test(values.coinmarket)) {
+    errors.coinmarket = "URL is invalid";
   }
   if (!values.telegram.trim()) {
     errors.telegram = "This field is required";
+  } else if(!/^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/i.test(values.telegram)) {
+    errors.telegram = "URL is invalid";
   }
 
   if (!values.coingecko.trim()) {
     errors.coingecko = "This field is required";
+  } else if(!/^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/i.test(values.coingecko)) {
+    errors.coingecko = "URL is invalid";
   }
 
   return errors;
