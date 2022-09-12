@@ -620,7 +620,7 @@ export default class PairExplorer extends React.Component {
         selector: "amount0",
         sortable: true,
         format: (txn) =>
-          `${getFormattedNumber(txn.amount0, 6)} ${
+          `${getFormattedNumber(txn.amount0, 2)} ${
             this.state.pair?.token0.symbol
           }`,
       },
@@ -629,7 +629,7 @@ export default class PairExplorer extends React.Component {
         selector: "amount1",
         sortable: true,
         format: (txn) =>
-          `${getFormattedNumber(txn.amount1, 6)} ${
+          `${getFormattedNumber(txn.amount1, 2)} ${
             this.state.pair?.token1.symbol
           }`,
       },

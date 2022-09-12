@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import VotePassive from "./assets/votepassive.svg";
 import Upvote from "./assets/upvote.svg";
 import Downvote from "./assets/downvote.svg";
@@ -20,20 +21,25 @@ const SingleNews = ({
   isConnected,
   onSingleUpVoteClick,
   onSingleDownVoteClick,
-  isPremium
+  isPremium,
+  alreadyVoted
 
 }) => {
   const [likeIndicator, setLikeIndicator] = useState(false);
   const [dislikeIndicator, setDislikeIndicator] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
 
+  useEffect(()=>{
+    onSingleUpVoteClick();
+    onSingleDownVoteClick();
+  }, [alreadyVoted])
   const bal1 = Number(localStorage.getItem("balance1"));
   const bal2 = Number(localStorage.getItem("balance2"));
 
   const handleLikeStates = () => {
     const logout = localStorage.getItem("logout");
 
-    if ((bal1 === 0 && bal2 === 0 && isPremium === false) || logout === 'true') {
+    if ((bal1 === 0 && bal2 === 0 && isPremium === false) || logout === 'true' || alreadyVoted === true) {
       setLikeIndicator(false);
       setDislikeIndicator(false);
       setShowTooltip(true);
@@ -52,7 +58,7 @@ const SingleNews = ({
   const handleDisLikeStates = () => {
     const logout = localStorage.getItem("logout");
 
-    if ((bal1 === 0 && bal2 === 0 && isPremium === false) || logout === 'true') {
+    if ((bal1 === 0 && bal2 === 0 && isPremium === false) || logout === 'true' || alreadyVoted === true) {
       setLikeIndicator(false);
       setDislikeIndicator(false);
 
@@ -68,6 +74,7 @@ const SingleNews = ({
       }
     }
   };
+
 
   return (
     <div className="singlenews-body">
@@ -101,7 +108,8 @@ const SingleNews = ({
                   }}
                 >
                   <ToolTip status={
-                    isConnected
+                    alreadyVoted === true ? 'You have already voted'
+                    : isConnected
                       ? "You need to be holding DYP to vote"
                       : "Please connect your wallet"
                   }/>
