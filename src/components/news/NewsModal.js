@@ -151,9 +151,9 @@ checkUpVoting(newsId)
     return result;
   };
 
-  // useEffect(()=>{
-  //   fetchVotingdata().then()
-  // }, [handleDisLikeStates, handleLikeStates])
+  useEffect(()=>{
+    fetchVotingdata().then()
+  }, [])
 
   
   return (

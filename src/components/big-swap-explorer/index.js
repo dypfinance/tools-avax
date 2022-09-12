@@ -233,14 +233,14 @@ export default class BigSwapExplorer extends React.Component {
         selector: "amount0",
         sortable: true,
         format: (txn) =>
-          `${getFormattedNumber(txn.amount0, 6)} ${txn.pair?.token0.symbol}`,
+          `${getFormattedNumber(txn.amount0, 2)} ${txn.pair?.token0.symbol}`,
       },
       {
         name: `Amount ${this.state.pair?.token1.symbol || "token1"}`,
         selector: "amount1",
         sortable: true,
         format: (txn) =>
-          `${getFormattedNumber(txn.amount1, 6)} ${txn.pair?.token1.symbol}`,
+          `${getFormattedNumber(txn.amount1, 2)} ${txn.pair?.token1.symbol}`,
       },
 
       {

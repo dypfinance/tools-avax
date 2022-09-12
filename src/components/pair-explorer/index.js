@@ -1679,7 +1679,9 @@ export default class PairExplorer extends React.Component {
                       )
                       .map((lock, index) => {
                         return (
-                          <div key={index} className="favRow">
+                          <div key={index} className="favRow" onClick={() => {
+                            window.location.replace("/account#my-fav");
+                          }} style={{cursor: 'pointer'}}>
                             <div
                               className="row m-0 justify-content-between align-items-center"
                               style={{ gap: 20 }}
