@@ -41,15 +41,13 @@ const News = ({ theme, isPremium }) => {
   const { account, chainId, active } = useWeb3React();
   const [pressNewsData, setPressNewsData] = useState([]);
   const [popularNewsData, setPopularNewsData] = useState([]);
-  
   const [otherNewsData, setOtherNewsData] = useState([]);
   const [otherNewsDataReverse, setOtherNewsDataReverse] = useState([]);
   const [otherPressReverse, setotherPressReverse] = useState([]);
-
-
   const [newsContent, setNewsContent] = useState([]);
-
   const [next, setNext] = useState(newsPerRow);
+  const [userAlreadyVoted, setUserAlreadyVoted] = useState(true);
+  const [userAlreadyVotedOthers, setuserAlreadyVotedOthers] = useState(false);
 
   const loadMore = () => {
     setNext(next + newsPerRow);
@@ -271,30 +269,21 @@ const News = ({ theme, isPremium }) => {
         ...newsData,
         ...pressNewsData,
       ];
-      
+
       for (let i = 0; i < bigData.length; i++) {
-        if (itemId === popularNewsData[i].id) {
-          handleFetchNewsContent("popular", itemId);
-        }
-
-        else if (itemId === otherNewsData[i].id) {
-          if (itemId === popularNewsData[i].id) {
-            handleFetchNewsContent("popular", itemId);
-          } 
-          else if (itemId === pressNewsData[i].id) {
-            handleFetchNewsContent("press", itemId);
+        if (itemId === otherNewsData[i].id) {
+          for (let j = 0; j < otherNewsData.length; j++) {
+            if (itemId === otherNewsData[j].id) {
+              if (popularNewsData.find((obj) => obj.id === itemId)) {
+                handleFetchNewsContent("popular", itemId);
+              } else if (pressNewsData.find((obj) => obj.id === itemId)) {
+                handleFetchNewsContent("press", itemId);
+              } else if (newsData.find((obj) => obj.id === itemId)) {
+                handleFetchNewsContent("news", itemId);
+              } else handleFetchNewsContent("other", itemId);
+            }
           }
-          else if (itemId === newsData[i].id) {
-            handleFetchNewsContent("news", itemId);
-          }
-           else handleFetchNewsContent("other", itemId);
-        }
-
-        if (itemId === pressNewsData[i].id) {
-          handleFetchNewsContent("press", itemId);
-        }
-
-        if (itemId === newsData[i].id) {
+        } else if (itemId === newsData[i].id) {
           handleFetchNewsContent("news", itemId);
         }
       }
@@ -368,7 +357,6 @@ const News = ({ theme, isPremium }) => {
       setOtherNewsDataReverse(otherNewsData);
     }
   };
-  
 
   const handleNewsReoderPress = () => {
     if (pressNewsData.length > 8 && otherNewsData.length > 0) {
@@ -382,7 +370,6 @@ const News = ({ theme, isPremium }) => {
     handleNewsReoderPress();
   }, [popularNewsData.length, otherNewsData.length, pressNewsData.length]);
 
-
   useEffect(() => {
     fetchNewsdata().then();
     fetchPressData().then();
@@ -391,16 +378,16 @@ const News = ({ theme, isPremium }) => {
   }, [newsData.length, popularNewsData.length]);
 
   useEffect(() => {
-   fetchVotingdata().then()
+    fetchVotingdata().then();
   }, [newsItemId]);
 
   const bal1 = Number(localStorage.getItem("balance1"));
   const bal2 = Number(localStorage.getItem("balance2"));
   const logout = localStorage.getItem("logout");
 
-  
-
   const handleUpVoting = async (itemId) => {
+    const coinbase = await window.getCoinbase();
+    // console.log(itemId)
     if (
       (bal1 === 0 && bal2 === 0 && isPremium === false) ||
       logout === "true"
@@ -410,11 +397,17 @@ const News = ({ theme, isPremium }) => {
       let response = null;
       try {
         response = await axios.get(
-          `https://news-manage.dyp.finance/api/v1/vote/${itemId}/up`
+          `https://news-manage.dyp.finance/api/v1/vote/${itemId}/${coinbase}/up`
         );
-
-        fetchVotingdata().then((votes) => topVotes(votes));
-        setnewsItemId(Number(itemId) + 1);
+        
+        if (response.data.status === "success") {
+          setUserAlreadyVoted(false);
+          fetchVotingdata().then((votes) => topVotes(votes));
+          setnewsItemId(Number(itemId) + 1);
+        } else {
+          setUserAlreadyVoted(true);
+          setShowTooltip(true);
+        }
       } catch (e) {
         console.log(e);
       }
@@ -423,6 +416,8 @@ const News = ({ theme, isPremium }) => {
   };
 
   const handleDownVoting = async (itemId) => {
+    const coinbase = await window.getCoinbase();
+
     if (
       (bal1 === 0 && bal2 === 0 && isPremium === false) ||
       logout === "true"
@@ -430,31 +425,21 @@ const News = ({ theme, isPremium }) => {
       setShowTooltip(true);
     } else {
       return await axios
-        .get(`https://news-manage.dyp.finance/api/v1/vote/${itemId}/down`)
+        .get(
+          `https://news-manage.dyp.finance/api/v1/vote/${itemId}/${coinbase}/down`
+        )
         .then((data) => {
-          data.status === 200 ? setnewsItemId(itemId) : console.error();
+          if (data.data.status === "success") {
+            setnewsItemId(itemId);
+            setUserAlreadyVoted(false);
+          } else {
+            setUserAlreadyVoted(true);
+            setShowTooltip(true);
+          }
+          // console.log(data)
         })
         .catch(console.error);
     }
-  };
-
-
-  const handleSingleUpVoting = async (itemId) => {
-    return await axios
-      .get(`https://news-manage.dyp.finance/api/v1/vote/${itemId}/up`)
-      .then((data) => {
-        data.status === 200 ? setnewsItemId(Number(itemId) + 1) : console.error();
-      })
-      .catch(console.error);
-  };
-
-  const handleSingleDownVoting = async (itemId) => {
-    return await axios
-      .get(`https://news-manage.dyp.finance/api/v1/vote/${itemId}/down`)
-      .then((data) => {
-        data.status === 200 ? setnewsItemId(itemId) : console.error();
-      })
-      .catch(console.error);
   };
 
 
@@ -465,11 +450,15 @@ const News = ({ theme, isPremium }) => {
     document.addEventListener("scroll", onScroll);
   });
 
+  useEffect(() => {
+    localStorage.setItem("firstTimeVoter", 'false')
+  },[]);
+
   const isBottom = (el) => {
     return el.getBoundingClientRect()?.bottom <= window.innerHeight;
   };
 
-  let result = [...otherNewsDataReverse,...otherPressReverse, ...newsData];
+  let result = [...otherNewsDataReverse, ...otherPressReverse, ...newsData];
   const bigNews = [...new Set(result)];
 
   const onScroll = () => {
@@ -481,9 +470,6 @@ const News = ({ theme, isPremium }) => {
       document.removeEventListener("scroll", onScroll);
     }
   };
-  
-  
-
 
   return (
     <div onScroll={onScroll} ref={listInnerRef} id="header">
@@ -496,6 +482,7 @@ const News = ({ theme, isPremium }) => {
               onSelectOtherNews={(key) => {
                 window.scrollTo(0, 0);
                 handleSelecTopNews(key);
+                handleFetchNewsContent("special", key);
                 setIsParam(false);
               }}
               title={activeNews.title}
@@ -503,6 +490,7 @@ const News = ({ theme, isPremium }) => {
               image={activeNews.image}
               content={newsContent}
               theme={theme}
+             
               upvotes={
                 votes.length !== 0
                   ? votes.find((obj) => obj.id === activeNews.id)?.up
@@ -562,6 +550,7 @@ const News = ({ theme, isPremium }) => {
                               link={item.link}
                               day={item.date.slice(0, 10)}
                               theme={theme}
+                              alreadyVoted={userAlreadyVoted}
                               upvotes={
                                 votes.length !== 0
                                   ? votes.find((obj) => obj.id === item.id)?.up
@@ -604,7 +593,9 @@ const News = ({ theme, isPremium }) => {
                       bottom={0}
                       left={0}
                       status={
-                        logout === "false"
+                        userAlreadyVoted === true
+                          ? "You have already voted"
+                          : logout === "false"
                           ? "You need to be holding DYP to vote"
                           : "Please connect your wallet"
                       }
@@ -660,6 +651,7 @@ const News = ({ theme, isPremium }) => {
                           month={item.month}
                           day={item.date.slice(0, 10)}
                           theme={theme}
+                         newsId={item.id}
                           upvotes={
                             votes.length !== 0
                               ? votes.find((obj) => obj.id === item.id)?.up
@@ -670,12 +662,13 @@ const News = ({ theme, isPremium }) => {
                               ? votes.find((obj) => obj.id === item.id)?.down
                               : 0
                           }
-                          onSingleUpVoteClick={() => {
-                            handleSingleUpVoting(item.id);
-                          }}
-                          onSingleDownVoteClick={() => {
-                            handleSingleDownVoting(item.id);
-                          }}
+                          onVotesFetch={fetchVotingdata}
+                          // onSingleUpVoteClick={() => {
+                          //   handleSingleUpVoting(item.id);
+                          // }}
+                          // onSingleDownVoteClick={() => {
+                          //   handleSingleDownVoting(item.id);
+                          // }}
                           onNewsClick={() => {
                             setShowModal(true);
                             setActiveNews(popularNewsData[key]);
@@ -703,6 +696,8 @@ const News = ({ theme, isPremium }) => {
                             month={item.month}
                             day={item.date.slice(0, 10)}
                             theme={theme}
+                          onVotesFetch={fetchVotingdata}
+                            
                             upvotes={
                               votes.length !== 0
                                 ? votes.find((obj) => obj.id === item.id)?.up
@@ -713,12 +708,7 @@ const News = ({ theme, isPremium }) => {
                                 ? votes.find((obj) => obj.id === item.id)?.down
                                 : 0
                             }
-                            onSingleUpVoteClick={() => {
-                              handleSingleUpVoting(item.id);
-                            }}
-                            onSingleDownVoteClick={() => {
-                              handleSingleDownVoting(item.id);
-                            }}
+                          
                             onNewsClick={() => {
                               setShowModal(true);
                               handleSelectTopVotedNews(item.id);
@@ -778,18 +768,14 @@ const News = ({ theme, isPremium }) => {
                         date={item.date.slice(0, 10)}
                         isPremium={isPremium}
                         isConnected={isConnected}
+                        onVotesFetch={fetchVotingdata}
                         onSinglePressHighlightClick={() => {
                           setActiveNews(pressNewsData[key]);
                           handleFetchNewsContent("press", item.id);
                           setShowModal(true);
                           window.scrollTo(0, 0);
                         }}
-                        onDownVoteClick={() => {
-                          handleDownVoting(item.id);
-                        }}
-                        onUpVoteClick={() => {
-                          handleUpVoting(item.id);
-                        }}
+                       
                         upvotes={
                           votes.length !== 0
                             ? votes.find((obj) => obj.id === item.id)?.up
@@ -832,6 +818,7 @@ const News = ({ theme, isPremium }) => {
                     month={item.month}
                     year={item.year}
                     theme={theme}
+                    onVotesFetch={fetchVotingdata}
                     upvotes={
                       votes.length !== 0
                         ? votes.find((obj) => obj.id === item.id)?.up
@@ -849,12 +836,7 @@ const News = ({ theme, isPremium }) => {
                       setShowModal(true);
                       window.scrollTo(0, 0);
                     }}
-                    onUpVoteClick={() => {
-                      handleSingleUpVoting(item.id);
-                    }}
-                    onDownVoteClick={() => {
-                      handleDownVoting(item.id);
-                    }}
+                  
                     isConnected={isConnected}
                     isPremium={isPremium}
                   />

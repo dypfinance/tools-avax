@@ -22,43 +22,40 @@ const SingleNews = ({
   onSingleUpVoteClick,
   onSingleDownVoteClick,
   isPremium,
-  alreadyVoted
-
+  newsId,
+onVotesFetch
 }) => {
   const [likeIndicator, setLikeIndicator] = useState(false);
   const [dislikeIndicator, setDislikeIndicator] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
+  const [alreadyVoted, setalreadyVoted] = useState(true);
 
-  useEffect(()=>{
-    onSingleUpVoteClick();
-    onSingleDownVoteClick();
-  }, [alreadyVoted])
   const bal1 = Number(localStorage.getItem("balance1"));
   const bal2 = Number(localStorage.getItem("balance2"));
 
   const handleLikeStates = () => {
     const logout = localStorage.getItem("logout");
-
-    if ((bal1 === 0 && bal2 === 0 && isPremium === false) || logout === 'true' || alreadyVoted === true) {
+    checkUpVoting(newsId)
+    if ((bal1 === 0 && bal2 === 0 && isPremium === false) || logout === 'true' || alreadyVoted === false) {
       setLikeIndicator(false);
       setDislikeIndicator(false);
       setShowTooltip(true);
     } else {
       if (likeIndicator === true) {
         setLikeIndicator(false);
-        onSingleDownVoteClick();
+        // onSingleDownVoteClick();
       } else if (likeIndicator === false) {
         setLikeIndicator(true);
         setDislikeIndicator(false);
-        onSingleUpVoteClick();
+        // onSingleUpVoteClick();
       }
     }
   };
 
   const handleDisLikeStates = () => {
     const logout = localStorage.getItem("logout");
-
-    if ((bal1 === 0 && bal2 === 0 && isPremium === false) || logout === 'true' || alreadyVoted === true) {
+checkDownVoting(newsId)
+    if ((bal1 === 0 && bal2 === 0 && isPremium === false) || logout === 'true' || alreadyVoted === false) {
       setLikeIndicator(false);
       setDislikeIndicator(false);
 
@@ -66,13 +63,55 @@ const SingleNews = ({
     } else {
       if (dislikeIndicator === true) {
         setDislikeIndicator(false);
-        onSingleUpVoteClick();
+        // onSingleUpVoteClick();
       } else if (dislikeIndicator === false) {
-        onSingleDownVoteClick();
+        // onSingleDownVoteClick();
         setDislikeIndicator(true);
         setLikeIndicator(false);
       }
     }
+  };
+
+  const checkUpVoting = async (itemId) => {
+    const coinbase = await window.getCoinbase();
+    return await axios
+      .get(
+        `https://news-manage.dyp.finance/api/v1/vote/${itemId}/${coinbase}/up`
+      )
+      .then((data) => {
+        
+        if (data.data.status === "success") {
+          
+          onVotesFetch()
+          
+        } else {
+          setalreadyVoted(false);
+          setShowTooltip(true)
+          setLikeIndicator(false)
+        }
+      })
+      .catch(console.error);
+  };
+
+  const checkDownVoting = async (itemId) => {
+    const coinbase = await window.getCoinbase();
+    return await axios
+      .get(
+        `https://news-manage.dyp.finance/api/v1/vote/${itemId}/${coinbase}/down`
+      )
+      .then((data) => {
+        
+        if (data.data.status === "success") {
+          onVotesFetch()
+        } else {
+          setalreadyVoted(false);
+          setShowTooltip(true)
+          setLikeIndicator(false)
+          setDislikeIndicator(false)
+
+        }
+      })
+      .catch(console.error);
   };
 
 
@@ -108,7 +147,7 @@ const SingleNews = ({
                   }}
                 >
                   <ToolTip status={
-                    alreadyVoted === true ? 'You have already voted'
+                    alreadyVoted === false ? 'You have already voted'
                     : isConnected
                       ? "You need to be holding DYP to vote"
                       : "Please connect your wallet"

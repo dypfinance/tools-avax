@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import VotePassive from "./assets/votepassive.svg";
 import Upvote from "./assets/upvote.svg";
 import Downvote from "./assets/downvote.svg";
@@ -24,20 +25,23 @@ const RelatedNews = ({
   onHandleDownvote,
   onDownVoteClick,
   isPremium,
+  onVotesFetch
+  
 }) => {
   const [likeIndicator, setLikeIndicator] = useState(false);
   const [dislikeIndicator, setDislikeIndicator] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
+  const [alreadyVoted, setalreadyVoted] = useState(true);
 
   const bal1 = Number(localStorage.getItem("balance1"));
   const bal2 = Number(localStorage.getItem("balance2"));
   const logout = localStorage.getItem("logout");
   const handleLikeStates = () => {
-
+    checkUpVoting(newsId)
 
     if (
       (bal1 === 0 && bal2 === 0 && isPremium === false) ||
-      logout === 'true'
+      logout === 'true' || alreadyVoted === false
     ) {
       setLikeIndicator(false);
       setDislikeIndicator(false);
@@ -55,18 +59,19 @@ const RelatedNews = ({
 
   const handleDisLikeStates = () => {
 
+    checkDownVoting(newsId)
     if (
       (bal1 === 0 && bal2 === 0 && isPremium === false) ||
-      logout === 'true'
+      logout === 'true' || alreadyVoted === false
     ) {
       setLikeIndicator(false);
       setShowTooltip(true);
     } else {
       if (dislikeIndicator === true) {
         setDislikeIndicator(false);
-        onHandleUpvote(newsId);
+        // onHandleUpvote(newsId);
       } else if (dislikeIndicator === false) {
-        onHandleDownvote(newsId);
+        // onHandleDownvote(newsId);
         setLikeIndicator(false);
         setDislikeIndicator(true);
       }
@@ -74,7 +79,48 @@ const RelatedNews = ({
   };
 
 
-// console.log(showTooltip)
+
+  const checkUpVoting = async (itemId) => {
+    const coinbase = await window.getCoinbase();
+    return await axios
+      .get(
+        `https://news-manage.dyp.finance/api/v1/vote/${itemId}/${coinbase}/up`
+      )
+      .then((data) => {
+        
+        if (data.data.status === "success") {
+          
+          onVotesFetch()
+          
+        } else {
+          setalreadyVoted(false);
+          setShowTooltip(true)
+          setLikeIndicator(false)
+        }
+      })
+      .catch(console.error);
+  };
+
+  const checkDownVoting = async (itemId) => {
+    const coinbase = await window.getCoinbase();
+    return await axios
+      .get(
+        `https://news-manage.dyp.finance/api/v1/vote/${itemId}/${coinbase}/down`
+      )
+      .then((data) => {
+        
+        if (data.data.status === "success") {
+          onVotesFetch()
+        } else {
+          setalreadyVoted(false);
+          setShowTooltip(true)
+          setLikeIndicator(false)
+          setDislikeIndicator(false)
+
+        }
+      })
+      .catch(console.error);
+  };
 
   if (title === undefined) {
     return (
@@ -129,7 +175,10 @@ const RelatedNews = ({
                   >
                     <ToolTip
                       status={
-                        logout === 'false'
+                        alreadyVoted === false
+                        ? "You have already voted"
+                        :
+                         logout === 'false'
                           ? "You need to be holding DYP to vote"
                           : "Please connect your wallet"
                       }

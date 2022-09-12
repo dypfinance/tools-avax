@@ -1,4 +1,5 @@
 import Modal from "../general/Modal";
+import axios from "axios";
 import React, { useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import RelatedNews from "./RelatedNews";
@@ -32,7 +33,8 @@ const NewsModal = ({
   year,
   link,
   onModalClose,
-  isPremium
+  isPremium,
+  onVotesFetch  
 }) => {
   const getItemsWithoutCurrentItem = (currentItemId, arrayOfItems) => {
     return arrayOfItems.filter((item) => item?.id !== currentItemId);
@@ -43,6 +45,7 @@ const NewsModal = ({
   const [dislikeIndicator, setDislikeIndicator] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
   const [votes, setVotes] = useState([])
+  const [alreadyVoted, setalreadyVoted] = useState(true);
   
   useEffect(() => {
     if (elementRef.current.clientHeight !== 0) {
@@ -57,40 +60,83 @@ const NewsModal = ({
   const logout = localStorage.getItem("logout");
 
   const handleLikeStates = () => {
-
-    if ((bal1 === 0 && bal2 === 0 && isPremium === false) || logout === 'true') {
+checkUpVoting(newsId)
+    if ((bal1 === 0 && bal2 === 0 && isPremium === false) || logout === 'true' || alreadyVoted === false) {
       setLikeIndicator(false);
+      setDislikeIndicator(false);
       setShowTooltip(true);
     } else {
       if (likeIndicator === true) {
         setLikeIndicator(false);
-        onHandlePressDownvote(newsId);
+        // onHandlePressDownvote(newsId);
         
       } else if (likeIndicator === false) {
         setLikeIndicator(true);
         setDislikeIndicator(false);
-        onHandlePressUpvote(newsId);
+        // onHandlePressUpvote(newsId);
       }
     }
   };
 
   const handleDisLikeStates = () => {
-
-    if ((bal1 === 0 && bal2 === 0 && isPremium === false) || logout === 'true') {
+    checkDownVoting(newsId)
+    if ((bal1 === 0 && bal2 === 0 && isPremium === false) || logout === 'true'  || alreadyVoted === false) {
       setLikeIndicator(false);
       setShowTooltip(true);
     } else {
       if (dislikeIndicator === true) {
         setDislikeIndicator(false);
-        onHandlePressUpvote(newsId);
+        // onHandlePressUpvote(newsId);
       } else if (dislikeIndicator === false) {
-        onHandlePressDownvote(newsId);
+        // onHandlePressDownvote(newsId);
         setDislikeIndicator(true);
         setLikeIndicator(false);
       }
     }
   };
   
+  const checkUpVoting = async (itemId) => {
+    const coinbase = await window.getCoinbase();
+    return await axios
+      .get(
+        `https://news-manage.dyp.finance/api/v1/vote/${itemId}/${coinbase}/up`
+      )
+      .then((data) => {
+        
+        if (data.data.status === "success") {
+          
+          fetchVotingdata().then()
+          
+        } else {
+          setalreadyVoted(false);
+          setShowTooltip(true)
+          setLikeIndicator(false)
+        }
+      })
+      .catch(console.error);
+  };
+
+  const checkDownVoting = async (itemId) => {
+    const coinbase = await window.getCoinbase();
+    return await axios
+      .get(
+        `https://news-manage.dyp.finance/api/v1/vote/${itemId}/${coinbase}/down`
+      )
+      .then((data) => {
+        
+        if (data.data.status === "success") {
+          fetchVotingdata()
+        } else {
+          setalreadyVoted(false);
+          setShowTooltip(true)
+          setLikeIndicator(false)
+          setDislikeIndicator(false)
+
+        }
+      })
+      .catch(console.error);
+  };
+
   
   const fetchVotingdata = async () => {
     const result = await fetch(`https://news-manage.dyp.finance/api/v1/votes/all`)
@@ -105,9 +151,9 @@ const NewsModal = ({
     return result;
   };
 
-  useEffect(()=>{
-    fetchVotingdata().then()
-  }, [onHandleDownvote, onHandleUpvote])
+  // useEffect(()=>{
+  //   fetchVotingdata().then()
+  // }, [handleDisLikeStates, handleLikeStates])
 
   
   return (
@@ -175,6 +221,8 @@ const NewsModal = ({
                   >
                     <ToolTip
                       status={
+                        alreadyVoted === false ? 'You have already voted'
+                        : 
                         logout==='false'
                           ? "You need to be holding DYP to vote"
                           : "Please connect your wallet"
@@ -184,7 +232,7 @@ const NewsModal = ({
                 ) : (
                   <></>
                 )}
-                <span>{Number(upvotes) - Number(downvotes)}</span>
+                <span>{Number(votes.find((obj) => obj.id === newsId)?.up) - Number(votes.find((obj) => obj.id === newsId)?.down)}</span>
 
                 <img
                   src={
@@ -315,6 +363,7 @@ const NewsModal = ({
                           month={item.month}
                           year={item.year}
                           link={item.link}
+                          // alreadyVoted={alreadyVoted}
                           upvotes={
                             votes.length !== 0
                               ? votes.find((obj) => obj.id === item.id)?.up
