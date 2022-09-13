@@ -33,15 +33,14 @@ async function getTokenInformation(address) {
   return res.data;
 }
 
-async function getSearchResultsLocalAPI(query)
-{
+async function getSearchResultsLocalAPI(query) {
   let res = await axios.get(
-      window.ethereum
-          ? window.ethereum.chainId === "0x1"
-           ? `https://api-explorer.dyp.finance/v1/eth/search/pairs/${query}`
-           : `https://api-explorer.dyp.finance/v1/avax/search/pairs/${query}`
-          : `https://api-explorer.dyp.finance/v1/eth/search/pairs/${query}`
-  )
+    window.ethereum
+      ? window.ethereum.chainId === "0x1"
+        ? `https://api-explorer.dyp.finance/v1/eth/search/pairs/${query}`
+        : `https://api-explorer.dyp.finance/v1/avax/search/pairs/${query}`
+      : `https://api-explorer.dyp.finance/v1/eth/search/pairs/${query}`
+  );
 
   return res.data.sort((a, b) => a.pair.reserve - b.pair.reserve).reverse();
 }
@@ -1017,16 +1016,16 @@ export default class PairExplorer extends React.Component {
                       </span>
                     </div>
                     <br />
-
                   </div>
-                </div> <a
-                      onClick={this.toggleModal}
-                      style={{ fontSize: ".7rem" }}
-                      className="popup-btn "
-                      href="javascript:void(0)"
-                    >
-                      <i className="fas fa-info-circle"></i> View More Info
-                    </a>
+                </div>{" "}
+                <a
+                  onClick={this.toggleModal}
+                  style={{ fontSize: ".7rem" }}
+                  className="popup-btn "
+                  href="javascript:void(0)"
+                >
+                  <i className="fas fa-info-circle"></i> View More Info
+                </a>
               </div>
 
               <div className="firstbox-wrapper">
@@ -1286,7 +1285,7 @@ export default class PairExplorer extends React.Component {
                           <i
                             style={{
                               color: this.state.starColor,
-                              marginBottom: '18px'
+                              marginBottom: "18px",
                             }}
                             className={`fa${
                               this.state.isFavorite ? "s" : "r"
@@ -1631,8 +1630,14 @@ export default class PairExplorer extends React.Component {
                       >
                         View pair locker
                       </NavLink>
-                      <NavLink to={`/locker/${this.props.match.params.pair_id}`}>
-                      <img src={PairLocker} alt="" style={{ marginLeft: 10, cursor: 'pointer' }}/>
+                      <NavLink
+                        to={`/locker/${this.props.match.params.pair_id}`}
+                      >
+                        <img
+                          src={PairLocker}
+                          alt=""
+                          style={{ marginLeft: 10, cursor: "pointer" }}
+                        />
                       </NavLink>
                     </div>
                   </div>
@@ -1679,9 +1684,11 @@ export default class PairExplorer extends React.Component {
                       )
                       .map((lock, index) => {
                         return (
-                          <div key={index} className="favRow" onClick={() => {
-                            window.location.replace("/account#my-fav");
-                          }} style={{cursor: 'pointer'}}>
+                          <NavLink
+                            key={index}
+                            className="favRow"
+                            to={`/pair-explorer/${lock.id}`}
+                          >
                             <div
                               className="row m-0 justify-content-between align-items-center"
                               style={{ gap: 20 }}
@@ -1691,10 +1698,10 @@ export default class PairExplorer extends React.Component {
                               </h2>
 
                               <span className="favliq">
-                              ...{lock.id.slice(35)}
+                                ...{lock.id.slice(35)}
                               </span>
                             </div>
-                          </div>
+                          </NavLink>
                         );
                       })}{" "}
                   </div>
@@ -1712,32 +1719,50 @@ export default class PairExplorer extends React.Component {
                       autoComplete="off"
                       placeholder="Search Pairs"
                     />
-                    <ul className="output" style={{
-                      display: this.state.searchResults.length == 0 ? 'none' : 'block',
-                      zIndex: 9,
-                      maxHeight: '300px',
-                      overflowY: 'auto'
-                    }}>
-                      {
-                        this.state.searchResults.map((p) => <NavLink
-                                to={`/pair-explorer/${p.pair.address.toLowerCase()}`}>
-                              <li key={p.id} className="prediction-item">
-                                <div className="suggest-item">
-                                  <h2 style={{fontSize: '1.2rem', fontWeight: 500}}>
-                                                            <span
-                                                                className="wh_txt">{p.pair.token_1.symbol}</span>/{p.pair.token_0.symbol}
-                                    <span className="bar">-</span> ({p.pair.token_0.name})
-                                  </h2>
-                                  <p style={{fontSize: '.85rem', fontWeight: 400}}>Token:
-                                    ...{p.pair.token_0.address.toLowerCase().slice(34)} - Pair:
-                                    ...{p.pair.address.toLowerCase().slice(34)}</p>
-                                  <p>Total liquidity:</p>
-                                  <span>${getFormattedNumber(p.pair.reserve, 2)}</span>
-                                </div>
-                              </li>
-                            </NavLink>
-                        )
-                      }
+                    <ul
+                      className="output"
+                      style={{
+                        display:
+                          this.state.searchResults.length == 0
+                            ? "none"
+                            : "block",
+                        zIndex: 9,
+                        maxHeight: "300px",
+                        overflowY: "auto",
+                      }}
+                    >
+                      {this.state.searchResults.map((p) => (
+                        <NavLink
+                          to={`/pair-explorer/${p.pair.address.toLowerCase()}`}
+                        >
+                          <li key={p.id} className="prediction-item">
+                            <div className="suggest-item">
+                              <h2
+                                style={{ fontSize: "1.2rem", fontWeight: 500 }}
+                              >
+                                <span className="wh_txt">
+                                  {p.pair.token_1.symbol}
+                                </span>
+                                /{p.pair.token_0.symbol}
+                                <span className="bar">-</span> (
+                                {p.pair.token_0.name})
+                              </h2>
+                              <p
+                                style={{ fontSize: ".85rem", fontWeight: 400 }}
+                              >
+                                Token: ...
+                                {p.pair.token_0.address.toLowerCase().slice(34)}{" "}
+                                - Pair: ...
+                                {p.pair.address.toLowerCase().slice(34)}
+                              </p>
+                              <p>Total liquidity:</p>
+                              <span>
+                                ${getFormattedNumber(p.pair.reserve, 2)}
+                              </span>
+                            </div>
+                          </li>
+                        </NavLink>
+                      ))}
                     </ul>
                     <button type="submit" id="submit">
                       {/* <img src="/assets/img/search-2.png" alt="Image" /> */}
