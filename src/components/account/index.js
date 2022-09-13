@@ -758,7 +758,7 @@ export default class Subscription extends React.Component {
               ) : (
                 <></>
               )}
-              {this.state.showRemovebtn === true ? (
+              {(this.state.showRemovebtn === true || this.state.image !== Placeholder) ? (
                 <div className="removebtn" type="" onClick={this.deleteAvatar}>
                   {this.state.loadspinnerRemove === true ? (
                     <div
