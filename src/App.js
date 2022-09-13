@@ -284,7 +284,7 @@ class App extends React.Component {
                 render={(props) => (
                   <News
                     theme={this.state.theme}
-                    isPremium={true}
+                    isPremium={this.state.isPremium}
                     key={props.match.params.news_id}
                     {...props}
                   />
