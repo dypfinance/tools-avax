@@ -303,6 +303,7 @@ export default class Subscription extends React.Component {
       .then((response) => response.json())
       .then((result) => {
         console.log("Success:", result);
+        window.location.reload()
       })
       .catch((error) => {
         console.error("Error:", error);

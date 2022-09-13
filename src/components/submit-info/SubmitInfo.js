@@ -21,7 +21,7 @@ const SubmitInfo = () => {
 
   useEffect(()=>{
     window.scrollTo(0,0)
-  })
+  },[])
 
   const [values, setValues] = useState(initialState);
   const [errors, setErrors] = useState({});
@@ -58,7 +58,6 @@ const SubmitInfo = () => {
 
       if (
         values.project_name !== "" &&
-        values.nft_number !== "" &&
         values.ticker !== ""
       ) {
         const send = await axios
@@ -140,7 +139,7 @@ const SubmitInfo = () => {
                     onChange={handleChange}
                     placeholder="Email"
                   />
-                  {errors.nft_number && (
+                  {errors.email && (
                     <span className="errormessage">{errors.email}</span>
                   )}
                 </div>
