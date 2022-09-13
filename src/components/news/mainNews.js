@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import VotePassive from "./assets/votepassive.svg";
 import Upvote from "./assets/upvote.svg";
 import Downvote from "./assets/downvote.svg";
 import Clock from "./assets/clock.svg";
+import ToolTip from "./ToolTip";
+import OutsideClickHandler from "react-outside-click-handler";
 
 const MainNews = ({
   link,
@@ -20,18 +23,86 @@ const MainNews = ({
   isConnected,
   onDownVoteClick,
   isPremium,
-  alreadyVoted
-
+  onVotesFetch,
 }) => {
   const [likeIndicator, setLikeIndicator] = useState(false);
   const [dislikeIndicator, setDislikeIndicator] = useState(false);
+  const [alreadyVoted, setalreadyVoted] = useState(true);
+  const [canVote, setCanVote] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
 
   const bal1 = Number(localStorage.getItem("balance1"));
   const bal2 = Number(localStorage.getItem("balance2"));
-    const logout = localStorage.getItem("logout");
-  const handleLikeStates = () => {
+  const logout = localStorage.getItem("logout");
+
+    useEffect(() => {
+      if(bal1 === 0 && bal2 === 0 && isPremium === true) {
+        setCanVote(true)
+      }
+  
+      else if(bal1 !== 0 && bal2 !== 0 && isPremium === true) {
+        setCanVote(true)
+      }
+  
+      else if((bal1 !== 0 || bal2 !== 0) && isPremium === false) {
+        setCanVote(true)
+      }
+  
+      else if((bal1 === 0 && bal2 === 0) && isPremium === false) {
+        setCanVote(false)
+      }
+      else if(logout === 'true') {
+        setCanVote(false)
+      }
+      
+    }, [alreadyVoted, bal1, bal2, isPremium, logout]);
+
+    const checkUpVoting = async (itemId) => {
+      const coinbase = await window.getCoinbase();
+      return await axios
+        .get(
+          `https://news-manage.dyp.finance/api/v1/vote/${itemId}/${coinbase}/up`
+        )
+        .then((data) => {
+          
+          if (data.data.status === "success") {
+            
+            onVotesFetch()
+            
+          } else {
+            setalreadyVoted(false);
+            setShowTooltip(true)
+            setLikeIndicator(false)
+          }
+        })
+        .catch(console.error);
+    };
+  
+    const checkDownVoting = async (itemId) => {
+      const coinbase = await window.getCoinbase();
+      return await axios
+        .get(
+          `https://news-manage.dyp.finance/api/v1/vote/${itemId}/${coinbase}/down`
+        )
+        .then((data) => {
+          
+          if (data.data.status === "success") {
+            onVotesFetch()
+          } else {
+            setalreadyVoted(false);
+            setShowTooltip(true)
+            setLikeIndicator(false)
+            setDislikeIndicator(false)
+  
+          }
+        })
+        .catch(console.error);
+    };
+
     
-    if ((bal1 === 0 && bal2 === 0 && isPremium === false) || logout === 'true' || alreadyVoted === true) {
+  const handleLikeStates = () => {
+    checkUpVoting(newsId)
+    if ((bal1 === 0 && bal2 === 0 && isPremium === false) || logout === 'true') {
       setLikeIndicator(false);
       setDislikeIndicator(false);
       onUpVoteClick();
@@ -48,8 +119,9 @@ const MainNews = ({
   };
 
   const handleDisLikeStates = () => {
+    checkDownVoting(newsId)
     const logout = localStorage.getItem("logout");
-    if ((bal1 === 0 && bal2 === 0 && isPremium === false) || logout === 'true' || alreadyVoted === true) {
+    if ((bal1 === 0 && bal2 === 0 && isPremium === false) || logout === 'true') {
       setLikeIndicator(false);
       setDislikeIndicator(false);
       onDownVoteClick();
@@ -113,7 +185,29 @@ const MainNews = ({
               }}
             />
             <span> {Number(upvotes) - Number(downvotes)}</span>
-
+            {showTooltip === true ? (
+              <OutsideClickHandler
+                onOutsideClick={() => {
+                  setShowTooltip(false);
+                }}
+              >
+                <ToolTip
+                  bottom={0}
+                  left={"auto"}
+                  status={
+                    logout === "false" && canVote === false
+                      ? "You need to be holding DYP to vote"
+                      : logout === "true"
+                      ? "Please connect your wallet"
+                      : alreadyVoted === true && canVote === true
+                      ? "You have already voted"
+                      : "You have already voted"
+                  }
+                />
+              </OutsideClickHandler>
+            ) : (
+              <></>
+            )}
             <img
               src={
                 likeIndicator === false && dislikeIndicator === false

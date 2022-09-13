@@ -47,7 +47,7 @@ const News = ({ theme, isPremium }) => {
   const [newsContent, setNewsContent] = useState([]);
   const [next, setNext] = useState(newsPerRow);
   const [userAlreadyVoted, setUserAlreadyVoted] = useState(true);
-  const [userAlreadyVotedOthers, setuserAlreadyVotedOthers] = useState(false);
+  const [canVote, setCanVote] = useState(false);
 
   const loadMore = () => {
     setNext(next + newsPerRow);
@@ -385,6 +385,31 @@ const News = ({ theme, isPremium }) => {
   const bal2 = Number(localStorage.getItem("balance2"));
   const logout = localStorage.getItem("logout");
 
+  useEffect(() => {
+    if(bal1 === 0 && bal2 === 0 && isPremium === true) {
+      setCanVote(true)
+    }
+
+    else if(bal1 !== 0 && bal2 !== 0 && isPremium === true) {
+      setCanVote(true)
+    }
+
+    else if((bal1 !== 0 || bal2 !== 0) && isPremium === false) {
+      setCanVote(true)
+    }
+
+    else if((bal1 === 0 && bal2 === 0) && isPremium === false) {
+      setCanVote(false)
+    }
+    else if(logout === 'true') {
+      setCanVote(false)
+    }
+    
+  }, [userAlreadyVoted, bal1, bal2, isPremium]);
+
+// console.log(isPremium)
+
+
   const handleUpVoting = async (itemId) => {
     const coinbase = await window.getCoinbase();
     // console.log(itemId)
@@ -550,7 +575,6 @@ const News = ({ theme, isPremium }) => {
                               link={item.link}
                               day={item.date.slice(0, 10)}
                               theme={theme}
-                              alreadyVoted={userAlreadyVoted}
                               upvotes={
                                 votes.length !== 0
                                   ? votes.find((obj) => obj.id === item.id)?.up
@@ -568,12 +592,7 @@ const News = ({ theme, isPremium }) => {
                                 setActiveNews(popularNewsData[key]);
                                 handleFetchNewsContent("popular", item.id);
                               }}
-                              onUpVoteClick={() => {
-                                handleUpVoting(item.id);
-                              }}
-                              onDownVoteClick={() => {
-                                handleDownVoting(item.id);
-                              }}
+                             onVotesFetch={fetchVotingdata}
                               isConnected={isConnected}
                               isPremium={isPremium}
                             />
@@ -583,27 +602,6 @@ const News = ({ theme, isPremium }) => {
                     })}
                 </Carousel>
 
-                {showTooltip === true ? (
-                  <OutsideClickHandler
-                    onOutsideClick={() => {
-                      setShowTooltip(false);
-                    }}
-                  >
-                    <ToolTip
-                      bottom={0}
-                      left={0}
-                      status={
-                        userAlreadyVoted === true
-                          ? "You have already voted"
-                          : logout === "false"
-                          ? "You need to be holding DYP to vote"
-                          : "Please connect your wallet"
-                      }
-                    />
-                  </OutsideClickHandler>
-                ) : (
-                  <></>
-                )}
               </div>
               <div
                 className="singlenews-side"
@@ -769,13 +767,13 @@ const News = ({ theme, isPremium }) => {
                         isPremium={isPremium}
                         isConnected={isConnected}
                         onVotesFetch={fetchVotingdata}
+                        newsId={item.id}
                         onSinglePressHighlightClick={() => {
                           setActiveNews(pressNewsData[key]);
                           handleFetchNewsContent("press", item.id);
                           setShowModal(true);
                           window.scrollTo(0, 0);
                         }}
-                       
                         upvotes={
                           votes.length !== 0
                             ? votes.find((obj) => obj.id === item.id)?.up

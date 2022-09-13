@@ -32,10 +32,37 @@ const RelatedNews = ({
   const [dislikeIndicator, setDislikeIndicator] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
   const [alreadyVoted, setalreadyVoted] = useState(true);
+  const [canVote, setCanVote] = useState(false);
 
   const bal1 = Number(localStorage.getItem("balance1"));
   const bal2 = Number(localStorage.getItem("balance2"));
   const logout = localStorage.getItem("logout");
+
+
+
+  useEffect(() => {
+    if(bal1 === 0 && bal2 === 0 && isPremium === true) {
+      setCanVote(true)
+    }
+
+    else if(bal1 !== 0 && bal2 !== 0 && isPremium === true) {
+      setCanVote(true)
+    }
+
+    else if((bal1 !== 0 || bal2 !== 0) && isPremium === false) {
+      setCanVote(true)
+    }
+
+    else if((bal1 === 0 && bal2 === 0) && isPremium === false) {
+      setCanVote(false)
+    }
+    else if(logout === 'true') {
+      setCanVote(false)
+    }
+    
+  }, [alreadyVoted, bal1, bal2, isPremium]);
+
+
   const handleLikeStates = () => {
     checkUpVoting(newsId)
 
@@ -89,9 +116,7 @@ const RelatedNews = ({
       .then((data) => {
         
         if (data.data.status === "success") {
-          
           onVotesFetch()
-          
         } else {
           setalreadyVoted(false);
           setShowTooltip(true)
@@ -175,12 +200,13 @@ const RelatedNews = ({
                   >
                     <ToolTip
                       status={
-                        alreadyVoted === false
-                        ? "You have already voted"
-                        :
-                         logout === 'false'
+                        logout === "false" && canVote === false
                           ? "You need to be holding DYP to vote"
-                          : "Please connect your wallet"
+                          : logout === 'true'
+                         ? "Please connect your wallet"
+                         :   alreadyVoted === true && canVote === true
+                         ? "You have already voted"
+                         : "You have already voted"
                       }
                     />
                   </OutsideClickHandler>
