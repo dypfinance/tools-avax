@@ -1,5 +1,5 @@
 // import 'bootstrap/dist/css/bootstrap.min.css';
-
+import Web3 from "web3";
 import React from "react";
 import GoogleAnalyticsReporter from "./functions/analytics";
 import PoolExplorer from "./components/pool-explorer";
@@ -39,35 +39,35 @@ class App extends React.Component {
       subscribedPlatformTokenAmount: "...",
       isPremium: false,
       hotPairs: [],
-      networkId: '1',
+      networkId: "1",
       show: false,
     };
-    this.showModal = this.showModal.bind(this)
-    this.hideModal = this.hideModal.bind(this)
+    this.showModal = this.showModal.bind(this);
+    this.hideModal = this.hideModal.bind(this);
   }
 
   showModal = () => {
-    this.setState({ show: true })
-  }
+    this.setState({ show: true });
+  };
 
   hideModal = () => {
-    this.setState({ show: false })
-  }
+    this.setState({ show: false });
+  };
 
   checkNetworkId() {
-    if(window.ethereum) {
-      window.ethereum.request({ method: "net_version" })
-      .then((data) => {
-        this.setState({
-          networkId: data
-        });
-        this.refreshSubscription().then()
-      })
-      .catch(console.error);
-    }
-    else {
+    if (window.ethereum) {
+      window.ethereum
+        .request({ method: "net_version" })
+        .then((data) => {
+          this.setState({
+            networkId: data,
+          });
+          this.refreshSubscription().then();
+        })
+        .catch(console.error);
+    } else {
       this.setState({
-        networkId: '1'
+        networkId: "1",
       });
     }
   }
@@ -87,38 +87,73 @@ class App extends React.Component {
     //   }
     // }.bind(this))
 
-    let coinbase = this.state.coinbase
-    
-
+    let coinbase = this.state.coinbase;
     let subscribedPlatformTokenAmount;
-    if (this.state.networkId === "1") {
-      subscribedPlatformTokenAmount = await window.subscriptionPlatformTokenAmountETH(coinbase);
-      let isPremium = Number(subscribedPlatformTokenAmount) > 0;
-      this.setState({ subscribedPlatformTokenAmount, isPremium });
-    }
+    let subscribedPlatformTokenAmountETH;
+    let subscribedPlatformTokenAmountAvax;
 
-    if (this.state.networkId === "43114") {
-      subscribedPlatformTokenAmount = await window.subscriptionPlatformTokenAmount(coinbase)
-      let isPremium = Number(subscribedPlatformTokenAmount) > 0;
-      this.setState({ subscribedPlatformTokenAmount, isPremium });
+    // subscribedPlatformTokenAmountETH =
+    //   await window.subscriptionPlatformTokenAmount(coinbase);
+
+    const web3eth = new Web3(
+      "https://mainnet.infura.io/v3/94608dc6ddba490697ec4f9b723b586e"
+    );
+    const web3avax = new Web3("https://api.avax.network/ext/bc/C/rpc");
+    const AvaxABI = window.SUBSCRIPTION_ABI;
+    const EthABI = window.SUBSCRIPTIONETH_ABI;
+    const ethsubscribeAddress = window.config.subscriptioneth_address;
+    const avaxsubscribeAddress = window.config.subscription_address;
+
+    const ethcontract = new web3eth.eth.Contract(EthABI, ethsubscribeAddress);
+    const avaxcontract = new web3avax.eth.Contract(
+      AvaxABI,
+      avaxsubscribeAddress
+    );
+
+    if (coinbase) {
+      subscribedPlatformTokenAmountETH = await ethcontract.methods
+        .subscriptionPlatformTokenAmount(coinbase)
+        .call()
+        .then();
+
+      subscribedPlatformTokenAmountAvax = await avaxcontract.methods
+        .subscriptionPlatformTokenAmount(coinbase)
+        .call()
+        .then();
+
+      if (
+        subscribedPlatformTokenAmountAvax == 0 &&
+        subscribedPlatformTokenAmountETH == 0
+      ) {
+        this.setState({ subscribedPlatformTokenAmount: "0", isPremium: false });
+      } else if (subscribedPlatformTokenAmountAvax > 0) {
+        this.setState({
+          subscribedPlatformTokenAmount: subscribedPlatformTokenAmountAvax,
+          isPremium: true,
+        });
+      } else if (subscribedPlatformTokenAmountETH > 0) {
+        this.setState({
+          subscribedPlatformTokenAmount: subscribedPlatformTokenAmountETH,
+          isPremium: true,
+        });
+      }
     }
   };
 
   handleConnection = async () => {
     let isConnected = this.state.isConnected;
     try {
-      localStorage.setItem('logout', 'false')
+      localStorage.setItem("logout", "false");
       isConnected = await window.connectWallet();
     } catch (e) {
-      this.setState({show: false})
+      this.setState({ show: false });
       window.alertify.error(String(e) || "Cannot connect wallet!");
       return;
     }
     this.setState({ isConnected, coinbase: await window.getCoinbase() });
-    this.setState({show: false})
+    this.setState({ show: false });
     return isConnected;
   };
-
 
   refreshHotPairs = async () => {
     window.$.get(
@@ -136,8 +171,6 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-    
-    // console.log(this.state.networkId);
     // getSyncStats()
     // .then((syncStatus) => {
     // let m = window.alertify.message(
@@ -166,34 +199,32 @@ class App extends React.Component {
     this.subscriptionInterval = setInterval(this.refreshSubscription, 5e3);
   }
 
-
-
   checkConnection() {
-    const logout = localStorage.getItem('logout')
-    if(logout !== 'true')
-    {window.ethereum?.request({ method: "eth_accounts" })
-      .then((data) => {
-        this.setState({
-          isConnected: data.length === 0 ? false : true,
-          coinbase: data.length === 0 ? undefined : data[0],
-        });
-        if(data.length === 0) {
-      localStorage.setItem('logout', 'true')
-        }
-      })
-      .catch(console.error);}
-      else {
-        this.setState({
-          isConnected: false,
-         
-        });
-      }
+    const logout = localStorage.getItem("logout");
+    if (logout !== "true") {
+      window.ethereum
+        ?.request({ method: "eth_accounts" })
+        .then((data) => {
+          this.setState({
+            isConnected: data.length === 0 ? false : true,
+            coinbase: data.length === 0 ? undefined : data[0],
+          });
+          if (data.length === 0) {
+            localStorage.setItem("logout", "true");
+          }
+        })
+        .catch(console.error);
+    } else {
+      this.setState({
+        isConnected: false,
+      });
+    }
   }
 
-   logout = () => {
-    localStorage.setItem('logout', 'true')
-    this.checkConnection()
-  }
+  logout = () => {
+    localStorage.setItem("logout", "true");
+    this.checkConnection();
+  };
   componentWillUnmount() {
     clearInterval(this.subscriptionInterval);
   }
@@ -227,11 +258,8 @@ class App extends React.Component {
   };
 
   render() {
-   
-
     document.addEventListener("touchstart", { passive: true });
     return (
-     
       <div
         className={`page_wrapper ${this.state.isMinimized ? "minimize" : ""}`}
       >
@@ -260,8 +288,8 @@ class App extends React.Component {
             showModal={this.showModal}
             hideModal={this.hideModal}
             show={this.state.show}
-            checkConnection = {this.checkConnection}
-            logout = {this.logout}
+            checkConnection={this.checkConnection}
+            logout={this.logout}
             isPremium={this.state.isPremium}
           />
           <div className="right-content">

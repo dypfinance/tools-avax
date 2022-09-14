@@ -118,14 +118,14 @@ window.ethereum.request({ method: "net_version" })
             alt="Image not found"
             style={{ width: "20px", marginRight: "5px" }}
           />
-          <a href="#">
+         
             {chainId === 1
               ? "ETH:"
               : chainId === 43114
               ? "AVAX"
               : ""}
             <span>${getFormattedNumber(ethPrice, 2)}</span>
-          </a>
+          
         </div>
         {chainId === 1 ? (
           <div className="dropdown">
