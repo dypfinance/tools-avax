@@ -220,6 +220,7 @@ export default class Subscription extends React.Component {
             this.setState({ lockActive: true });
             this.setState({ loadspinner: false });
           }
+          
       } else {
         const result = await subscribeTokencontract.methods
           .allowance(this.state.coinbase, avaxsubscribeAddress)
@@ -392,7 +393,7 @@ export default class Subscription extends React.Component {
         : window.config.subscription_tokens[
             this.state.selectedSubscriptionToken
           ]?.decimals;
-
+// this.handleCheckIfAlreadyApproved()
     return (
       <div>
         <h4 className="d-block mb-3">Subscribe to DYP Tools Premium</h4>
@@ -555,7 +556,7 @@ export default class Subscription extends React.Component {
                     <div
                       className="subscribebtn w-auto mt-2"
                       type=""
-                      onClick={() => {this.setState({ subscribe_now: true }); this.handleSubscriptionTokenChange(this.state.selectedSubscriptionToken)}}
+                      onClick={() => {this.setState({ subscribe_now: true }); this.handleSubscriptionTokenChange(this.state.selectedSubscriptionToken);  this.handleCheckIfAlreadyApproved()}}
                     >
                       Subscribe now
                     </div>
@@ -593,9 +594,9 @@ export default class Subscription extends React.Component {
                               disabled={!this.props.appState.isConnected}
                               onChange={
                                 (e) =>
-                                  this.handleSubscriptionTokenChange(
+                                 { this.handleSubscriptionTokenChange(
                                     e.target.value
-                                  )
+                                  )}
                                 // console.log(e.target)
                               }
                             />
@@ -653,7 +654,7 @@ export default class Subscription extends React.Component {
                       className="btn v1"
                       style={{
                         background:
-                          "linear-gradient(51.32deg, #E30613 -12.3%, #FA4A33 50.14%)",
+                        this.state.lockActive === false ? "linear-gradient(51.32deg, #E30613 -12.3%, #FA4A33 50.14%)" : "#C4C4C4",
                         width: 230,
                       }}
                       type="button"
