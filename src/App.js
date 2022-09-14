@@ -262,6 +262,7 @@ class App extends React.Component {
             show={this.state.show}
             checkConnection = {this.checkConnection}
             logout = {this.logout}
+            isPremium={this.state.isPremium}
           />
           <div className="right-content">
             <Switch>

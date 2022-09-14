@@ -125,17 +125,18 @@ const Sidebar = (props) => {
                     </span>
                   )}
                   {props.isConnected && (
-                    <span onClick={props.logout}><img
-                      src={Logout}
-                      alt=""
-                      style={{
-                        transform: "rotate(180deg)",
-                        height: 25,
-                        marginLeft: 10,
-                      }} 
-                     
-                    /><span style={{color: '#fff'}}>Logout</span></span>
-                    
+                    <span onClick={props.logout}>
+                      <img
+                        src={Logout}
+                        alt=""
+                        style={{
+                          transform: "rotate(180deg)",
+                          height: 25,
+                          marginLeft: 10,
+                        }}
+                      />
+                      <span style={{ color: "#fff" }}>Logout</span>
+                    </span>
                   )}
                 </a>
                 {!props.isConnected && (
@@ -174,7 +175,9 @@ const Sidebar = (props) => {
                 }}
                 onClick={() => {
                   setActiveBtn("eth");
-                  !props.isConnected ? props.showModal() :  handleSwitchNetwork("0x1");
+                  !props.isConnected
+                    ? props.showModal()
+                    : handleSwitchNetwork("0x1");
                 }}
               >
                 <img src={Ethereum} alt="Image not found" />
@@ -204,7 +207,9 @@ const Sidebar = (props) => {
                 }}
                 onClick={() => {
                   setActiveBtn("avax");
-                  !props.isConnected ? props.showModal() : handleSwitchNetwork("0xa86a");
+                  !props.isConnected
+                    ? props.showModal()
+                    : handleSwitchNetwork("0xa86a");
                 }}
               >
                 <img src={Avax} alt="Image not found" />
@@ -549,24 +554,30 @@ const Sidebar = (props) => {
           </ul>
         </div>
       </div>
-      <NavLink className="upgrade-text" to="/account">
-        <div className="premium-wrapper">
-          <div style={{ padding: 15 }}>
-            <div className="row m-0 pb-2 upper-wrapper">
-              <div style={{ maxWidth: 110 }}>
-                <h3 className="premium-title">Upgrade to Premium</h3>
-                <span className="premium-subtitle">
-                  Get additional benefits & features
-                </span>
-              </div>
-              <div>
-                <img src={Crown} alt="" className="crown" />
+      {props.isPremium === true ? (
+        <></>
+      ) : (
+        <>
+          <NavLink className="upgrade-text" to="/account">
+            <div className="premium-wrapper">
+              <div style={{ padding: 15 }}>
+                <div className="row m-0 pb-2 upper-wrapper">
+                  <div style={{ maxWidth: 110 }}>
+                    <h3 className="premium-title">Upgrade to Premium</h3>
+                    <span className="premium-subtitle">
+                      Get additional benefits & features
+                    </span>
+                  </div>
+                  <div>
+                    <img src={Crown} alt="" className="crown" />
+                  </div>
+                </div>
+                Upgrade today <img src={RightArrow} alt="" />
               </div>
             </div>
-            Upgrade today <img src={RightArrow} alt="" />
-          </div>
-        </div>
-      </NavLink>
+          </NavLink>
+        </>
+      )}
     </div>
   );
 };
