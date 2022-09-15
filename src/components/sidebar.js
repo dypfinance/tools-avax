@@ -125,13 +125,13 @@ const Sidebar = (props) => {
                     </span>
                   )}
                   {props.isConnected && (
-                    <span onClick={props.logout}>
+                    <span onClick={props.logout} className='d-flex'>
                       <img
                         src={Logout}
                         alt=""
                         style={{
                           transform: "rotate(180deg)",
-                          height: 25,
+                          height: 15,
                           marginLeft: 10,
                         }}
                       />
