@@ -484,7 +484,7 @@ const News = ({ theme, isPremium, coinbase }) => {
       document.removeEventListener("scroll", onScroll);
     }
   };
-
+  
   return (
     <div onScroll={onScroll} ref={listInnerRef} id="header">
       <div className="news-wrapper">
@@ -820,6 +820,7 @@ const News = ({ theme, isPremium, coinbase }) => {
                     }}
                     isConnected={isConnected}
                     isPremium={isPremium}
+                    coinbase={coinbase}
                   />
                 </div>
               );

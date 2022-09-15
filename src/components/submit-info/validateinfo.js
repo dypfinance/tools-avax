@@ -8,7 +8,7 @@ export default function validateInfo(values) {
   
   if (!values.project_name) {
     errors.project_name = "This field is required";
-  } else if (!/^[A-Za-z][A-Za-z0-9_]{3,29}$/i.test(values.project_name)) {
+  } else if (!/^[A-Za-z ][A-Za-z0-9_ ]{3,29}$/i.test(values.project_name)) {
     errors.project_name = "Project Name is Invalid";
   }
 

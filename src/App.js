@@ -191,7 +191,7 @@ class App extends React.Component {
     // .catch(console.error);
     // window.connectWallet().then();
     // if(window.ethereum) {
-    console.log(this.state.coinbase)
+    
     // }
     this.checkConnection();
     this.checkNetworkId();
