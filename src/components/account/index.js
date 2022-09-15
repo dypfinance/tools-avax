@@ -667,6 +667,8 @@ export default class Subscription extends React.Component {
                         background:
                         this.state.lockActive === false ? "linear-gradient(51.32deg, #E30613 -12.3%, #FA4A33 50.14%)" : "#C4C4C4",
                         width: 230,
+                        pointerEvents:
+                          this.state.lockActive === false ? "auto" : "none",
                       }}
                       type="button"
                     >
