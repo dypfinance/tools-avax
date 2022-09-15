@@ -215,9 +215,14 @@ export default class Subscription extends React.Component {
           .allowance(this.state.coinbase, ethsubscribeAddress)
           .call()
           .then();
-        
-          if(result == 0) {
+      
+          if(result != 0) {
             this.setState({ lockActive: true });
+            this.setState({ loadspinner: false });
+          }
+
+          else if(result == 0) {
+            this.setState({ lockActive: false });
             this.setState({ loadspinner: false });
           }
           
@@ -227,8 +232,13 @@ export default class Subscription extends React.Component {
           .call()
           .then();
 
-          if(result == 0) {
+          if(result != 0) {
             this.setState({ lockActive: true });
+            this.setState({ loadspinner: false });
+          }
+
+          else if(result == 0) {
+            this.setState({ lockActive: false });
             this.setState({ loadspinner: false });
           }
 
@@ -594,9 +604,10 @@ export default class Subscription extends React.Component {
                               disabled={!this.props.appState.isConnected}
                               onChange={
                                 (e) =>
-                                 { this.handleSubscriptionTokenChange(
-                                    e.target.value
-                                  )}
+                                 { this.handleSubscriptionTokenChange(e.target.value);
+                                  this.handleCheckIfAlreadyApproved()
+                                }
+                                  
                                 // console.log(e.target)
                               }
                             />
