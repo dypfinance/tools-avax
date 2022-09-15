@@ -114,7 +114,7 @@ const OtherNews = ({
         `https://news-manage.dyp.finance/api/v1/vote/${itemId}/${coinbase}/up`
       )
       .then((data) => {
-        console.log(data.data)
+        
        
         if (data.data.status === "success") {
           
