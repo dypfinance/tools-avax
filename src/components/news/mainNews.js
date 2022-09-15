@@ -24,6 +24,7 @@ const MainNews = ({
   onDownVoteClick,
   isPremium,
   onVotesFetch,
+  coinbase
 }) => {
   const [likeIndicator, setLikeIndicator] = useState(false);
   const [dislikeIndicator, setDislikeIndicator] = useState(false);
@@ -58,7 +59,7 @@ const MainNews = ({
     }, [alreadyVoted, bal1, bal2, isPremium, logout]);
 
     const checkUpVoting = async (itemId) => {
-      const coinbase = await window.getCoinbase();
+      
       return await axios
         .get(
           `https://news-manage.dyp.finance/api/v1/vote/${itemId}/${coinbase}/up`
@@ -78,7 +79,7 @@ const MainNews = ({
     };
   
     const checkDownVoting = async (itemId) => {
-      const coinbase = await window.getCoinbase();
+      
       return await axios
         .get(
           `https://news-manage.dyp.finance/api/v1/vote/${itemId}/${coinbase}/down`

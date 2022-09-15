@@ -34,7 +34,7 @@ const NewsModal = ({
   link,
   onModalClose,
   isPremium,
-  onVotesFetch  
+  coinbase
 }) => {
   const getItemsWithoutCurrentItem = (currentItemId, arrayOfItems) => {
     return arrayOfItems.filter((item) => item?.id !== currentItemId);
@@ -121,7 +121,7 @@ checkUpVoting(newsId)
   };
   
   const checkUpVoting = async (itemId) => {
-    const coinbase = await window.getCoinbase();
+   
     return await axios
       .get(
         `https://news-manage.dyp.finance/api/v1/vote/${itemId}/${coinbase}/up`
@@ -142,7 +142,7 @@ checkUpVoting(newsId)
   };
 
   const checkDownVoting = async (itemId) => {
-    const coinbase = await window.getCoinbase();
+   
     return await axios
       .get(
         `https://news-manage.dyp.finance/api/v1/vote/${itemId}/${coinbase}/down`
@@ -408,6 +408,8 @@ checkUpVoting(newsId)
                           isConnected={isConnected}
                           isPremium={isPremium}
                           onVotesFetch={fetchVotingdata}
+             coinbase ={coinbase}
+
                         />
                       </div>
                     );}

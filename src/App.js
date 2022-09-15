@@ -191,7 +191,7 @@ class App extends React.Component {
     // .catch(console.error);
     // window.connectWallet().then();
     // if(window.ethereum) {
-    // console.log(this.state.coinbase)
+    console.log(this.state.coinbase)
     // }
     this.checkConnection();
     this.checkNetworkId();
@@ -316,6 +316,7 @@ class App extends React.Component {
                     isPremium={this.state.isPremium}
                     key={props.match.params.news_id}
                     {...props}
+                    coinbase = {this.state.coinbase}
                   />
                 )}
               />

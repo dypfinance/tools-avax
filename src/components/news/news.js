@@ -13,7 +13,7 @@ import Carousel from "better-react-carousel";
 import { useParams } from "react-router-dom";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-const News = ({ theme, isPremium }) => {
+const News = ({ theme, isPremium, coinbase }) => {
   const responsive1 = [
     {
       breakpoint: 1220,
@@ -386,29 +386,20 @@ const News = ({ theme, isPremium }) => {
   const logout = localStorage.getItem("logout");
 
   useEffect(() => {
-    if(bal1 === 0 && bal2 === 0 && isPremium === true) {
-      setCanVote(true)
+    if (bal1 === 0 && bal2 === 0 && isPremium === true) {
+      setCanVote(true);
+    } else if (bal1 !== 0 && bal2 !== 0 && isPremium === true) {
+      setCanVote(true);
+    } else if ((bal1 !== 0 || bal2 !== 0) && isPremium === false) {
+      setCanVote(true);
+    } else if (bal1 === 0 && bal2 === 0 && isPremium === false) {
+      setCanVote(false);
+    } else if (logout === "true") {
+      setCanVote(false);
     }
-
-    else if(bal1 !== 0 && bal2 !== 0 && isPremium === true) {
-      setCanVote(true)
-    }
-
-    else if((bal1 !== 0 || bal2 !== 0) && isPremium === false) {
-      setCanVote(true)
-    }
-
-    else if((bal1 === 0 && bal2 === 0) && isPremium === false) {
-      setCanVote(false)
-    }
-    else if(logout === 'true') {
-      setCanVote(false)
-    }
-    
   }, [userAlreadyVoted, bal1, bal2, isPremium]);
 
-// console.log(isPremium)
-
+  // console.log(isPremium)
 
   const handleUpVoting = async (itemId) => {
     const coinbase = await window.getCoinbase();
@@ -424,7 +415,7 @@ const News = ({ theme, isPremium }) => {
         response = await axios.get(
           `https://news-manage.dyp.finance/api/v1/vote/${itemId}/${coinbase}/up`
         );
-        
+
         if (response.data.status === "success") {
           setUserAlreadyVoted(false);
           fetchVotingdata().then((votes) => topVotes(votes));
@@ -467,8 +458,6 @@ const News = ({ theme, isPremium }) => {
     }
   };
 
-
-
   const listInnerRef = useRef();
 
   useEffect(() => {
@@ -476,8 +465,8 @@ const News = ({ theme, isPremium }) => {
   });
 
   useEffect(() => {
-    localStorage.setItem("firstTimeVoter", 'false')
-  },[]);
+    localStorage.setItem("firstTimeVoter", "false");
+  }, []);
 
   const isBottom = (el) => {
     return el.getBoundingClientRect()?.bottom <= window.innerHeight;
@@ -515,7 +504,7 @@ const News = ({ theme, isPremium }) => {
               image={activeNews.image}
               content={newsContent}
               theme={theme}
-             
+              coinbase={coinbase}
               upvotes={
                 votes.length !== 0
                   ? votes.find((obj) => obj.id === activeNews.id)?.up
@@ -575,6 +564,7 @@ const News = ({ theme, isPremium }) => {
                               link={item.link}
                               day={item.date.slice(0, 10)}
                               theme={theme}
+                              coinbase={coinbase}
                               upvotes={
                                 votes.length !== 0
                                   ? votes.find((obj) => obj.id === item.id)?.up
@@ -592,7 +582,7 @@ const News = ({ theme, isPremium }) => {
                                 setActiveNews(popularNewsData[key]);
                                 handleFetchNewsContent("popular", item.id);
                               }}
-                             onVotesFetch={fetchVotingdata}
+                              onVotesFetch={fetchVotingdata}
                               isConnected={isConnected}
                               isPremium={isPremium}
                             />
@@ -601,7 +591,6 @@ const News = ({ theme, isPremium }) => {
                       );
                     })}
                 </Carousel>
-
               </div>
               <div
                 className="singlenews-side"
@@ -649,7 +638,7 @@ const News = ({ theme, isPremium }) => {
                           month={item.month}
                           day={item.date.slice(0, 10)}
                           theme={theme}
-                         newsId={item.id}
+                          newsId={item.id}
                           upvotes={
                             votes.length !== 0
                               ? votes.find((obj) => obj.id === item.id)?.up
@@ -661,12 +650,7 @@ const News = ({ theme, isPremium }) => {
                               : 0
                           }
                           onVotesFetch={fetchVotingdata}
-                          // onSingleUpVoteClick={() => {
-                          //   handleSingleUpVoting(item.id);
-                          // }}
-                          // onSingleDownVoteClick={() => {
-                          //   handleSingleDownVoting(item.id);
-                          // }}
+                          coinbase={coinbase}
                           onNewsClick={() => {
                             setShowModal(true);
                             setActiveNews(popularNewsData[key]);
@@ -694,8 +678,8 @@ const News = ({ theme, isPremium }) => {
                             month={item.month}
                             day={item.date.slice(0, 10)}
                             theme={theme}
-                          onVotesFetch={fetchVotingdata}
-                            
+                            onVotesFetch={fetchVotingdata}
+                            coinbase={coinbase}
                             upvotes={
                               votes.length !== 0
                                 ? votes.find((obj) => obj.id === item.id)?.up
@@ -706,7 +690,6 @@ const News = ({ theme, isPremium }) => {
                                 ? votes.find((obj) => obj.id === item.id)?.down
                                 : 0
                             }
-                          
                             onNewsClick={() => {
                               setShowModal(true);
                               handleSelectTopVotedNews(item.id);
@@ -784,6 +767,7 @@ const News = ({ theme, isPremium }) => {
                             ? votes.find((obj) => obj.id === item.id)?.down
                             : 0
                         }
+                        coinbase={coinbase}
                       />
                     </div>
                   </Carousel.Item>
@@ -834,7 +818,6 @@ const News = ({ theme, isPremium }) => {
                       setShowModal(true);
                       window.scrollTo(0, 0);
                     }}
-                  
                     isConnected={isConnected}
                     isPremium={isPremium}
                   />

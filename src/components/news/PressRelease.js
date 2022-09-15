@@ -20,7 +20,8 @@ const PressRealease = ({
   isConnected,
   onDownVoteClick,
   onUpVoteClick,
-onVotesFetch
+onVotesFetch,
+coinbase
 }) => {
   const [likeIndicator, setLikeIndicator] = useState(false);
   const [dislikeIndicator, setDislikeIndicator] = useState(false);
@@ -101,7 +102,7 @@ onVotesFetch
 
   
   const checkUpVoting = async (itemId) => {
-    const coinbase = await window.getCoinbase();
+    
     return await axios
       .get(
         `https://news-manage.dyp.finance/api/v1/vote/${itemId}/${coinbase}/up`
@@ -122,7 +123,7 @@ onVotesFetch
   };
 
   const checkDownVoting = async (itemId) => {
-    const coinbase = await window.getCoinbase();
+    
     return await axios
       .get(
         `https://news-manage.dyp.finance/api/v1/vote/${itemId}/${coinbase}/down`
