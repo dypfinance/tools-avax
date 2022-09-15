@@ -64,7 +64,6 @@ const MainNews = ({
           `https://news-manage.dyp.finance/api/v1/vote/${itemId}/${coinbase}/up`
         )
         .then((data) => {
-          
           if (data.data.status === "success") {
             
             onVotesFetch()
@@ -176,7 +175,7 @@ const MainNews = ({
                   ? VotePassive
                   : likeIndicator === true
                   ? Upvote
-                  : Downvote
+                  : VotePassive
               }
               alt=""
               className="like-indicator"
@@ -212,9 +211,9 @@ const MainNews = ({
               src={
                 likeIndicator === false && dislikeIndicator === false
                   ? VotePassive
-                  : likeIndicator === true
-                  ? Upvote
-                  : Downvote
+                  : dislikeIndicator === true
+                  ? Downvote
+                  : VotePassive
               }
               alt=""
               className="like-indicator"

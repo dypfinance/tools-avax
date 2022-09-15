@@ -149,10 +149,10 @@ checkDownVoting(newsId)
               <img
                 src={
                   likeIndicator === false && dislikeIndicator === false
-                    ? VotePassive
-                    : likeIndicator === true
-                    ? Upvote
-                    : Downvote
+                  ? VotePassive
+                  : likeIndicator === true
+                  ? Upvote
+                  : VotePassive
                 }
                 alt=""
                 className="like-indicator"
@@ -185,10 +185,10 @@ checkDownVoting(newsId)
               <img
                 src={
                   likeIndicator === false && dislikeIndicator === false
-                    ? VotePassive
-                    : likeIndicator === true
-                    ? Upvote
-                    : Downvote
+                  ? VotePassive
+                  : dislikeIndicator === true
+                  ? Downvote
+                  : VotePassive
                 }
                 alt=""
                 className="like-indicator"

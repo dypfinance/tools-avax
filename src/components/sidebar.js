@@ -246,14 +246,8 @@ const Sidebar = (props) => {
                     setActiveLink("explorer");
                   }}
                   className={
-                    location.includes("pool-explorer") ? "activelink" : ""
+                    location.includes("pool-explorer") ? "activelink" : "navlinkitem"
                   }
-                  style={{
-                    flexDirection: "column",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 20,
-                  }}
                 >
                   <img
                     src={
@@ -283,14 +277,8 @@ const Sidebar = (props) => {
                     setActiveLink("pair");
                   }}
                   className={
-                    location.includes("pair-explorer") ? "activelink" : ""
+                    location.includes("pair-explorer") ? "activelink" : "navlinkitem"
                   }
-                  style={{
-                    flexDirection: "column",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 20,
-                  }}
                 >
                   <img
                     src={
@@ -327,13 +315,7 @@ const Sidebar = (props) => {
                   onClick={() => {
                     setActiveLink("lock");
                   }}
-                  className={location.includes("locker") ? "activelink" : ""}
-                  style={{
-                    flexDirection: "column",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 20,
-                  }}
+                  className={location.includes("locker") ? "activelink" : "navlinkitem"}
                 >
                   <img
                     src={
@@ -360,13 +342,7 @@ const Sidebar = (props) => {
                   onClick={() => {
                     setActiveLink("news");
                   }}
-                  className={location.includes("news") ? "activelink" : ""}
-                  style={{
-                    flexDirection: "column",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 20,
-                  }}
+                  className={location.includes("news") ? "activelink" : "navlinkitem"}
                 >
                   <img
                     src={
@@ -418,13 +394,7 @@ const Sidebar = (props) => {
                   onClick={() => {
                     setActiveLink("info");
                   }}
-                  className={location.includes("info") ? "activelink" : ""}
-                  style={{
-                    flexDirection: "column",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 20,
-                  }}
+                  className={location.includes("info") ? "activelink" : "navlinkitem"}
                 >
                   <img
                     src={
@@ -450,13 +420,7 @@ const Sidebar = (props) => {
                   target="_blank"
                   rel="noopener noreferrer"
                   href="https://dyp.finance/launchpad"
-                  style={{
-                    flexDirection: "column",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 20,
-                  }}
-                  className={activeLink === "rocket" ? "activelink" : ""}
+                  className={activeLink === "rocket" ? "activelink" : "navlinkitem"}
                 >
                   <img
                     src={
@@ -491,13 +455,8 @@ const Sidebar = (props) => {
                       ? "https://app.uniswap.org/#/swap?outputCurrency=0x961c8c0b1aad0c0b10a51fef6a867e3091bcef17"
                       : "https://app.pangolin.exchange/#/swap?outputCurrency=0x961c8c0b1aad0c0b10a51fef6a867e3091bcef17"
                   }
-                  className={activeLink === "buydyp" ? "activelink" : ""}
-                  style={{
-                    flexDirection: "column",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 20,
-                  }}
+                  className={activeLink === "buydyp" ? "activelink" : "navlinkitem"}
+                 
                 >
                   <img
                     src={
@@ -524,13 +483,8 @@ const Sidebar = (props) => {
                   onClick={() => {
                     setActiveLink("account");
                   }}
-                  className={location.includes("account") ? "activelink" : ""}
-                  style={{
-                    flexDirection: "column",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 20,
-                  }}
+                  className={location.includes("account") ? "activelink" : "navlinkitem"}
+                 
                 >
                   <img
                     src={

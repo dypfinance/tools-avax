@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Web3 from "web3";
 import axios from "axios";
 import VotePassive from "./assets/votepassive.svg";
 import Upvote from "./assets/upvote.svg";
@@ -112,6 +113,7 @@ const OtherNews = ({
         `https://news-manage.dyp.finance/api/v1/vote/${itemId}/${coinbase}/up`
       )
       .then((data) => {
+        console.log(data.data)
        
         if (data.data.status === "success") {
           
@@ -176,7 +178,7 @@ const OtherNews = ({
                     ? VotePassive
                     : likeIndicator === true
                     ? Upvote
-                    : Downvote
+                    : VotePassive
                 }
                 alt=""
                 className="like-indicator"
@@ -211,9 +213,9 @@ const OtherNews = ({
                 src={
                   likeIndicator === false && dislikeIndicator === false
                     ? VotePassive
-                    : likeIndicator === true
-                    ? Upvote
-                    : Downvote
+                    : dislikeIndicator === true
+                    ? Downvote
+                    : VotePassive
                 }
                 alt=""
                 className="like-indicator"

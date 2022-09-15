@@ -162,10 +162,10 @@ onVotesFetch
               <img
                 src={
                   likeIndicator === false && dislikeIndicator === false
-                    ? VotePassive
-                    : likeIndicator === true
-                    ? Upvote
-                    : Downvote
+                  ? VotePassive
+                  : likeIndicator === true
+                  ? Upvote
+                  : VotePassive
                 }
                 alt=""
                 className="like-indicator"
@@ -203,9 +203,9 @@ onVotesFetch
                 src={
                   likeIndicator === false && dislikeIndicator === false
                     ? VotePassive
-                    : likeIndicator === true
-                    ? Upvote
-                    : Downvote
+                    : dislikeIndicator === true
+                    ? Downvote
+                    : VotePassive
                 }
                 alt=""
                 className="like-indicator"

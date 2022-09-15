@@ -625,6 +625,16 @@ padding: 20px;
   opacity: 1;
 }
 
+.navlinkitem {
+  flex-direction: column;
+  display: flex !important;
+  align-items: center;
+  gap: 20px;
+  position: absolute;
+  width: 100px;
+}
+
+
 .dropdown ul::before {
   position: absolute;
   top: -9px;
@@ -1082,6 +1092,10 @@ padding: 20px;
     padding: 5px !important;
   } */
 
+  .navlinkitem, .activelink {
+    gap: 10px !important;
+  }
+
   .navlinks {
     width: 90px !important;
   }
@@ -1149,7 +1163,11 @@ padding: 20px;
   border-radius: 8px;
   padding: 5px;
   display: flex !important;
+  flex-direction: column;
   align-items: center;
+  position: absolute;
+  width: 95px;
+  gap: 20px;
 }
 
 .minimize_btn span {
