@@ -1331,6 +1331,7 @@ export default class PairExplorer extends React.Component {
                           display: "flex",
                           flexDirection: "column",
                           fontSize: 12,
+                          alignItems: 'flex-end'
                         }}
                       >
                         {this.state[
