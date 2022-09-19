@@ -1256,9 +1256,7 @@ export default class PairExplorer extends React.Component {
             </div>
             <div className="rightside">
             <div className="table-box">
-            <div className="table-title">
-              <h4>Trade history</h4>
-            </div>
+           
             <div className="l-table-wrapper-div">{this.GetDataTable()}</div>
           </div>
               <div

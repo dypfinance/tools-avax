@@ -3802,12 +3802,12 @@ color: #999999 !important;
   display: flex;
   flex-direction: column-reverse;
   justify-content: flex-end;
-  gap: 16px;
+  gap: 19px;
   width: 63%;
 }
 
 .iXRfeU {
-  max-height: 465px !important;
+  max-height: 535px !important;
 }
 
 .singlepress-inner {
