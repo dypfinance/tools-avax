@@ -1464,6 +1464,9 @@ padding: 20px;
   margin: 0;
 }
 
+.jxflYm {
+  min-height: 47px !important;
+}
 .content-title {
   border-bottom: 1px solid #D9D9D94D;
   padding: 0 0 20px;
