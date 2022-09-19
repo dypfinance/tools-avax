@@ -1468,6 +1468,8 @@ padding: 20px;
   border-bottom: 1px solid #D9D9D94D;
   padding: 0 0 20px;
   margin: 0 0 20px;
+  display: grid;
+  gap: 20px;
 }
 
 .content-title-top {
