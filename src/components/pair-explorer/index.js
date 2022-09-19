@@ -701,7 +701,6 @@ export default class PairExplorer extends React.Component {
       <DataTable
         progressComponent={<Circular />}
         compact={true}
-        // responsive={true}
         keyField="id"
         theme={this.props.theme == "theme-dark" ? "solarized" : "light"}
         persistTableHead={false}
@@ -712,6 +711,8 @@ export default class PairExplorer extends React.Component {
         paginationRowsPerPageOptions={[50, 100, 250, 500]}
         columns={columns}
         data={this.state.swaps}
+        dense
+        className="rdt_TableBody"
       />
     );
   };
@@ -1254,9 +1255,9 @@ export default class PairExplorer extends React.Component {
               </div>
             </div>
             <div className="rightside">
-            <div className="table-box">
+            <div className="table-box h-100">
            
-            <div className="l-table-wrapper-div">{this.GetDataTable()}</div>
+            <div className="l-table-wrapper-div h-100">{this.GetDataTable()}</div>
           </div>
               <div
                 className="row m-0 w-100 justify-content-between"

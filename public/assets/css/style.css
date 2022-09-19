@@ -3806,8 +3806,8 @@ color: #999999 !important;
   width: 63%;
 }
 
-.iXRfeU {
-  max-height: 535px !important;
+.rdt_TableBody {
+  max-height: 500px !important;
 }
 
 .singlepress-inner {
@@ -3836,7 +3836,7 @@ color: #999999 !important;
   width: 85%;
 }
 
-@media only screen and (max-width: 1533px) {
+@media only screen and (max-width: 1420px) {
   .secondbox-wrapper {
     max-width: 100% !important;
   }
