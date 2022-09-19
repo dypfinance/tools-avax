@@ -1249,7 +1249,6 @@ export default class PairExplorer extends React.Component {
               </div>
 
               <div>
-                {" "}
                 <h5 className="mb-2 latestnews-title">Latest news</h5>
                 <LatestNews />
               </div>
@@ -1686,7 +1685,7 @@ export default class PairExplorer extends React.Component {
                   <div className="d-flex flex-column" style={{ gap: 10 }}>
                     {this.state.favorites
                       .slice(
-                        this.state.favorites.length - 3,
+                        this.state.favorites.length > 3 ? this.state.favorites.length - 3 : 0,
                         this.state.favorites.length
                       )
                       .map((lock, index) => {
