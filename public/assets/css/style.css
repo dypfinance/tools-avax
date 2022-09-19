@@ -1715,6 +1715,12 @@ color: #303134 !important;
   /* transition: 1s ease 0.3s; */
 }
 
+@media only screen and (max-width: 1610px) {
+  .rdt_TableBody {
+    max-height: 600px !important;
+  }
+}
+
 @media screen and (max-width: 767px) {
   .fYAEyH {
     grid-template-columns: repeat(10, 95%) !important;
@@ -3807,7 +3813,7 @@ color: #999999 !important;
 }
 
 .rdt_TableBody {
-  max-height: 540px !important;
+  max-height: 500px;
 }
 
 .singlepress-inner {
