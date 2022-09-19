@@ -477,10 +477,12 @@ a:hover {
   background: #FFFFFF;
 box-shadow: 10px 20px 40px rgba(0, 0, 0, 0.1);
 border-radius: 8px;
-max-width: 50%;
+max-width: 60%;
 width: 100%;
-min-height: 100px;
-/* height: 100%; */
+height: 216px;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
 padding: 20px;
 }
 
@@ -494,7 +496,7 @@ padding: 20px;
 }
 
 .favorites {
-  width: 46%;
+  width: 37%;
 }
 
 .dZkckO::before {
@@ -1363,11 +1365,11 @@ padding: 20px;
   /* transform: scale(1.1) translateX(-50%); */
   display: block;
   margin: 0 auto;
-  left: 28%;
+  left: 38%;
   position: absolute !important;
   width: 24px;
   height: 24px;
-  top: 10px;
+  top: -2px;
 }
 
 .nicescroll-cursors {
@@ -3788,14 +3790,19 @@ color: #999999 !important;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  width: 40%;
+  width: 35%;
 }
 
 .rightside {
   display: flex;
-  flex-direction: column;
-  gap: 18px;
-  width: 58%;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+  gap: 16px;
+  width: 63%;
+}
+
+.iXRfeU {
+  max-height: 465px !important;
 }
 
 .singlepress-inner {

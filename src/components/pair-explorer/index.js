@@ -701,6 +701,7 @@ export default class PairExplorer extends React.Component {
       <DataTable
         progressComponent={<Circular />}
         compact={true}
+        // responsive={true}
         keyField="id"
         theme={this.props.theme == "theme-dark" ? "solarized" : "light"}
         persistTableHead={false}
@@ -931,7 +932,7 @@ export default class PairExplorer extends React.Component {
           <div className="graph-wrap">
             <div className="leftside">
               <div className="firstbox-wrapper">
-                <div className="firstbox-inner">
+                <div className="firstbox-inner pb-0">
                   <div className="graph-header">
                     <div className="graph-header-left">
                       <h2 className="firstbox-title">
@@ -1254,6 +1255,12 @@ export default class PairExplorer extends React.Component {
               </div>
             </div>
             <div className="rightside">
+            <div className="table-box">
+            <div className="table-title">
+              <h4>Trade history</h4>
+            </div>
+            <div className="l-table-wrapper-div">{this.GetDataTable()}</div>
+          </div>
               <div
                 className="row m-0 w-100 justify-content-between"
                 style={{ gap: 20 }}
@@ -1302,7 +1309,8 @@ export default class PairExplorer extends React.Component {
                     </div>
                     <div className="d-flex justify-content-between">
                       <p style={{ fontSize: ".8rem" }}>
-                        ({this.state.mainToken?.name || "..."}) <br />
+                        ({this.state.mainToken?.name || "..."})
+                         <br />
                         Token contract:{" "}
                         <a
                           rel="noopener noreferrer"
@@ -1679,7 +1687,7 @@ export default class PairExplorer extends React.Component {
                   <div className="d-flex flex-column" style={{ gap: 10 }}>
                     {this.state.favorites
                       .slice(
-                        this.state.favorites.length - 2,
+                        this.state.favorites.length - 3,
                         this.state.favorites.length
                       )
                       .map((lock, index) => {
@@ -1708,7 +1716,7 @@ export default class PairExplorer extends React.Component {
                 </div>
               </div>
 
-              <div className="graph-right" style={{ height: "100%" }}>
+              <div className="graph-right">
                 <div className="search-box">
                   <form id="searchform">
                     <input
@@ -1776,7 +1784,7 @@ export default class PairExplorer extends React.Component {
                   </form>
                 </div>
                 <div
-                  className="chart-wrap"
+                  className="chart-wrap d-none"
                   style={{ height: "90%", marginTop: 20 }}
                 >
                   {/* <div className='mb-3'>
@@ -1809,12 +1817,7 @@ export default class PairExplorer extends React.Component {
               </div>
             </div>
           </div>
-          <div className="table-box graphwrapper">
-            <div className="table-title">
-              <h4>Trade history</h4>
-            </div>
-            <div className="l-table-wrapper-div">{this.GetDataTable()}</div>
-          </div>
+
         </div>
         <Modal show={this.state.show} onHide={this.toggleModal}>
           <Modal.Header closeButton>
