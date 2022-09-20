@@ -271,7 +271,7 @@ const News = ({ theme, isPremium, coinbase }) => {
       ];
 
       for (let i = 0; i < bigData.length; i++) {
-        if (itemId === otherNewsData[i].id) {
+        if (itemId === otherNewsData[i]?.id) {
           for (let j = 0; j < otherNewsData.length; j++) {
             if (itemId === otherNewsData[j].id) {
               if (popularNewsData.find((obj) => obj.id === itemId)) {
@@ -280,11 +280,9 @@ const News = ({ theme, isPremium, coinbase }) => {
                 handleFetchNewsContent("press", itemId);
               } else if (newsData.find((obj) => obj.id === itemId)) {
                 handleFetchNewsContent("news", itemId);
-              } else handleFetchNewsContent("other", itemId);
+              } else {handleFetchNewsContent("other", itemId);}
             }
           }
-        } else if (itemId === newsData[i].id) {
-          handleFetchNewsContent("news", itemId);
         }
       }
     }
@@ -474,6 +472,9 @@ const News = ({ theme, isPremium, coinbase }) => {
 
   let result = [...otherNewsDataReverse, ...otherPressReverse, ...newsData];
   const bigNews = [...new Set(result)];
+  const bigNewsSorted = bigNews.sort(function(a,b){
+    return new Date(b.date) - new Date(a.date);
+  })
 
   const onScroll = () => {
     const wrappedElement = document.getElementById("header");
@@ -784,8 +785,8 @@ const News = ({ theme, isPremium, coinbase }) => {
           Other News
         </h1>
         <div className="row m-0 othernews-row-wrapper" style={{ gap: 10 }}>
-          {bigNews.length > 0 &&
-            bigNews?.slice(0, next)?.map((item, key) => {
+          {bigNewsSorted.length > 0 &&
+            bigNewsSorted?.slice(0, next)?.map((item, key) => {
               return (
                 <div
                   className="banner-item"
@@ -813,7 +814,7 @@ const News = ({ theme, isPremium, coinbase }) => {
                         : 0
                     }
                     onOtherNewsClick={() => {
-                      setActiveNews(bigNews[key]);
+                      setActiveNews(bigNewsSorted[key]);
                       handleFetchNewsContent("special", item.id);
                       setShowModal(true);
                       window.scrollTo(0, 0);
