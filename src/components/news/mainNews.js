@@ -101,7 +101,11 @@ const MainNews = ({
 
     
   const handleLikeStates = () => {
-    checkUpVoting(newsId)
+    if (logout === "false") {
+      checkUpVoting(newsId);
+    }
+    else {setShowTooltip(true);}
+
     if ((bal1 === 0 && bal2 === 0 && isPremium === false) || logout === 'true') {
       setLikeIndicator(false);
       setDislikeIndicator(false);
@@ -119,7 +123,11 @@ const MainNews = ({
   };
 
   const handleDisLikeStates = () => {
-    checkDownVoting(newsId)
+     if (logout === "false") {
+      checkDownVoting(newsId);
+    }
+    else {setShowTooltip(true);}
+    
     const logout = localStorage.getItem("logout");
     if ((bal1 === 0 && bal2 === 0 && isPremium === false) || logout === 'true') {
       setLikeIndicator(false);

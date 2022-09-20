@@ -65,7 +65,10 @@ const RelatedNews = ({
 
 
   const handleLikeStates = () => {
-    checkUpVoting(newsId)
+    if (logout === "false") {
+      checkUpVoting(newsId);
+    }
+    else {setShowTooltip(true);}
 
     if (
       (bal1 === 0 && bal2 === 0 && isPremium === false) ||
@@ -86,8 +89,11 @@ const RelatedNews = ({
   };
 
   const handleDisLikeStates = () => {
+    if (logout === "false") {
+      checkDownVoting(newsId);
+    }
+    else {setShowTooltip(true);}
 
-    checkDownVoting(newsId)
     if (
       (bal1 === 0 && bal2 === 0 && isPremium === false) ||
       logout === 'true' || alreadyVoted === false

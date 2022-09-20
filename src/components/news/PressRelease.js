@@ -57,7 +57,10 @@ coinbase
 
 
   const handleLikeStates = () => {
-    checkUpVoting(newsId)
+    if (logout === "false") {
+      checkUpVoting(newsId);
+    }
+    else {setShowTooltip(true);}
     if (
       (bal1 === 0 && bal2 === 0 && isPremium === false) ||
       logout === "true" || alreadyVoted === false
@@ -79,8 +82,10 @@ coinbase
   };
 
   const handleDisLikeStates = () => {
-    const logout = localStorage.getItem("logout");
-    checkDownVoting(newsId)
+    if (logout === "false") {
+      checkDownVoting(newsId);
+    }
+    else {setShowTooltip(true);}
     if (
       (bal1 === 0 && bal2 === 0 && isPremium === false) ||
       logout === "true" || alreadyVoted === false

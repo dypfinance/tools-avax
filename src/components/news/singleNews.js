@@ -59,7 +59,10 @@ coinbase
   }, [alreadyVoted, bal1, bal2, isPremium]);
 
   const handleLikeStates = () => {
-    checkUpVoting(newsId)
+    if (logout === "false") {
+      checkUpVoting(newsId);
+    }
+    else {setShowTooltip(true);}
     if ((bal1 === 0 && bal2 === 0 && isPremium === false) || logout === 'true' || alreadyVoted === false) {
       setLikeIndicator(false);
       setDislikeIndicator(false);
@@ -77,7 +80,10 @@ coinbase
   };
 
   const handleDisLikeStates = () => {
-checkDownVoting(newsId)
+    if (logout === "false") {
+      checkDownVoting(newsId);
+    }
+    else {setShowTooltip(true);}
     if ((bal1 === 0 && bal2 === 0 && isPremium === false) || logout === 'true' || alreadyVoted === false) {
       setLikeIndicator(false);
       setDislikeIndicator(false);
