@@ -1255,9 +1255,30 @@ export default class PairExplorer extends React.Component {
               </div>
             </div>
             <div className="rightside">
-            <div className="table-box h-100">
+            <div className="table-box d-flex flex-column" style={{gap: 19}}>
+            <div
+                  className="chart-wrap"
+                  style={{  marginTop: 0 }}
+                >
+
+                  <div >
+                    {this.state.mainToken && this.state.pair && (
+                      <TVChartContainer
+                        mainToken={this.state.mainToken}
+                        onBarsRequest={this.onBarsRequest}
+                        registerBarSubscription={this.registerBarSubscription}
+                        pair={this.state.pair}
+                        theme={
+                          this.props.theme == "theme-white" ? "Light" : "Dark"
+                        }
+                      />
+                    )}
+                  </div>
+                  
+                </div>
+
            
-            <div className="l-table-wrapper-div h-100">{this.GetDataTable()}</div>
+            <div className="l-table-wrapper-div">{this.GetDataTable()}</div>
           </div>
               <div
                 className="row m-0 w-100 justify-content-between"

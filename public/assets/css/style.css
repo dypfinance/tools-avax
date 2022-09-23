@@ -1648,7 +1648,11 @@ font-size: 15px !important;
 }
 
 #tv_chart_container {
-  height: 100% !important;
+  height: 290px !important;
+}
+
+.gZzsDe {
+  bottom: -60px !important;
 }
 
 #tv_chart_container iframe 
@@ -1658,7 +1662,7 @@ font-size: 15px !important;
 }
 
 .CircularProgressbar {
-  width: 70% !important;
+  width: 60% !important;
   border-radius: 50%;
 }
 
@@ -1717,8 +1721,12 @@ color: #303134 !important;
 
 @media only screen and (max-width: 1610px) {
   .rdt_TableBody {
-    max-height: 600px !important;
+    max-height: 300px !important;
   }
+
+  #tv_chart_container {
+    height: 375px !important;
+}
 }
 
 @media screen and (max-width: 767px) {
@@ -3192,9 +3200,9 @@ span.badge.badge-danger {
   margin: 2px;
 }
 
-div.l-table-wrapper-div {
+/* div.l-table-wrapper-div {
   min-height: 500px;
-}
+} */
 
 .theme-dark .l-table-wrapper-div {
   background: var(--black);
@@ -3813,7 +3821,7 @@ color: #999999 !important;
 }
 
 .rdt_TableBody {
-  max-height: 500px;
+  max-height: 200px;
 }
 
 .singlepress-inner {
@@ -3870,9 +3878,6 @@ color: #999999 !important;
     width: 100% !important;
   }
 
-  #tv_chart_container {
-    height: 480px !important;
-  }
 }
 
 
