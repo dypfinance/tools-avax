@@ -712,7 +712,7 @@ export default class PairExplorer extends React.Component {
         columns={columns}
         data={this.state.swaps}
         dense
-        className="rdt_TableBody"
+        className="newtable"
       />
     );
   };
