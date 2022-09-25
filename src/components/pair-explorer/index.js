@@ -1390,7 +1390,7 @@ export default class PairExplorer extends React.Component {
                     <div className="graph-header-left">
                       <ul
                         className="l-social-icons-list d-flex"
-                        style={{ gap: 10 }}
+                        style={{ gap: 4, alignItems: 'baseline' }}
                       >
                         <li>
                           <div

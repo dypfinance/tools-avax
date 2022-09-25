@@ -1724,12 +1724,12 @@ color: #303134 !important;
 }
 
 @media only screen and (max-width: 1610px) {
-  .rdt_TableBody {
+  .newtable {
     max-height: 300px !important;
   }
 
   #tv_chart_container {
-    height: 375px !important;
+    height: 300px !important;
 }
 }
 
