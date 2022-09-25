@@ -67,7 +67,7 @@ const LatestNews = ({ theme }) => {
                       className="latestnews-item"
                       style={{ gap: 10 }}
                     >
-                      <div className="d-flex flex-column" style={{ gap: 15 }}>
+                      <div className="d-flex flex-column" style={{ gap: 15, height: 120, justifyContent: 'space-between' }}>
                         <h6
                           className="related-subnews-title"
                           onClick={() => {}}

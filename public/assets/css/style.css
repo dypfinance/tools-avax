@@ -496,7 +496,7 @@ padding: 20px;
 }
 
 .favorites {
-  width: 37%;
+  width: 36%;
 }
 
 .dZkckO::before {
@@ -2544,7 +2544,7 @@ color: #303134 !important;
 
 .latestnews-item {
   display: flex;
- align-items: center;
+ align-items: flex-start;
   justify-content: space-between;
 }
 
@@ -3213,6 +3213,7 @@ span.badge.badge-danger {
 }
 .theme-white .l-table-wrapper-div {
   background: var(--white);
+  border-radius: 8px;
 }
 
 .theme-dark strong,
@@ -3813,7 +3814,7 @@ color: #999999 !important;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  width: 35%;
+  width: 38%;
 }
 
 .rightside {
@@ -3821,7 +3822,7 @@ color: #999999 !important;
   flex-direction: column-reverse;
   justify-content: flex-end;
   gap: 19px;
-  width: 63%;
+  width: 60%;
 }
 
 .newtable {

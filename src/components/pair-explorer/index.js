@@ -1148,7 +1148,7 @@ export default class PairExplorer extends React.Component {
                       </div>
                       <div
                         className="row m-0 justify-content-center"
-                        style={{ gap: 13 }}
+                        style={{ gap: 12 }}
                       >
                         {scores.map((score, i) => (
                           <div className="score-wrapper" key={i}>
