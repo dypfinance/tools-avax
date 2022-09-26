@@ -27,7 +27,6 @@ const Sidebar = (props) => {
   const [location, setlocation] = useState("news");
   const [networkId, setNetworkId] = useState(1);
 
-
   const [avatar, setAvatar] = useState("/assets/img/person.svg");
 
   const { chainId, active, account } = useWeb3React();
@@ -79,6 +78,7 @@ const Sidebar = (props) => {
           <img className="logo-black" src={Logo} alt="Image" />
         </a>
       </div>
+      <div className="d-flex flex-column justify-content-between " style={{height: '90%'}}>
       <div className="premiumposition">
         <div className="menu-cat-one" style={{ marginTop: "2rem" }}>
           <div className="walletwrapper">
@@ -125,7 +125,7 @@ const Sidebar = (props) => {
                     </span>
                   )}
                   {props.isConnected && (
-                    <span onClick={props.logout} className='d-flex'>
+                    <span onClick={props.logout} className="d-flex">
                       <img
                         src={Logout}
                         alt=""
@@ -246,7 +246,9 @@ const Sidebar = (props) => {
                     setActiveLink("explorer");
                   }}
                   className={
-                    location.includes("pool-explorer") ? "activelink" : "navlinkitem"
+                    location.includes("pool-explorer")
+                      ? "activelink"
+                      : "navlinkitem"
                   }
                 >
                   <img
@@ -277,7 +279,9 @@ const Sidebar = (props) => {
                     setActiveLink("pair");
                   }}
                   className={
-                    location.includes("pair-explorer") ? "activelink" : "navlinkitem"
+                    location.includes("pair-explorer")
+                      ? "activelink"
+                      : "navlinkitem"
                   }
                 >
                   <img
@@ -315,7 +319,9 @@ const Sidebar = (props) => {
                   onClick={() => {
                     setActiveLink("lock");
                   }}
-                  className={location.includes("locker") ? "activelink" : "navlinkitem"}
+                  className={
+                    location.includes("locker") ? "activelink" : "navlinkitem"
+                  }
                 >
                   <img
                     src={
@@ -342,7 +348,9 @@ const Sidebar = (props) => {
                   onClick={() => {
                     setActiveLink("news");
                   }}
-                  className={location.includes("news") ? "activelink" : "navlinkitem"}
+                  className={
+                    location.includes("news") ? "activelink" : "navlinkitem"
+                  }
                 >
                   <img
                     src={
@@ -394,7 +402,9 @@ const Sidebar = (props) => {
                   onClick={() => {
                     setActiveLink("info");
                   }}
-                  className={location.includes("info") ? "activelink" : "navlinkitem"}
+                  className={
+                    location.includes("info") ? "activelink" : "navlinkitem"
+                  }
                 >
                   <img
                     src={
@@ -420,7 +430,9 @@ const Sidebar = (props) => {
                   target="_blank"
                   rel="noopener noreferrer"
                   href="https://dyp.finance/launchpad"
-                  className={activeLink === "rocket" ? "activelink" : "navlinkitem"}
+                  className={
+                    activeLink === "rocket" ? "activelink" : "navlinkitem"
+                  }
                 >
                   <img
                     src={
@@ -455,8 +467,9 @@ const Sidebar = (props) => {
                       ? "https://app.uniswap.org/#/swap?outputCurrency=0x961c8c0b1aad0c0b10a51fef6a867e3091bcef17"
                       : "https://app.pangolin.exchange/#/swap?outputCurrency=0x961c8c0b1aad0c0b10a51fef6a867e3091bcef17"
                   }
-                  className={activeLink === "buydyp" ? "activelink" : "navlinkitem"}
-                 
+                  className={
+                    activeLink === "buydyp" ? "activelink" : "navlinkitem"
+                  }
                 >
                   <img
                     src={
@@ -483,8 +496,9 @@ const Sidebar = (props) => {
                   onClick={() => {
                     setActiveLink("account");
                   }}
-                  className={location.includes("account") ? "activelink" : "navlinkitem"}
-                 
+                  className={
+                    location.includes("account") ? "activelink" : "navlinkitem"
+                  }
                 >
                   <img
                     src={
@@ -532,6 +546,7 @@ const Sidebar = (props) => {
           </NavLink>
         </>
       )}
+      </div>
     </div>
   );
 };

@@ -700,7 +700,7 @@ export default class PairExplorer extends React.Component {
     const tableStyle = {
       table: {
         style: {
-          height: "516px",
+          height: "552px",
         },
       },
     };
@@ -1938,7 +1938,7 @@ export default class PairExplorer extends React.Component {
                   </form>
                 </div>
               </div>
-              <div className="table-box d-flex flex-column" style={{ gap: 19 }}>
+              <div className="table-box d-flex flex-column" style={{ gap: 20 }}>
                 <div className="chart-wrap" style={{ marginTop: 0 }}>
                   <div>
                     {this.state.mainToken && this.state.pair && (
