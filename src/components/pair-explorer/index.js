@@ -609,7 +609,7 @@ export default class PairExplorer extends React.Component {
         selector: "token1PerToken0",
         sortable: true,
         format: (txn) =>
-          `${getFormattedNumber(txn.token1PerToken0, 6)} ${
+          `${getFormattedNumber(txn.token1PerToken0, 4)} ${
             this.state.pair?.token1.symbol
           }`,
       },
@@ -649,7 +649,7 @@ export default class PairExplorer extends React.Component {
                 : `https://etherscan.io/address/${txn.maker}`
             }
           >
-            ...{txn.maker?.slice(34)}
+            ...{txn.maker?.slice(36)}
           </a>
         ),
       },
