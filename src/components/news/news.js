@@ -516,7 +516,7 @@ const News = ({ theme, isPremium, coinbase }) => {
                   ? votes.find((obj) => obj.id === activeNews.id)?.down
                   : 0
               }
-              day={activeNews.date.slice(0, 10)}
+              day={activeNews.date?.slice(0, 10)}
               month={activeNews.month}
               year={activeNews.year}
               latestNewsData={topVotes(votes)}
