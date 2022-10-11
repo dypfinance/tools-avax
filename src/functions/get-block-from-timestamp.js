@@ -63,139 +63,61 @@ const TIMESTAMP_QUERY = `query ($number: BigInt!) {
     }
 }`;
 
-async function getBlockFromTimestamp(timestamp) {
-  let variables = { gte: timestamp * 1, lt: timestamp * 1 + 600 };
-  if (window.ethereum) {
-    if (window.ethereum.chainId === "0x1") {
-      let response = await fetchGql(
-        BLOCK_QUERY,
-        variables,
-        ETHEREUM_BLOCKS_SUBGRAPH_ETH
-      );
-      // alert(JSON.stringify(response))
-      return response.data.blocks[0].number;
-    }
-    if (window.ethereum.chainId === "0xa86a") {
-      let response = await fetchGql(
-        BLOCK_QUERY,
-        variables,
-        ETHEREUM_BLOCKS_SUBGRAPH
-      );
-      // alert(JSON.stringify(response))
-      return response.data.blocks[0].number;
-    }
-  } else {
-    let response = await fetchGql(
+async function getBlockFromTimestamp(timestamp, network) {
+  let variables = {gte: timestamp*1, lt: timestamp*1 + 600}
+  let response = await fetchGql(
       BLOCK_QUERY,
       variables,
-      ETHEREUM_BLOCKS_SUBGRAPH_ETH
-    );
-    // alert(JSON.stringify(response))
-    return response.data.blocks[0].number;
-  }
+      (network == 'ethereum' ? ETHEREUM_BLOCKS_SUBGRAPH_ETH : ETHEREUM_BLOCKS_SUBGRAPH))
+  // alert(JSON.stringify(response))
+  // console.log('getBlockFromTimestamp ', response.data.blocks[0].number)
+  return response.data.blocks[0].number
 }
 
-async function getTimestampFromBlock(number) {
-  let variables = { number };
-  let response = 0;
-  if (window.ethereum) {
-    if (window.ethereum.chainId === "0x1") {
-      while (1) {
-        response = await fetchGql(
-          TIMESTAMP_QUERY,
-          variables,
-          ETHEREUM_BLOCKS_SUBGRAPH_ETH
-        );
-        if (
-          response.data.blocks != undefined &&
-          response.data != 0 &&
-          response.data.blocks[0] != undefined
-        ) {
-          console.log(response);
-          break;
-        }
-      }
-      return response.data.blocks[0].timestamp;
-    }
-    if (window.ethereum.chainId === "0xa86a") {
-      while (1) {
-        response = await fetchGql(
-          TIMESTAMP_QUERY,
-          variables,
-          ETHEREUM_BLOCKS_SUBGRAPH
-        );
-        if (
-          response.data.blocks != undefined &&
-          response.data != 0 &&
-          response.data.blocks[0] != undefined
-        ) {
-          console.log(response);
-          break;
-        }
-      }
-      return response.data.blocks[0].timestamp;
-    }
-  } else {
-    while (1) {
-      response = await fetchGql(
+async function getTimestampFromBlock(number, network) {
+  let variables = {number}
+  // console.log({number})
+  let response = 0
+  while (1){
+    response = await fetchGql(
         TIMESTAMP_QUERY,
         variables,
-        ETHEREUM_BLOCKS_SUBGRAPH_ETH
-      );
-      if (
-        response.data.blocks != undefined &&
-        response.data != 0 &&
-        response.data.blocks[0] != undefined
-      ) {
-        console.log(response);
-        break;
-      }
+        (network == 'ethereum' ? ETHEREUM_BLOCKS_SUBGRAPH_ETH : ETHEREUM_BLOCKS_SUBGRAPH))
+    // console.log('inWhile ', response)
+    if (response.data.blocks != undefined && response.data != 0 && response.data.blocks[0] != undefined){
+      // console.log(response)
+
+      break
     }
-    return response.data.blocks[0].timestamp;
+
   }
+
+  //response = await fetchGql(TIMESTAMP_QUERY, variables, ETHEREUM_BLOCKS_SUBGRAPH)
+  // console.log('inWhileBREAK ', response)
+
+  // console.log('getTimestampFromBlock ', response.data.blocks[0].timestamp)
+
+  return response.data.blocks[0].timestamp
+  // let response = await fetchGql(TIMESTAMP_QUERY, variables, ETHEREUM_BLOCKS_SUBGRAPH)
+  // return response.data.blocks[0].timestamp
 }
 
-async function getLatestBlock() {
-  if (window.ethereum) {
-    if (window.ethereum.chainId === "0x1") {
-      let response = await fetchGql(
-        INDEXING_STATUS_QUERY_ETH,
-        null,
-        INDEXING_STATUS_ENDPOINTETH
-      );
-
-      return response.data.indexingStatusForCurrentVersion.chains[0].latestBlock
-        .number;
-    }
-
-    if (window.ethereum.chainId === "0xa86a") {
-      let response = await fetchGql(
-        INDEXING_STATUS_QUERY,
-        null,
-        INDEXING_STATUS_ENDPOINT
-      );
-      return response.data.indexingStatusForCurrentVersion.chains[0].latestBlock
-        .number;
-    }
-  } else {
-    let response = await fetchGql(
-      INDEXING_STATUS_QUERY_ETH,
+async function getLatestBlock(network) {
+  let response = await fetchGql(
+      (network == 'ethereum' ? INDEXING_STATUS_QUERY_ETH : INDEXING_STATUS_QUERY),
       null,
-      INDEXING_STATUS_ENDPOINTETH
-    );
-
-    return response.data.indexingStatusForCurrentVersion.chains[0].latestBlock
-      .number;
-  }
+      (network == 'ethereum' ? INDEXING_STATUS_ENDPOINTETH : INDEXING_STATUS_ENDPOINT))
+  // console.log('getLatestBlock ', response.data.indexingStatusForCurrentVersion.chains[0].latestBlock.number)
+  return response.data.indexingStatusForCurrentVersion.chains[0].latestBlock.number
 }
 
-async function get24hEarlierBlock() {
-  const b = await getLatestBlock();
-  const number = Number(b);
-  const t = await getTimestampFromBlock(number);
-  const a = await getBlockFromTimestamp(t - 86400);
-  return Number(a);
+function get24hEarlierBlock(network) {
+  return getLatestBlock(network)
+      .then(b => getTimestampFromBlock(Number(b),network))
+      // .then()
+      .then(t => getBlockFromTimestamp(t - 86400, network))
+      .then(a => Number(a))
 }
 
-export { getTimestampFromBlock, getLatestBlock, get24hEarlierBlock };
-export default getBlockFromTimestamp;
+export { getTimestampFromBlock, getLatestBlock, get24hEarlierBlock }
+export default getBlockFromTimestamp

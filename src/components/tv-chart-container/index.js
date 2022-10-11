@@ -35,7 +35,8 @@ export class TVChartContainer extends React.PureComponent {
 		let pairId = this.props.pair.id
 		let registerBarSubscription = this.props.registerBarSubscription
 		let onBarsRequest = this.props.onBarsRequest
-		const datafeed = getDataFeed({symbol, pairId, registerBarSubscription, onBarsRequest, mainToken})
+		let network = this.props.networkId
+		const datafeed = getDataFeed({symbol, pairId, registerBarSubscription, onBarsRequest, mainToken, network})
 		const widgetOptions = {
 			symbol: this.props.symbol,
 			height: '100%',

@@ -3,24 +3,26 @@ import {NavLink} from "react-router-dom";
 import getFormattedNumber from "../functions/get-formatted-number";
 import React, {useEffect, useState} from "react";
 
-const Header = ({toggleMobileSidebar, toggleTheme, theme}) => {
+const Header = ({toggleMobileSidebar, toggleTheme, theme, network}) => {
 
     const [gasPrice, setGasprice] = useState()
     const [ethPrice, setEthprice] = useState()
-    const [chainId, setChainId] = useState(1)
+    // const [chainId, setChainId] = useState(1)
 
-    const checkNetworkId = () => {
-        if (window.ethereum) {
-            window.ethereum.request({method: "net_version"})
-                .then((data) => {
-                    setChainId(Number(data))
-                    fetchData()
-                })
-                .catch(console.error);
-        } else {
-            setChainId(1)
-        }
-    }
+    let chainId = parseInt(network)
+
+    // const checkNetworkId = () => {
+    //     if (window.ethereum) {
+    //         window.ethereum.request({method: "net_version"})
+    //             .then((data) => {
+    //                 // setChainId(Number(data))
+    //                 fetchData()
+    //             })
+    //             .catch(console.error);
+    //     } else {
+    //         // setChainId(1)
+    //     }
+    // }
 
 
     const [hotpairs, setHotpairs] = useState([])
@@ -35,10 +37,10 @@ const Header = ({toggleMobileSidebar, toggleTheme, theme}) => {
                 .catch(console.error);
 
             await fetch(
-                "https://data-api.defipulse.com/api/v1/egs/api/ethgasAPI.json?api-key=0cb24df6d59351fdfb85e84c264c1d89dada314bbd85bbb5bea318f7f995"
+                "https://ethgasstation.info/api/ethgasAPI.json?api-key=free_key"
             )
                 .then((res) => res.json())
-                .then((data) => setGasprice(data.fast / 10))
+                .then((data) => setGasprice(data.average/10))
                 .catch(console.error);
         }
 
@@ -94,7 +96,7 @@ const Header = ({toggleMobileSidebar, toggleTheme, theme}) => {
     useEffect(() => {
         fetchData().then()
         refreshHotPairs().then()
-        checkNetworkId()
+        // checkNetworkId()
         ethereum?.on('chainChanged', handleChainChanged)
         ethereum?.on('accountChanged', handleChainChanged)
 
@@ -118,9 +120,9 @@ const Header = ({toggleMobileSidebar, toggleTheme, theme}) => {
                     />
                     <a href="#">
                         {chainId === 1
-                            ? "ETH:"
+                            ? "ETH: "
                             : chainId === 43114
-                                ? "AVAX"
+                                ? "AVAX: "
                                 : ""}
                         <span>${getFormattedNumber(ethPrice, 2)}</span>
                     </a>

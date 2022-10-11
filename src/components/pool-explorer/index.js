@@ -4,7 +4,7 @@ import DataTable, {createTheme} from "react-data-table-component";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import {NavLink} from "react-router-dom";
 import getProcessedTransactions from "../../functions/get-processed-transactions";
-import {getProcessedTransactionsETH} from "../../functions/get-processed-transactions";
+// import {getProcessedTransactionsETH} from "../../functions/get-processed-transactions";
 import getFormattedNumber from "../../functions/get-formatted-number";
 
 import BigSwapExplorer from "../big-swap-explorer";
@@ -69,72 +69,47 @@ export default class PoolExplorer extends React.Component {
             screen: "pool",
             filteredByTokenId: "",
             filteredByTxnType: "", // 'burn' | 'mint' | ''
-            networkId: "1", //this to replace using window.ethereum.chainId
         };
     }
 
-    checkNetworkId() {
-        if (window.ethereum) {
-            window.ethereum
-                .request({method: "net_version"})
-                .then((data) => {
-                    this.setState({
-                        networkId: data,
-                    });
-                    this.fetchTransactions().then();
-                })
-                .catch(console.error);
-        } else {
-            this.fetchTransactions().then();
-            this.setState({
-                networkId: "1",
-            });
+    componentDidMount() {
+        this.fetchTransactions();
+        window.scrollTo(0, 0)
+    }
 
+    async componentDidUpdate(prevProps) {
+        if(prevProps.networkId != this.props.networkId){
+            this.setState({
+                isLoading: true,
+                ethPrice: "...",
+                processedTransactions: [],
+                filteredTransactions: []
+            });
+            await window.wait(1000);
+            await this.fetchTransactions().then();
         }
     }
-
-    componentDidMount() {
-        this.checkNetworkId();
-        window.scrollTo(0, 0)
-
-    }
-
-    //   componentDidUpdate() {
-    //     this.checkNetworkId()
-    // }
 
     fetchTransactions = async () => {
 
         try {
-            let network = this.props.network;
-            if (this.state.networkId === "1") {
-                let {transactions, ethPrice} = await getProcessedTransactionsETH();
 
-                // TODO: Filter this to last 4 hour transactions once synced
-                transactions = transactions;
-                // .filter(txn => txn.timestamp*1e3 >= Date.now() - 4 * 60 * 60 * 1000)
-                this.setState({
-                    processedTransactions: transactions,
-                    filteredTransactions: transactions,
-                    ethPrice,
-                });
-            }
-            if (this.state.networkId === "43114") {
-                let {transactions, ethPrice} = await getProcessedTransactions(
-                    network
-                );
-                // TODO: Filter this to last 4 hour transactions once synced
-                transactions = transactions;
-                // .filter(txn => txn.timestamp*1e3 >= Date.now() - 4 * 60 * 60 * 1000)
-                this.setState({
-                    processedTransactions: transactions,
-                    filteredTransactions: transactions,
-                    ethPrice,
-                });
-            }
-        } finally {
-            this.setState({isLoading: false});
+            let network
+            this.props.networkId == 1 ? network = 'ethereum' : network = 'avalanche'
+            let transactions = await getProcessedTransactions(network);
+
+            // TODO: Filter this to last 4 hour transactions once synced
+            let filteredTransactions = transactions.transactions
+                .filter(txn => txn.timestamp*1e3 >= Date.now() - 4 * 60 * 60 * 1000)
+            this.setState({
+                processedTransactions: filteredTransactions,
+                filteredTransactions: filteredTransactions,
+                ethPrice: transactions.ethPrice,
+            });
+        } catch (e) {
+            console.log(e)
         }
+        this.setState({isLoading: false});
     };
 
     filterByTokenId = (tokenId) => {
@@ -209,7 +184,7 @@ export default class PoolExplorer extends React.Component {
                         rel="noopener noreferrer"
                         target="_blank"
                         href={
-                            this.state.networkId === "1"
+                            this.props.networkId === 1
                                 ? `https://etherscan.io/address/${txn.tokenId}`
                                 : `https://cchain.explorer.avax.network/address/${txn.tokenId}`
                         }
@@ -264,19 +239,19 @@ export default class PoolExplorer extends React.Component {
                             rel="noopener noreferrer"
                             target="_blank"
                             title={
-                                this.state.networkId === "1"
+                                this.props.networkId === 1
                                     ? "Buy at Uniswap"
                                     : "Buy at Pangolin"
                             }
                             href={
-                                this.state.networkId === "1"
+                                this.props.networkId === 1
                                     ? `https://app.uniswap.org/#/swap?outputCurrency=${txn.tokenId}`
                                     : `https://app.pangolin.exchange/#/swap?outputCurrency=${txn.tokenId}`
                             }
                         >
                             <img
                                 src={
-                                    this.state.networkId === "1"
+                                    this.props.networkId === 1
                                         ? "/images/uniswap-logo-home.png"
                                         : "/images/pangolin.png"
                                 }
@@ -289,7 +264,7 @@ export default class PoolExplorer extends React.Component {
                             target="_blank"
                             title={txn.id.split("-")[0]}
                             href={
-                                this.state.networkId === "1"
+                                this.props.networkId === 1
                                     ? `https://etherscan.io/tx/${txn.id.split("-")[0]}`
                                     : `https://cchain.explorer.avax.network/tx/${
                                         txn.id.split("-")[0]
@@ -299,7 +274,7 @@ export default class PoolExplorer extends React.Component {
                             <img
                                 className="icon-bg-white-rounded"
                                 src={
-                                    this.state.networkId === "1"
+                                    this.props.networkId === 1
                                         ? "/images/etherscan.png"
                                         : "/images/cchain.png"
                                 }
@@ -343,7 +318,7 @@ export default class PoolExplorer extends React.Component {
                         target="_blank"
                         rel="noopener noreferrer"
                         href={
-                            this.state.networkId === "1"
+                            this.props.networkId === 1
                                 ? `https://v2.info.uniswap.org/pair/${txn.pairId}`
                                 : `https://cchain.explorer.avax.network/address/${txn.pairId}`
                         }
@@ -379,11 +354,11 @@ export default class PoolExplorer extends React.Component {
                     `${getFormattedNumber(txn.tokenAmount, 8)} ${txn.tokenSymbol}`,
             },
             {
-                name: this.state.networkId === "1" ? "ETH Amount" : "AVAX Amount",
+                name: this.props.networkId === 1 ? "ETH Amount" : "AVAX Amount",
                 selector: "ethAmount",
                 sortable: true,
                 format: (txn) =>
-                    this.state.networkId === "1"
+                    this.props.networkId === 1
                         ? `${getFormattedNumber(txn.ethAmount, 8)} ETH`
                         : `${getFormattedNumber(txn.ethAmount, 8)} AVAX`,
             },
@@ -438,7 +413,7 @@ export default class PoolExplorer extends React.Component {
                                     Big Swap Explorer
                                 </h2>
                                 <p className="d-block">
-                                    {this.state.networkId === "1"
+                                    {this.props.networkId === 1
                                         ? " Search for Big Swaps on Uniswap with useful information"
                                         : " Search for Big Swaps on Pangolin with useful information"}
                                 </p>
@@ -449,7 +424,7 @@ export default class PoolExplorer extends React.Component {
                                     Top Tokens
                                 </h2>
                                 <p className="d-block">
-                                    {this.state.networkId === "1"
+                                    {this.props.networkId === 1
                                         ? "List of Uniswap Top Tokens"
                                         : "List of Pangolin Top Tokens"}
                                 </p>
@@ -557,7 +532,7 @@ export default class PoolExplorer extends React.Component {
                     <div className="table-title">
                         {this.state.screen === "pool" ? (
                             <h4>
-                                {this.state.networkId === "1"
+                                {this.props.networkId === 1
                                     ? "Uniswap Pools Activity"
                                     : "Pangolin Pools Activity"}
                             </h4>
@@ -565,7 +540,7 @@ export default class PoolExplorer extends React.Component {
                             <h4>Latest Big Swaps</h4>
                         ) : this.state.screen === "tokens" ? (
                             <h4>
-                                {this.state.networkId === "1"
+                                {this.props.networkId === 1
                                     ? "Uniswap Top Tokens"
                                     : "Pangolin Top Tokens"}
                             </h4>
@@ -578,16 +553,20 @@ export default class PoolExplorer extends React.Component {
                     ) : this.state.screen === "swap" ? (
                         <BigSwapExplorer
                             theme={this.props.theme}
-                            network={this.props.network}
+                            networkId={this.props.networkId}
                         />
                     ) : this.state.screen === "tokens" ? (
-                        <TopTokens theme={this.props.theme}/>
+                        <TopTokens
+                            theme={this.props.theme}
+                            networkId={this.props.networkId}
+                        />
                     ) : (
                         <Farms
                             handleConnection={this.props.handleConnection}
                             isConnected={this.props.isConnected}
                             appState={this.props.state}
                             theme={this.props.theme}
+                            networkId={this.props.networkId}
                             // {...props}
                         />
                     )}

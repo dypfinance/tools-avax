@@ -35,11 +35,11 @@ class App extends React.Component {
             isConnected: false,
             chainId: undefined,
             coinbase: null,
-            network: "avalanche",
+            // network: "avalanche",
             subscribedPlatformTokenAmount: "...",
             isPremium: false,
             hotPairs: [],
-            networkId: '1',
+            networkId: 1,
             show: false,
         };
         this.showModal = this.showModal.bind(this)
@@ -54,21 +54,25 @@ class App extends React.Component {
         this.setState({show: false})
     }
 
-    checkNetworkId() {
-        if (window.ethereum) {
-            window.ethereum.request({method: "net_version"})
-                .then((data) => {
-                    this.setState({
-                        networkId: data
-                    });
-                    this.refreshSubscription().then()
-                })
-                .catch(console.error);
-        } else {
-            this.setState({
-                networkId: '1'
-            });
-        }
+    // checkNetworkId() {
+    //     if (window.ethereum) {
+    //         window.ethereum.request({method: "net_version"})
+    //             .then((data) => {
+    //                 this.setState({
+    //                     networkId: data
+    //                 });
+    //                 this.refreshSubscription().then()
+    //             })
+    //             .catch(console.error);
+    //     } else {
+    //         this.setState({
+    //             networkId: '1'
+    //         });
+    //     }
+    // }
+
+    handleSwitchNetwork = (chainId) => {
+        this.setState({networkId: chainId})
     }
 
     refreshSubscription = async () => {
@@ -90,13 +94,13 @@ class App extends React.Component {
 
 
         let subscribedPlatformTokenAmount;
-        if (this.state.networkId === "1") {
+        if (this.state.networkId === 1) {
             await window.subscriptionPlatformTokenAmountETH(coinbase);
             let isPremium = Number(subscribedPlatformTokenAmount) > 0;
             this.setState({subscribedPlatformTokenAmount, isPremium});
         }
 
-        if (this.state.networkId === "43114") {
+        if (this.state.networkId === 43114) {
             await window.subscriptionPlatformTokenAmount(coinbase);
             let isPremium = Number(subscribedPlatformTokenAmount) > 0;
             this.setState({subscribedPlatformTokenAmount, isPremium});
@@ -122,7 +126,7 @@ class App extends React.Component {
     refreshHotPairs = async () => {
         window.$.get(
             `${
-                this.state.networkId === "1"
+                this.state.networkId === 1
                     ? "https://app-tools.dyp.finance"
                     : "https://app-tools-avax.dyp.finance"
             }/api/hot-pairs`
@@ -160,9 +164,9 @@ class App extends React.Component {
         // console.log(this.state.coinbase)
         // }
         this.checkConnection();
-        this.checkNetworkId();
+        // this.checkNetworkId();
         this.refreshHotPairs();
-        this.subscriptionInterval = setInterval(this.refreshSubscription, 5e3);
+        // this.subscriptionInterval = setInterval(this.refreshSubscription, 5e3);
     }
 
 
@@ -247,6 +251,7 @@ class App extends React.Component {
                     theme={this.state.theme}
                     toggleMobileSidebar={this.toggleMobileSidebar}
                     isOpenInMobile={this.state.isOpenInMobile}
+                    network={this.state.networkId}
                 />
                 <div className="content-wrapper">
                     <Sidebar
@@ -261,6 +266,8 @@ class App extends React.Component {
                         show={this.state.show}
                         checkConnection={this.checkConnection}
                         logout={this.logout}
+                        handleSwitchNetwork={this.handleSwitchNetwork}
+                        network={this.state.networkId}
                     />
                     <div className="right-content">
                         <Switch>
@@ -270,7 +277,7 @@ class App extends React.Component {
                                 render={() => (
                                     <PoolExplorer
                                         theme={this.state.theme}
-                                        network={this.state.network}
+                                        networkId={parseInt(this.state.networkId)}
                                         handleConnection={this.handleConnection}
                                         isConnected={this.state.isConnected}
                                         appState={this.state}
@@ -295,7 +302,7 @@ class App extends React.Component {
                                 render={() => (
                                     <BigSwapExplorer
                                         theme={this.state.theme}
-                                        network={this.state.network}
+                                        networkId={parseInt(this.state.networkId)}
                                     />
                                 )}
                             />
@@ -309,6 +316,7 @@ class App extends React.Component {
                                         isPremium={this.state.isPremium}
                                         key={props.match.params.pair_id}
                                         theme={this.state.theme}
+                                        networkId={parseInt(this.state.networkId)}
                                         {...props}
                                     />
                                 )}
@@ -323,7 +331,10 @@ class App extends React.Component {
                             <Route
                                 exact
                                 path="/top-tokens"
-                                render={() => <TopTokens theme={this.state.theme}/>}
+                                render={() => <TopTokens
+                                    theme={this.state.theme}
+                                    // networkId={parseInt(this.state.networkId)}
+                                />}
                             />
                             <Route
                                 exact
@@ -375,47 +386,6 @@ class App extends React.Component {
                         <Footer/>
                     </div>
                 </div>
-                {/* <div className="popup-modal show">
-            <div className="popup-header">
-                <div className="popup-header-item">
-                    <p>Market Cap</p>
-                    <span>$31,454,888.99</span>
-                </div>
-                <div className="popup-header-item">
-                    <p>Circ. Supply</p>
-                    <span>$31,454,888.99 DYP</span>
-                </div>
-            </div>
-            <div className="popup-body">
-                <div className="popup-body-item">
-                    <p>1 ETH: </p>
-                    <span>5130.9083947 DYP</span>
-                </div>
-                <div className="popup-body-item">
-                    <p> Pool Created:</p>
-                    <span>6/9/20 18:54 </span>
-                </div>
-                <div className="popup-body-item">
-                    <p>Fully Diluted Market Cap: </p>
-                    <span>$31,454,888.99 </span>
-                </div>
-                <div className="popup-body-item">
-                    <p>Total Supply: </p>
-                    <span>31,454,888.99 DYP </span>
-                </div>
-                <div className="popup-body-item">
-                    <p>Pooled DYP: </p>
-                    <span> 2.96%</span>
-                </div>
-            </div>
-            <div className="popup-total">
-                <h6>Liquidity Bonded</h6>
-                <p>$47,085.00</p>
-            </div>
-            <div className="popup-close">
-                <button type="button">Close</button>
-            </div>
-        </div> */}
             </div>
         );
     }

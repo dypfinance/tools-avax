@@ -21,6 +21,8 @@ window.config = {
     "https://graphiql-avax.dyp.finance/subgraphs/name/dasconnor/pangolin-dex",
   subgrapheth_url:
     "https://graphiql.dyp.finance/subgraphs/name/davekaj/uniswap",
+  subgraphGraphEth: "https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2",
+  subgraphGraphAvax: "https://api.thegraph.com/subgraphs/name/dasconnor/pangolin-dex",
   indexing_status_endpoint: "https://graph-node-avax.dyp.finance/graphql",
   indexing_status_endpointeth: "https://graph-node.dyp.finance/graphql",
 
@@ -2776,15 +2778,13 @@ async function getMinLockCreationFeeInWei(pair, baseToken, amount) {
     .getMinLockCreationFeeInWei(pair, baseToken, amount)
     .call();
 }
-async function getPairTokensInfo(pair) {
+async function getPairTokensInfo(pair, network) {
   let pairContract = await getContract({
     key: "PAIR",
     address: pair,
-    ABI: window.ethereum
-      ? window.ethereum.chainId === "0x1"
+    ABI: network === 1
         ? UNISWAP_PAIRETH_ABI
         : UNISWAP_PAIR_ABI
-      : UNISWAP_PAIRETH_ABI,
   });
   let [token0_address, token1_address] = await Promise.all([
     pairContract.methods.token0().call(),
@@ -3048,45 +3048,28 @@ async function toggleFavoriteETH(pair) {
 // ======= end favorites functions ========
 
 // -----------------
-async function getMainToken(pair) {
+async function getMainToken(pair, network) {
   let mainToken = pair.token0 || {};
 
-  if (window.ethereum) {
-    if (window.ethereum.chainId === "0x1") {
-      for (let token of window.config.baseEth_tokens) {
-        if (mainToken.id == token) {
-          mainToken = pair.token1;
-          mainToken.__number = 1;
-          mainToken.__base_number = 0;
-          break;
-        } else if (pair.token1.id == token) {
-          mainToken = pair.token0;
-          mainToken.__number = 0;
-          mainToken.__base_number = 1;
-          break;
-        }
-      }
-      return mainToken;
-    }
-
-    if (window.ethereum.chainId === "0xa86a") {
-      for (let token of window.config.base_tokens) {
-        if (mainToken.id == token) {
-          mainToken = pair.token1;
-          mainToken.__number = 1;
-          mainToken.__base_number = 0;
-          break;
-        } else if (pair.token1.id == token) {
-          mainToken = pair.token0;
-          mainToken.__number = 0;
-          mainToken.__base_number = 1;
-          break;
-        }
-      }
-      return mainToken;
-    }
-  } else {
+  if (network === 1) {
     for (let token of window.config.baseEth_tokens) {
+      if (mainToken.id == token) {
+        mainToken = pair.token1;
+        mainToken.__number = 1;
+        mainToken.__base_number = 0;
+        break;
+      } else if (pair.token1.id == token) {
+        mainToken = pair.token0;
+        mainToken.__number = 0;
+        mainToken.__base_number = 1;
+        break;
+      }
+    }
+    return mainToken;
+  }
+
+  if (network === 43114) {
+    for (let token of window.config.base_tokens) {
       if (mainToken.id == token) {
         mainToken = pair.token1;
         mainToken.__number = 1;

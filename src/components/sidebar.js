@@ -5,7 +5,7 @@ import Logo from "../assets/logo.svg";
 import LogoWhite from "../assets/logo-white.svg";
 import React, {useState, useEffect, useCallback} from "react";
 import {useWeb3React} from "@web3-react/core";
-import {handleSwitchNetwork} from "../functions/hooks";
+// import {handleSwitchNetwork} from "../functions/hooks";
 import {injected} from "../functions/connectors";
 import NotConnected from "../assets/notconnected.svg";
 import Connected from "../assets/connected.svg";
@@ -27,10 +27,11 @@ const Sidebar = (props) => {
     const [location, setlocation] = useState("news");
     const [networkId, setNetworkId] = useState(1);
 
+    let chainId = parseInt(props.network)
 
     const [avatar, setAvatar] = useState("/assets/img/person.svg");
 
-    const {chainId, active, account} = useWeb3React();
+    const {active, account} = useWeb3React();
     const triedEager = useEagerConnect();
     useInactiveListener(!triedEager);
 
@@ -155,36 +156,30 @@ const Sidebar = (props) => {
                         <h6
                             className="networks row m-0"
                             style={{
-                                border: props.isConnected
-                                    ? chainId === 1
+                                border: chainId === 1
                                         ? "1px solid #1486C3"
                                         : "1px solid #E84142"
-                                    : "none",
                             }}
                         >
                             <a
                                 href="javascript:void(0)"
                                 className="hoverNetwork"
                                 style={{
-                                    background: props.isConnected
-                                        ? chainId === 1
+                                    background: chainId === 1
                                             ? "#1D91D0"
                                             : "transparent"
-                                        : "transparent",
                                 }}
                                 onClick={() => {
                                     setActiveBtn("eth");
-                                    !props.isConnected ? props.showModal() : handleSwitchNetwork("0x1");
+                                    props.handleSwitchNetwork(1);
                                 }}
                             >
                                 <img src={Ethereum} alt="Image not found"/>
                                 <span
                                     style={{
-                                        color: props.isConnected
-                                            ? chainId === 1
+                                        color: chainId === 1
                                                 ? "#fff"
                                                 : "#6B7A99"
-                                            : "#6B7A99",
                                     }}
                                     className="network-text"
                                 >
@@ -196,25 +191,21 @@ const Sidebar = (props) => {
                                 className="hoverNetwork"
                                 style={{
                                     padding: "4px 11px 0",
-                                    background: props.isConnected
-                                        ? chainId === 43114
+                                    background: chainId === 43114
                                             ? "#E84142"
                                             : "transparent"
-                                        : "transparent",
                                 }}
                                 onClick={() => {
                                     setActiveBtn("avax");
-                                    !props.isConnected ? props.showModal() : handleSwitchNetwork("0xa86a");
+                                    props.handleSwitchNetwork(43114);
                                 }}
                             >
                                 <img src={Avax} alt="Image not found"/>
                                 <span
                                     style={{
-                                        color: props.isConnected
-                                            ? chainId === 43114
+                                        color: chainId === 43114
                                                 ? "#fff"
                                                 : "#6B7A99"
-                                            : "#6B7A99",
                                     }}
                                 >
                   Avalanche
