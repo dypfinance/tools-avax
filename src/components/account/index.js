@@ -1,8 +1,8 @@
 import React from "react";
+import Web3 from "web3";
 import getFormattedNumber from "../../functions/get-formatted-number";
 import { NavLink } from "react-router-dom";
 import Error from "../../assets/error.svg";
-import Fire from "./fire.png";
 import Placeholder from "../../assets/person.svg";
 import { benefits } from "./benefits";
 import Check from "./check.svg";
@@ -19,7 +19,7 @@ export default class Subscription extends React.Component {
     super(props);
     this.state = {
       coinbase: "",
-      selectedSubscriptionToken:  Object.keys(
+      selectedSubscriptionToken: Object.keys(
         window.config.subscription_tokens
       )[0],
       tokenBalance: "",
@@ -69,11 +69,11 @@ export default class Subscription extends React.Component {
         .then((favorites) => this.setState({ favorites }))
         .catch(console.error);
 
-        this.setState({
-          selectedSubscriptionToken: Object.keys(
-           window.config.subscriptioneth_tokens
-          )[0],
-        });
+      this.setState({
+        selectedSubscriptionToken: Object.keys(
+          window.config.subscriptioneth_tokens
+        )[0],
+      });
     }
 
     if (this.state.networkId === "43114") {
@@ -82,14 +82,12 @@ export default class Subscription extends React.Component {
         .then((favorites) => this.setState({ favorites }))
         .catch(console.error);
 
-        this.setState({
-          selectedSubscriptionToken: Object.keys(
-           window.config.subscription_tokens
-          )[0],
-        });
+      this.setState({
+        selectedSubscriptionToken: Object.keys(
+          window.config.subscription_tokens
+        )[0],
+      });
     }
-
-   
   }
 
   checkConnection() {
@@ -119,7 +117,9 @@ export default class Subscription extends React.Component {
   }
 
   componentDidMount() {
-    window.scrollTo(0,0)
+
+    this.handleCheckIfAlreadyApproved();
+    window.scrollTo(0, 0);
     this.checkConnection();
     this.checkNetworkId();
     if (window.isConnectedOneTime) {
@@ -194,6 +194,56 @@ export default class Subscription extends React.Component {
         this.setState({ status: "An error occurred. Please try again" });
         this.setState({ loadspinner: false });
       });
+  };
+
+  handleCheckIfAlreadyApproved = async () => {
+    const web3eth = new Web3(
+      "https://mainnet.infura.io/v3/94608dc6ddba490697ec4f9b723b586e"
+    );
+    
+    const ethsubscribeAddress = window.config.subscriptioneth_address;
+    const avaxsubscribeAddress = window.config.subscription_address;
+    const subscribeToken = this.state.selectedSubscriptionToken;
+    const subscribeTokencontract = new web3eth.eth.Contract(
+      window.ERC20_ABI,
+      subscribeToken
+    );
+
+    if (this.state.coinbase) {
+      if (this.state.networkId === "1") {
+        const result = await subscribeTokencontract.methods
+          .allowance(this.state.coinbase, ethsubscribeAddress)
+          .call()
+          .then();
+      
+          if(result != 0) {
+            this.setState({ lockActive: true });
+            this.setState({ loadspinner: false });
+          }
+
+          else if(result == 0) {
+            this.setState({ lockActive: false });
+            this.setState({ loadspinner: false });
+          }
+          
+      } else {
+        const result = await subscribeTokencontract.methods
+          .allowance(this.state.coinbase, avaxsubscribeAddress)
+          .call()
+          .then();
+
+          if(result != 0) {
+            this.setState({ lockActive: true });
+            this.setState({ loadspinner: false });
+          }
+
+          else if(result == 0) {
+            this.setState({ lockActive: false });
+            this.setState({ loadspinner: false });
+          }
+
+      }
+    }
   };
 
   handleSubscribe = async (e) => {
@@ -303,6 +353,7 @@ export default class Subscription extends React.Component {
       .then((response) => response.json())
       .then((result) => {
         console.log("Success:", result);
+        window.location.reload();
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -352,7 +403,7 @@ export default class Subscription extends React.Component {
         : window.config.subscription_tokens[
             this.state.selectedSubscriptionToken
           ]?.decimals;
-          
+// this.handleCheckIfAlreadyApproved()
     return (
       <div>
         <h4 className="d-block mb-3">Subscribe to DYP Tools Premium</h4>
@@ -387,7 +438,6 @@ export default class Subscription extends React.Component {
                               src={item.free === "yes" ? Check : Cross}
                               alt=""
                               className="itemdataimg"
-                             
                             />{" "}
                           </td>
                           <td className="tabledata">
@@ -473,14 +523,12 @@ export default class Subscription extends React.Component {
                                 <img
                                   src={item.free === "yes" ? Check : Cross}
                                   alt=""
-                                 
                                 />
                               </td>
                               <td className="tabledata">
                                 <img
                                   src={item.premium === "yes" ? Check : Cross}
                                   alt=""
-
                                 />
                               </td>
                             </tr>
@@ -518,7 +566,7 @@ export default class Subscription extends React.Component {
                     <div
                       className="subscribebtn w-auto mt-2"
                       type=""
-                      onClick={() => this.setState({ subscribe_now: true })}
+                      onClick={() => {this.setState({ subscribe_now: true }); this.handleSubscriptionTokenChange(this.state.selectedSubscriptionToken);  this.handleCheckIfAlreadyApproved()}}
                     >
                       Subscribe now
                     </div>
@@ -556,9 +604,10 @@ export default class Subscription extends React.Component {
                               disabled={!this.props.appState.isConnected}
                               onChange={
                                 (e) =>
-                                  this.handleSubscriptionTokenChange(
-                                    e.target.value
-                                  )
+                                 { this.handleSubscriptionTokenChange(e.target.value);
+                                  this.handleCheckIfAlreadyApproved()
+                                }
+                                  
                                 // console.log(e.target)
                               }
                             />
@@ -616,8 +665,10 @@ export default class Subscription extends React.Component {
                       className="btn v1"
                       style={{
                         background:
-                          "linear-gradient(51.32deg, #E30613 -12.3%, #FA4A33 50.14%)",
+                        this.state.lockActive === false ? "linear-gradient(51.32deg, #E30613 -12.3%, #FA4A33 50.14%)" : "#C4C4C4",
                         width: 230,
+                        pointerEvents:
+                          this.state.lockActive === false ? "auto" : "none",
                       }}
                       type="button"
                     >
@@ -758,7 +809,8 @@ export default class Subscription extends React.Component {
               ) : (
                 <></>
               )}
-              {this.state.showRemovebtn === true ? (
+              {this.state.showRemovebtn === true ||
+              this.state.image !== Placeholder ? (
                 <div className="removebtn" type="" onClick={this.deleteAvatar}>
                   {this.state.loadspinnerRemove === true ? (
                     <div
@@ -783,7 +835,8 @@ export default class Subscription extends React.Component {
         <div className="row m-0" style={{ gap: 30 }}>
           {this.state.favorites.map((lock, index) => {
             return (
-              <NavLink key={index} 
+              <NavLink
+                key={index}
                 className="l-clr-purple"
                 to={`/pair-explorer/${lock.id}`}
               >

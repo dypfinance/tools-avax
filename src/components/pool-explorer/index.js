@@ -338,7 +338,7 @@ export default class PoolExplorer extends React.Component {
                 selector: "tokenPerEth",
                 sortable: true,
                 format: (txn) =>
-                    `$${getFormattedNumber(txn.tokenPerEth * this.state.ethPrice, 8)}`,
+                    `$${getFormattedNumber(txn.tokenPerEth * this.state.ethPrice, 1)}`,
             },
             {
                 name: "Total Value",
@@ -351,7 +351,7 @@ export default class PoolExplorer extends React.Component {
                 selector: "tokenAmount",
                 sortable: true,
                 format: (txn) =>
-                    `${getFormattedNumber(txn.tokenAmount, 8)} ${txn.tokenSymbol}`,
+                    `${getFormattedNumber(txn.tokenAmount, 4)} ${txn.tokenSymbol}`,
             },
             {
                 name: this.props.networkId === 1 ? "ETH Amount" : "AVAX Amount",
@@ -359,8 +359,8 @@ export default class PoolExplorer extends React.Component {
                 sortable: true,
                 format: (txn) =>
                     this.props.networkId === 1
-                        ? `${getFormattedNumber(txn.ethAmount, 8)} ETH`
-                        : `${getFormattedNumber(txn.ethAmount, 8)} AVAX`,
+                        ? `${getFormattedNumber(txn.ethAmount, 4)} ETH`
+                        : `${getFormattedNumber(txn.ethAmount, 4)} AVAX`,
             },
             {
                 name: "Created on",

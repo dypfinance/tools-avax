@@ -28,7 +28,7 @@ const InfoModal = ({ modalId, visible, onModalClose }) => {
                   <h6 className="info-title">Active – Liquidity Locked</h6>
                   <br />
                   <p className="info-text">
-                  This badge means that the liquidity pool is locked and safe. Owner of the pool cannot withdraw the liquidity until the lockin time ends.
+                  This badge means that the liquidity pool is locked and safe. Owner of the pool cannot withdraw the liquidity until the locking time ends.
                   </p>
                 </div>
               </div>
@@ -39,7 +39,7 @@ const InfoModal = ({ modalId, visible, onModalClose }) => {
                   <h6 className="info-title">Active – Potential Liquidity Unlock</h6>
                   <br />
                   <p className="info-text">
-                  This badge means that the liquidity pool lockin time has ended, and the owner have the possibility to withdraw locked liquidity at any moment in time. Note that unlocked liquidity means that you cannot sell the coin or token and will experience Impermanent Loss (IL).
+                  This badge means that the liquidity pool locking time has ended, and the owner have the possibility to withdraw locked liquidity at any moment in time. Note that unlocked liquidity means that you cannot sell the coin or token and will experience Impermanent Loss (IL).
                   </p>
                 </div>
               </div>

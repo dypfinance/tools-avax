@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
-import Carousel from "better-react-carousel";
 import Clock from "../news/assets/clock.svg";
 import { NavLink } from "react-router-dom";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
 
 const LatestNews = ({ theme }) => {
   const [newsData, setNewsData] = useState([]);
@@ -38,23 +40,22 @@ const LatestNews = ({ theme }) => {
     fetchVotingdata().then();
   },[]);
 
+  var settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true
+  };
+
   return (
     <div className="latestnews-wrapper">
-      <Carousel
-        cols={1}
-        rows={1}
-        gap={10}
-        loop
-        showDots={true}
-        autoplay={4000}
-        hideArrow={true}
-        scrollSnap={true}
-      >
+      <Slider {...settings}>
         {newsData.length > 0 &&
           newsData.slice(0, 5).map((item, key) => {
             return (
-              <Carousel.Item key={key}>
-                <NavLink to={`/news/${item.id}`} onClick={()=>{window.location.assign(`/news/${item.id}`)}}>
+                <NavLink to={`/news/${item.id}`} onClick={()=>{window.location.assign(`/news/${item.id}`)}} key={key}>
                 <div
                   style={{
                     display: item.title?.includes("http") ? "none" : "block",
@@ -66,7 +67,7 @@ const LatestNews = ({ theme }) => {
                       className="latestnews-item"
                       style={{ gap: 10 }}
                     >
-                      <div className="d-flex flex-column" style={{ gap: 15 }}>
+                      <div className="d-flex flex-column" style={{ gap: 15, height: 120, justifyContent: 'space-between' }}>
                         <h6
                           className="related-subnews-title"
                           onClick={() => {}}
@@ -113,10 +114,9 @@ const LatestNews = ({ theme }) => {
                   </div>
                 </div>
                 </NavLink>
-              </Carousel.Item>
             );
           })}
-      </Carousel>
+        </Slider>
 
       <div></div>
     </div>

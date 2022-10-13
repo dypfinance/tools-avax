@@ -1,16 +1,16 @@
 import React from "react";
 import moment from "moment";
-import DataTable, {createTheme} from "react-data-table-component";
+import DataTable, { createTheme } from "react-data-table-component";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import {NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 import getProcessedSwaps from "../../functions/get-processed-swaps";
 import getFormattedNumber from "../../functions/get-formatted-number";
 
 const Circular = () => (
     // we need to add some padding to circular progress to keep it from activating our scrollbar
-    <div style={{padding: "60px"}}>
-        <CircularProgress color="inherit" size={75}/>
+    <div style={{ padding: "60px" }}>
+        <CircularProgress color="inherit" size={75} />
     </div>
 );
 
@@ -74,7 +74,7 @@ export default class BigSwapExplorer extends React.Component {
     }
 
     async componentDidUpdate(prevProps) {
-        if(prevProps.networkId != this.props.networkId){
+        if (prevProps.networkId != this.props.networkId) {
             this.setState({
                 isLoading: true,
                 ethPrice: "...",
@@ -169,7 +169,7 @@ export default class BigSwapExplorer extends React.Component {
                 minWidth: "145px",
                 cell: (txn) => (
                     <td
-                        style={{whiteSpace: "nowrap"}}
+                        style={{ whiteSpace: "nowrap" }}
                         title={new Date(txn.timestamp * 1e3)}
                     >
                         {moment(txn.timestamp * 1e3).format("YYYY-MM-DD HH:mm")}
@@ -207,14 +207,14 @@ export default class BigSwapExplorer extends React.Component {
                 selector: "amount0",
                 sortable: true,
                 format: (txn) =>
-                    `${getFormattedNumber(txn.amount0, 6)} ${txn.pair?.token0.symbol}`,
+                    `${getFormattedNumber(txn.amount0, 2)} ${txn.pair?.token0.symbol}`,
             },
             {
                 name: `Amount ${this.state.pair?.token1.symbol || "token1"}`,
                 selector: "amount1",
                 sortable: true,
                 format: (txn) =>
-                    `${getFormattedNumber(txn.amount1, 6)} ${txn.pair?.token1.symbol}`,
+                    `${getFormattedNumber(txn.amount1, 2)} ${txn.pair?.token1.symbol}`,
             },
 
             {
@@ -272,7 +272,7 @@ export default class BigSwapExplorer extends React.Component {
                         {/* <a rel='noopener noreferrer' target="_blank" title="Blocked Liquidity" href={`https://www.unicrypt.network/pair/${txn.pairId}`}><img className='icon-bg-white-rounded' src="/images/unicrypt_v3.svg" width="18" alt="" /></a> */}
                         <NavLink title={txn.pair.id} to={`/pair-explorer/${txn.pair.id}`}>
                             <i
-                                style={{fontSize: "20px", position: "relative", top: "5px"}}
+                                style={{ fontSize: "20px", position: "relative", top: "5px" }}
                                 className="far fa-compass"
                             ></i>
                         </NavLink>
@@ -282,7 +282,7 @@ export default class BigSwapExplorer extends React.Component {
         ];
         return (
             <DataTable
-                progressComponent={<Circular/>}
+                progressComponent={<Circular />}
                 compact={true}
                 keyField="id"
                 theme={this.props.theme == "theme-dark" ? "solarized" : "light"}

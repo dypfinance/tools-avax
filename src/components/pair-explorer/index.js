@@ -1,23 +1,22 @@
 import React from "react";
 import moment from "moment";
-import DataTable, {createTheme} from "react-data-table-component";
+import DataTable, { createTheme } from "react-data-table-component";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import {NavLink, Redirect} from "react-router-dom";
-
+import { NavLink, Redirect } from "react-router-dom";
 // import Chart from 'kaktana-react-lightweight-charts'
-import {TVChartContainer} from "../tv-chart-container/index";
+import { TVChartContainer } from "../tv-chart-container/index";
 
 import getProcessedSwaps from "../../functions/get-processed-swaps";
 import getFormattedNumber from "../../functions/get-formatted-number";
 import getSearchResults from "../../functions/get-search-results";
-import {get24hEarlierBlock} from "../../functions/get-block-from-timestamp";
+import { get24hEarlierBlock } from "../../functions/get-block-from-timestamp";
 import fetchGql from "../../functions/fetch-gql";
-import {getPairCandles} from "../../functions/datafeed";
+import { getPairCandles } from "../../functions/datafeed";
 import PairLocker from "./pairlocker.svg";
-import {Modal, Button} from "react-bootstrap";
+import { Modal, Button } from "react-bootstrap";
 import GearProgress from "./GearProgress";
 import axios from "axios";
-import {CircularProgressbar, buildStyles} from "react-circular-progressbar";
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import LatestNews from "./LatestNews";
 
@@ -36,15 +35,15 @@ async function getSearchResultsLocalAPI(query, network) {
         network === 1
             ? `https://api-explorer.dyp.finance/v1/eth/search/pairs/${query}`
             : `https://api-explorer.dyp.finance/v1/avax/search/pairs/${query}`
-    )
+    );
 
     return res.data.sort((a, b) => a.pair.reserve - b.pair.reserve).reverse();
 }
 
 const Circular = () => (
     // we need to add some padding to circular progress to keep it from activating our scrollbar
-    <div style={{padding: "60px"}}>
-        <CircularProgress color="inherit" size={75}/>
+    <div style={{ padding: "60px" }}>
+        <CircularProgress color="inherit" size={75} />
     </div>
 );
 
@@ -147,8 +146,8 @@ export default class PairExplorer extends React.Component {
                 window
                     .isFavoriteETH(pair_id.toLowerCase())
                     .then((isFavorite) => {
-                        this.setState({isFavorite});
-                        this.setState({starColor: "rgb(227, 6, 19)"});
+                        this.setState({ isFavorite });
+                        this.setState({ starColor: "rgb(227, 6, 19)" });
                     })
                     .catch(console.error);
             }
@@ -156,8 +155,8 @@ export default class PairExplorer extends React.Component {
                 window
                     .isFavorite(pair_id.toLowerCase())
                     .then((isFavorite) => {
-                        this.setState({isFavorite});
-                        this.setState({starColor: "rgb(227, 6, 19)"});
+                        this.setState({ isFavorite });
+                        this.setState({ starColor: "rgb(227, 6, 19)" });
                     })
                     .catch(console.error);
             }
@@ -166,25 +165,29 @@ export default class PairExplorer extends React.Component {
 
     checkNetworkId() {
         // if (window.ethereum) {
-        //     // this.setState({
-        //     //     networkId: data,
-        //     // });
-        //     this.fetchfavData();
-        //     let pair_id = this.props.match.params.pair_id;
-        //     if (!pair_id) return;
-        //     this.checkFavData();
-        //     this.refreshVoteCount();
-        //     this.refreshPairInfo();
+        //     window.ethereum
+        //         .request({ method: "net_version" })
+        //         .then((data) => {
+        //             this.setState({
+        //                 networkId: data,
+        //             });
+        //             this.fetchfavData();
+        //             let pair_id = this.props.match.params.pair_id;
+        //             if (!pair_id) return;
+        //             this.checkFavData();
+        //             this.refreshVoteCount();
+        //             this.refreshPairInfo();
         //
-        //     this.fetchSwaps(pair_id);
+        //             this.fetchSwaps(pair_id);
+        //         })
+        //         .catch(console.error);
         // } else {
-            // this.fetchfavData();
             let pair_id = this.props.match.params.pair_id;
             if (!pair_id) return;
             this.refreshVoteCount();
             this.refreshPairInfo();
             this.fetchfavData();
-            this.checkFavData();
+        this.checkFavData();
 
             this.fetchSwaps(pair_id);
             // this.setState({
@@ -197,14 +200,14 @@ export default class PairExplorer extends React.Component {
         if (this.props.networkId === 1) {
             window
                 .getFavoritesETH()
-                .then((favorites) => this.setState({favorites}))
+                .then((favorites) => this.setState({ favorites }))
                 .catch(console.error);
         }
 
         if (this.props.networkId === 43114) {
             window
                 .getFavorites()
-                .then((favorites) => this.setState({favorites}))
+                .then((favorites) => this.setState({ favorites }))
                 .catch(console.error);
         }
     }
@@ -219,7 +222,6 @@ export default class PairExplorer extends React.Component {
         window.addOneTimeWalletConnectionListener(this.refreshPairInfo);
         this.fetchInterval = setInterval(() => this.fetchSwaps(pair_id), 15000);
     }
-
     componentWillUnmount() {
         document.querySelector("title").innerText = this.oldTitle || "DYP Tools";
         clearInterval(this.fetchInterval);
@@ -228,17 +230,11 @@ export default class PairExplorer extends React.Component {
         window.removeOneTimeWalletConnectionListener(this.refreshPairInfo);
     }
 
-    // async componentDidUpdate(prevProps) {
-    //     if(prevProps.networkId != this.props.networkId){
-    //         this.setState(this.state)
-    //     }
-    // }
-
     refreshCGInfo = async (tokenAddress) => {
         try {
             let info = await getTokenInformation(tokenAddress, this.props.networkId);
             let cgInfo = {};
-            console.log({cgInfo: info});
+            console.log({ cgInfo: info });
 
             cgInfo.link_logo = info.image?.large;
             cgInfo.link_coingecko =
@@ -254,14 +250,14 @@ export default class PairExplorer extends React.Component {
             cgInfo.circulating_supply = info.market_data?.circulating_supply;
             cgInfo.fdv_usd = info.market_data?.fully_diluted_valuation?.usd;
 
-            this.setState({cgInfo});
+            this.setState({ cgInfo });
         } catch (e) {
             console.error(e);
         }
     };
 
     refreshPairInfo = async () => {
-        let {pairInfo} = await window.$.get(
+        let { pairInfo } = await window.$.get(
             this.props.networkId === 1
                 ? `${window.config.apieth_baseurl}/api/pair-info?pairId=${String(
                 this.props.match.params.pair_id
@@ -274,7 +270,7 @@ export default class PairExplorer extends React.Component {
                     .trim()
                     .toLowerCase()}`
         );
-        this.setState({pairInfo});
+        this.setState({ pairInfo });
 
         let coinbase;
         try {
@@ -285,11 +281,11 @@ export default class PairExplorer extends React.Component {
         }
         if (this.state.pair) {
             let mainToken = await window.getMainToken(this.state.pair, this.props.networkId);
-            this.setState({mainToken});
+            this.setState({ mainToken });
             let mainTokenTotalSupply =
                 (await window.getTokenTotalSupply(mainToken.id)) /
                 10 ** mainToken.decimals;
-            this.setState({mainTokenTotalSupply});
+            this.setState({ mainTokenTotalSupply });
         }
         this.refreshLockerData();
     };
@@ -301,7 +297,7 @@ export default class PairExplorer extends React.Component {
         } catch (e) {
             console.error(e);
         }
-        let {voteCount, upvoteCount, coinbaseVote} = await window.$.get(
+        let { voteCount, upvoteCount, coinbaseVote } = await window.$.get(
             `${
                 this.props.networkId === 1
                     ? window.config.apieth_baseurl
@@ -318,7 +314,7 @@ export default class PairExplorer extends React.Component {
     };
     registerViewOnce = async (pair) => {
         if (this.state.isViewRegistered) return;
-        this.setState({isViewRegistered: true});
+        this.setState({ isViewRegistered: true });
         try {
             let pair_id = pair.id;
             let token0Symbol = pair.token0.symbol;
@@ -351,9 +347,9 @@ export default class PairExplorer extends React.Component {
         let coinbase = await window.getCoinbase();
         if (!coinbase) return;
 
-        this.setState({isRegisteringVote: true});
+        this.setState({ isRegisteringVote: true });
         let oldCoinbaseVote = this.state.coinbaseVote;
-        this.setState({coinbaseVote: oldCoinbaseVote == upvote ? null : upvote});
+        this.setState({ coinbaseVote: oldCoinbaseVote == upvote ? null : upvote });
 
         try {
             let mainToken = await window.getMainToken(this.state.pair, this.props.networkId);
@@ -366,7 +362,7 @@ export default class PairExplorer extends React.Component {
                 window.alertify.message(
                     `Buy some ${mainToken.symbol} to vote! The voting process is free, but available only for ${mainToken.symbol} token holders!`
                 );
-                this.setState({coinbaseVote: oldCoinbaseVote});
+                this.setState({ coinbaseVote: oldCoinbaseVote });
                 return;
             }
 
@@ -381,7 +377,7 @@ export default class PairExplorer extends React.Component {
                 }/api/community-votes?coinbase=${coinbase}&pairId=${pairId}&action=${action}`
             );
         } finally {
-            this.setState({isRegisteringVote: false});
+            this.setState({ isRegisteringVote: false });
             this.refreshVoteCount();
         }
     };
@@ -417,7 +413,7 @@ export default class PairExplorer extends React.Component {
               }
             }
           }`,
-            {pair},
+            { pair },
             (this.props.networkId === 1 ? window.config.subgraphGraphEth : window.config.subgraphGraphAvax)
         )
             .then((res) => res.data)
@@ -468,25 +464,25 @@ export default class PairExplorer extends React.Component {
     doSearch = () => {
         if (!this.state.query) {
             clearTimeout(this.searchTimeout);
-            this.setState({isSearching: false, searchResults: []});
+            this.setState({ isSearching: false, searchResults: [] });
             return;
         }
-        this.setState({isSearching: true});
+        this.setState({ isSearching: true });
         getSearchResultsLocalAPI(this.state.query, this.props.networkId)
             .then((searchResults) => {
                 if (!this.state.query) searchResults = [];
-                this.setState({searchResults});
+                this.setState({ searchResults });
             })
             .catch(console.log)
             .finally(() => {
-                this.setState({isSearching: false});
+                this.setState({ isSearching: false });
             });
     };
 
     fetchSwaps = async (pair_id) => {
         get24hEarlierBlock(this.props.networkId === 1 ? 'ethereum' : 'avalanche')
             .then((_24hEarlierBlock) => {
-                this.setState({_24hEarlierBlock});
+                this.setState({ _24hEarlierBlock });
                 this.handleTimeTravelQueries(
                     _24hEarlierBlock,
                     this.props.match.params.pair_id
@@ -500,12 +496,12 @@ export default class PairExplorer extends React.Component {
                     false,
                     this.props.networkId === 1 ? 'ethereum' : 'avalanche'
                 );
-            console.log({swaps, ethPrice});
-            this.setState({swaps, ethPrice, pair});
-            let mainToken = await window.getMainToken(this.state.pair, this.props.networkId)
-            this.setState({mainToken});
+            console.log({ swaps, ethPrice });
+            this.setState({ swaps, ethPrice, pair });
+            let mainToken = await window.getMainToken(this.state.pair, this.props.networkId);
+            this.setState({ mainToken });
             if (!this.state.cgInfo) {
-                let mainToken = await window.getMainToken(this.state.pair, this.props.networkId)
+                let mainToken = await window.getMainToken(this.state.pair, this.props.networkId);
                 if (mainToken && mainToken.id) {
                     this.refreshCGInfo(mainToken.id);
                 }
@@ -518,16 +514,16 @@ export default class PairExplorer extends React.Component {
             let symbol = `${pair.token0.symbol}-${pair.token1.symbol}`;
             let title = `$${usd_price} | ${symbol} | Pair Explorer - DYP Tools`;
             document.querySelector("title").innerText = title;
-            return {swaps, ethPrice, pair};
+            return { swaps, ethPrice, pair };
         } finally {
-            this.setState({isLoading: false});
+            this.setState({ isLoading: false });
             setTimeout(this.refreshVoteCount, 50);
             setTimeout(this.refreshPairInfo, 50);
         }
     };
 
     handleQuery = (query) => {
-        this.setState({query});
+        this.setState({ query });
         clearTimeout(this.searchTimeout);
         this.searchTimeout = setTimeout(this.doSearch, 400);
     };
@@ -541,7 +537,7 @@ export default class PairExplorer extends React.Component {
             window
                 .isFavoriteETH(this.state.pair.id.toLowerCase())
                 .then((isFavorite) =>
-                    this.setState({isFavorite, starColor: "#E30613"})
+                    this.setState({ isFavorite, starColor: "#E30613" })
                 )
                 .catch(console.error);
             this.fetchfavData();
@@ -567,7 +563,7 @@ export default class PairExplorer extends React.Component {
                 minWidth: "145px",
                 cell: (txn) => (
                     <td
-                        style={{whiteSpace: "nowrap"}}
+                        style={{ whiteSpace: "nowrap" }}
                         title={new Date(txn.timestamp * 1e3)}
                     >
                         {moment(txn.timestamp * 1e3).format("YYYY-MM-DD HH:mm")}
@@ -603,7 +599,7 @@ export default class PairExplorer extends React.Component {
                 selector: "token1PerToken0",
                 sortable: true,
                 format: (txn) =>
-                    `${getFormattedNumber(txn.token1PerToken0, 6)} ${
+                    `${getFormattedNumber(txn.token1PerToken0, 4)} ${
                         this.state.pair?.token1.symbol
                     }`,
             },
@@ -612,7 +608,7 @@ export default class PairExplorer extends React.Component {
                 selector: "amount0",
                 sortable: true,
                 format: (txn) =>
-                    `${getFormattedNumber(txn.amount0, 6)} ${
+                    `${getFormattedNumber(txn.amount0, 2)} ${
                         this.state.pair?.token0.symbol
                     }`,
             },
@@ -621,7 +617,7 @@ export default class PairExplorer extends React.Component {
                 selector: "amount1",
                 sortable: true,
                 format: (txn) =>
-                    `${getFormattedNumber(txn.amount1, 6)} ${
+                    `${getFormattedNumber(txn.amount1, 2)} ${
                         this.state.pair?.token1.symbol
                     }`,
             },
@@ -641,7 +637,7 @@ export default class PairExplorer extends React.Component {
                                 : `https://cchain.explorer.avax.network/address/${txn.maker}`
                         }
                     >
-                        ...{txn.maker?.slice(34)}
+                        ...{txn.maker?.slice(36)}
                     </a>
                 ),
             },
@@ -684,11 +680,19 @@ export default class PairExplorer extends React.Component {
                 ),
             },
         ];
+
+        const tableStyle = {
+            table: {
+                style: {
+                    height: "552px",
+                },
+            },
+        };
         return (
             <DataTable
-                progressComponent={<Circular/>}
+                progressComponent={<Circular />}
                 compact={true}
-                keyField="id"
+                keyField="id2"
                 theme={this.props.theme == "theme-dark" ? "solarized" : "light"}
                 persistTableHead={false}
                 progressPending={this.state.isLoading}
@@ -698,6 +702,8 @@ export default class PairExplorer extends React.Component {
                 paginationRowsPerPageOptions={[50, 100, 250, 500]}
                 columns={columns}
                 data={this.state.swaps}
+                dense
+                customStyles={tableStyle}
             />
         );
     };
@@ -712,13 +718,13 @@ export default class PairExplorer extends React.Component {
         title = encodeURIComponent(title);
         link = encodeURIComponent(link);
         // link = encodeURIComponent(link)
-        return {link, title};
+        return { link, title };
     };
     getAutoTrustScores = () => {
-        let result = {avg: undefined, avg_weighted: undefined, scores: []};
+        let result = { avg: undefined, avg_weighted: undefined, scores: [] };
         let cgInfo = this.state.cgInfo || {};
         let settings = window.config.automated_trust_scores;
-        let {perfect_scoring} = settings;
+        let { perfect_scoring } = settings;
         let scores = {
             tx_no:
                 Math.min(this.state.pair?.txCount * 1, perfect_scoring.tx_no) /
@@ -776,7 +782,7 @@ export default class PairExplorer extends React.Component {
         //     window.alertify.message("Subscribe to Premium for this feature!")
         //     return;
         // }
-        this.setState({show: !this.state.show});
+        this.setState({ show: !this.state.show });
     };
 
     refreshLockerData = async () => {
@@ -784,7 +790,7 @@ export default class PairExplorer extends React.Component {
         let baseTokens = this.props.networkId === 1
                 ? await window.getBaseTokensETH()
                 : await window.getBaseTokens();
-        this.setState({baseTokens});
+        this.setState({ baseTokens });
         if (window.web3.utils.isAddress(pair_id)) {
             // this.refreshTokenLocks(pair_id)
             // this.handlePairChange(null, pair_id)
@@ -792,16 +798,16 @@ export default class PairExplorer extends React.Component {
                     ? await window.getLockedAmountETH(pair_id)
                     : await window.getLockedAmount(pair_id);
             this.refreshUsdValueOfLP(pair_id, totalLpLocked, baseTokens);
-            this.setState({totalLpLocked});
+            this.setState({ totalLpLocked });
         }
     };
 
     refreshUsdValueOfLP = async (pair, amount, baseTokens) => {
         try {
             let totalSupply = await window.getTokenTotalSupply(pair);
-            this.setState({lpTotalSupply: totalSupply});
+            this.setState({ lpTotalSupply: totalSupply });
 
-            let {token0, token1} = await window.getPairTokensInfo(pair, this.props.networkId);
+            let { token0, token1 } = await window.getPairTokensInfo(pair, this.props.networkId);
             let baseToken;
             if (baseTokens.includes(token0.address.toLowerCase())) {
                 baseToken = token0;
@@ -819,14 +825,14 @@ export default class PairExplorer extends React.Component {
             if (!tokenCG) return;
             let usdPerBaseToken = Number(await window.getPrice(tokenCG));
             let usdValueOfLP = baseTokenInLp * usdPerBaseToken * 2;
-            this.setState({usdValueOfLP});
+            this.setState({ usdValueOfLP });
         } catch (e) {
             console.error(e);
         }
     };
 
     onBarsRequest = (bars) => {
-        console.log({bars});
+        console.log({ bars });
         if (!bars || !bars.length) return;
         let latestTime = Math.max(this.latestTime || 0, bars[bars.length - 1].time);
         this.latestTime = latestTime;
@@ -840,6 +846,7 @@ export default class PairExplorer extends React.Component {
             if (!(pairId = this.props.match.params.pair_id)) return;
             if (!this.latestTime) return;
             if (!this.state.mainToken) return;
+
             let bars = await getPairCandles(
                 pairId,
                 Math.floor(this.latestTime / 1e3),
@@ -909,11 +916,11 @@ export default class PairExplorer extends React.Component {
         //     }
         // }
 
-        let {avg, avg_weighted, scores} = this.getAutoTrustScores();
+        let { avg, avg_weighted, scores } = this.getAutoTrustScores();
         // console.log({ avg, avg_weighted, scores })
         let colors = ["orange", "violet", "salmon", "#3e98c7", "green"];
 
-        let {title, link} = this.getShareInfo();
+        let { title, link } = this.getShareInfo();
 
         let mainTokenKey = "0";
         let baseTokenKey = "1";
@@ -929,8 +936,548 @@ export default class PairExplorer extends React.Component {
                 <div>
                     <div className="graph-wrap">
                         <div className="leftside">
+                            <div
+                                className="row m-0 w-100 justify-content-between flex-column"
+                                style={{ gap: 20 }}
+                            >
+                                <div className="graph-right2">
+                                    <div className="search-box">
+                                        <form id="searchform">
+                                            <input
+                                                value={this.state.query}
+                                                onChange={(e) => this.handleQuery(e.target.value)}
+                                                type="text"
+                                                id="search-bar"
+                                                autoComplete="off"
+                                                placeholder="Search Pairs"
+                                            />
+                                            <ul
+                                                className="output"
+                                                style={{
+                                                    display:
+                                                        this.state.searchResults.length == 0
+                                                            ? "none"
+                                                            : "block",
+                                                    zIndex: 9,
+                                                    maxHeight: "300px",
+                                                    overflowY: "auto",
+                                                }}
+                                            >
+                                                {this.state.searchResults.map((p) => (
+                                                    <NavLink
+                                                        to={`/pair-explorer/${p.pair.address.toLowerCase()}`}
+                                                    >
+                                                        <li key={p.id} className="prediction-item">
+                                                            <div className="suggest-item">
+                                                                <h2
+                                                                    style={{
+                                                                        fontSize: "1.2rem",
+                                                                        fontWeight: 500,
+                                                                    }}
+                                                                >
+                                  <span className="wh_txt">
+                                    {p.pair.token_1.symbol}
+                                  </span>
+                                                                    /{p.pair.token_0.symbol}
+                                                                    <span className="bar">-</span> (
+                                                                    {p.pair.token_0.name})
+                                                                </h2>
+                                                                <p
+                                                                    style={{
+                                                                        fontSize: ".85rem",
+                                                                        fontWeight: 400,
+                                                                    }}
+                                                                >
+                                                                    Token: ...
+                                                                    {p.pair.token_0.address
+                                                                        .toLowerCase()
+                                                                        .slice(34)}{" "}
+                                                                    - Pair: ...
+                                                                    {p.pair.address.toLowerCase().slice(34)}
+                                                                </p>
+                                                                <p>Total liquidity:</p>
+                                                                <span>
+                                  ${getFormattedNumber(p.pair.reserve, 2)}
+                                </span>
+                                                            </div>
+                                                        </li>
+                                                    </NavLink>
+                                                ))}
+                                            </ul>
+                                            <button type="submit" id="submit">
+                                                {/* <img src="/assets/img/search-2.png" alt="Image" /> */}
+                                                <i
+                                                    style={{ color: "var(--red)" }}
+                                                    className={`fas fa-${
+                                                        !this.state.isSearching
+                                                            ? "search"
+                                                            : "spinner fa-spin"
+                                                    }`}
+                                                ></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <div className="secondbox-wrapper">
+                                    <div className="content-title">
+                                        <div className="content-title-top">
+                                            <h2>
+                                                {this.state.cgInfo?.link_logo && (
+                                                    <img
+                                                        height="30"
+                                                        width="30"
+                                                        style={{
+                                                            objectFit: "contain",
+                                                            position: "relative",
+                                                            top: "-3px",
+                                                        }}
+                                                        src={this.state.cgInfo?.link_logo}
+                                                    />
+                                                )}{" "}
+                                                {this.state.pair?.token0.symbol || "..."} /{" "}
+                                                {this.state.pair?.token1.symbol || "..."}{" "}
+                                                <button
+                                                    onClick={this.toggleFavorite}
+                                                    className={`btn v2 p-0 ${
+                                                        this.state.isFavorite ? "is-favorite" : ""
+                                                    }`}
+                                                >
+                                                    <i
+                                                        style={{
+                                                            color: this.state.starColor,
+                                                            marginBottom: "18px",
+                                                        }}
+                                                        className={`fa${
+                                                            this.state.isFavorite ? "s" : "r"
+                                                        } fa-star`}
+                                                    ></i>
+                                                </button>
+                                            </h2>
+                                            <h2>
+                                                $
+                                                {(
+                                                    this.state.mainToken?.derivedETH * this.state.ethPrice
+                                                ).toFixed(4) * 1 || "..."}
+                                            </h2>
+                                        </div>
+                                        <div className="d-flex justify-content-between">
+                                            <p style={{ fontSize: ".8rem" }}>
+                                                ({this.state.mainToken?.name || "..."})
+                                                <br />
+                                                Token contract:{" "}
+                                                <a
+                                                    rel="noopener noreferrer"
+                                                    target="_blank"
+                                                    href={
+                                                        this.props.networkId === 1
+                                                            ? `https://etherscan.io/token/${this.state.mainToken?.id}`
+                                                            : `https://cchain.explorer.avax.network/tokens/${this.state.mainToken?.id}`
+                                                    }
+                                                >
+                                                    ...{this.state.mainToken?.id.slice(34)}
+                                                </a>{" "}
+                                            </p>
+                                            <p
+                                                style={{
+                                                    display: "flex",
+                                                    flexDirection: "column",
+                                                    fontSize: 12,
+                                                    alignItems: "flex-end",
+                                                }}
+                                            >
+                                                {this.state[
+                                                    `diffUsdPerToken${this.state.mainToken?.__number}Percent`
+                                                    ] != "..." && (
+                                                    <span
+                                                        className={
+                                                            this.state[
+                                                                `diffUsdPerToken${this.state.mainToken?.__number}Percent`
+                                                                ] *
+                                                            1 >=
+                                                            0
+                                                                ? "green-text"
+                                                                : ""
+                                                        }
+                                                    >
+                            (24h:{" "}
+                                                        {
+                                                            this.state[
+                                                                `diffUsdPerToken${this.state.mainToken?.__number}Percent`
+                                                                ]
+                                                        }
+                                                        %)
+                          </span>
+                                                )}{" "}
+                                                {(this.state.mainToken?.derivedETH * 1).toFixed(6) *
+                                                1 || "..."}{" "}
+                                                {this.props.networkId === 1
+                                                        ? "ETH"
+                                                        : "AVAX"
+                                                    }
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className="graph-header" style={{ gap: 5 }}>
+                                        <div className="graph-header-left">
+                                            <ul
+                                                className="l-social-icons-list d-flex"
+                                                style={{ gap: 4, alignItems: "baseline" }}
+                                            >
+                                                <li>
+                                                    <div
+                                                        className="social-share-parent"
+                                                        style={{
+                                                            display: "inline-block",
+                                                            position: "relative",
+                                                        }}
+                                                    >
+                                                        <button className="btn v3 p-0">
+                                                            <i
+                                                                className="fas fa-share-alt"
+                                                                style={{ color: "#71757E" }}
+                                                            ></i>
+                                                        </button>
+
+                                                        <div className="social-share-wrapper-div">
+                                                            <a
+                                                                className="resp-sharing-button__link"
+                                                                href={`https://twitter.com/intent/tweet/?text=${title}&url=${link}`}
+                                                                target="_blank"
+                                                                rel="noopener"
+                                                                aria-label=""
+                                                            >
+                                                                <div className="resp-sharing-button resp-sharing-button--twitter resp-sharing-button--small">
+                                                                    <div
+                                                                        aria-hidden="true"
+                                                                        className="resp-sharing-button__icon resp-sharing-button__icon--solid"
+                                                                    >
+                                                                        <svg
+                                                                            xmlns="http://www.w3.org/2000/svg"
+                                                                            viewBox="0 0 24 24"
+                                                                        >
+                                                                            <path d="M23.44 4.83c-.8.37-1.5.38-2.22.02.93-.56.98-.96 1.32-2.02-.88.52-1.86.9-2.9 1.1-.82-.88-2-1.43-3.3-1.43-2.5 0-4.55 2.04-4.55 4.54 0 .36.03.7.1 1.04-3.77-.2-7.12-2-9.36-4.75-.4.67-.6 1.45-.6 2.3 0 1.56.8 2.95 2 3.77-.74-.03-1.44-.23-2.05-.57v.06c0 2.2 1.56 4.03 3.64 4.44-.67.2-1.37.2-2.06.08.58 1.8 2.26 3.12 4.25 3.16C5.78 18.1 3.37 18.74 1 18.46c2 1.3 4.4 2.04 6.97 2.04 8.35 0 12.92-6.92 12.92-12.93 0-.2 0-.4-.02-.6.9-.63 1.96-1.22 2.56-2.14z" />
+                                                                        </svg>
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+
+                                                            <a
+                                                                className="resp-sharing-button__link"
+                                                                href={`https://reddit.com/submit/?url=${link}&resubmit=true&title=${title}`}
+                                                                target="_blank"
+                                                                rel="noopener"
+                                                                aria-label=""
+                                                            >
+                                                                <div className="resp-sharing-button resp-sharing-button--reddit resp-sharing-button--small">
+                                                                    <div
+                                                                        aria-hidden="true"
+                                                                        className="resp-sharing-button__icon resp-sharing-button__icon--solid"
+                                                                    >
+                                                                        <svg
+                                                                            xmlns="http://www.w3.org/2000/svg"
+                                                                            viewBox="0 0 24 24"
+                                                                        >
+                                                                            <path d="M24 11.5c0-1.65-1.35-3-3-3-.96 0-1.86.48-2.42 1.24-1.64-1-3.75-1.64-6.07-1.72.08-1.1.4-3.05 1.52-3.7.72-.4 1.73-.24 3 .5C17.2 6.3 18.46 7.5 20 7.5c1.65 0 3-1.35 3-3s-1.35-3-3-3c-1.38 0-2.54.94-2.88 2.22-1.43-.72-2.64-.8-3.6-.25-1.64.94-1.95 3.47-2 4.55-2.33.08-4.45.7-6.1 1.72C4.86 8.98 3.96 8.5 3 8.5c-1.65 0-3 1.35-3 3 0 1.32.84 2.44 2.05 2.84-.03.22-.05.44-.05.66 0 3.86 4.5 7 10 7s10-3.14 10-7c0-.22-.02-.44-.05-.66 1.2-.4 2.05-1.54 2.05-2.84zM2.3 13.37C1.5 13.07 1 12.35 1 11.5c0-1.1.9-2 2-2 .64 0 1.22.32 1.6.82-1.1.85-1.92 1.9-2.3 3.05zm3.7.13c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2-2-.9-2-2zm9.8 4.8c-1.08.63-2.42.96-3.8.96-1.4 0-2.74-.34-3.8-.95-.24-.13-.32-.44-.2-.68.15-.24.46-.32.7-.18 1.83 1.06 4.76 1.06 6.6 0 .23-.13.53-.05.67.2.14.23.06.54-.18.67zm.2-2.8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm5.7-2.13c-.38-1.16-1.2-2.2-2.3-3.05.38-.5.97-.82 1.6-.82 1.1 0 2 .9 2 2 0 .84-.53 1.57-1.3 1.87z" />
+                                                                        </svg>
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+
+                                                            <a
+                                                                className="resp-sharing-button__link"
+                                                                href={`https://telegram.me/share/url?text=${title}&url=${link}`}
+                                                                target="_blank"
+                                                                rel="noopener"
+                                                                aria-label=""
+                                                            >
+                                                                <div className="resp-sharing-button resp-sharing-button--telegram resp-sharing-button--small">
+                                                                    <div
+                                                                        aria-hidden="true"
+                                                                        className="resp-sharing-button__icon resp-sharing-button__icon--solid"
+                                                                    >
+                                                                        <svg
+                                                                            xmlns="http://www.w3.org/2000/svg"
+                                                                            viewBox="0 0 24 24"
+                                                                        >
+                                                                            <path d="M.707 8.475C.275 8.64 0 9.508 0 9.508s.284.867.718 1.03l5.09 1.897 1.986 6.38a1.102 1.102 0 0 0 1.75.527l2.96-2.41a.405.405 0 0 1 .494-.013l5.34 3.87a1.1 1.1 0 0 0 1.046.135 1.1 1.1 0 0 0 .682-.803l3.91-18.795A1.102 1.102 0 0 0 22.5.075L.706 8.475z" />
+                                                                        </svg>
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <a
+                                                        rel="noopener noreferrer"
+                                                        target="_blank"
+                                                        title={
+                                                            this.props.networkId === 1
+                                                                ? "Buy at Uniswap"
+                                                                : "Buy at Pangolin"
+                                                        }
+                                                        href={
+                                                            this.props.networkId === 1
+                                                                ? `https://v2.info.uniswap.org/pair/${this.props.match.params.pair_id}`
+                                                                : `https://app.pangolin.exchange/#/swap?outputCurrency/${this.props.match.params.pair_id}`
+                                                        }
+                                                    >
+                                                        <img
+                                                            src={
+                                                                this.props.networkId === 1
+                                                                    ? "/images/uniswap-logo-home.png"
+                                                                    : "/images/pangolin.png"
+                                                            }
+                                                            width="18"
+                                                            alt=""
+                                                        />
+                                                    </a>
+                                                </li>
+                                                {this.state.pairInfo?.link_coinmarketcap && (
+                                                    <li>
+                                                        <a
+                                                            rel="noopener noreferrer"
+                                                            target="_blank"
+                                                            title="Coinmarketcap"
+                                                            href={this.state.pairInfo?.link_coinmarketcap}
+                                                        >
+                                                            <img
+                                                                src="/images/coinmarketcap.jpeg"
+                                                                width="18"
+                                                                alt=""
+                                                            />
+                                                        </a>
+                                                    </li>
+                                                )}
+                                                {(this.state.pairInfo?.link_coingecko ||
+                                                    this.state.cgInfo?.link_coingecko) && (
+                                                    <li>
+                                                        <a
+                                                            rel="noopener noreferrer"
+                                                            target="_blank"
+                                                            title="Coingecko"
+                                                            href={
+                                                                this.state.pairInfo?.link_coingecko ||
+                                                                this.state.cgInfo?.link_coingecko
+                                                            }
+                                                        >
+                                                            <img
+                                                                src="/images/coingecko.webp"
+                                                                width="18"
+                                                                alt=""
+                                                            />
+                                                        </a>
+                                                    </li>
+                                                )}
+                                                {(this.state.pairInfo?.link_website ||
+                                                    this.state.cgInfo?.link_website) && (
+                                                    <li>
+                                                        <a
+                                                            rel="noopener noreferrer"
+                                                            target="_blank"
+                                                            title="Website"
+                                                            href={
+                                                                this.state.pairInfo?.link_website ||
+                                                                this.state.cgInfo?.link_website
+                                                            }
+                                                        >
+                                                            <i
+                                                                style={{ color: `var(--red)` }}
+                                                                className="fas fa-external-link-alt"
+                                                                alt=""
+                                                            />
+                                                        </a>
+                                                    </li>
+                                                )}
+                                                {(this.state.pairInfo?.link_twitter ||
+                                                    this.state.cgInfo?.link_twitter) && (
+                                                    <li>
+                                                        <a
+                                                            rel="noopener noreferrer"
+                                                            target="_blank"
+                                                            title="Twitter"
+                                                            href={
+                                                                this.state.pairInfo?.link_twitter ||
+                                                                this.state.cgInfo?.link_twitter
+                                                            }
+                                                        >
+                                                            <i
+                                                                style={{ color: "rgba(29,161,242,1.00)" }}
+                                                                className="fab fa-twitter"
+                                                                alt=""
+                                                            />
+                                                        </a>
+                                                    </li>
+                                                )}
+                                                {(this.state.pairInfo?.link_telegram ||
+                                                    this.state.cgInfo?.link_telegram) && (
+                                                    <li>
+                                                        <a
+                                                            rel="noopener noreferrer"
+                                                            target="_blank"
+                                                            title="Telegram"
+                                                            href={
+                                                                this.state.pairInfo?.link_telegram ||
+                                                                this.state.cgInfo.link_telegram
+                                                            }
+                                                        >
+                                                            <i
+                                                                style={{ color: "#0088cc" }}
+                                                                className="fab fa-telegram"
+                                                                alt=""
+                                                            />
+                                                        </a>
+                                                    </li>
+                                                )}
+                                                <li>
+                                                    <a
+                                                        rel="noopener noreferrer"
+                                                        target="_blank"
+                                                        title={this.state.pair?.id}
+                                                        href={
+                                                            this.props.networkId === 1
+                                                                ? `https://etherscan.io/address/${this.props.match.params.pair_id}`
+                                                                : `https://cchain.explorer.avax.network/address/${this.props.match.params.pair_id}`
+                                                        }
+                                                    >
+                                                        <img
+                                                            className="icon-bg-white-rounded"
+                                                            src={
+                                                                this.props.networkId === 1
+                                                                    ? "/images/etherscan.png"
+                                                                    : "/images/cchain.png"
+                                                            }
+                                                            width="18"
+                                                            alt=""
+                                                        />
+                                                    </a>
+                                                </li>
+
+                                                {this.state.pairInfo?.link_audit && (
+                                                    <li>
+                                                        <a
+                                                            rel="noopener noreferrer"
+                                                            target="_blank"
+                                                            title="Audit"
+                                                            href={this.state.pairInfo?.link_audit}
+                                                        >
+                                                            <i
+                                                                style={{ color: "var(--red)" }}
+                                                                className="far fa-file-pdf"
+                                                                alt=""
+                                                            />
+                                                        </a>
+                                                    </li>
+                                                )}
+                                            </ul>
+                                        </div>
+                                        <div className="graph-header-right">
+                                            <NavLink
+                                                title="DYP Locker"
+                                                to={`/locker/${this.props.match.params.pair_id}`}
+                                                className={"tradebtn w-auto"}
+                                            >
+                                                View pair locker
+                                            </NavLink>
+                                            <NavLink
+                                                to={`/locker/${this.props.match.params.pair_id}`}
+                                            >
+                                                <img
+                                                    src={PairLocker}
+                                                    alt=""
+                                                    style={{ marginLeft: 10, cursor: "pointer" }}
+                                                />
+                                            </NavLink>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="secondbox-wrapper favorites">
+                                    <div
+                                        className="content-title m-0 p-0"
+                                        style={{ borderBottom: "none" }}
+                                    >
+                                        <div className="content-title-top">
+                                            <h2>FAVORITES</h2>
+                                            {this.state.favorites.length > 0 && (
+                                                <button
+                                                    className="tradebtn m-0 w-auto"
+                                                    style={{ gap: 5 }}
+                                                    onClick={() => {
+                                                        window.location.replace("/account#my-fav");
+                                                    }}
+                                                >
+                                                    <svg
+                                                        width="10"
+                                                        height="10"
+                                                        viewBox="0 0 10 10"
+                                                        fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                    >
+                                                        <path
+                                                            d="M4.32229 10C3.23685 10 2.14862 10 1.06318 10C0.423045 10 0 9.57696 0 8.93683C0 6.75759 0 4.57557 0 2.39633C0 1.76177 0.423045 1.33594 1.05483 1.33594C2.36014 1.33594 3.66546 1.33594 4.97078 1.33594C5.22683 1.33594 5.39382 1.55581 5.31033 1.78125C5.26023 1.91484 5.14055 1.99834 4.98748 2.00112C4.801 2.0039 4.61174 2.00112 4.42527 2.00112C3.30365 2.00112 2.18202 2.00112 1.0604 2.00112C0.793209 2.00112 0.667965 2.12636 0.667965 2.39355C0.667965 4.57835 0.667965 6.76037 0.667965 8.94518C0.667965 9.2068 0.795992 9.33482 1.05761 9.33482C3.24242 9.33482 5.42444 9.33482 7.60924 9.33482C7.87364 9.33482 7.99889 9.20958 7.99889 8.94518C7.99889 7.65378 7.99889 6.36238 7.99889 5.07098C7.99889 5.01531 8.00167 4.95965 8.01559 4.90677C8.06012 4.75091 8.20484 4.6535 8.36348 4.6702C8.52213 4.68411 8.65015 4.81771 8.66407 4.97913C8.66685 4.99862 8.66407 5.02088 8.66407 5.04036C8.66407 6.35403 8.66407 7.66491 8.66407 8.97858C8.66407 9.45728 8.37183 9.84415 7.92096 9.96383C7.81798 9.99166 7.70943 10 7.60089 10C6.50988 10 5.41609 10 4.32229 10Z"
+                                                            fill="white"
+                                                        />
+                                                        <path
+                                                            d="M8.83322 0.667966C8.57995 0.667966 8.32668 0.667966 8.07341 0.667966C7.60583 0.667966 7.13547 0.670749 6.66789 0.667966C6.49255 0.667966 6.35339 0.537156 6.33391 0.370164C6.31721 0.205956 6.42297 0.0528806 6.58718 0.0111328C6.62336 0.00278319 6.66233 0 6.70129 0C7.67541 0 8.65231 0 9.62642 0C9.86578 0 9.99937 0.133593 9.99937 0.375731C9.99937 1.34706 9.99937 2.3184 9.99937 3.29251C9.99937 3.51517 9.86578 3.66546 9.66817 3.66824C9.46778 3.67103 9.33141 3.51795 9.33141 3.28695C9.33141 2.6162 9.33141 1.94823 9.33141 1.27748C9.33141 1.2413 9.33141 1.20234 9.33141 1.14667C9.28966 1.18564 9.26183 1.21069 9.23678 1.23574C7.69489 2.77762 6.153 4.31673 4.6139 5.8614C4.50536 5.96994 4.38846 6.03396 4.2326 5.98664C4.00995 5.91706 3.92645 5.64709 4.07396 5.4634C4.09901 5.43 4.13241 5.40217 4.16024 5.37434C5.69099 3.84359 7.22453 2.31005 8.75529 0.779293C8.78312 0.751461 8.82208 0.729196 8.85548 0.704147C8.84713 0.687448 8.83878 0.679098 8.83322 0.667966Z"
+                                                            fill="white"
+                                                        />
+                                                    </svg>
+                                                    View all
+                                                </button>
+                                            )}
+                                        </div>
+                                    </div>
+                                    <div className="d-flex flex-column" style={{ gap: 10 }}>
+                                        {this.state.favorites.length === 0 ? (
+                                            <div className="firstbox-inner">
+                                                <p className="d-flex justify-content-between">
+                                                    Add a favorite pair{" "}
+                                                    <button
+                                                        className="tradebtn m-0 w-auto"
+                                                        onClick={this.toggleFavorite}
+                                                    >
+                                                        Add pair
+                                                    </button>
+                                                </p>
+                                            </div>
+                                        ) : (
+                                            this.state.favorites
+                                                .slice(
+                                                    this.state.favorites.length > 3
+                                                        ? this.state.favorites.length - 3
+                                                        : 0,
+                                                    this.state.favorites.length
+                                                )
+                                                .map((lock, index) => {
+                                                    return (
+                                                        <NavLink
+                                                            key={index}
+                                                            className="favRow"
+                                                            to={`/pair-explorer/${lock.id}`}
+                                                        >
+                                                            <div
+                                                                className="row m-0 justify-content-between align-items-center"
+                                                                style={{ gap: 20 }}
+                                                            >
+                                                                <h2 className="favpair">
+                                                                    {lock.token0.symbol}/{lock.token1.symbol}
+                                                                </h2>
+
+                                                                <span className="favliq">
+                                  ...{lock.id.slice(35)}
+                                </span>
+                                                            </div>
+                                                        </NavLink>
+                                                    );
+                                                })
+                                        )}{" "}
+                                    </div>
+                                </div>
+                            </div>
+
                             <div className="firstbox-wrapper">
-                                <div className="firstbox-inner">
+                                <div className="firstbox-inner pb-0">
                                     <div className="graph-header">
                                         <div className="graph-header-left">
                                             <h2 className="firstbox-title">
@@ -1012,13 +1559,12 @@ export default class PairExplorer extends React.Component {
                         )}
                       </span>
                                         </div>
-                                        <br/>
-
+                                        <br />
                                     </div>
-                                </div>
+                                </div>{" "}
                                 <a
                                     onClick={this.toggleModal}
-                                    style={{fontSize: ".7rem"}}
+                                    style={{ fontSize: ".7rem" }}
                                     className="popup-btn "
                                     href="javascript:void(0)"
                                 >
@@ -1120,10 +1666,10 @@ export default class PairExplorer extends React.Component {
                                     ) : (
                                         <div className="graph-progress">
                                             <div
-                                                className="progress-title m-auto pb-4"
-                                                style={{width: "35%"}}
+                                                className="progress-title m-0 pb-4"
+                                                style={{ width: "35%" }}
                                             >
-                                                <p style={{fontSize: 18}}>DYP Score</p>
+                                                <p style={{ fontSize: 16 }}>DYP Score</p>
                                                 <GearProgress
                                                     values={[0, getFormattedNumber(avg_weighted, 2)]}
                                                 >
@@ -1143,40 +1689,98 @@ export default class PairExplorer extends React.Component {
                                                 </GearProgress>
                                             </div>
                                             <div
-                                                className="row m-0 justify-content-center"
-                                                style={{gap: 13}}
+                                                className="row m-0 justify-content-between"
+                                                style={{ gap: 12, width: "60%" }}
                                             >
-                                                {scores.map((score, i) => (
-                                                    <div className="score-wrapper" key={i}>
-                                                        <GearProgress values={[0, 100]}>
-                                                            {(value) => (
-                                                                <CircularProgressbar
-                                                                    value={getFormattedNumber(score.score, 2)}
-                                                                    text={`${
-                                                                        getFormattedNumber(score.score, 2) ===
-                                                                        "100.00"
-                                                                            ? 100
-                                                                            : getFormattedNumber(score.score, 2)
-                                                                    }%`}
-                                                                    circleRatio={0.75}
-                                                                    styles={buildStyles({
-                                                                        rotation: 1 / 2 + 1 / 8,
-                                                                        strokeLinecap: "butt",
-                                                                        trailColor: "#D6D8E7",
-                                                                        pathColor: colors[i],
-                                                                    })}
-                                                                />
-                                                            )}
-                                                        </GearProgress>
-
-                                                        <span className="score-title">{score.name}</span>
-                                                    </div>
-                                                ))}
+                                                <table className="w-100">
+                                                    <tr>
+                                                        {scores.slice(0, 2).map((score, i) => (
+                                                            <td>
+                                                                {" "}
+                                                                <div className="score-wrapper" key={i}>
+                                                                    <div className="d-flex" style={{ gap: 5 }}>
+                                                                        <div
+                                                                            className="color-indicator"
+                                                                            style={{ background: colors[i] }}
+                                                                        ></div>
+                                                                        <span className="score-title">
+                                      {`${
+                                          getFormattedNumber(score.score, 2) ===
+                                          "100.00"
+                                              ? 100
+                                              : getFormattedNumber(score.score, 2)
+                                      }%`}{" "}
+                                    </span>
+                                                                    </div>
+                                                                    <span className="score-title">
+                                    {score.name}
+                                  </span>
+                                                                </div>
+                                                            </td>
+                                                        ))}
+                                                    </tr>
+                                                    <tr>
+                                                        {scores
+                                                            .slice(2, scores.length - 1)
+                                                            .map((score, i) => (
+                                                                <td>
+                                                                    <div className="score-wrapper" key={i}>
+                                                                        <div className="d-flex" style={{ gap: 5 }}>
+                                                                            <div
+                                                                                className="color-indicator"
+                                                                                style={{ background: colors[i + 2] }}
+                                                                            ></div>
+                                                                            <span className="score-title">
+                                        {`${
+                                            getFormattedNumber(score.score, 2) ===
+                                            "100.00"
+                                                ? 100
+                                                : getFormattedNumber(score.score, 2)
+                                        }%`}{" "}
+                                      </span>
+                                                                        </div>
+                                                                        <span className="score-title">
+                                      {score.name}
+                                    </span>
+                                                                    </div>
+                                                                </td>
+                                                            ))}
+                                                    </tr>
+                                                    <tr>
+                                                        {scores
+                                                            .slice(scores.length - 1, scores.length)
+                                                            .map((score, i) => (
+                                                                <td>
+                                                                    <div className="score-wrapper" key={i}>
+                                                                        <div className="d-flex" style={{ gap: 5 }}>
+                                                                            <div
+                                                                                className="color-indicator"
+                                                                                style={{
+                                                                                    background: colors[scores.length - 1],
+                                                                                }}
+                                                                            ></div>
+                                                                            <span className="score-title">
+                                        {`${
+                                            getFormattedNumber(score.score, 2) ===
+                                            "100.00"
+                                                ? 100
+                                                : getFormattedNumber(score.score, 2)
+                                        }%`}{" "}
+                                      </span>
+                                                                        </div>
+                                                                        <span className="score-title">
+                                      {score.name}
+                                    </span>
+                                                                    </div>
+                                                                </td>
+                                                            ))}
+                                                    </tr>
+                                                </table>
                                             </div>
                                         </div>
                                     )}
                                 </div>
-                                <div className="graph-progress mt-2">
+                                <div className="graph-progress2 mt-2">
                                     <div
                                         className="progress-title"
                                         style={{
@@ -1244,454 +1848,9 @@ export default class PairExplorer extends React.Component {
                                     </div>
                                 </div>
                             </div>
-
-                            <div>
-                                {" "}
-                                <h5 className="mb-2 latestnews-title">Latest news</h5>
-                                <LatestNews/>
-                            </div>
                         </div>
                         <div className="rightside">
-                            <div
-                                className="row m-0 w-100 justify-content-between"
-                                style={{gap: 20}}
-                            >
-                                <div className="secondbox-wrapper">
-                                    <div className="content-title">
-                                        <div className="content-title-top">
-                                            <h2>
-                                                {this.state.cgInfo?.link_logo && (
-                                                    <img
-                                                        height="30"
-                                                        width="30"
-                                                        style={{
-                                                            objectFit: "contain",
-                                                            position: "relative",
-                                                            top: "-3px",
-                                                        }}
-                                                        src={this.state.cgInfo?.link_logo}
-                                                    />
-                                                )}{" "}
-                                                {this.state.pair?.token0.symbol || "..."} /{" "}
-                                                {this.state.pair?.token1.symbol || "..."}{" "}
-                                                <button
-                                                    onClick={this.toggleFavorite}
-                                                    className={`btn v2 p-0 ${
-                                                        this.state.isFavorite ? "is-favorite" : ""
-                                                    }`}
-                                                >
-                                                    <i
-                                                        style={{
-                                                            color: this.state.starColor,
-                                                            marginBottom: '18px'
-                                                        }}
-                                                        className={`fa${
-                                                            this.state.isFavorite ? "s" : "r"
-                                                        } fa-star`}
-                                                    ></i>
-                                                </button>
-                                            </h2>
-                                            <h2>
-                                                $
-                                                {(
-                                                    this.state.mainToken?.derivedETH * this.state.ethPrice
-                                                ).toFixed(4) * 1 || "..."}
-                                            </h2>
-                                        </div>
-                                        <div className="d-flex justify-content-between">
-                                            <p style={{fontSize: ".8rem"}}>
-                                                ({this.state.mainToken?.name || "..."}) <br/>
-                                                Token contract:{" "}
-                                                <a
-                                                    rel="noopener noreferrer"
-                                                    target="_blank"
-                                                    href={
-                                                        this.props.networkId === 1
-                                                            ? `https://etherscan.io/token/${this.state.mainToken?.id}`
-                                                            : `https://cchain.explorer.avax.network/tokens/${this.state.mainToken?.id}`
-                                                    }
-                                                >
-                                                    ...{this.state.mainToken?.id.slice(34)}
-                                                </a>{" "}
-                                            </p>
-                                            <p
-                                                style={{
-                                                    display: "flex",
-                                                    flexDirection: "column",
-                                                    fontSize: 12,
-                                                }}
-                                            >
-                                                {this.state[
-                                                    `diffUsdPerToken${this.state.mainToken?.__number}Percent`
-                                                    ] != "..." && (
-                                                    <span
-                                                        className={
-                                                            this.state[
-                                                                `diffUsdPerToken${this.state.mainToken?.__number}Percent`
-                                                                ] *
-                                                            1 >=
-                                                            0
-                                                                ? "green-text"
-                                                                : ""
-                                                        }
-                                                    >
-                            (24h:{" "}
-                                                        {
-                                                            this.state[
-                                                                `diffUsdPerToken${this.state.mainToken?.__number}Percent`
-                                                                ]
-                                                        }
-                                                        %)
-                          </span>
-                                                )}{" "}
-                                                {(this.state.mainToken?.derivedETH * 1).toFixed(6) *
-                                                1 || "..."}{" "}
-                                                {
-                                                    this.props.networkId === 1
-                                                        ? "ETH"
-                                                        : "AVAX"
-                                                }
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div className="graph-header" style={{gap: 5}}>
-                                        <div className="graph-header-left">
-                                            <ul
-                                                className="l-social-icons-list d-flex"
-                                                style={{gap: 10}}
-                                            >
-                                                <li>
-                                                    <div
-                                                        className="social-share-parent"
-                                                        style={{
-                                                            display: "inline-block",
-                                                            position: "relative",
-                                                        }}
-                                                    >
-                                                        <button className="btn v3 p-0">
-                                                            <i
-                                                                className="fas fa-share-alt"
-                                                                style={{color: "#71757E"}}
-                                                            ></i>
-                                                        </button>
-
-                                                        <div className="social-share-wrapper-div">
-                                                            <a
-                                                                className="resp-sharing-button__link"
-                                                                href={`https://twitter.com/intent/tweet/?text=${title}&url=${link}`}
-                                                                target="_blank"
-                                                                rel="noopener"
-                                                                aria-label=""
-                                                            >
-                                                                <div
-                                                                    className="resp-sharing-button resp-sharing-button--twitter resp-sharing-button--small">
-                                                                    <div
-                                                                        aria-hidden="true"
-                                                                        className="resp-sharing-button__icon resp-sharing-button__icon--solid"
-                                                                    >
-                                                                        <svg
-                                                                            xmlns="http://www.w3.org/2000/svg"
-                                                                            viewBox="0 0 24 24"
-                                                                        >
-                                                                            <path
-                                                                                d="M23.44 4.83c-.8.37-1.5.38-2.22.02.93-.56.98-.96 1.32-2.02-.88.52-1.86.9-2.9 1.1-.82-.88-2-1.43-3.3-1.43-2.5 0-4.55 2.04-4.55 4.54 0 .36.03.7.1 1.04-3.77-.2-7.12-2-9.36-4.75-.4.67-.6 1.45-.6 2.3 0 1.56.8 2.95 2 3.77-.74-.03-1.44-.23-2.05-.57v.06c0 2.2 1.56 4.03 3.64 4.44-.67.2-1.37.2-2.06.08.58 1.8 2.26 3.12 4.25 3.16C5.78 18.1 3.37 18.74 1 18.46c2 1.3 4.4 2.04 6.97 2.04 8.35 0 12.92-6.92 12.92-12.93 0-.2 0-.4-.02-.6.9-.63 1.96-1.22 2.56-2.14z"/>
-                                                                        </svg>
-                                                                    </div>
-                                                                </div>
-                                                            </a>
-
-                                                            <a
-                                                                className="resp-sharing-button__link"
-                                                                href={`https://reddit.com/submit/?url=${link}&resubmit=true&title=${title}`}
-                                                                target="_blank"
-                                                                rel="noopener"
-                                                                aria-label=""
-                                                            >
-                                                                <div
-                                                                    className="resp-sharing-button resp-sharing-button--reddit resp-sharing-button--small">
-                                                                    <div
-                                                                        aria-hidden="true"
-                                                                        className="resp-sharing-button__icon resp-sharing-button__icon--solid"
-                                                                    >
-                                                                        <svg
-                                                                            xmlns="http://www.w3.org/2000/svg"
-                                                                            viewBox="0 0 24 24"
-                                                                        >
-                                                                            <path
-                                                                                d="M24 11.5c0-1.65-1.35-3-3-3-.96 0-1.86.48-2.42 1.24-1.64-1-3.75-1.64-6.07-1.72.08-1.1.4-3.05 1.52-3.7.72-.4 1.73-.24 3 .5C17.2 6.3 18.46 7.5 20 7.5c1.65 0 3-1.35 3-3s-1.35-3-3-3c-1.38 0-2.54.94-2.88 2.22-1.43-.72-2.64-.8-3.6-.25-1.64.94-1.95 3.47-2 4.55-2.33.08-4.45.7-6.1 1.72C4.86 8.98 3.96 8.5 3 8.5c-1.65 0-3 1.35-3 3 0 1.32.84 2.44 2.05 2.84-.03.22-.05.44-.05.66 0 3.86 4.5 7 10 7s10-3.14 10-7c0-.22-.02-.44-.05-.66 1.2-.4 2.05-1.54 2.05-2.84zM2.3 13.37C1.5 13.07 1 12.35 1 11.5c0-1.1.9-2 2-2 .64 0 1.22.32 1.6.82-1.1.85-1.92 1.9-2.3 3.05zm3.7.13c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2-2-.9-2-2zm9.8 4.8c-1.08.63-2.42.96-3.8.96-1.4 0-2.74-.34-3.8-.95-.24-.13-.32-.44-.2-.68.15-.24.46-.32.7-.18 1.83 1.06 4.76 1.06 6.6 0 .23-.13.53-.05.67.2.14.23.06.54-.18.67zm.2-2.8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm5.7-2.13c-.38-1.16-1.2-2.2-2.3-3.05.38-.5.97-.82 1.6-.82 1.1 0 2 .9 2 2 0 .84-.53 1.57-1.3 1.87z"/>
-                                                                        </svg>
-                                                                    </div>
-                                                                </div>
-                                                            </a>
-
-                                                            <a
-                                                                className="resp-sharing-button__link"
-                                                                href={`https://telegram.me/share/url?text=${title}&url=${link}`}
-                                                                target="_blank"
-                                                                rel="noopener"
-                                                                aria-label=""
-                                                            >
-                                                                <div
-                                                                    className="resp-sharing-button resp-sharing-button--telegram resp-sharing-button--small">
-                                                                    <div
-                                                                        aria-hidden="true"
-                                                                        className="resp-sharing-button__icon resp-sharing-button__icon--solid"
-                                                                    >
-                                                                        <svg
-                                                                            xmlns="http://www.w3.org/2000/svg"
-                                                                            viewBox="0 0 24 24"
-                                                                        >
-                                                                            <path
-                                                                                d="M.707 8.475C.275 8.64 0 9.508 0 9.508s.284.867.718 1.03l5.09 1.897 1.986 6.38a1.102 1.102 0 0 0 1.75.527l2.96-2.41a.405.405 0 0 1 .494-.013l5.34 3.87a1.1 1.1 0 0 0 1.046.135 1.1 1.1 0 0 0 .682-.803l3.91-18.795A1.102 1.102 0 0 0 22.5.075L.706 8.475z"/>
-                                                                        </svg>
-                                                                    </div>
-                                                                </div>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <a
-                                                        rel="noopener noreferrer"
-                                                        target="_blank"
-                                                        title={
-                                                            this.props.networkId === 1
-                                                                ? "Buy at Uniswap"
-                                                                : "Buy at Pangolin"
-                                                        }
-                                                        href={
-                                                            this.props.networkId === 1
-                                                                ? `https://v2.info.uniswap.org/pair/${this.props.match.params.pair_id}`
-                                                                : `https://app.pangolin.exchange/#/swap?outputCurrency/${this.props.match.params.pair_id}`
-                                                        }
-                                                    >
-                                                        <img
-                                                            src={
-                                                                this.props.networkId === 1
-                                                                    ? "/images/uniswap-logo-home.png"
-                                                                    : "/images/pangolin.png"
-                                                            }
-                                                            width="18"
-                                                            alt=""
-                                                        />
-                                                    </a>
-                                                </li>
-                                                {this.state.pairInfo?.link_coinmarketcap && (
-                                                    <li>
-                                                        <a
-                                                            rel="noopener noreferrer"
-                                                            target="_blank"
-                                                            title="Coinmarketcap"
-                                                            href={this.state.pairInfo?.link_coinmarketcap}
-                                                        >
-                                                            <img
-                                                                src="/images/coinmarketcap.jpeg"
-                                                                width="18"
-                                                                alt=""
-                                                            />
-                                                        </a>
-                                                    </li>
-                                                )}
-                                                {(this.state.pairInfo?.link_coingecko ||
-                                                    this.state.cgInfo?.link_coingecko) && (
-                                                    <li>
-                                                        <a
-                                                            rel="noopener noreferrer"
-                                                            target="_blank"
-                                                            title="Coingecko"
-                                                            href={
-                                                                this.state.pairInfo?.link_coingecko ||
-                                                                this.state.cgInfo?.link_coingecko
-                                                            }
-                                                        >
-                                                            <img
-                                                                src="/images/coingecko.webp"
-                                                                width="18"
-                                                                alt=""
-                                                            />
-                                                        </a>
-                                                    </li>
-                                                )}
-                                                {(this.state.pairInfo?.link_website ||
-                                                    this.state.cgInfo?.link_website) && (
-                                                    <li>
-                                                        <a
-                                                            rel="noopener noreferrer"
-                                                            target="_blank"
-                                                            title="Website"
-                                                            href={
-                                                                this.state.pairInfo?.link_website ||
-                                                                this.state.cgInfo?.link_website
-                                                            }
-                                                        >
-                                                            <i
-                                                                style={{color: `var(--red)`}}
-                                                                className="fas fa-external-link-alt"
-                                                                alt=""
-                                                            />
-                                                        </a>
-                                                    </li>
-                                                )}
-                                                {(this.state.pairInfo?.link_twitter ||
-                                                    this.state.cgInfo?.link_twitter) && (
-                                                    <li>
-                                                        <a
-                                                            rel="noopener noreferrer"
-                                                            target="_blank"
-                                                            title="Twitter"
-                                                            href={
-                                                                this.state.pairInfo?.link_twitter ||
-                                                                this.state.cgInfo?.link_twitter
-                                                            }
-                                                        >
-                                                            <i
-                                                                style={{color: "rgba(29,161,242,1.00)"}}
-                                                                className="fab fa-twitter"
-                                                                alt=""
-                                                            />
-                                                        </a>
-                                                    </li>
-                                                )}
-                                                {(this.state.pairInfo?.link_telegram ||
-                                                    this.state.cgInfo?.link_telegram) && (
-                                                    <li>
-                                                        <a
-                                                            rel="noopener noreferrer"
-                                                            target="_blank"
-                                                            title="Telegram"
-                                                            href={
-                                                                this.state.pairInfo?.link_telegram ||
-                                                                this.state.cgInfo.link_telegram
-                                                            }
-                                                        >
-                                                            <i
-                                                                style={{color: "#0088cc"}}
-                                                                className="fab fa-telegram"
-                                                                alt=""
-                                                            />
-                                                        </a>
-                                                    </li>
-                                                )}
-                                                <li>
-                                                    <a
-                                                        rel="noopener noreferrer"
-                                                        target="_blank"
-                                                        title={this.state.pair?.id}
-                                                        href={
-                                                            this.props.networkId === 1
-                                                                ? `https://etherscan.io/address/${this.props.match.params.pair_id}`
-                                                                : `https://cchain.explorer.avax.network/address/${this.props.match.params.pair_id}`
-                                                        }
-                                                    >
-                                                        <img
-                                                            className="icon-bg-white-rounded"
-                                                            src={
-                                                                this.props.networkId === 1
-                                                                    ? "/images/etherscan.png"
-                                                                    : "/images/cchain.png"
-                                                            }
-                                                            width="18"
-                                                            alt=""
-                                                        />
-                                                    </a>
-                                                </li>
-
-                                                {this.state.pairInfo?.link_audit && (
-                                                    <li>
-                                                        <a
-                                                            rel="noopener noreferrer"
-                                                            target="_blank"
-                                                            title="Audit"
-                                                            href={this.state.pairInfo?.link_audit}
-                                                        >
-                                                            <i
-                                                                style={{color: "var(--red)"}}
-                                                                className="far fa-file-pdf"
-                                                                alt=""
-                                                            />
-                                                        </a>
-                                                    </li>
-                                                )}
-                                            </ul>
-                                        </div>
-                                        <div className="graph-header-right">
-                                            <NavLink
-                                                title="DYP Locker"
-                                                to={`/locker/${this.props.match.params.pair_id}`}
-                                                className={"tradebtn w-auto"}
-                                            >
-                                                View pair locker
-                                            </NavLink>
-                                            <NavLink to={`/locker/${this.props.match.params.pair_id}`}>
-                                                <img src={PairLocker} alt=""
-                                                     style={{marginLeft: 10, cursor: 'pointer'}}/>
-                                            </NavLink>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="secondbox-wrapper favorites">
-                                    <div
-                                        className="content-title m-0 p-0"
-                                        style={{borderBottom: "none"}}
-                                    >
-                                        <div className="content-title-top">
-                                            <h2>FAVORITES</h2>
-                                            <button
-                                                className="tradebtn m-0 w-auto"
-                                                style={{gap: 5}}
-                                                onClick={() => {
-                                                    window.location.replace("/account#my-fav");
-                                                }}
-                                            >
-                                                <svg
-                                                    width="10"
-                                                    height="10"
-                                                    viewBox="0 0 10 10"
-                                                    fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                >
-                                                    <path
-                                                        d="M4.32229 10C3.23685 10 2.14862 10 1.06318 10C0.423045 10 0 9.57696 0 8.93683C0 6.75759 0 4.57557 0 2.39633C0 1.76177 0.423045 1.33594 1.05483 1.33594C2.36014 1.33594 3.66546 1.33594 4.97078 1.33594C5.22683 1.33594 5.39382 1.55581 5.31033 1.78125C5.26023 1.91484 5.14055 1.99834 4.98748 2.00112C4.801 2.0039 4.61174 2.00112 4.42527 2.00112C3.30365 2.00112 2.18202 2.00112 1.0604 2.00112C0.793209 2.00112 0.667965 2.12636 0.667965 2.39355C0.667965 4.57835 0.667965 6.76037 0.667965 8.94518C0.667965 9.2068 0.795992 9.33482 1.05761 9.33482C3.24242 9.33482 5.42444 9.33482 7.60924 9.33482C7.87364 9.33482 7.99889 9.20958 7.99889 8.94518C7.99889 7.65378 7.99889 6.36238 7.99889 5.07098C7.99889 5.01531 8.00167 4.95965 8.01559 4.90677C8.06012 4.75091 8.20484 4.6535 8.36348 4.6702C8.52213 4.68411 8.65015 4.81771 8.66407 4.97913C8.66685 4.99862 8.66407 5.02088 8.66407 5.04036C8.66407 6.35403 8.66407 7.66491 8.66407 8.97858C8.66407 9.45728 8.37183 9.84415 7.92096 9.96383C7.81798 9.99166 7.70943 10 7.60089 10C6.50988 10 5.41609 10 4.32229 10Z"
-                                                        fill="white"
-                                                    />
-                                                    <path
-                                                        d="M8.83322 0.667966C8.57995 0.667966 8.32668 0.667966 8.07341 0.667966C7.60583 0.667966 7.13547 0.670749 6.66789 0.667966C6.49255 0.667966 6.35339 0.537156 6.33391 0.370164C6.31721 0.205956 6.42297 0.0528806 6.58718 0.0111328C6.62336 0.00278319 6.66233 0 6.70129 0C7.67541 0 8.65231 0 9.62642 0C9.86578 0 9.99937 0.133593 9.99937 0.375731C9.99937 1.34706 9.99937 2.3184 9.99937 3.29251C9.99937 3.51517 9.86578 3.66546 9.66817 3.66824C9.46778 3.67103 9.33141 3.51795 9.33141 3.28695C9.33141 2.6162 9.33141 1.94823 9.33141 1.27748C9.33141 1.2413 9.33141 1.20234 9.33141 1.14667C9.28966 1.18564 9.26183 1.21069 9.23678 1.23574C7.69489 2.77762 6.153 4.31673 4.6139 5.8614C4.50536 5.96994 4.38846 6.03396 4.2326 5.98664C4.00995 5.91706 3.92645 5.64709 4.07396 5.4634C4.09901 5.43 4.13241 5.40217 4.16024 5.37434C5.69099 3.84359 7.22453 2.31005 8.75529 0.779293C8.78312 0.751461 8.82208 0.729196 8.85548 0.704147C8.84713 0.687448 8.83878 0.679098 8.83322 0.667966Z"
-                                                        fill="white"
-                                                    />
-                                                </svg>
-                                                View all
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div className="d-flex flex-column" style={{gap: 10}}>
-                                        {this.state.favorites
-                                            .slice(
-                                                this.state.favorites.length - 2,
-                                                this.state.favorites.length
-                                            )
-                                            .map((lock, index) => {
-                                                return (
-                                                    <div key={index} className="favRow">
-                                                        <div
-                                                            className="row m-0 justify-content-between align-items-center"
-                                                            style={{gap: 20}}
-                                                        >
-                                                            <h2 className="favpair">
-                                                                {lock.token0.symbol}/{lock.token1.symbol}
-                                                            </h2>
-
-                                                            <span className="favliq">
-                              ...{lock.id.slice(35)}
-                              </span>
-                                                        </div>
-                                                    </div>
-                                                );
-                                            })}{" "}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="graph-right" style={{height: "100%"}}>
+                            <div className="graph-right">
                                 <div className="search-box">
                                     <form id="searchform">
                                         <input
@@ -1702,38 +1861,57 @@ export default class PairExplorer extends React.Component {
                                             autoComplete="off"
                                             placeholder="Search Pairs"
                                         />
-                                        <ul className="output" style={{
-                                            display: this.state.searchResults.length == 0 ? 'none' : 'block',
-                                            zIndex: 9,
-                                            maxHeight: '300px',
-                                            overflowY: 'auto'
-                                        }}>
-                                            {
-                                                this.state.searchResults.map((p) => <NavLink
-                                                        to={`/pair-explorer/${p.pair.address.toLowerCase()}`}>
-                                                        <li key={p.id} className="prediction-item">
-                                                            <div className="suggest-item">
-                                                                <h2 style={{fontSize: '1.2rem', fontWeight: 500}}>
-                                                            <span
-                                                                className="wh_txt">{p.pair.token_1.symbol}</span>/{p.pair.token_0.symbol}
-                                                                    <span className="bar">-</span> ({p.pair.token_0.name})
-                                                                </h2>
-                                                                <p style={{fontSize: '.85rem', fontWeight: 400}}>Token:
-                                                                    ...{p.pair.token_0.address.toLowerCase().slice(34)} -
-                                                                    Pair:
-                                                                    ...{p.pair.address.toLowerCase().slice(34)}</p>
-                                                                <p>Total liquidity:</p>
-                                                                <span>${getFormattedNumber(p.pair.reserve, 2)}</span>
-                                                            </div>
-                                                        </li>
-                                                    </NavLink>
-                                                )
-                                            }
+                                        <ul
+                                            className="output"
+                                            style={{
+                                                display:
+                                                    this.state.searchResults.length == 0
+                                                        ? "none"
+                                                        : "block",
+                                                zIndex: 9,
+                                                maxHeight: "300px",
+                                                overflowY: "auto",
+                                            }}
+                                        >
+                                            {this.state.searchResults.map((p) => (
+                                                <NavLink
+                                                    to={`/pair-explorer/${p.pair.address.toLowerCase()}`}
+                                                >
+                                                    <li key={p.id} className="prediction-item">
+                                                        <div className="suggest-item">
+                                                            <h2
+                                                                style={{ fontSize: "1.2rem", fontWeight: 500 }}
+                                                            >
+                                <span className="wh_txt">
+                                  {p.pair.token_1.symbol}
+                                </span>
+                                                                /{p.pair.token_0.symbol}
+                                                                <span className="bar">-</span> (
+                                                                {p.pair.token_0.name})
+                                                            </h2>
+                                                            <p
+                                                                style={{ fontSize: ".85rem", fontWeight: 400 }}
+                                                            >
+                                                                Token: ...
+                                                                {p.pair.token_0.address
+                                                                    .toLowerCase()
+                                                                    .slice(34)}{" "}
+                                                                - Pair: ...
+                                                                {p.pair.address.toLowerCase().slice(34)}
+                                                            </p>
+                                                            <p>Total liquidity:</p>
+                                                            <span>
+                                ${getFormattedNumber(p.pair.reserve, 2)}
+                              </span>
+                                                        </div>
+                                                    </li>
+                                                </NavLink>
+                                            ))}
                                         </ul>
                                         <button type="submit" id="submit">
                                             {/* <img src="/assets/img/search-2.png" alt="Image" /> */}
                                             <i
-                                                style={{color: "var(--red)"}}
+                                                style={{ color: "var(--red)" }}
                                                 className={`fas fa-${
                                                     !this.state.isSearching ? "search" : "spinner fa-spin"
                                                 }`}
@@ -1741,14 +1919,10 @@ export default class PairExplorer extends React.Component {
                                         </button>
                                     </form>
                                 </div>
-                                <div
-                                    className="chart-wrap"
-                                    style={{height: "90%", marginTop: 20}}
-                                >
-                                    {/* <div className='mb-3'>
-                                <p>Price chart for {this.state.pair?.token0.symbol || '...'}/USD</p>
-                            </div> */}
-                                    <div style={{height: "100%"}}>
+                            </div>
+                            <div className="table-box d-flex flex-column" style={{ gap: 20 }}>
+                                <div className="chart-wrap" style={{ marginTop: 0 }}>
+                                    <div>
                                         {this.state.mainToken && this.state.pair && (
                                             <TVChartContainer
                                                 mainToken={this.state.mainToken}
@@ -1762,25 +1936,11 @@ export default class PairExplorer extends React.Component {
                                             />
                                         )}
                                     </div>
-                                    {/* <Chart
-                            darkTheme={this.props.theme == 'theme-dark'} 
-                            options={this.state.options} 
-                            candlestickSeries={this.state.candlestickSeries} 
-                            // histogramSeries={this.state.histogramSeries} 
-                            autoWidth 
-                            height={450} /> */}
-                                    {/* <Chart from={this.state.timeRange.from} to={this.state.timeRange.to} onTimeRangeMove={this.handleTimeRangeMove} options={options} candlestickSeries={this.state.candlestickSeries} autoWidth height={450} /> */}
-                                    {/* <img className="graph-one" src="/assets/img/graph-black.png" alt="Image" /> */}
-                                    {/* <img className="graph-two" src="/assets/img/graph-white.png" alt="Image" /> */}
                                 </div>
+
+                                <div className="l-table-wrapper-div">{this.GetDataTable()}</div>
                             </div>
                         </div>
-                    </div>
-                    <div className="table-box graphwrapper">
-                        <div className="table-title">
-                            <h4>Trade history</h4>
-                        </div>
-                        <div className="l-table-wrapper-div">{this.GetDataTable()}</div>
                     </div>
                 </div>
                 <Modal show={this.state.show} onHide={this.toggleModal}>
@@ -1831,7 +1991,7 @@ export default class PairExplorer extends React.Component {
                                     {this.state.mainToken?.symbol}{" "}
                                 </td>
                             </tr>
-                            <tr style={{borderTop: "none"}}>
+                            <tr style={{ borderTop: "none" }}>
                                 <td>
                                     {" "}
                                     1{" "}
@@ -1881,7 +2041,7 @@ export default class PairExplorer extends React.Component {
                                 <td>
                                     {" "}
                                     <NavLink to={`/locker/${this.props.match.params.pair_id}`}>
-                                        <strong style={{color: `var(--preloader-clr)`}}>
+                                        <strong style={{ color: `var(--preloader-clr)` }}>
                                             LP On DYP Locker <i className="fas fa-lock"></i>{" "}
                                         </strong>
                                     </NavLink>
@@ -1898,10 +2058,10 @@ export default class PairExplorer extends React.Component {
                         this.props.isPremium && (
                             <div>
                                 <h5 className="mb-3">About Project</h5>
-                                <p style={{fontSize: ".8rem"}}>
+                                <p style={{ fontSize: ".8rem" }}>
                                     {this.state.pairInfo.project_comment_public}{" "}
                                 </p>
-                                <p style={{fontSize: ".8rem"}}>
+                                <p style={{ fontSize: ".8rem" }}>
                                     {this.state.pairInfo.ts_comment_public}{" "}
                                 </p>
                             </div>

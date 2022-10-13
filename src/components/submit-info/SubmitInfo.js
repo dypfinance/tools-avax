@@ -19,9 +19,9 @@ const SubmitInfo = () => {
     coingecko: "",
   };
 
-  useEffect(()=>{
-    window.scrollTo(0,0)
-  })
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const [values, setValues] = useState(initialState);
   const [errors, setErrors] = useState({});
@@ -58,8 +58,19 @@ const SubmitInfo = () => {
 
       if (
         values.project_name !== "" &&
-        values.nft_number !== "" &&
-        values.ticker !== ""
+        values.ticker !== "" &&
+        errors.project_name === "" &&
+        errors.email === "" &&
+        errors.ticker === "" &&
+        errors.contract_address === "" &&
+        errors.about === "" &&
+        errors.audit_info === "" &&
+        errors.audit_link === "" &&
+        errors.website_link === "" &&
+        errors.twitter === "" &&
+        errors.coinmarket === "" &&
+        errors.telegram === "" &&
+        errors.coingecko === "" 
       ) {
         const send = await axios
           .post("https://api-mail.dyp.finance/api/submit_form", data)
@@ -72,12 +83,11 @@ const SubmitInfo = () => {
 
         if (send.status === 1) {
           alert("Your information has been submitted.");
-      setValues({ ...initialState });
+          setValues({ ...initialState });
         } else {
           alert("Something goes to wrong.");
         }
       }
-
     }
   };
 
@@ -89,13 +99,20 @@ const SubmitInfo = () => {
             Submit form
           </h2>
           <p className="d-block">
-          Use this form to submit information about your project to DYP Tools
+            Use this form to submit information about your project to DYP Tools
           </p>
         </div>
       </div>
       <div className="px-3 table-title" style={{ paddingBottom: "6rem" }}>
-        <form style={{ display: "flex", flexDirection: "column", gap: 20, margin: '2rem'}}>
-          <div style={{borderBottom: '1px solid #D5D7E6'}}>
+        <form
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 20,
+            margin: "2rem",
+          }}
+        >
+          <div style={{ borderBottom: "1px solid #D5D7E6" }}>
             <h5>Your details</h5>
             <div className="row mt-3 mb-4">
               <div className="col-lg-4 single-cell">
@@ -129,7 +146,7 @@ const SubmitInfo = () => {
                     <span className="errormessage">{errors.nft_number}</span>
                   )}
                 </div> */}
-                 <div className="input-wrapper">
+                <div className="input-wrapper">
                   <span className="required-text">Email</span>
                   <input
                     type="email"
@@ -140,7 +157,7 @@ const SubmitInfo = () => {
                     onChange={handleChange}
                     placeholder="Email"
                   />
-                  {errors.nft_number && (
+                  {errors.email && (
                     <span className="errormessage">{errors.email}</span>
                   )}
                 </div>
@@ -184,10 +201,14 @@ const SubmitInfo = () => {
               <div className="col-lg-4">
                 <div className="input-wrapper">
                   <span className="required-text">About the project</span>
-                  
+
                   <textarea
                     className="inputfield"
-                    style={{height: 'auto', paddingTop:10, paddingBottom:10}}
+                    style={{
+                      height: "auto",
+                      paddingTop: 10,
+                      paddingBottom: 10,
+                    }}
                     id="inputAddress"
                     placeholder="Enter project description and include information about the project's liquidity, team profiles, smart contract security efforts, project mission etc."
                     name="about"
@@ -203,7 +224,7 @@ const SubmitInfo = () => {
               </div>
             </div>
           </div>
-          <div  style={{borderBottom: '1px solid #D5D7E6'}}>
+          <div style={{ borderBottom: "1px solid #D5D7E6" }}>
             <h5>Smart contract details</h5>
             <div className="row mt-3 mb-4">
               <div className="col-lg-4 single-cell">
@@ -227,9 +248,7 @@ const SubmitInfo = () => {
               </div>
               <div className="col-lg-4 single-cell">
                 <div className="input-wrapper">
-                  <span className="required-text">
-                    Smart contract audit
-                  </span>
+                  <span className="required-text">Smart contract audit</span>
                   <input
                     type="text"
                     className="inputfield"

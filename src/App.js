@@ -1,5 +1,5 @@
 // import 'bootstrap/dist/css/bootstrap.min.css';
-
+import Web3 from "web3";
 import React from "react";
 import GoogleAnalyticsReporter from "./functions/analytics";
 import PoolExplorer from "./components/pool-explorer";
@@ -14,10 +14,10 @@ import News from "./components/news/news";
 import Sidebar from "./components/sidebar";
 import Header from "./components/header";
 import Footer from "./components/Footer/footer";
-import {Route} from "react-router-dom";
+import { Route } from "react-router-dom";
 import SubmitInfo from "./components/submit-info/SubmitInfo";
-import {Switch} from "react-router-dom";
-import {RedirectPathToNewsOnly} from "./functions/redirects";
+import { Switch } from "react-router-dom";
+import { RedirectPathToNewsOnly } from "./functions/redirects";
 import getSyncStats from "./functions/get-indexing-status";
 import getFormattedNumber from "./functions/get-formatted-number";
 
@@ -42,31 +42,32 @@ class App extends React.Component {
             networkId: 1,
             show: false,
         };
-        this.showModal = this.showModal.bind(this)
-        this.hideModal = this.hideModal.bind(this)
+        this.showModal = this.showModal.bind(this);
+        this.hideModal = this.hideModal.bind(this);
     }
 
     showModal = () => {
-        this.setState({show: true})
-    }
+        this.setState({ show: true });
+    };
 
     hideModal = () => {
-        this.setState({show: false})
-    }
+        this.setState({ show: false });
+    };
 
     // checkNetworkId() {
     //     if (window.ethereum) {
-    //         window.ethereum.request({method: "net_version"})
+    //         window.ethereum
+    //             .request({ method: "net_version" })
     //             .then((data) => {
     //                 this.setState({
-    //                     networkId: data
+    //                     networkId: data,
     //                 });
-    //                 this.refreshSubscription().then()
+    //                 this.refreshSubscription().then();
     //             })
     //             .catch(console.error);
     //     } else {
     //         this.setState({
-    //             networkId: '1'
+    //             networkId: "1",
     //         });
     //     }
     // }
@@ -90,38 +91,73 @@ class App extends React.Component {
         //   }
         // }.bind(this))
 
-        let coinbase = this.state.coinbase
-
-
+        let coinbase = this.state.coinbase;
         let subscribedPlatformTokenAmount;
-        if (this.state.networkId === 1) {
-            await window.subscriptionPlatformTokenAmountETH(coinbase);
-            let isPremium = Number(subscribedPlatformTokenAmount) > 0;
-            this.setState({subscribedPlatformTokenAmount, isPremium});
-        }
+        let subscribedPlatformTokenAmountETH;
+        let subscribedPlatformTokenAmountAvax;
 
-        if (this.state.networkId === 43114) {
-            await window.subscriptionPlatformTokenAmount(coinbase);
-            let isPremium = Number(subscribedPlatformTokenAmount) > 0;
-            this.setState({subscribedPlatformTokenAmount, isPremium});
+        // subscribedPlatformTokenAmountETH =
+        //   await window.subscriptionPlatformTokenAmount(coinbase);
+
+        const web3eth = new Web3(
+            "https://mainnet.infura.io/v3/94608dc6ddba490697ec4f9b723b586e"
+        );
+        const web3avax = new Web3("https://api.avax.network/ext/bc/C/rpc");
+        const AvaxABI = window.SUBSCRIPTION_ABI;
+        const EthABI = window.SUBSCRIPTIONETH_ABI;
+        const ethsubscribeAddress = window.config.subscriptioneth_address;
+        const avaxsubscribeAddress = window.config.subscription_address;
+
+        const ethcontract = new web3eth.eth.Contract(EthABI, ethsubscribeAddress);
+        const avaxcontract = new web3avax.eth.Contract(
+            AvaxABI,
+            avaxsubscribeAddress
+        );
+
+        if (coinbase) {
+            subscribedPlatformTokenAmountETH = await ethcontract.methods
+                .subscriptionPlatformTokenAmount(coinbase)
+                .call()
+                .then();
+
+            subscribedPlatformTokenAmountAvax = await avaxcontract.methods
+                .subscriptionPlatformTokenAmount(coinbase)
+                .call()
+                .then();
+
+            if (
+                subscribedPlatformTokenAmountAvax == 0 &&
+                subscribedPlatformTokenAmountETH == 0
+            ) {
+                this.setState({ subscribedPlatformTokenAmount: "0", isPremium: false });
+            } else if (subscribedPlatformTokenAmountAvax > 0) {
+                this.setState({
+                    subscribedPlatformTokenAmount: subscribedPlatformTokenAmountAvax,
+                    isPremium: true,
+                });
+            } else if (subscribedPlatformTokenAmountETH > 0) {
+                this.setState({
+                    subscribedPlatformTokenAmount: subscribedPlatformTokenAmountETH,
+                    isPremium: true,
+                });
+            }
         }
     };
 
     handleConnection = async () => {
         let isConnected = this.state.isConnected;
         try {
-            localStorage.setItem('logout', 'false')
+            localStorage.setItem("logout", "false");
             isConnected = await window.connectWallet();
         } catch (e) {
-            this.setState({show: false})
+            this.setState({ show: false });
             window.alertify.error(String(e) || "Cannot connect wallet!");
             return;
         }
-        this.setState({isConnected, coinbase: await window.getCoinbase()});
-        this.setState({show: false})
+        this.setState({ isConnected, coinbase: await window.getCoinbase() });
+        this.setState({ show: false });
         return isConnected;
     };
-
 
     refreshHotPairs = async () => {
         window.$.get(
@@ -132,15 +168,13 @@ class App extends React.Component {
             }/api/hot-pairs`
         )
             // window.$.get(`${API_BASEURL}/api/hot-pairs`)
-            .then(({hotPairs}) => {
-                this.setState({hotPairs});
+            .then(({ hotPairs }) => {
+                this.setState({ hotPairs });
             })
             .catch(console.error);
     };
 
     componentDidMount() {
-
-        // console.log(this.state.networkId);
         // getSyncStats()
         // .then((syncStatus) => {
         // let m = window.alertify.message(
@@ -161,42 +195,40 @@ class App extends React.Component {
         // .catch(console.error);
         // window.connectWallet().then();
         // if(window.ethereum) {
-        // console.log(this.state.coinbase)
+
         // }
         this.checkConnection();
         // this.checkNetworkId();
         this.refreshHotPairs();
-        // this.subscriptionInterval = setInterval(this.refreshSubscription, 5e3);
+        this.subscriptionInterval = setInterval(this.refreshSubscription, 5e3);
     }
 
-
     checkConnection() {
-        const logout = localStorage.getItem('logout')
-        if (logout !== 'true') {
-            window.ethereum?.request({method: "eth_accounts"})
+        const logout = localStorage.getItem("logout");
+        if (logout !== "true") {
+            window.ethereum
+                ?.request({ method: "eth_accounts" })
                 .then((data) => {
                     this.setState({
                         isConnected: data.length === 0 ? false : true,
                         coinbase: data.length === 0 ? undefined : data[0],
                     });
                     if (data.length === 0) {
-                        localStorage.setItem('logout', 'true')
+                        localStorage.setItem("logout", "true");
                     }
                 })
                 .catch(console.error);
         } else {
             this.setState({
                 isConnected: false,
-
             });
         }
     }
 
     logout = () => {
-        localStorage.setItem('logout', 'true')
-        this.checkConnection()
-    }
-
+        localStorage.setItem("logout", "true");
+        this.checkConnection();
+    };
     componentWillUnmount() {
         clearInterval(this.subscriptionInterval);
     }
@@ -206,10 +238,10 @@ class App extends React.Component {
             "theme-dark": "theme-white",
             "theme-white": "theme-dark",
         };
-        let {theme} = this.state;
+        let { theme } = this.state;
         document.body.classList.add(toBeAdded[theme]);
         document.body.classList.remove(theme);
-        this.setState({theme: toBeAdded[theme]});
+        this.setState({ theme: toBeAdded[theme] });
     };
 
     toggleNetwork = (network) => {
@@ -219,26 +251,23 @@ class App extends React.Component {
 
     toggleMinimizeSidebar = () => {
         const f = () => window.dispatchEvent(new Event("resize"));
-        this.setState({isMinimized: !this.state.isMinimized}, () => f());
+        this.setState({ isMinimized: !this.state.isMinimized }, () => f());
         f();
         let newInterval = setInterval(f, 16);
         setTimeout(() => clearInterval(newInterval), 1000);
     };
 
     toggleMobileSidebar = () => {
-        this.setState({isOpenInMobile: !this.state.isOpenInMobile});
+        this.setState({ isOpenInMobile: !this.state.isOpenInMobile });
     };
 
     render() {
-
-
-        document.addEventListener("touchstart", {passive: true});
+        document.addEventListener("touchstart", { passive: true });
         return (
-
             <div
                 className={`page_wrapper ${this.state.isMinimized ? "minimize" : ""}`}
             >
-                <Route component={GoogleAnalyticsReporter}/>
+                <Route component={GoogleAnalyticsReporter} />
 
                 <div className="body_overlay"></div>
                 <div className="minimize-wrap">
@@ -266,6 +295,7 @@ class App extends React.Component {
                         show={this.state.show}
                         checkConnection={this.checkConnection}
                         logout={this.logout}
+                        isPremium={this.state.isPremium}
                         handleSwitchNetwork={this.handleSwitchNetwork}
                         network={this.state.networkId}
                     />
@@ -293,6 +323,7 @@ class App extends React.Component {
                                         isPremium={this.state.isPremium}
                                         key={props.match.params.news_id}
                                         {...props}
+                                        coinbase = {this.state.coinbase}
                                     />
                                 )}
                             />
@@ -325,22 +356,19 @@ class App extends React.Component {
                             <Route
                                 exact
                                 path="/submit-info"
-                                render={() => <SubmitInfo theme={this.state.theme}/>}
+                                render={() => <SubmitInfo theme={this.state.theme} />}
                             />
 
                             <Route
                                 exact
                                 path="/top-tokens"
-                                render={() => <TopTokens
-                                    theme={this.state.theme}
-                                    // networkId={parseInt(this.state.networkId)}
-                                />}
+                                render={() => <TopTokens theme={this.state.theme} />}
                             />
                             <Route
                                 exact
                                 path="/account"
                                 render={() => (
-                                    <Account appState={this.state} theme={this.state.theme}/>
+                                    <Account appState={this.state} theme={this.state.theme} />
                                 )}
                             />
                             <Route
@@ -380,10 +408,10 @@ class App extends React.Component {
                                     />
                                 )}
                             />
-                            <Route component={RedirectPathToNewsOnly}/>
+                            <Route component={RedirectPathToNewsOnly} />
                         </Switch>
 
-                        <Footer/>
+                        <Footer />
                     </div>
                 </div>
             </div>
