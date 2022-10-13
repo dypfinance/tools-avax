@@ -66,39 +66,33 @@ export default class TopTokens extends React.Component {
       isLoading: true,
       filteredByTokenId: "",
       filteredByTxnType: "", // 'burn' | 'mint' | ''
-      networkId: "1",
     };
   }
 
-  checkNetworkId() {
-    if (window.ethereum) {
-      window.ethereum
-        .request({ method: "net_version" })
-        .then((data) => {
-          this.setState({
-            networkId: data,
-          });
-          this.fetchTopTokens().then();
-        })
-        .catch(console.error);
-    } else {
-    this.fetchTopTokens().then();  
-      this.setState({
-        networkId: "1",
-      });
-      
-    }
-  }
-
-  componentDidMount() {
+  async componentDidMount() {
     // this.fetchTransactions()
     // this.fetchSwaps()
-    this.checkNetworkId();
+    // this.checkNetworkId();
+    await this.fetchTopTokens().then()
+  }
+
+  async componentDidUpdate(prevProps) {
+    if(prevProps.networkId != this.props.networkId){
+      this.setState({
+        isLoading: true,
+        ethPrice: "...",
+        tokens: [],
+        filteredTokens: [],
+      });
+      await this.fetchTopTokens().then();
+    }
   }
 
   fetchTopTokens = async () => {
     try {
-      let { tokens, ethPrice } = await getTopTokens();
+      let network
+      this.props.networkId == 1 ? network = 'ethereum' : network = 'avalanche'
+      let { tokens, ethPrice } = await getTopTokens(network);
       console.log({ tokens, ethPrice });
       this.setState({ tokens, ethPrice, filteredTokens: tokens });
       return { tokens, ethPrice };
@@ -137,7 +131,7 @@ export default class TopTokens extends React.Component {
           <a
             target="_blank"
             className="l-clr-purple"
-            href={ window.ethereum ? window.ethereum.chainId === '0x1' ? `https://v2.info.uniswap.org/token/${txn.id}` : `https://cchain.explorer.avax.network/address/${txn.id}` : `https://v2.info.uniswap.org/token/${txn.id}`}
+            href={ this.props.networkId == 1 ? `https://v2.info.uniswap.org/token/${txn.id}` : `https://cchain.explorer.avax.network/address/${txn.id}` }
             style={{
               whiteSpace: "nowrap",
               overflow: "hidden",

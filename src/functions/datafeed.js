@@ -1,16 +1,14 @@
 import axios from "axios";
 
-async function getPairCandles(pair, from, to, n = 0) {
+async function getPairCandles(pair, from, to, n = 0, network) {
   let query = "";
   if (from && to) {
     query = `?from=${from}&to=${to}`;
   }
   let candles = await axios.get(
-    window.ethereum ?
-    window.ethereum.chainId === "0x1"
+    network === 1
       ? `${window.config.apieth_baseurl}/api/candles/minutes/${pair}${query}`
       : `${window.config.api_baseurl}/api/candles/minutes/${pair}${query}`
-      : `${window.config.apieth_baseurl}/api/candles/minutes/${pair}${query}`
   );
   candles = candles.data;
   return processCandles(candles, n);
@@ -66,6 +64,7 @@ export default function getDataFeed({
   registerBarSubscription,
   onBarsRequest,
   mainToken,
+    network
 }) {
   return {
     onReady: (callback) => {
@@ -117,14 +116,16 @@ export default function getDataFeed({
           pairId,
           undefined,
           undefined,
-          mainToken.__number
+          mainToken.__number,
+            network
         );
       } else {
         pairCandles = await getPairCandles(
           pairId,
           from,
           to,
-          mainToken.__number
+          mainToken.__number,
+            network
         );
       }
 

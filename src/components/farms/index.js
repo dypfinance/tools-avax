@@ -65,36 +65,30 @@ export default class Farms extends React.Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     // this.fetchTransactions()
-    this.fetchFarms();
+    await this.fetchFarms();
   }
 
-  // fetchTransactions = async () => {
-  //     try {
-  //         let { transactions, ethPrice } = await getProcessedTransactions()
-  //         console.log({ transactions, ethPrice })
-
-  //         // TODO: Filter this to last 4 hour transactions once synced
-  //         transactions = transactions
-  //         // .filter(txn => txn.timestamp*1e3 >= Date.now() - 4 * 60 * 60 * 1000)
-  //         this.setState({ processedTransactions: transactions, filteredTransactions: transactions,
-  //             ethPrice
-  //         })
-  //     } finally {
-  //         this.setState({isLoading: false})
-  //     }
-
-  // }
+  async componentDidUpdate(prevProps) {
+    if(prevProps.networkId != this.props.networkId){
+      this.setState({
+        isLoading: true,
+        ethPrice: "...",
+        farms: [],
+        filteredFarms: [],
+      });
+      await this.fetchFarms().then();
+    }
+  }
 
   fetchFarms = async () => {
     try {
+      let network = this.props.networkId
       let farms = await window.$.get(
-        window.ethereum ?
-        window.ethereum.chainId === "0x1"
+        network == 1
           ? `${window.config.farm_api}/api/farm-info/eth/`
           : `${window.config.farm_api}/api/farm-info-avax/`
-          :`${window.config.farm_api}/api/farm-info/eth/`
       );
       farms = farms.farmInfo;
       //console.log({ farms })
